@@ -95,23 +95,20 @@ This Jumpstart Drop was originally written by the following contributors:
 
 Open the script using an editor and provide the values for the environment variables to match your environment. You will need to provide:
 
-- SUBSCRIPTIONID: Provide your subscription ID.
-- APPID: Provide your Service Principal App ID.
-- PASSWORD: Provide your service principal password.
-- TENANTID: Provide your Tenant ID.
-- RG: Provide your resource group name.
-- LOCATION: Provide the Azure Region.
-- VMNAME: Provide the Azure VM name.
+- subscriptionId: Provide your subscription ID
+- appId: Provide your Service Principal App ID
+- password: Provide your service principal password
+- tenantId: Provide your Tenant ID
+- resourceGroup: Provide your resource group name
+- location: Provide the Azure Region
 
 ### Run the automation
 
 Once you have provided your inputs, run the script with the command below:
 
 ```powershell
-. ./linux_arc_onboarding.ps1
+.\windows_arc_onboarding.ps1
 ```
-
-  > **Note:** The extra dot is due to the script having an *export* function and needs to have the vars exported in the same shell session as the rest of the commands.
 
 ## Resources
 
