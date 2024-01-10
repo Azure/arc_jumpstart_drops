@@ -8,7 +8,7 @@ description: >
 
 ## Manage Extended Security Updates (ESU) licenses at scale
 
-The following Jumpstart tool will guide you on how to programatically perform tasks with on your [Extended Security Updates (ESU) licenses](https://learn.microsoft.com/windows-server/get-started/extended-security-updates-deploy) at scale.
+The following Jumpstart Drop will guide you on how to programatically perform tasks with on your [Extended Security Updates (ESU) licenses](https://learn.microsoft.com/windows-server/get-started/extended-security-updates-deploy) at scale.
 
 This tool consists of a script that will allow you to:  
 
@@ -19,15 +19,14 @@ This tool consists of a script that will allow you to:
 
 This Jumpstart Drop was originally written by the following contributors:
 
-[Raúl Carboneras | Cloud Solution Architect at Microsoft](https://www.linkedin.com/in/ra%C3%BAl-carboneras-37609350/)
-[Laura Nicolás | Cloud Solution Architect at Microsoft](https://www.linkedin.com/in/lauranicolasd)
+- [Raúl Carboneras | Cloud Solution Architect at Microsoft](https://www.linkedin.com/in/ra%C3%BAl-carboneras-37609350/)
 
 ## Prerequisites
 
-- Clone the Azure Arc Jumpstart repository
+- Clone the Azure Arc Drops repository
 
     ```shell
-    git clone https://github.com/microsoft/azure_arc.git
+    git clone https://github.com/Azure/arc_jumpstart_drops.git
     ```
 
 - The script requires PowerShell 7 as well as [Azure PowerShell](https://learn.microsoft.com/powershell/azure/install-azure-powershell?view=azps-11.1.0) installed.
@@ -73,4 +72,4 @@ Now that the licenses are asigned they need to be mapped to its corresponding Az
 
 ## Resources
 
-Make sure to review the Jumpstart Scenarios on ESU licenses for [Azure Arc-enabled Servers](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/day2/arc_extended_security_updates) and [Azure Arc-enabled SQL Server.](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_sqlsrv/day2/esu/)
+Make sure to review the Jumpstart Scenario on ESU licenses for [Azure Arc-enabled Servers](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/day2/arc_extended_security_updates) and [Azure Arc-enabled SQL Server.](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_sqlsrv/day2/esu/)
