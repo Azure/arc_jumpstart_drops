@@ -103,8 +103,6 @@ Open the script using an editor and provide the values for the environment varia
 - LOCATION: Provide the Azure Region.
 - VMNAME: Provide the Azure VM name.
 
-  > **Note:** The extra dot is due to the script having an *export* function and needs to have the vars exported in the same shell session as the rest of the commands.
-
 ### Run the automation
 
 Once you have provided your inputs, run the script with the command below:
@@ -112,6 +110,8 @@ Once you have provided your inputs, run the script with the command below:
 ```bash
 .\linux_arc_onboarding.ps1
 ```
+
+  > **Note:** The extra dot is due to the script having an *export* function and needs to have the vars exported in the same shell session as the rest of the commands.
 
 ## Resources
 
