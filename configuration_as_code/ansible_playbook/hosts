@@ -1,0 +1,2 @@
+[arcserver]
+<hostname> ansible_ssh_user=arcdemo

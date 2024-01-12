@@ -112,4 +112,8 @@ Once you have provided your inputs, run the script with the command below:
 
 ## Resources
 
-Make sure to review the Jumpstart Scenario on how to [Deploy a Windows Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_win).
+For more information about onboarding Azure VMs to Azure Arc, review the following resources:
+
+- [Evaluate Azure Arc-enabled servers on an Azure virtual machine](https://learn.microsoft.com/azure/azure-arc/servers/plan-evaluate-on-azure-virtual-machine)
+- Manual Ubuntu server onboarding with Azure Arc-enabled servers [video](https://www.youtube.com/watch?v=F_0w_fEqx6Y&list=PLZuSmETs0xIauYQB1UeyZbBGhdj7BREOG&index=7)
+- Jumpstart Scenario on how to [Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_linux).
