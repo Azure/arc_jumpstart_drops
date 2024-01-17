@@ -108,7 +108,7 @@ Open the script using an editor and provide the values for the environment varia
 Once you have provided your inputs, run the script with the command below:
 
 ```bash
-.\linux_arc_onboarding.ps1
+. ./linux_arc_onboarding.sh
 ```
 
   > **Note:** The extra dot is due to the script having an *export* function and needs to have the vars exported in the same shell session as the rest of the commands.
