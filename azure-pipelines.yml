@@ -1,7 +1,10 @@
 # Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'Azure Arc Jumpstart Develop(98a19988-5c3d-4824-a685-f5cf12ae5c19)'
+    KeyVaultName: 'ADOPipelineKV'
+    SecretsFilter: 'TestCI'
+    RunAsPreJob: false
 
 trigger:
 - canary
@@ -13,7 +16,6 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: CmdLine@2
+  inputs:
+    script: 'echo TestCI -> $(TestCI)'
