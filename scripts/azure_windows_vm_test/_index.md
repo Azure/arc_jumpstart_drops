@@ -95,12 +95,12 @@ This Jumpstart Drop was originally written by the following contributors:
 
 Open the script using an editor and provide the values for the environment variables to match your environment. You will need to provide:
 
-- subscriptionId: Provide your subscription ID
-- appId: Provide your Service Principal App ID
-- password: Provide your service principal password
-- tenantId: Provide your Tenant ID
-- resourceGroup: Provide your resource group name
-- location: Provide the Azure Region
+- subscriptionId: Provide your subscription ID.
+- appId: Provide your Service Principal App ID.
+- password: Provide your service principal password.
+- tenantId: Provide your Tenant ID.
+- resourceGroup: Provide your resource group name.
+- location: Provide the Azure Region.
 
 ### Run the automation
 
