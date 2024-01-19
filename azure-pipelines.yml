@@ -4,6 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
+- main
 - canary
 
 pool:
