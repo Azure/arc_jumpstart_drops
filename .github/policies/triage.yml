@@ -11,11 +11,6 @@ configuration:
       - payloadType: Pull_Request
       - isAction:
           action: Opened
-      - or:
-        - activitySenderHasAssociation:
-            association: FirstTimer
-        - activitySenderHasAssociation:
-            association: FirstTimeContributor
       then:
       - addReply:
           reply: 'Hi friend! Thanks you for opening this Pull Request. Someone will review it soon. Thank you for committing to making the Azure Arc Jumpstart better.'
