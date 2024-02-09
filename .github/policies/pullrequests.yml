@@ -12,7 +12,7 @@ configuration:
       - hourly:
           hour: 3
       filters:
-      - isIssue
+      - isPullRequest
       - isOpen
       - hasLabel:
           label: needs author feedback
