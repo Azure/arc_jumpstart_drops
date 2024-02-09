@@ -12,24 +12,6 @@ configuration:
       - hourly:
           hour: 3
       filters:
-      - isPullRequest
-      - isOpen
-      - hasLabel:
-          label: needs author feedback
-      - noActivitySince:
-          days: 7 
-      - isNotLabeledWith:
-          label: no recent activity
-      actions:
-      - addLabel:
-          label: no recent activity
-      - addReply: 
-          reply: This pull request has been automatically marked as stale because it was marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**. Thank you ${issueAuthor} for your contributions to this project!
-    - description: 
-      frequencies:
-      - hourly:
-          hour: 3
-      filters:
       - is
       - isPullRequest
       - hasLabel:
