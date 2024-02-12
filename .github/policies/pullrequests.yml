@@ -30,7 +30,7 @@ configuration:
       - hourly:
           hour: 3
       filters:
-      - is
+      - isOpen
       - isPullRequest
       - hasLabel:
           label: no recent activity
