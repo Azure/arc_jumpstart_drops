@@ -21,7 +21,7 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 
 If you believe that any fields are missing or that your Drop content does not fit into the JSON schema described above, please create an [Issue](./Issues) and we will do our best to address your concerns.
 
-## Drop Example 
+## Drop Schema Example 
 This JSON file provides an example of how a Drop schema file should be structured for a valid contribution.
 
 ```json
@@ -32,11 +32,11 @@ This JSON file provides an example of how a Drop schema file should be structure
   "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg", 
   "Authors" : [
     {
-    	"Name" : "Laura Nicolas"
+    	"Name" : "Laura Nicolas",
     	"Link" : "https ://www.linkedin.com/in/lauranicolasd",
     }, 
     {
-    	"Name" : "Francisco Cabrera"
+    	"Name" : "Francisco Cabrera",
     	"Link" : "https://github.com/fcabrera23"
     }
   ], 
@@ -45,8 +45,8 @@ This JSON file provides an example of how a Drop schema file should be structure
   "Difficulty" : "Medium",
   "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
   "Products" : ["Azure Monitor", "Arc"],
-  "LastModified" : "",
-  "CreatedDate" : "",
+  "LastModified" : "2024-03-08T18:25:43.511Z",
+  "CreatedDate" : "2024-03-01T10:30:16.201Z",
   "Topics" : []
 }
 ```
