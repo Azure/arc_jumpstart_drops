@@ -1,0 +1,21 @@
+{
+    "Title": "Manage Extended Security Updates (ESU) licenses at scale",
+    "Summary": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script.",
+    "Description": "This Jumpstart Drop consists of a script that will allow you to: create ESU licenses for Azure Arc-enabled servers at scale and Assign ESU licenses for Azure Arc-enabled servers",
+    "Cover": "", 
+    "Authors" : [
+      {
+          "Name": "Raúl Carboneras",
+          "Link": "https://www.linkedin.com/in/ra%C3%BAl-carboneras-37609350/"
+      }
+    ], 
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/esu_licenses",
+    "Type": "Script_Automation",
+    "Difficulty": "High",
+    "ProgrammingLanguage" : [ "PowerShell", "CSV"],
+    "Products" : ["ESU Licenses", "Arc", "Arc-enabled Servers"],
+    "LastModified": "2024-03-15T18:25:43.511Z",
+    "CreatedDate" : "2024-03-15T10:30:16.201Z",
+    "Topics" : []
+  }
+  

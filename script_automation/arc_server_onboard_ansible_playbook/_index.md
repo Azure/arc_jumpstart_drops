@@ -84,7 +84,7 @@ Edit the hosts file to add the hostnames of the server's you want to onboard to 
 Once you have provided your inputs, run the playbook with the command below:
 
 ```bash
-ansible-playbook arc-server-onboard-playbook.yml -i hosts
+ansible-playbook arc-server-onboard-ansible-playbook.yml -i hosts
 ```
 
 ## Resources

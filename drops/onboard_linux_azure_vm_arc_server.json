@@ -6,7 +6,7 @@
   "Authors" : [
     {
     	"Name": "Laura Nicolas",
-    	"Link": "https://www.linkedin.com/in/lauranicolasd",
+    	"Link": "https://www.linkedin.com/in/lauranicolasd"
     }
   ], 
   "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/script_automation/azure_linux_vm_test",
