@@ -23,9 +23,6 @@ If you're unsure about your future contribution, don't hesitate to start a GitHu
 
 Happy contributing!
 
-## Adding to the repo
-
-
 ## Contribution and feedback
 
 We value your input! If you have suggestions, feedback, or valuable insights to share, feel free to open an issue. Your contributions help us improve the documentation for the entire community.
