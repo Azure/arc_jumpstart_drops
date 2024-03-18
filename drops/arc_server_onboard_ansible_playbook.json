@@ -1,7 +1,7 @@
 {
     "Title": "Azure Arc onboarding using Ansible playbooks",
-    "Summary": "The following Jumpstart Drop will guide you on how to use an Ansible playbook to onboard Linux and Windows VMs at scale.",
-    "Description": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Onboarding an Azure VM as an Azure Arc-enabled server is not supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don't have an existing virtual machine, review the Jumpstart Scenario Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It is not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
+    "Summary": "The following Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
+    "Description": "",
     "Cover": "", 
     "Authors" : [
       {
