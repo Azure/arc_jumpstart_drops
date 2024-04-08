@@ -24,7 +24,9 @@ This Jumpstart Drop was originally written by the following contributors:
     git clone https://github.com/Azure/arc_jumpstart_drops.git
     ```
 
-- Log Analytics workspace with [VM Insights](https://learn.microsoft.com/azure/azure-arc/servers/learn/tutorial-enable-vm-insights#enable-vm-insights) data collected. Note that this workbook will work for any server (Arc-enabled or not) sending VM Insights data to a Log Analytics workspace.
+- Log Analytics workspace with [VM Insights](https://learn.microsoft.com/azure/azure-arc/servers/learn/tutorial-enable-vm-insights#enable-vm-insights) data collected.
+
+    > **Note:** This workbook will work for any server (Arc-enabled or not) sending VM Insights data to a Log Analytics workspace.
 
 ## Getting Started
 
