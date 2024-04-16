@@ -6,12 +6,12 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 | Parameter | Description | Required | Options | 
 | --------- | ----------- | -------- | ------- | 
 | Title | A short, descriptive title that reflects the artifact and user experience provided by the Drop | Yes | |
-| Summary | A brief, 1-2 sentence description of the Drop and its purpose. This will be displayed as the Drop Card description. | Yes | Maximum 250 characters |
+| Summary | A brief, one or two sentence description of the Drop and its purpose. This will be displayed as the Drop Card description. | Yes | Maximum 250 characters |
 | Description | A more detailed description of the Drop. This will be displayed in the right bar when a user clicks on the Drop Card. | Yes | Maximum 1000 characters | 
 | Cover | A link to an image or video thumbnail that will be displayed as the Drop Card's display image. | No | |
 | Authors | A list of all authors and contributors to the Drop. Each author should contain a _Name_ and a _Link_ to the GitHub or Social media account | Yes | | 
 | Source | A link to the source code folder in the Arc Jumpstart Drops repository or the public contributor's repository. | Yes | | 
-| Type | The type of Drop, based on the Jumpstart Drops list. | Yes | ui_dashboard_workbook, sample_app, library_package, script_automation, template, tutorial_guide | 
+| Type | The type of Drop, based on the Jumpstart Drops list. | Yes | `ui_dashboard_workbook`, `sample_app`, `library_package`, `script_automation`, `template`, `tutorial_guide` | 
 | Difficulty | The level of difficulty required to understand and run the Drop, based on the Microsoft Education Center Levels. | Yes | Beginner (L100), Medium (L200), Advanced (L300+) | 
 | ProgrammingLanguage | A list of tags for the programming languages used in the Drop. Contributors can add their own language if necessary. | No | PowerShell, .NET/C#, Python, Go, Node, Bash, Bicep, Terraform, Ansible, Helm, Other | 
 | Products | A list of products and services used in the Drop. Contributors can add their own if necessary. | No | AKS, Windows IoT, SQL Server, Arc, Arc-enabled service, App Services, VMware |
@@ -19,7 +19,7 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 | CreatedDate | Not filled by the user. Used to track when the Drop was created | No | |
 | Topics | Not filled by user, but gathered automatically leveraging the GitHub repository topics | No | |
 
-If you believe that any fields are missing or that your Drop content does not fit into the JSON schema described above, please create an [Issue](./Issues) and we will do our best to address your concerns.
+If you believe that any fields are missing or that your Drop content doesn't fit into the JSON schema described above, please create an [Issue](./Issues) and we will do our best to address your concerns.
 
 ## Drop Schema Example 
 This JSON file provides an example of how a Drop schema file should be structured for a valid contribution.
