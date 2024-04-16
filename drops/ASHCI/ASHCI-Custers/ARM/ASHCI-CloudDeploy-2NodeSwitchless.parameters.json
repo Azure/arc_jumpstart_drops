@@ -1,0 +1,249 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "deploymentMode": {
+            "value": "Validate"
+        },
+        "keyVaultName": {
+            "value": "hci-cluster-hcikv" 
+        },
+        "softDeleteRetentionDays": {
+            "value": 30
+        },
+        "diagnosticStorageAccountName": {
+            "value": "hciclusterdiag" 
+        },
+        "logsRetentionInDays": {
+            "value": 30
+        },
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "secretsLocation": {
+            "value": "https://hci-cluster-hcikv.vault.azure.net/"
+        },
+        "ClusterWitnessStorageAccountName": {
+            "value": "hciclustersa"
+        },
+        "clusterName": {
+            "value": "HCI-HCICluster" 
+        },
+        "location": {
+            "value": "EastUS" 
+        },
+        "tenantId": {
+            "value": "",
+            "metadata": {"description": "Provide the Tenant ID of the Azure Subscription."} 
+        },
+        "localAdminSecretName": {
+            "value": "LocalAdminCredential",
+            "metadata": {
+                "description": "Do not change this Value."}
+        },
+        "localAdminSecretValue": {
+            "value": "",
+            "metadata": {"description": "This should be base64 value in UserName:Password format."}  
+        },
+        "domainAdminSecretName": {
+            "value": "AzureStackLCMUserCredential",
+            "metadata": {
+                "description": "Do not change this Value."
+            }
+        },
+        "domainAdminSecretValue": {
+            "value": "",
+            "metadata": {"description": "This should be base64 value in UserName:Password format."} 
+        },
+        "arbDeploymentSpnName": {
+            "value": "DefaultARBApplication",
+            "metadata": {
+                "description": "Do not change this Value."}
+            },
+        "arbDeploymentSpnValue": {
+            "value": "MTg2NzU1OWQtYmIyMS00ZGY2LTg0OTEtNTdmMmY3OGEwYjQ4OjFJWDhRfmlFYlduYkdma0tsTHd5eGpETFFhXzhmNUV0RXdIZkNidkg=" 
+        },
+        "storageWitnessName": {
+            "value": "WitnessStorageKey",
+            "metadata": {
+                "description": "Do not change this Value."}
+            },
+        "storageWitnessValue": {
+            "value": "YUMrbzhaUjJMbGdQbEduMGlWd3FxNnN6aG5kWE1wdHltTFRJM0lqV3dnUGtaRk9CK1VSNGxQRFNyd1pwYi90T25YS3QwRlBzaUpBUytBU3RRak5oOHc9PQ==" 
+        },
+        "apiVersion": {
+            "value": "2023-08-01-preview"
+        },
+        "arcNodeResourceIds": {
+            "value":  [
+                "/subscriptions/03d13178-3e31-454d-9bdd-9e93bc53828a/resourceGroups/Orlando/providers/Microsoft.HybridCompute/machines/ORL-Node1",
+                "/subscriptions/03d13178-3e31-454d-9bdd-9e93bc53828a/resourceGroups/Orlando/providers/Microsoft.HybridCompute/machines/ORL-Node2"
+            ],
+            "metadata": {
+                "description": "Provide the Arc-Enabled Machine Resource ID of all the ASHCI nodes"}
+        },
+        "domainFqdn": {
+            "value": "domain.com"
+        },
+        "namingPrefix": {
+            "value": "HCI"
+        },
+        "adouPath": {
+            "value": "OU=HCI,OU=Hypervisors,OU=Servers,OU=Computers,OU=TailwindTraders,DC=tailwindtraders,DC=com",
+            "metadata": {
+                "description": "Provide OU to place AHSCI Cluster and Node Computer Objects"}
+        },
+        "securityLevel": {
+            "value": "Recommended"
+        },
+        "driftControlEnforced": {
+            "value": true
+        },
+        "credentialGuardEnforced": {
+            "value": true
+        },
+        "smbSigningEnforced": {
+            "value": true
+        },
+        "smbClusterEncryption": {
+            "value": false
+        },
+        "bitlockerBootVolume": {
+            "value": true
+        },
+        "bitlockerDataVolumes": {
+            "value": true
+        },
+        "wdacEnforced": {
+            "value": true
+        },
+        "streamingDataClient": {
+            "value": true
+        },
+        "euLocation": {
+            "value": false
+        },
+        "episodicDataUpload": {
+            "value": true
+        },
+        "configurationMode": {
+            "value": "Express"
+        },
+        "subnetMask": {
+            "value": "255.255.255.0"
+        },
+        "defaultGateway": {
+            "value": "10.10.0.1"
+        },
+        "startingIPAddress": {
+            "value": "10.10.0.20"
+        },
+        "endingIPAddress": {
+            "value": "10.10.0.30"
+        },
+        "dnsServers": {
+            "value": [
+                "10.10.1.8",
+                "10.10.1.9"
+            ]
+                },
+        "physicalNodesSettings": {
+            "value":[
+                {
+                    "name": "HCI-Node1",
+                    "ipv4Address": "10.10.0.11"
+                },
+                {
+                    "name": "HCI-Node2",
+                    "ipv4Address": "10.10.0.13"
+                }
+            ]
+        },
+        "networkingType": {
+            "value": "switchlessMultiServerDeployment"
+        },
+        "storageConnectivitySwitchless": {
+            "value": true
+          },
+          "networkingPattern": {
+            "value": "ConvergedManagmentCompute"
+          },
+          "intentList": {
+            "value": [
+                {
+                    "name": "HCI",
+                    "trafficType": [
+                        "Management",
+                        "Compute"
+                    ],
+                    "adapter": [
+                        "MGMT-A",
+                        "MGMT-B"
+                    ],
+                    "overrideVirtualSwitchConfiguration": false,
+                    "virtualSwitchConfigurationOverrides": {
+                        "enableIov": "",
+                        "loadBalancingAlgorithm": ""
+                    },
+                    "overrideQosPolicy": false,
+                    "qosPolicyOverrides": {
+                        "priorityValue8021Action_Cluster": "7",
+                        "priorityValue8021Action_SMB": "3",
+                        "bandwidthPercentage_SMB": "50"
+                    },
+                    "overrideAdapterProperty": true,
+                    "adapterPropertyOverrides": {
+                        "jumboPacket": "9014",
+                        "networkDirect": "Disabled",
+                        "networkDirectTechnology": "RoCEv2"
+                    }
+                },
+                {
+                  "name": "Storage",
+                  "trafficType": [
+                      "Storage"
+                  ],
+                  "adapter": [
+                      "SMB-A",
+                      "SMB-B"
+                  ],
+                  "overrideVirtualSwitchConfiguration": false,
+                  "virtualSwitchConfigurationOverrides": {
+                      "enableIov": "",
+                      "loadBalancingAlgorithm": ""
+                  },
+                  "overrideQosPolicy": false,
+                  "qosPolicyOverrides": {
+                      "priorityValue8021Action_Cluster": "7",
+                      "priorityValue8021Action_SMB": "3",
+                      "bandwidthPercentage_SMB": "50"
+                  },
+                  "overrideAdapterProperty": true,
+                  "adapterPropertyOverrides": {
+                      "jumboPacket": "9014",
+                      "networkDirect": "Enabled",
+                      "networkDirectTechnology": "iWARP"
+                  }
+              }
+            ]
+          },
+          "storageNetworkList": {
+            "value": [
+                {
+                    "name": "StorageNetwork1",
+                    "networkAdapterName": "SMB-A",
+                    "vlanId": "711"
+                },
+                {
+                  "name": "StorageNetwork2",
+                  "networkAdapterName": "SMB-B",
+                  "vlanId": "712"
+              }
+            ]
+          },
+          "customLocation": {
+            "value": "HCI"
+          }
+      }
+    
+}

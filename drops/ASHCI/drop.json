@@ -1,0 +1,20 @@
+{
+    "Title" : "Azure Stack HCI - IaC Template Examples",
+    "Summary" : "This Drop provides examples of Infrastructure as Code (IaC) templates for Azure Stack HCI. The templates are written in ARM and Bicep and can be used to deploy Azure Stack HCI clusters in Azure in a Scalable manner.",
+    "Description" : "This drop provides example of Infrastructure as Code (IaC) templates for Azure Stack HCI. The templates are written in ARM and Bicep and can be used to deploy Azure Stack HCI clusters in Azure in a Scalable manner",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg", 
+    "Authors" : [
+      {
+          "Name" : "Michael Godfrey",
+          "Link" : "https://www.linkedin.com/in/migodfre"
+      }
+    ], 
+    "Source" : "https://github.com/Azure/arc_jumpstart_drops/tree/main/workbooks/arc_management_full",
+    "Type" : "Script/Automation",
+    "Difficulty" : "Medium",
+    "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
+    "Products" : ["Azure Stack HCI", "Arc"],
+    "LastModified" : "2024-04-16-T10:30:16.201Z",
+    "CreatedDate" : "2024-04-016-T10:30:16.201Z",
+    "Topics" : ["Azure Stack HCI", "IaC", "ARM", "Bicep", "Azure"]
+  }
