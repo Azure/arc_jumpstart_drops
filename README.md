@@ -1,33 +1,60 @@
-# Project
+# Azure Arc Jumpstart Drops
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+Welcome to the Arc Jumpstart Drops repository! This repository is your go-to resource for all the source code and data for the Arc Jumpstart Drops collection. Whether you're a beginner discovering the curated Drops collection or an experienced user looking to submit a new, you'll find valuable insights tailored to your needs here.
 
-As the maintainer of this project, please make a few updates:
+<p align="center">
+  <img src="/img/logo/jumpstart.png" alt="Arc Jumpstart logo" width="320">
+</p>
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+To get started, please carefully read our [Contributing](./CONTRIBUTING.md) guide. For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
 
-## Contributing
+## What you'll find here
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+- **Drops:** All the [json schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that is published in the Jumpstart Drops curated list. 
+- **Drops Source Code:** .
+- **Supportive Documents and Files:** Additional resources used across the [Arc Jumpstart Drops](https://arcjumpstart.com/azure_jumpstart_drops) website, aiding in various contexts and providing supplemental information.
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+## How to utilize this repository
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This documentation repository is tailored for contributors and works in tandem with the [our source code repository](https://aka.ms/JumpstartGitHubCode). While not mandatory, it's highly probable that contributors will need to clone both repositories to effectively contribute to Arc Jumpstart.
+
+Before you start, we recommend familiarizing yourself with our comprehensive [contribution guidelines](https://aka.ms/JumpstartContribution). These guidelines outline the standards and practices we follow, ensuring consistency and quality across our documentation.
+
+If you're unsure about your future contribution, don't hesitate to start a [GitHub discussion](https://aka.ms/JumpstartDiscussions). This is a great place to ask questions, share ideas, or get feedback on potential contributions. Our community is here to help and we welcome all levels of experience.
+
+Happy contributing!
+
+## Branch guidance
+
+The Arc Jumpstart Drops repository handles branching similarly to the other Arc Jumpstart [repositories](https://github.com/Azure/arc_jumpstart_docs). Two primary branches are maintained, each one attached to a specific website slot (prod/canary). 
+
+The following branches are currently maintained:
+
+| Branch                                                       | Website                    | Description                                                                                      |
+| ------------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------ |
+| [main](https://github.com/Azure/arc_jumpstart_drops/) (primary)               | https://arcjumpstart.com/azure_jumpstart_drops      | Latest Arc Jumpstart public website. This is the latest documentation and Drops available in the deployed to the production slot. |
+| [canary](https://github.com/Azure/arc_jumpstart_drops/tree/canary) (canary) | https://preview.arcjumpstart.com/azure_jumpstart_drops | Pre-release documentation. Document and Drops updates should be merged to the canary branch for preview validation before merging to the main branch. |
+
+## Cloning the repositories
+
+To contribute, you'll likely need to clone this repository or use GitHub UI to create the Drops [schema.json](./SCHEMA.md). Use the following command to clone the repository:
+
+```bash
+git clone https://github.com/Azure/arc_jumpstart_drops
+```
+
+## Contribution and feedback
+
+Your input and contributions are highly valued! If you have suggestions, feedback, or valuable insights to share, feel free to open an issue or create a new Drop submissions. 
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant Arc Jumpstart team the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+For furhter information about the Contribution process, see [Contributing](./CONTRIBUTING.md) guide.
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/legal/intellectualproperty/trademarks/usage/general).
+
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
