@@ -1,6 +1,6 @@
 # FAQs
 
-### What is Arc Jumpstart Drops?
+### What's Arc Jumpstart Drops?
 Arc Jumpstart Drops serves as a curated collection of scripts, tools, and other resources that can help developers/IT/OT and maintenance professionals streamline their day-to-day operations and smooth their [Adaptive Cloud](https://arcjumpstart.com/adaptive_cloud) journey. 
 
 ### Can I contribute a Drop?
@@ -13,9 +13,9 @@ No, it's not necessary to host your source code in the Drops repository. You hav
 - **Keep the code in your own repository**: Alternatively, you can keep the code in your own repository and provide a reference/URL to it in the Drop [definition file](./SCHEMA.md).
 
 ### Do I need to authenticate to the Jumpstart portal to contribute or use Drops?
-No, authentication and logging in to the portal are not required to contribute or use Jumpstart Drops. However, if you are logged in, we are developing features to provide contributors with insights on their contributions and enhance their experience and submission.
+No, authentication and logging in to the portal aren't required to contribute or use Jumpstart Drops. However, if you are logged in, we're developing features to provide contributors with insights on their contributions and enhance their experience and submission.
 
-### What is the Drop licensing schema?
+### What's the Drop licensing schema?
 Jumpstart Drops follows the same [MIT](./LICENSE) licensing as all the other Arc Jumpstart Products. All contributions should also be under an [MIT](./LICENSE) license. 
 
 The MIT license is a permissive open-source software license that allows for the use, modification, and distribution of the licensed software, as long as the original copyright notice and license terms are included in any copies or distributions of the software. 
@@ -31,10 +31,10 @@ Using Drops is straightforward. Simply download the Drop by clicking the Downloa
 ### How do I submit a Drop?
 Submitting a Drop is easy. You can choose to create a pull request directly in the Arc Jumpstart Drops repository or use the [Submit Drop](https://arcjumpstart.com/arc_jumpstart_drops) form for a streamlined process. Refer to the Drops [contribution process](./CONTRIBUTING.md) guide for detailed instructions.
 
-### How is support and maintenance handled for Drops?
-Support and maintenance for Drops are managed through GitHub Issues, where bugs and feature requests can be tracked. The project follows the support approach outlined in [Arc Jumpstart Support](https://github.com/Azure/arc_jumpstart_docs/blob/main/SUPPORT.md
+### How's support and maintenance handled for Drops?
+Support and maintenance for Drops are managed through GitHub Issues, where bugs and feature requests can be tracked. The project follows the support approach outlined in [Arc Jumpstart Support](https://github.com/Azure/arc_jumpstart_docs/blob/main/SUPPORT.md).
 
-**Important**: _Please note that Drops do not come with official support or warranty, but the community is encouraged to provide assistance to the best of their ability._
+**Important**: _Please note that Drops don't come with official support or warranty, but the community is encouraged to provide assistance to the best of their ability._
 
 ### What tools are used for code maintenance in this project?
-All Drop owners are responsible for the code maintenance of their source code. If you chose to host the Drop source code as part of the Jumpstart Drops repository, we will run some check for code maintenance, like **CodeQL** and **GitHub Dependabot** security alerts. We're actively looking into developing new features to help contributors maintain their source code. If you have suggestions, please create an [Issue](./issues) with your suggested appraoch.
+All Drop owners are responsible for the code maintenance of their source code. If you chose to host the Drop source code as part of the Jumpstart Drops repository, we will run some check for code maintenance, like **CodeQL** and **GitHub Dependabot** security alerts. We're actively looking into developing new features to help contributors maintain their source code. If you have suggestions, please create an [Issue](./issues) with your suggested approach.

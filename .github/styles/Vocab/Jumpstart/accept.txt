@@ -27,3 +27,7 @@ ARM
 US
 RDP
 JIT
+Dependabot
+snake_case
+Ansible
+VMware

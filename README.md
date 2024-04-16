@@ -3,15 +3,15 @@
 Welcome to the Arc Jumpstart Drops repository! This repository is your go-to resource for all the source code and data for the Arc Jumpstart Drops collection. Whether you're a beginner discovering the curated Drops collection or an experienced user looking to submit a new, you'll find valuable insights tailored to your needs here.
 
 <p align="center">
-  <img src="/img/logo/jumpstart.png" alt="Arc Jumpstart logo" width="320">
+  <img src="./img/jumpstart.png" alt="Arc Jumpstart logo" width="320">
 </p>
 
-To get started, please carefully read our [Contributing](./CONTRIBUTING.md) guide. For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
+To get started, please carefully read our [Contributing guidelines](./CONTRIBUTING.md). For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
 
 ## What you'll find here
 
-- **Drops:** All the [json schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that is published in the Jumpstart Drops curated list. 
-- **Drops Source Code:** .
+- **Drops:** All the [JSON schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that's published in the Jumpstart Drops curated list. 
+- **Drops Source Code:** Files and artifacts for Drops that opted to publish their source code to this repository.
 - **Supportive Documents and Files:** Additional resources used across the [Arc Jumpstart Drops](https://arcjumpstart.com/azure_jumpstart_drops) website, aiding in various contexts and providing supplemental information.
 
 ## How to utilize this repository
@@ -33,7 +33,7 @@ The following branches are currently maintained:
 | Branch                                                       | Website                    | Description                                                                                      |
 | ------------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------ |
 | [main](https://github.com/Azure/arc_jumpstart_drops/) (primary)               | https://arcjumpstart.com/azure_jumpstart_drops      | Latest Arc Jumpstart public website. This is the latest documentation and Drops available in the deployed to the production slot. |
-| [canary](https://github.com/Azure/arc_jumpstart_drops/tree/canary) (canary) | https://preview.arcjumpstart.com/azure_jumpstart_drops | Pre-release documentation. Document and Drops updates should be merged to the canary branch for preview validation before merging to the main branch. |
+| [canary](https://github.com/Azure/arc_jumpstart_drops/tree/canary) (preview) | https://preview.arcjumpstart.com/azure_jumpstart_drops | Pre-release documentation. Document and Drops updates should be merged to the canary branch for preview validation before merging to the main branch. |
 
 ## Cloning the repositories
 
@@ -48,9 +48,9 @@ git clone https://github.com/Azure/arc_jumpstart_drops
 Your input and contributions are highly valued! If you have suggestions, feedback, or valuable insights to share, feel free to open an issue or create a new Drop submissions. 
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant Arc Jumpstart team the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant Arc Jumpstart team the rights to use your contribution. For details, visit [Microsoft CLA](https://cla.opensource.microsoft.com).
 
-For furhter information about the Contribution process, see [Contributing](./CONTRIBUTING.md) guide.
+For more information about the Contribution process, see [Contributing](./CONTRIBUTING.md) guide.
 
 ## Trademarks
 

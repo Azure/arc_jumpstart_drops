@@ -6,10 +6,9 @@ This project welcomes contributions and suggestions through GitHub, following th
 |------------------------------------------|
 | All Drops must be submitted under an MIT License. For more information, see [Licensing](./LICENSE).  |
 
-
 ### Overview
 
-Our goal is to create a simplified contirbution process for our users that guarantees high quality standards fo all submissions. Contributors can create submissions using GitHub directly, or leverage Jumpstart Drops page [Submit Drop](./) form to expedite the process. 
+Our goal is to create a simplified contribution process for our users that guarantees high quality standards fo all submissions. Contributors can create submissions using GitHub directly, or leverage Jumpstart Drops page [Submit Drop](./) form to expedite the process. 
 
 The contribution process consists of the following steps:
 
@@ -24,7 +23,9 @@ The contribution process consists of the following steps:
 
     - **Source Code**: Include the script/app/dashboard you've created, along with any necessary documentation (README, images, videos, etc.). Ensure these files follow the correct structure defined in the [folder structure](#folder-structure) section. 
 
-    - **Drop Definition**: Provide a JSON file with all the required fields as described in the [Drops Schema](./SCHEMA.md) definition. This file will be used by the Arc Jumpstart Drops page to create a Drop card with all the necessary information, as well as apply the correct filtering mechanisms. 
+    - **Drop Definition**: Provide a JSON file with all the required fields as described in the [Drops Schema](./SCHEMA.md) definition. This file will be used by the Arc Jumpstart Drops page to create a Drop card with all the necessary information, as well as apply the correct filtering mechanisms.  
+
+        **Important:** The Drop definition JSON file should be placed under the [drops](./drops/) folder, and the name should be unique, descriptive and using snake_case.
 
 1. **Create Pull Request to Canary**: Submit your pull request (PR) to the Canary branch of [Arc Jumpstart Drops](https://github.com/Azure/arc_jumpstart_drops).
 
@@ -52,10 +53,10 @@ When submitting the Drop source code as part of the Pull Request into the Arc Ju
 
 <img src="./img/folder_structure.png" alt="Folder structure" width="500">
 
-1. A root folder with the name of the Drop, using snake_case (e.g. azure_arc_management_and_monitor_workbook)
+1. A root folder with the name of the Drop, using **snake_case** (for example, azure_arc_management_and_monitor_workbook)
 
 1. Inside the root folder, a file name **_index.md** equivalent to a README file for the Drop. This file provides a brief introduction and overview of the Drop, its objectives, prerequisites, deployment steps, and any additional resources or references.
 
-1. Inside the root folder, a subfolder named **artifacts** that contains all the files and scripts that are needed to deploy the Drop.
+1. Inside the root folder, a new folder named **artifacts** that contains all the files and scripts that are needed to deploy the Drop.
 
-1. Optionally, inside the artifacts folder, a subfolder named **media** that contains any screenshots or architecture diagrams to showcase the Drop.
+1. Optionally, inside the artifacts folder, a new folder named **media** that contains any screenshots or architecture diagrams to showcase the Drop.
