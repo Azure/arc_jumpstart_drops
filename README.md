@@ -3,20 +3,18 @@
 Welcome to the Arc Jumpstart Drops repository! This repository is your go-to resource for all the source code and data for the Arc Jumpstart Drops collection. Whether you're a beginner discovering the curated Drops collection or an experienced user looking to submit a new, you'll find valuable insights tailored to your needs here.
 
 <p align="center">
-  <img src="./img/jumpstart.png" alt="Arc Jumpstart logo" width="320">
+  <img src="./img/drops_banner.png" alt="Arc Jumpstart logo" width="700">
 </p>
 
 To get started, please carefully read our [Contributing guidelines](./CONTRIBUTING.md). For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
 
 ## What you'll find here
 
-- **Drops:** All the [JSON schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that's published in the Jumpstart Drops curated list. 
+- **Drops:** All the JSON [schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that's published in the Jumpstart Drops curated list. 
 - **Drops Source Code:** Files and artifacts for Drops that opted to publish their source code to this repository.
 - **Supportive Documents and Files:** Additional resources used across the [Arc Jumpstart Drops](https://arcjumpstart.com/azure_jumpstart_drops) website, aiding in various contexts and providing supplemental information.
 
 ## How to utilize this repository
-
-This documentation repository is tailored for contributors and works in tandem with the [our source code repository](https://aka.ms/JumpstartGitHubCode). While not mandatory, it's highly probable that contributors will need to clone both repositories to effectively contribute to Arc Jumpstart.
 
 Before you start, we recommend familiarizing yourself with our comprehensive [contribution guidelines](https://aka.ms/JumpstartContribution). These guidelines outline the standards and practices we follow, ensuring consistency and quality across our documentation.
 
