@@ -1,8 +1,8 @@
-## Contribution Process
+# Contribution Process
 
 This project welcomes contributions and suggestions through GitHub, following the Azure Arc Jumpstart [Contribution Guidelines](https://arcjumpstart.com/contribution_guidelines). 
 
-### Overview
+## Overview
 
 Our goal is to create a simplified contribution process for our users that guarantees high quality standards for all submissions. Contributors can create submissions using GitHub directly, or leverage Jumpstart Drops page [Submit Drop](./) form to expedite the process. 
 
@@ -45,7 +45,7 @@ The contribution process consists of the following steps:
 
 1. **Merge to Main**: Finally, once the **Canary** branch is merged to **Main** and publish to Production, the Drop will be available as part of [Azure Arc Jumpstart Drops](https://arcjumpstart.com/arc_jumpstart_drops).
 
-### Drop Index
+## Drop Index
 
 When you click on a Drop for more information, a right-side bar will appear with a more in-depth content of the Drop. The right bar leverages the **index.md** file of the Drop source code to render different tabs. To render the sections, the following headers (H3 or H4) are required to be part of the **index.md** file:
 
@@ -63,10 +63,11 @@ When you click on a Drop for more information, a right-side bar will appear with
     |------------------------------------------|
     | While the sections described above are recommended for an optimal user experience, contributors are free to use their own layouts and sections. If no matching sections are found, all content will be rendered in a single tab labeled **Overview**.|
 
+For example, if the **My First Example Drop** contains an **index.md** that contains the _Overview_, _Prerequisites_, _Getting started_ and _Resources_ sections, the right-bar will render as the following image:
 
-    <img src="./img/drop-right-bar.png" alt="Folder structure" width="500">
+<img src="./img/drop-right-bar.png" alt="Folder structure" width="500">
 
-### Folder structure
+## Folder structure
 
 When submitting the Drop source code as part of the Pull Request into the Arc Jumpstart Drops repository, we encourage contributors to adhere to the following folder structure.
 

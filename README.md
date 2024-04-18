@@ -3,7 +3,7 @@
 Welcome to the Arc Jumpstart Drops repository! This repository is your go-to resource for all the source code and data for the Arc Jumpstart Drops collection. Whether you're a beginner discovering the curated Drops collection or an experienced user looking to submit a new, you'll find valuable insights tailored to your needs here.
 
 <p align="center">
-  <img src="./img/drops_banner.png" alt="Arc Jumpstart logo" width="900">
+  <img src="./img/drops_banner.png" alt="Arc Jumpstart logo" width="700">
 </p>
 
 To get started, please carefully read our [Contributing guidelines](./CONTRIBUTING.md). For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
