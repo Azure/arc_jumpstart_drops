@@ -1,0 +1,37 @@
+{
+    "Title": "Azure Edge Extensions AIO - Inner Developer Loop",
+    "Summary": "Azure IoT Operations (AIO) devcontainer with k3d and dapr.",
+    "Description": "This sample contains the setup of an inner developer loop to work with Azure IoT Operations (AIO) and custom application using Dapr and .NET. The repo is using a configuration with Visual Studio Code, Dev Container and VS Code Kubernetes Tools to allow local developer environment configuration and remote debugging of workloads. The sample workload is using .NET, though the same debugging experience can be achieved with other languages.",
+    "Cover": "",
+    "Authors": [
+        {
+            "Name": "Katrien De Graeve",
+            "Link": "https://github.com/katriendg"
+        },
+        {
+            "Name": "Marcel Bindseil",
+            "Link": "https://github.com/bindsi"
+        },
+        {
+            "Name": "Allen Greaves",
+            "Link": "https://github.com/agreaves-ms"
+        }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-dapr-net-devcontainer-k3d",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "PowerShell", 
+        "C#",
+        "Dockerfile",
+        "Shell"
+    ],
+    "Products": [
+        "Azure IoT Operations",
+        "Arc",
+        "Dapr"
+    ],
+    "LastModified": "2024-04-18T00:00:00.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+}
