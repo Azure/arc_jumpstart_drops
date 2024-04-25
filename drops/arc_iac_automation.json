@@ -1,19 +1,26 @@
 {
-    "Title" : "Azure Arc Infrastructure as Code Automation",
-    "Summary" : "This Drop provides a single view for scaling Arc resources through cloud driven deployment method by using Infrastructure as Code DevOps process",
-    "Description" : "This Jumpstart Drop provides an automation workflow to accelerate customers adopting Infrastructure as Code as their DevOps process to provision and manage their infrastructure at scale",
-    "Authors" : [
-      {
-          "Name" : "Wen Xu",
-          "Link" : "https://www.linkedin.com/in/wen-xu-91a474a1/"
-      }
-    ], 
-    "Source" : "https://github.com/Azure/Edge-infrastructure-quickstart-template/tree/main",
-    "Type" : "script_automation",
-    "Difficulty" : "Medium",
-    "ProgrammingLanguage" : [ "HCL", "PowerShell"] ,
-    "Products" : ["Arc", "AKS Arc", "Azure Stakc HCI"],
-    "LastModified" : "2024-03-25T18:25:43.511Z",
-    "CreatedDate" : "2024-03-25T10:30:16.201Z",
-    "Topics" : []
-  }
+  "Title": "Azure Arc Infrastructure as Code Automation",
+  "Summary": "This Drop provides a single view for scaling Arc resources through cloud driven deployment method by using Infrastructure as Code DevOps process",
+  "Description": "This Jumpstart Drop provides an automation workflow to accelerate customers adopting Infrastructure as Code as their DevOps process to provision and manage their infrastructure at scale",
+  "Authors": [
+    {
+      "Name": "Wen Xu",
+      "Link": "https://www.linkedin.com/in/wen-xu-91a474a1/"
+    }
+  ],
+  "Source": "https://github.com/Azure/Edge-infrastructure-quickstart-template/tree/main",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "HCL",
+    "PowerShell"
+  ],
+  "Products": [
+    "Arc",
+    "AKS Arc",
+    "Azure Stack HCI"
+  ],
+  "LastModified": "2024-03-25T18:25:43.511Z",
+  "CreatedDate": "2024-03-25T10:30:16.201Z",
+  "Topics": []
+}
