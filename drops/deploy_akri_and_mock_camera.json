@@ -2,27 +2,36 @@
   "Title": "Deploy Akri on an Azure Arc-enabled Kubernetes cluster with an IP mock camera",
   "Summary": "The following Jumpstart Drop will guide you on how to deploy Akri as Kubernetes resource interface that exposes an IP mock camera in an Azure Arc-enabled Kubernetes cluster.",
   "Description": "The following Jumpstart Drop will guide you on how to deploy Akri as Kubernetes resource interface that exposes an IP mock camera in an Azure Arc-enabled Kubernetes cluster. Akri is an open source project for a Kubernetes resource interface that lets you expose heterogenous leaf devices as resources in a Kubernetes cluster. It currently supports OPC UA, ONVIF, and udev protocols, but you can also implement custom protocol handlers provided by the template. In this scenario, Akri is used for handling the dynamic appearance and disappearance of an ONVIF mock camera as the Discovery Handler.",
-  "Cover": "", 
-  "Authors" : [
+  "Cover": "",
+  "Authors": [
     {
-    	"Name": "Laura Nicolas",
-    	"Link": "https://www.linkedin.com/in/lauranicolasd"
+      "Name": "Laura Nicolas",
+      "Link": "https://www.linkedin.com/in/lauranicolasd"
     },
     {
-    	"Name": "Francisco Cabrera Lieutier",
-    	"Link": "https://www.linkedin.com/in/franciscocabreralieutier/"
+      "Name": "Francisco Cabrera Lieutier",
+      "Link": "https://www.linkedin.com/in/franciscocabreralieutier/"
     },
     {
       "Name": "Yu Jin Kim",
       "Link": "https://www.linkedin.com/in/yu-jin-kim/"
     }
-  ], 
+  ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/sample_app/deploy_akri_and_mock_camera/",
-  "Type": "Sample_App",
+  "Type": "sample_app",
   "Difficulty": "Medium",
-  "ProgrammingLanguage" : [ "Rustc", "JSON"],
-  "Products" : ["Akri", "Arc", "Arc-enabled Kubernetes", "AKS", "AKS Edge Essentials"],
+  "ProgrammingLanguage": [
+    "Rustc",
+    "JSON"
+  ],
+  "Products": [
+    "Akri",
+    "Arc",
+    "Arc-enabled Kubernetes",
+    "AKS",
+    "AKS Edge Essentials"
+  ],
   "LastModified": "2024-03-15T18:25:43.511Z",
-  "CreatedDate" : "2024-03-15T10:30:16.201Z",
-  "Topics" : []
+  "CreatedDate": "2024-03-15T10:30:16.201Z",
+  "Topics": []
 }
