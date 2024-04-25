@@ -8,6 +8,8 @@ Welcome to the Arc Jumpstart Drops repository! This repository is your go-to res
 
 To get started, please carefully read our [Contributing guidelines](./CONTRIBUTING.md). For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
 
+Please note that before contributing or using any Arc Jumpstart Drop, it's important to carefully review our [disclaimer](./DISCLAIMER.md). This will help you understand the risks and limitations associated with the use of all Drops.
+
 ## What you'll find here
 
 - **Drops:** All the JSON [schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that's published in the Jumpstart Drops curated list. 

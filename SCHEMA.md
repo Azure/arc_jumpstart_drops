@@ -26,27 +26,33 @@ This JSON file provides an example of how a Drop schema file should be structure
 
 ```json
 {
-  "Title" : "Azure Arc Management & Monitor Workbook",
-  "Summary" : "This Drop provides a single view for monitoring and reporting on Arc resources using an Azure Monitor workbook offering consistency in managing different environments.",
-  "Description" : "This Jumpstart Drop provides an Azure Monitor workbook that is intended to provide a single pane of glass for monitoring and reporting on Arc resources. Using Azure's management and operations tools in hybrid, multi-cloud and edge deployments provides the consistency needed to manage each environment through a common set of governance and operations management practices. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
-  "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg", 
-  "Authors" : [
+  "Title": "Azure Arc Management & Monitor Workbook",
+  "Summary": "This Drop provides a single view for monitoring and reporting on Arc resources using an Azure Monitor workbook offering consistency in managing different environments.",
+  "Description": "This Jumpstart Drop provides an Azure Monitor workbook that is intended to provide a single pane of glass for monitoring and reporting on Arc resources. Using Azure's management and operations tools in hybrid, multi-cloud and edge deployments provides the consistency needed to manage each environment through a common set of governance and operations management practices. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
+  "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg",
+  "Authors": [
     {
-    	"Name" : "Laura Nicolas",
-    	"Link" : "https ://www.linkedin.com/in/lauranicolasd",
-    }, 
+      "Name": "Laura Nicolas",
+      "Link": "https://www.linkedin.com/in/lauranicolasd"
+    },
     {
-    	"Name" : "Francisco Cabrera",
-    	"Link" : "https://github.com/fcabrera23"
+      "Name": "Francisco Cabrera",
+      "Link": "https://github.com/fcabrera23"
     }
-  ], 
-  "Source" : "https://github.com/Azure/arc_jumpstart_drops/tree/main/workbooks/arc_management_full",
-  "Type" : "Script/Automation",
-  "Difficulty" : "Medium",
-  "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
-  "Products" : ["Azure Monitor", "Arc"],
-  "LastModified" : "2024-03-08T18:25:43.511Z",
-  "CreatedDate" : "2024-03-01T10:30:16.201Z",
-  "Topics" : []
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/workbooks/arc_management_full",
+  "Type": "Script/Automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "PowerShell",
+    "JSON"
+  ],
+  "Products": [
+    "Azure Monitor",
+    "Arc"
+  ],
+  "LastModified": "2024-03-08T18:25:43.511Z",
+  "CreatedDate": "2024-03-01T10:30:16.201Z",
+  "Topics": []
 }
 ```
