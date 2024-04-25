@@ -60,24 +60,26 @@
             "metadata": {
                 "description": "Do not change this Value."}
             },
-        "arbDeploymentSpnValue": {
-            "value": "MTg2NzU1OWQtYmIyMS00ZGY2LTg0OTEtNTdmMmY3OGEwYjQ4OjFJWDhRfmlFYlduYkdma0tsTHd5eGpETFFhXzhmNUV0RXdIZkNidkg=" 
-        },
+            "arbDeploymentSpnValue": {
+                "value": "" ,
+                "metadata": {"description": "This should be base64 value in ApplicationID:Password format."}
+            },
         "storageWitnessName": {
             "value": "WitnessStorageKey",
             "metadata": {
                 "description": "Do not change this Value."}
             },
-        "storageWitnessValue": {
-            "value": "YUMrbzhaUjJMbGdQbEduMGlWd3FxNnN6aG5kWE1wdHltTFRJM0lqV3dnUGtaRk9CK1VSNGxQRFNyd1pwYi90T25YS3QwRlBzaUpBUytBU3RRak5oOHc9PQ==" 
-        },
+            "storageWitnessValue": {
+                "value": "",
+                "metadata": {"description": "This should be base64 value in StorageAccountKey format."} 
+            },
         "apiVersion": {
             "value": "2023-08-01-preview"
         },
         "arcNodeResourceIds": {
             "value":  [
-                "/subscriptions/03d13178-3e31-454d-9bdd-9e93bc53828a/resourceGroups/Orlando/providers/Microsoft.HybridCompute/machines/ORL-Node1",
-                "/subscriptions/03d13178-3e31-454d-9bdd-9e93bc53828a/resourceGroups/Orlando/providers/Microsoft.HybridCompute/machines/ORL-Node2"
+                "",
+                ""
             ],
             "metadata": {
                 "description": "Provide the Arc-Enabled Machine Resource ID of all the ASHCI nodes"}

@@ -80,7 +80,15 @@ Following metadata was not decompiled:
 */
 param arbDeploymentSpnName = 'DefaultARBApplication'
 
-param arbDeploymentSpnValue = 'MTg2NzU1OWQtYmIyMS00ZGY2LTg0OTEtNTdmMmY3OGEwYjQ4OjFJWDhRfmlFYlduYkdma0tsTHd5eGpETFFhXzhmNUV0RXdIZkNidkg='
+/*
+Parameter metadata is not supported in Bicep Parameters files
+
+Following metadata was not decompiled:
+{
+  "description": "This should be base64 value in ApplicationID:Password format."
+}
+*/
+param arbDeploymentSpnValue = ''
 
 /*
 Parameter metadata is not supported in Bicep Parameters files
@@ -92,7 +100,15 @@ Following metadata was not decompiled:
 */
 param storageWitnessName = 'WitnessStorageKey'
 
-param storageWitnessValue = 'YUMrbzhaUjJMbGdQbEduMGlWd3FxNnN6aG5kWE1wdHltTFRJM0lqV3dnUGtaRk9CK1VSNGxQRFNyd1pwYi90T25YS3QwRlBzaUpBUytBU3RRak5oOHc9PQ=='
+/*
+Parameter metadata is not supported in Bicep Parameters files
+
+Following metadata was not decompiled:
+{
+  "description": "This should be base64 value in StorageAccountKey format."
+}
+*/
+param storageWitnessValue = ''
 
 param apiVersion = '2023-08-01-preview'
 
@@ -105,8 +121,8 @@ Following metadata was not decompiled:
 }
 */
 param arcNodeResourceIds = [
-  '/subscriptions/03d13178-3e31-454d-9bdd-9e93bc53828a/resourceGroups/Orlando/providers/Microsoft.HybridCompute/machines/ORL-Node1'
-  '/subscriptions/03d13178-3e31-454d-9bdd-9e93bc53828a/resourceGroups/Orlando/providers/Microsoft.HybridCompute/machines/ORL-Node2'
+  ''
+  ''
 ]
 
 param domainFqdn = 'domain.com'

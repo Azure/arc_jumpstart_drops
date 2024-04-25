@@ -411,7 +411,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "condition": "[equals(parameters('diagaccount_newOrExisting'), 'new')]",
-      "apiVersion": "2023-01-01",
+      "apiVersion": "2021-01-01",
       "name": "[parameters('diagnosticStorageAccountName')]",
       "location": "[parameters('location')]",
       "sku": {
@@ -426,7 +426,7 @@
     {
       "condition": "[equals(parameters('diagaccount_newOrExisting'), 'existing')]",
       "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2023-01-01",
+      "apiVersion": "2021-01-01",
       "location": "[parameters('location')]",
       "kind": "StorageV2",
       "properties": {
@@ -489,7 +489,7 @@
     {
         "condition": "[equals(parameters('deploymentMode'), 'Validate')]",
         "type": "Microsoft.AzureStackHCI/clusters",
-      "apiVersion": "2023-08-01-preview",
+      "apiVersion": "2024-02-15-preview",
       "name": "[parameters('clusterName')]",
       "dependsOn": [ 
               "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
@@ -571,7 +571,7 @@
     },
     {
             "type": "microsoft.azurestackhci/clusters/deploymentSettings",
-            "apiVersion": "[parameters('apiVersion')]",
+            "apiVersion": "2024-02-15-preview",
             "name": "[format('{0}/default', parameters('clusterName'))]",
             "dependsOn": [ 
               "[resourceId('Microsoft.AzureStackHCI/clusters', parameters('clusterName'))]"

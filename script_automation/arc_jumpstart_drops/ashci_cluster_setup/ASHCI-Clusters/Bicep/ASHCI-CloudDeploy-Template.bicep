@@ -219,7 +219,7 @@ param physicalNodesSettings array = [
   'switchlessMultiServerDeployment'
   'singleServerDeployment'
 ])
-param networkingType string = 'switchedMultiServerDeployment'
+param networkingType string = ''
 
 @description('The intent list for deploying a hci cluster')
 param intentList array = []
@@ -233,7 +233,7 @@ param storageConnectivitySwitchless bool = false
 @description('The custom location for deploying a hci cluster')
 param customLocation string = ''
 
-resource Microsoft_Storage_storageAccounts_diagnosticStorageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' =
+resource Microsoft_Storage_storageAccounts_diagnosticStorageAccount 'Microsoft.Storage/storageAccounts@2021-01-01' =
   if (diagaccount_newOrExisting == 'new') {
     name: diagnosticStorageAccountName
     location: location
@@ -247,7 +247,7 @@ resource Microsoft_Storage_storageAccounts_diagnosticStorageAccount 'Microsoft.S
     }
   }
 
-resource Microsoft_Storage_storageAccounts_diagnosticStorageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' =
+resource Microsoft_Storage_storageAccounts_diagnosticStorageAccount 'Microsoft.Storage/storageAccounts@2021-01-01' =
   if (diagaccount_newOrExisting == 'existing') {
     location: location
     kind: 'StorageV2'
@@ -261,7 +261,7 @@ resource Microsoft_Storage_storageAccounts_diagnosticStorageAccount 'Microsoft.S
     name: diagnosticStorageAccountName
   }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
+resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   name: keyVaultName
   location: location
   properties: {
@@ -284,7 +284,28 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   ]
 }
 
-resource cluster 'Microsoft.AzureStackHCI/clusters@2024-01-01' =
+resource keyVaultName_Microsoft_Insights_service 'Microsoft.KeyVault/vaults/providers/diagnosticsettings@2016-09-01' = {
+  name: '${keyVaultName}/Microsoft.Insights/service'
+  location: resourceGroup().location
+  properties: {
+    storageAccountId: Microsoft_Storage_storageAccounts_diagnosticStorageAccount.id
+    logs: [
+      {
+        category: 'AuditEvent'
+        enabled: true
+        retentionPolicy: {
+          enabled: true
+          days: logsRetentionInDays
+        }
+      }
+    ]
+  }
+  dependsOn: [
+    keyVault
+  ]
+}
+
+resource cluster 'Microsoft.AzureStackHCI/clusters@2024-02-15-preview' =
   if (deploymentMode == 'Validate') {
     name: clusterName
     identity: {
@@ -297,7 +318,7 @@ resource cluster 'Microsoft.AzureStackHCI/clusters@2024-01-01' =
     ]
   }
 
-resource keyVaultName_domainAdminSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+resource keyVaultName_domainAdminSecret 'Microsoft.KeyVault/vaults/secrets@2021-06-01-preview' = {
   parent: keyVault
   name: '${domainAdminSecretName}'
   location: location
@@ -311,7 +332,7 @@ resource keyVaultName_domainAdminSecret 'Microsoft.KeyVault/vaults/secrets@2023-
   }
 }
 
-resource keyVaultName_localAdminSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+resource keyVaultName_localAdminSecret 'Microsoft.KeyVault/vaults/secrets@2021-06-01-preview' = {
   parent: keyVault
   name: '${localAdminSecretName}'
   location: location
@@ -325,7 +346,7 @@ resource keyVaultName_localAdminSecret 'Microsoft.KeyVault/vaults/secrets@2023-0
   }
 }
 
-resource keyVaultName_arbDeploymentSpn 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+resource keyVaultName_arbDeploymentSpn 'Microsoft.KeyVault/vaults/secrets@2021-06-01-preview' = {
   parent: keyVault
   name: '${arbDeploymentSpnName}'
   location: location
@@ -339,7 +360,7 @@ resource keyVaultName_arbDeploymentSpn 'Microsoft.KeyVault/vaults/secrets@2023-0
   }
 }
 
-resource keyVaultName_storageWitness 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+resource keyVaultName_storageWitness 'Microsoft.KeyVault/vaults/secrets@2021-06-01-preview' = {
   parent: keyVault
   name: '${storageWitnessName}'
   location: location
@@ -353,8 +374,9 @@ resource keyVaultName_storageWitness 'Microsoft.KeyVault/vaults/secrets@2023-07-
   }
 }
 
-resource clusterName_default 'Microsoft.AzureStackHCI/clusters/deploymentSettings@2024-01-01' = {
-  name: '${clusterName}/default'
+resource clusterName_default 'microsoft.azurestackhci/clusters/deploymentSettings@2024-02-15-preview' = {
+  parent: cluster
+  name: 'default'
   properties: {
     arcNodeResourceIds: arcNodeResourceIds
     deploymentMode: deploymentMode
@@ -421,7 +443,4 @@ resource clusterName_default 'Microsoft.AzureStackHCI/clusters/deploymentSetting
       ]
     }
   }
-  dependsOn: [
-    cluster
-  ]
 }
