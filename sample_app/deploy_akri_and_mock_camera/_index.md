@@ -29,6 +29,8 @@ This Jumpstart Drop was originally written by the following contributors:
 
 - [Install Helm](https://helm.sh/docs/helm/helm_install/)
 
+- Install [AKS Edge Essentials](https://learn.microsoft.com/en-us/azure/aks/hybrid/aks-edge-quickstart)
+
 ## Getting Started
 
 ### Run the automation
@@ -38,7 +40,7 @@ This drop deploys Akri and it is used to discover ONVIF cameras that are connect
 Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/drops/sample_app/deploy_akri_and_mock_camera/) and run:
 
   ```powershell
-    . .\akri_deploy.sh
+    . .\akri_deploy.ps1
   ```
 
 ### Verify the deployment

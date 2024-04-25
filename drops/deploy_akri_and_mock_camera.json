@@ -9,15 +9,19 @@
     	"Link": "https://www.linkedin.com/in/lauranicolasd"
     },
     {
-    	"Name": "Laura Nicolas",
+    	"Name": "Francisco Cabrera Lieutier",
     	"Link": "https://www.linkedin.com/in/franciscocabreralieutier/"
+    },
+    {
+      "Name": "Yu Jin Kim",
+      "Link": "https://www.linkedin.com/in/yu-jin-kim/"
     }
   ], 
   "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/sample_app/deploy_akri_and_mock_camera/",
   "Type": "Sample_App",
   "Difficulty": "Medium",
   "ProgrammingLanguage" : [ "Rustc", "JSON"],
-  "Products" : ["Akri", "Arc", "Arc-enabled Kubernetes"],
+  "Products" : ["Akri", "Arc", "Arc-enabled Kubernetes", "AKS", "AKS Edge Essentials"],
   "LastModified": "2024-03-15T18:25:43.511Z",
   "CreatedDate" : "2024-03-15T10:30:16.201Z",
   "Topics" : []
