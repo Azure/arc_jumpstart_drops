@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize] 
     branches:
       - canary
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   validate:
