@@ -20,20 +20,19 @@ jobs:
       with:
         files: drops/*.json 
 
-    - name: Run Only if there's a change to Drop schema
+    - name: List changed JSON schema files
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
       run: |
-        echo "One or more files in the docs folder has changed."
-        echo "List all the files that have changed: $ALL_CHANGED_FILES"
+        echo "✅ Success - List all the files that have changed: $ALL_CHANGED_FILES"
 
     - name: Validate JSON
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       uses: docker://orrosenblatt/validate-json-action:latest
       env:
-        INPUT_SCHEMA: ${{ steps.changed-files-specific.outputs.all_changed_files }}
-        INPUT_JSONS: ./drops/azure_edge_extensions_aio_data_historian.json
+        INPUT_SCHEMA:  ./drops/default_schema.json
+        INPUT_JSONS: ${{ steps.changed-files-specific.outputs.all_changed_files }}
 
     - name : Validate source repo
       if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -46,9 +45,9 @@ jobs:
         
         # Use curl to check if the URL returns a 200 OK status code
         if curl --head --fail --silent "$source_url" >/dev/null; then
-          echo "Success: $source_url exists."
+          echo "✅ Success - The "Source": $source_url exists."
         else
-          echo "Error: $source_url does not exists."
+          echo "❌ Error - The $source_url does not exists."
           exit 1
         fi
       
@@ -71,22 +70,22 @@ jobs:
         if curl --head --fail --silent "$license_url" >/dev/null; then
           # If the LICENSE file exists, look for "MIT License" in the file
           if curl --silent "$license_url" | grep -q 'MIT License'; then
-            echo "Success: $license_url has an MIT license"
+            echo "✅ Success - The $organization/$repository" has an MIT license"
           else
-            echo "Error: $license_url does not have an MIT license"
+            echo "❌ Error - The $license_url does not have an MIT license"
             exit 1
           fi
         elif curl --head --fail --silent "$license_url/LICENSE.md" >/dev/null; then
           # If the LICENSE.md file exists, look for "MIT" in the file
           if curl --silent "$license_url/LICENSE.md" | grep -q 'MIT License'; then
-            echo "Success: $license_url has an MIT license"
+            echo "✅ Success - The $license_url has an MIT license"
           else
-            echo "Error: $license_url does not have an MIT license"
+            echo "❌ Error - The $license_url does not have an MIT license"
             exit 1
           fi
         else
           # If neither file exists, output an error message
-          echo "Error: $license_url does not have a LICENSE file"
+          echo "❌ Error - The $license_url does not have a LICENSE file"
           exit 1
         fi
         
