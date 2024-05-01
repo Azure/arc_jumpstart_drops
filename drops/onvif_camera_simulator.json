@@ -11,6 +11,10 @@
         {
             "Name": "Laura Nicolas",
             "Link": "https://www.linkedin.com/in/lauranicolasd"
+        },
+        {
+            "Name": "Yu Jin Kim",
+            "Link": "https://www.linkedin.com/in/yu-jin-kim/"
         }
     ],
     "Source": "https://github.com/fcabrera23/onvif-camera-mock",
