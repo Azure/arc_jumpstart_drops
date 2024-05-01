@@ -9,7 +9,7 @@
           "Link" : "https://www.linkedin.com/in/migodfre"
       }
     ], 
-    "Source" : "https://github.com/mgodfre3/arc_jumpstart_drops/tree/migodfre_ashci_drops-April2024/script_automation/arc_jumpstart_drops/ashci_cluster_setup/ASHCI-Clusters",
+    "Source" : "https://github.com/Azure/arc_jumpstart_drops/tree/main/arc_ashci_iac",
     "Type" : "Script/Automation",
     "Difficulty" : "Medium",
     "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
