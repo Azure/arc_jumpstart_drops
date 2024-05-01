@@ -15,7 +15,7 @@
     ],
     "Source": "https://github.com/fcabrera23/onvif-camera-mock",
     "Type": "sample_app",
-    "Difficulty": "Medium",
+    "Difficulty": "Mediuma",
     "ProgrammingLanguage": [
         "Python",
         "C++"
