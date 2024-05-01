@@ -10,7 +10,7 @@
       }
     ], 
     "Source" : "https://github.com/Azure/arc_jumpstart_drops/tree/main/arc_ashci_iac",
-    "Type" : "Script/Automation",
+    "Type" : "Script_Automation",
     "Difficulty" : "Medium",
     "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
     "Products" : ["Azure Stack HCI", "Arc"],
