@@ -31,7 +31,7 @@ jobs:
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       uses: docker://orrosenblatt/validate-json-action:latest
       env:
-        INPUT_SCHEMA:  ./drops/default_schema.json
+        INPUT_SCHEMA:  .github/workflows/default_schema.json
         INPUT_JSONS: ${{ steps.changed-files-specific.outputs.all_changed_files }}
 
     - name : Validate source repo
