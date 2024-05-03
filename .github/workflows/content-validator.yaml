@@ -1,0 +1,46 @@
+name: Drop content validator
+
+on:
+  pull_request:
+    types: [opened, synchronize] 
+    branches:
+      - canary
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Get the Drop schema json
+      id: changed-files-specific
+      uses: tj-actions/changed-files@v44
+
+    - name: List changed JSON schema files
+      if: steps.changed-files-specific.outputs.any_changed == 'true'
+      env:
+        ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
+      run: |
+        echo "✅ Success - List all the files that have changed: $ALL_CHANGED_FILES"
+
+    - name : Check content
+      if: steps.changed-files-specific.outputs.any_changed == 'true'
+      env:
+        ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
+      run: |
+
+        ## Get all the file paths that have changed and merged them into a single string
+        changed_files=$(echo "${ALL_CHANGED_FILES}" | tr '\n' ' ')
+        
+        echo "Changed files: $changed_files"
+        node validator.js changed_files
