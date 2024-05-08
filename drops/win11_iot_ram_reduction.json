@@ -9,7 +9,7 @@
             "Link": "https://www.github.com/ldabas-msft"
         }
     ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/script_automation/win11_iot_ram_reduction",
+    "Source": "https://github.com/ldabas-msft/arc_jumpstart_drops/tree/main/script_automation/win11_iot_ram_reduction",
     "Type": "script_automation",
     "Difficulty": "Beginner",
     "ProgrammingLanguage": [
