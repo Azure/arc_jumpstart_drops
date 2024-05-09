@@ -1,5 +1,5 @@
 # Drop Schema
-This document provides guidance on the fields and options that every user should complete when contributing a Drop. The information in this JSON file is used by the Jumpstart Drops platform to create the appropriate card on the page and display relevant content to the user. Additionally, other fields will be utilized to improve filtering and sorting of the Drops.
+This document provides guidance on the fields and options that every user should complete when contributing a Drop. The information in this JSON file is used by the Jumpstart Drops platform to create the appropriate card on the page and display relevant content to the user. Additionally, other fields will be utilized to improve the filtering and sorting of the Drops.
 
 As part of the review process, the Jumpstart team will thoroughly examine each of these fields to ensure the contribution meets our high quality standards. Additionally, an automated pipeline will run when the pull request is created to verify that all required fields are completed and adhere to the field rules.
 
