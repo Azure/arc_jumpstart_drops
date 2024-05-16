@@ -1,0 +1,97 @@
+{
+    "type": "object",
+    "required": [
+      "Title",
+      "Summary",
+      "Description",
+      "Authors",
+      "Source",
+      "Type",
+      "Difficulty"
+    ],
+    "properties": {
+      "Title": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "Summary": {
+        "type": "string",
+        "maxLength": 250
+      },
+      "Description": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "Cover": {
+        "type": "string"
+      },
+      "Authors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "Name",
+            "Link"
+          ],
+          "properties": {
+            "Name": {
+              "type": "string"
+            },
+            "Link": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Source": {
+        "type": "string",
+        "format": "uri"
+      },
+      "Type": {
+        "type": "string",
+        "enum": [
+          "ui_dashboard_workbook",
+          "sample_app",
+          "library_package",
+          "script_automation",
+          "template",
+          "tutorial_guide"
+        ]
+      },
+      "Difficulty": {
+        "type": "string",
+        "enum": [
+          "Beginner",
+          "Medium",
+          "Advanced"
+        ]
+      },
+      "ProgrammingLanguage": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "Products": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "LastModified": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "CreatedDate": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "Topics": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "additionalProperties": false
+}

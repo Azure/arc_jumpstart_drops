@@ -35,7 +35,7 @@ This Jumpstart Drop was originally written by the following contributors:
 
 ### Run the automation
 
-This drop deploys Akri and it is used to discover ONVIF cameras that are connected to the same network as your cluster, in this instance a mock ONVIF camera is deployed as a container. These steps help you get started using Akri to discover IP cameras through the ONVIF protocol and use them via a video broker that enables you to consume the footage from the camera and display it in a web application.
+This drop deploys Akri and it's used to discover ONVIF cameras that are connected to the same network as your cluster, in this instance a mock ONVIF camera is deployed as a container. These steps help you get started using Akri to discover IP cameras through the ONVIF protocol and use them via a video broker that enables you to consume the footage from the camera and display it in a web application.
 
 Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/drops/sample_app/deploy_akri_and_mock_camera/) and run:
 

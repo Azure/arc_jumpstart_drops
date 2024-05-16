@@ -2,7 +2,7 @@
 
 The following disclaimer **applies to all Arc Jumpstart Drops (“Drops”)**, which includes code snippets, templates, or scripts that help users to deploy Azure Arc enabled services and scenarios.  
 
-- All Drops are published by default under an MIT license, unless otherwise specified in the GitHub pull request (“PR”) or the Drop itself. You may not merge any PR that does not include a license.  
+- All Drops are published by default under an MIT license, unless otherwise specified in the GitHub pull request (“PR”) or the Drop itself. You may not merge any PR that doesn't include a license.  
 
 - If the Drop includes any data, such as sample data, AI training data, or configuration data, you must license it under a Community Data License Agreement (CDLA-2.0) license, unless otherwise specified in the PR or the Drop. 
 

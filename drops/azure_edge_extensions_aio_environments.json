@@ -1,7 +1,7 @@
 {
-    "Title": "Azure Edge Extensions AIO - Inner Developer Loop",
+    "Title": "Azure Edge Extensions AIO Environments",
     "Summary": "This is a solution to build Azure IoT Operations (AIO) VM environments.",
-    "Description": "This repository sets up the infrastructure to create vhdx images and VMs for Azure IoT Operations on Arc-enabled servers. This infrastructure enables you to install instrumentation tools and collect memory dumps for applications and core components.",
+    "Description": "This repository sets up the infrastructure to create VHDX images and VMs for Azure IoT Operations on Arc-enabled servers. This infrastructure enables you to install instrumentation tools and collect memory dumps for applications and core components.",
     "Cover": "",
     "Authors": [
         {

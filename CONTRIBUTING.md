@@ -21,7 +21,7 @@ The contribution process consists of the following steps:
 
 1. **Drops artifacts creation**: Develop and validate the source code of the Drop and the JSON definition file. Ensure to test end to end, and provide clear documentation. The required artifacts include:
 
-    - **Source Code**: Include the script/app/dashboard you've created, along with any necessary documentation (README, images, videos, etc.). Ensure these files follow the correct structure defined in the [folder structure](#folder-structure) section. 
+    - **Source Code**: Include all the code files you've created, along with any necessary documentation (README, images, videos, etc.). Ensure these files follow the correct structure defined in the [folder structure](#folder-structure) section. 
 
     - **Drop Definition**: Provide a JSON file with all the required fields as described in the [Drops Schema](./SCHEMA.md) definition. This file will be used by the Arc Jumpstart Drops page to create a Drop card with all the necessary information, as well as apply the correct filtering mechanisms.  
 
@@ -29,13 +29,18 @@ The contribution process consists of the following steps:
         |------------------------------------------|
         | The Drop definition JSON file should be placed under the [drops](./drops/) folder, and the name should be unique, descriptive and using snake_case.|
 
+        | ℹ️ **Important**                          | 
+        |------------------------------------------|
+        | Ensure to check the spelling, grammar and wording of your submission. To help validation, use [Vale](https://vale.sh/), already configured as part of the project. Ensure to use `vale sync` before starting linting, to get the latest configurations.|
+
+
 1. **Create Pull Request to Canary**: Submit your pull request (PR) to the Canary branch of [Arc Jumpstart Drops](https://github.com/Azure/arc_jumpstart_drops).
 
 1. **GitHub Checks**: GitHub checks will run to ensure:
     - Drop definition and folder structure.
     - MIT licensing check
     - CodeQL for vulnerabilities.
-    - Vale.sh Linter for documentation grammar and styling.
+    - Vale.sh Linter for documentation grammar and styling. 
 
 1. **Manual review from Jumpstart Core maintainers**: Automatic reviewers will be added. The PR can only be merged if all GitHub checks pass and at least 2 reviewers approved the submission.
 

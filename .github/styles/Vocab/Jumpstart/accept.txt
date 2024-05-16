@@ -31,3 +31,12 @@ Dependabot
 snake_case
 Ansible
 VMware
+SDKs
+Akri
+udev
+Moc
+VMs
+hostnames
+Carboneras
+Dabas
+Automations

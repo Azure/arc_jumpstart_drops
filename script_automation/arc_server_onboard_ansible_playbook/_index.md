@@ -60,7 +60,7 @@ This Jumpstart Drop was originally written by the following contributors:
 
     > **Note:** If you create multiple subsequent role assignments on the same service principal, your client secret (password) will be destroyed and recreated each time. Therefore, make sure you grab the correct password.
 
-    > **Note:** The Jumpstart drops are designed with as much ease of use in-mind and adhering to security-related best practices whenever possible. It is optional but highly recommended to scope the service principal to a specific [Azure subscription and resource group](https://learn.microsoft.com/cli/azure/ad/sp?view=azure-cli-latest) as well considering using a [less privileged service principal account](https://learn.microsoft.com/azure/role-based-access-control/best-practices).
+    > **Note:** The Jumpstart drops are designed with as much ease of use in-mind and adhering to security-related best practices whenever possible. It's optional but highly recommended to scope the service principal to a specific [Azure subscription and resource group](https://learn.microsoft.com/cli/azure/ad/sp?view=azure-cli-latest) as well considering using a [less privileged service principal account](https://learn.microsoft.com/azure/role-based-access-control/best-practices).
 
 - [Ansible must be configured to interact with your inventory.](https://docs.ansible.com/ansible/latest/getting_started/get_started_inventory.html#get-started-inventory)
 
@@ -70,12 +70,12 @@ This Jumpstart Drop was originally written by the following contributors:
 
 Open the playbook using an editor and provide the values for the environment variables to match your environment. You will need to provide:
 
-- service_principal_id: provide-your-service-principal-id-here.
-- service_principal_secret: provide-your-service-principal-secret-here.
-- tenant_id: provide-your-tenant-id-here.
-- subscription_id: provide-your-subscription-id-here'
-- resource_group: provide-your-resource-group-here.
-- location: provide-your-location-here.
+- `service_principal_id`: provide-your-service-principal-id-here.
+- `service_principal_secret`: provide-your-service-principal-secret-here.
+- `tenant_id`: provide-your-tenant-id-here.
+- `subscription_id`: provide-your-subscription-id-here'
+- `resource_group`: provide-your-resource-group-here.
+- `location`: provide-your-location-here.
 
 Edit the hosts file to add the hostnames of the server's you want to onboard to Ansible. You could also work with an [Ansible dynamic inventory.](https://docs.ansible.com/ansible/latest/inventory_guide/intro_dynamic_inventory.html)
 

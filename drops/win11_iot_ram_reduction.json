@@ -1,0 +1,28 @@
+{
+    "Title": "Windows 11 IoT Enterprise RAM Reduction Guide",
+    "Summary": "This guide provides instructions on how to minimize the RAM usage of Windows 11 IoT Enterprise systems.",
+    "Description": "This repository offers a practical solution for optimizing Windows 11 IoT Enterprise by reducing its RAM usage. It includes a configure_services_final.bat batch file that utilizes the Windows sysprep package to streamline system services. By disabling non-essential services, commonly referred to as 'bloat', this guide helps achieve a significantly lower RAM footprint, thus enhancing the performance and reliability of IoT devices.",
+    "Cover": "",
+    "Authors": [
+        {
+            "Name": "Lakshit Dabas",
+            "Link": "https://www.github.com/ldabas-msft"
+        }
+    ],
+    "Source": "https://github.com/ldabas-msft/arc_jumpstart_drops/tree/main/script_automation/win11_iot_ram_reduction",
+    "Type": "script_automation",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+        "Batch"
+    ],
+    "Products": [
+        "Windows 11 IoT Enterprise"
+    ],
+    "LastModified": "2024-05-07T00:00:00.000Z",
+    "CreatedDate": "2024-05-07T00:00:00.000Z",
+    "Topics": [
+        "RAM optimization", 
+        "IoT", 
+        "Windows Configuration"
+    ]
+}
