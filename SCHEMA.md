@@ -41,7 +41,7 @@ This JSON file provides an example of how a Drop schema file should be structure
     }
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/workbooks/arc_management_full",
-  "Type": "Script/Automation",
+  "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
     "PowerShell",

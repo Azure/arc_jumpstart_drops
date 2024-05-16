@@ -8,7 +8,7 @@ description: >
 
 ## Manage Extended Security Updates (ESU) licenses at scale
 
-The following Jumpstart Drop will guide you on how to programatically perform tasks with on your [Extended Security Updates (ESU) licenses](https://learn.microsoft.com/windows-server/get-started/extended-security-updates-deploy) at scale.
+The following Jumpstart Drop will guide you on how to automate and perform tasks with on your [Extended Security Updates (ESU) licenses](https://learn.microsoft.com/windows-server/get-started/extended-security-updates-deploy) at scale.
 
 This tool consists of a script that will allow you to:  
 
@@ -31,7 +31,7 @@ This Jumpstart Drop was originally written by the following contributors:
 
 - The script requires PowerShell 7 as well as [Azure PowerShell](https://learn.microsoft.com/powershell/azure/install-azure-powershell?view=azps-11.1.0) installed.
 - Before running the script you must run `Connect-AzAccount` and set the proper subscription with `Set-AzContext -Subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx`.
-- It assumes Azure Arc-enabled Servers are already onboarded and registered in the Azure Portal.
+- It assumes Azure Arc-enabled Servers are already configured and registered in the Azure Portal.
 
 ## Getting Started
 
@@ -47,7 +47,7 @@ This will create a 'ESULicensesSourcefile.csv' file  with the information of the
 
 ### Create ESU Licenses
 
-Once you have teh default CSV file you can use to create them or you can use a modified one. To create the ESU licenses for the Azure Arc-enabled servers using the default CSV use the command below:
+Once you have the default CSV file you can use to create them or you can use a modified one. To create the ESU licenses for the Azure Arc-enabled servers using the default CSV use the command below:
 
   ```powershell
    .\ESUsSetLicenses.ps1 -ProvisionLicenses
@@ -63,7 +63,7 @@ As an output from this step you will get an 'ESUAssigmentInfo.csv' file with the
 
 ### Assign the ESU licenses
 
-Now that the licenses are asigned they need to be mapped to its corresponding Azure Arc-enabled server, using the 'ESUAssigmentInfo.csv' file or a modified one if you needed to make some changes.
+Now that the licenses are assigned they need to be mapped to its corresponding Azure Arc-enabled server, using the 'ESUAssigmentInfo.csv' file or a modified one if you needed to make some changes.
 
   ```powershell
   .\ESUsSetLicenses.ps1 -AssignLicenses

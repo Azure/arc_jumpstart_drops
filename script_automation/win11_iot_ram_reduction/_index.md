@@ -8,7 +8,7 @@ description: >
 
 ## Windows 11 IoT Enterprise RAM Reduction Guide
 
-This repository offers a practical solution for optimizing Windows 11 IoT Enterprise by reducing its RAM usage. It includes a `configure_services_final.bat` batch file that utilizes the Windows sysprep package to streamline system services. By disabling non-essential services, commonly referred to as 'bloat', this guide helps achieve a significantly lower RAM footprint, thus enhancing the performance and reliability of IoT devices.
+This repository offers a practical solution for optimizing Windows 11 IoT Enterprise by reducing its RAM usage. It includes a `configure_services_final.bat` batch file that utilizes the Windows `sysprep` package to streamline system services. By disabling non-essential services, commonly referred to as 'bloat', this guide helps achieve a significantly lower RAM footprint, thus enhancing the performance and reliability of IoT devices.
 
 ## Contributors
 
@@ -31,7 +31,7 @@ Prepare the system for modifications in audit mode.
 1. **Access Command Prompt with Admin Rights:**
 
 - Use the shortcut `Win + X`.
-- Select “Windows Terminal (Admin)” or “Command Prompt (Admin)”.
+- Select **Windows Terminal (Admin)** or **Command Prompt (Admin)**.
   
 2. **Navigate to SysPrep:**
 
