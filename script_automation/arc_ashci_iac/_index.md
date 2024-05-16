@@ -38,8 +38,6 @@ This Jumpstart Drop was originally written by the following contributors:
   - [Encode Parameter Values](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#encode-parameter-values)
   - [Assign Resource Permissions ](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#step-2-assign-resource-permissions)
 
-    
-
 ## Getting Started
 
 ### Prepare Parameter File
@@ -92,51 +90,39 @@ With all the prerequisite and preparation steps complete, you're ready to deploy
 1. In Azure portal, go to **Home** and select **+ Create a resource**.
 
 1. Select **Create** under **Template deployment (deploy using custom templates)**
-            
-            :::image type="content" source=(script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-1.png) alt-text="Screenshot showing the template deployment (deploy using custom template)." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-1.png":::
+    ![Screenshot showing the template deployment (deploy using custom template).](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-1.png)        
 
 1. Near the bottom of the page, find **Start with a quickstart template or template spec** section. Select **Quickstart template** option.
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-2.png" alt-text="Screenshot showing the quickstart template selected." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-2.png":::
-
+    ![Screenshot showing the quickstart template selected.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-2.png)
+   
 1. Use the **Quickstart template (disclaimer)** field to filter for the appropriate template. Type *azurestackhci/create-cluster* for the filter.
 
 1. When finished, **Select template**.
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-3.png" alt-text="Screenshot showing template selected." lightbox="script_automation/ashci_cluster_setup/ASHCI-Clusters/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-3.png":::
-
+    ![Screenshot showing template selected](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-3.png)
 
 1. On the **Basics** tab, you see the **Custom deployment** page. You can select the various parameters through the dropdown list or select **Edit parameters**.
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-4.png" alt-text="Screenshot showing Custom deployment page on the Basics tab." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-4.png":::
+     ![Screenshot showing Custom deployment page on the Basics tab.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-4.png)
 
 1. Edit parameters such as network intent or storage network intent. Once the parameters are all filled out, **Save** the parameters file.
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-5.png" alt-text="Screenshot showing parameters filled out for the template." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-5.png":::
-
+    ![Screenshot showing parameters filled out for the template.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-5.png)
 
 1. Select the appropriate resource group for your environment.
 
 1.  Scroll to the bottom, and confirm that **Deployment Mode = Validate**.
 
 1. Select **Review + create**.
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-6.png" alt-text="Screenshot showing Review + Create selected on Basics tab." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-6.png":::
+   ![Screenshot showing Review + Create selected on Basics tab.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-6.png)
 
 1. On the **Review + Create** tab, select **Create**. This creates the remaining prerequisite resources and validates the deployment. Validation takes about 10 minutes to complete.
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7.png" alt-text="Screenshot showing Create selected on Review + Create tab." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7.png":::
+    ![Screenshot showing Create selected on Review + Create tab.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7.png)
 
 1.  Once validation is complete, select **Redeploy**.
-
-            :::image type="content" source="script_automation/ashci_cluster_setup/ASHCI-Clusters/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7a.png" alt-text="Screenshot showing Redeploy selected." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7a.png":::
+     ![Screenshot showing Redeploy selected](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7a.png)
 
 1. On the **Custom deployment** screen, select **Edit parameters**. Load up the previously saved parameters and select **Save**.
 
 1. At the bottom of the workspace, change the final value in the JSON from **Validate** to **Deploy**, where **Deployment Mode = Deploy**. 
-
-            :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7b.png" alt-text="Screenshot showing deploy selected for deployment mode." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7b.png":::
-
+     ![Screenshot showing deploy selected for deployment mode.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-7b.png)
 
 1. Verify that all the fields for the ARM deployment template have been filled in by the Parameters JSON.
 
@@ -152,7 +138,7 @@ With all the prerequisite and preparation steps complete, you're ready to deploy
 
     Once deployment initiates, there's a limited Environment Checker run, a full Environment Checker run, and cloud deployment starts. After a few minutes, you can monitor deployment in the portal.
 
-        :::image type="content" source="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-9.png" alt-text="Screenshot showing the status of environment checker validation." lightbox="script_automation/arc_ashci_iac/artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-9.png":::
+   ![Screenshot showing the status of environment checker validation.](./artifacts/media/deployment-azure-resource-manager-template/deploy-arm-template-9.png)
 
 1. In a new browser window, navigate to the resource group for your environment. Select the cluster resource.
 
@@ -166,7 +152,6 @@ With all the prerequisite and preparation steps complete, you're ready to deploy
 1. The step in deployment that takes the longest is **Deploy Moc and ARB Stack**. This step takes ~40 to 45 minutes.
 
     Once complete, the task at the top updates with status and end time.
-
 
 ### Next Steps
  Now that your Azure Stack HCI Cluster is built you can move on to the next steps which include:
