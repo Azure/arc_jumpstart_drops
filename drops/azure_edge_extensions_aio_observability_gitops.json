@@ -1,7 +1,7 @@
 {
     "Title": "Azure Edge Extensions AIO Observability GitOps",
     "Summary": "Sample for configuring Azure IoT Operations Preview with OpenTelemetry and local observability visualization on edge enabled through Flux GitOps.",
-    "Description": "In this sample, a Visual Studio Code dev container is used as the developer sandbox to leverage a local K3D cluster, initialize Azure resources and install a baseline set of Azure IoT Operations' components. The objective is to illustrate how to setup observability to be able to locally vizualize health of the cluster and Azure IoT Operations' components. This repository is particularly useful for those interested in edge-based visualization. Please check formal Azure IoT Operations documentation if you are looking for a default observability setup and wish to analyze observability data using Azure Monitor",
+    "Description": "In this sample, a Visual Studio Code dev container is used as the developer sandbox to leverage a local K3D cluster, initialize Azure resources and install a baseline set of Azure IoT Operations' components. The objective is to illustrate how to setup observability to be able to locally visualize health of the cluster and Azure IoT Operations' components. This repository is particularly useful for those interested in edge-based visualization. Please check formal Azure IoT Operations documentation if you are looking for a default observability setup and wish to analyze observability data using Azure Monitor",
     "Cover": "",
     "Authors": [
         {
