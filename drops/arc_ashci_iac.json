@@ -9,7 +9,7 @@
           "Link" : "https://www.linkedin.com/in/migodfre"
       }
     ], 
-    "Source" : "https://github.com/mgodfre3/arc_jumpstart_drops/tree/migodfre_ashci_drops-April2024/script_automation/arc_ashci_iac",
+    "Source" : "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_ashci_iac",
     "Type" : "script_automation",
     "Difficulty" : "Medium",
     "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
