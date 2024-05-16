@@ -35,7 +35,7 @@ This Jumpstart Drop was originally written by the following contributors:
 - Prepare Azure Resources
   - [Ensure you have a Service Principal with Correct Subscription and Resource Group Permissions](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#create-a-service-principal)
   - [Pre-Create Cloud Witness Storage Account](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#create-a-cloud-witness-storage-account)
-  - [Encode Paramater Values](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#encode-parameter-values)
+  - [Encode Parameter Values](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#encode-parameter-values)
   - [Assign Resource Permissions ](https://learn.microsoft.com/en-us/azure-stack/hci/deploy/deployment-azure-resource-manager-template#step-2-assign-resource-permissions)
 
     
@@ -43,43 +43,43 @@ This Jumpstart Drop was originally written by the following contributors:
 ## Getting Started
 
 ### Prepare Parameter File
-- In order to Deploy the ASHCI Cluster you will need to create a Parameter File with Values that apply to your Environment. Make a copy of the paramter file that applies to your chosen ASHCI Network Configuration, In this Jumpstart DROP, three common examples are provided:
-    - [2 Node Switchless](script_automation/arc_ashci_iac/artifacts/Templates/ARM/ASHCI-CloudDeploy-2NodeSwitchless.parameters.json)
-    - [3 Node Switchless](script_automation/arc_ashci_iac/artifacts/Templates/ARM/ASHCI-CloudDeploy-3NodeSwitchless.parameters.json)
+- In order to Deploy the ASHCI Cluster you will need to create a Parameter File with Values that apply to your Environment. Make a copy of the parameter file that applies to your chosen ASHCI Network Configuration, In this Jumpstart DROP, three common examples are provided:
+    - [2 Node Switch less](script_automation/arc_ashci_iac/artifacts/Templates/ARM/ASHCI-CloudDeploy-2NodeSwitchless.parameters.json)
+    - [3 Node Switch less](script_automation/arc_ashci_iac/artifacts/Templates/ARM/ASHCI-CloudDeploy-3NodeSwitchless.parameters.json)
     - [Fully Converged](script_automation/arc_ashci_iac/artifacts/Templates/ARM/ASHCI-CloudDeploy-FullyConverged.parameters.json) 
 
 ### Editing the Parameters File
 
 Open the selected Parameter File using an editor and provide the values for the environment variables to match your environment. You will need to provide:
 
-- DeploymentMode : Choose betwen "Validate" & "Deploy", your first deployment will always use the Valadte Variable.
-- KeyVaultName : Provide the name of the Azure Key Vault that will be created to store ASHCI Cloud Deployment Secrets
-- softDeleteRetentionDays: Number of Days Azure Key Vault will be retained in case of Deletion (Optional)
-- diagnosticStorageAccountName: Name of Azure Storage Account that will be used for Diagnostic Logs associated with the Azure Key Vault
-- logsRetentionInDays: Number of Days Key Vault Diagnostics will be retained (Optional)
-- storageAccountType : Azure Storage Account Type
-- secretsLocation: URI to Azure Key Vault, this should match the name of your Key Vault
-- ClusterWitnessStorageAccountName: Name of Cloud Witness Azure Stoage Account that was created in PreRequisites
-- ClusterName: Active Directory Name of the Desired ASHCI Cluster
-- Location : Provide the Azure Region
-- TenantID: Provide your Tenant ID
-- localAdminSecretValue : This should be base64 value in UserName:Password format of the Local Administrator Account
-- domainAdminSecretValue: This should be base64 value in UserName:Password format of the AD Service Account used to Join Domain, Create Cluster, etc.
-- arbDeploymentSpnValue : Azure Entra SPN Account from Prerequisites, as a base64 value in ApplicationID:Client Secret format.
-- storageWitnessValue : This should be base64 value of the Storage Account Access Key in StorageAccountKey format.
-- arcNodeResourceIds : Provide the Arc-Enabled Machine Resource ID of all the ASHCI nodes
-- domainFqdn                      : Fully Qualified Domain Name that ASHCI Cluster will be deployed into
-- namingPrefix : Prefix for all ASHCI Infra Resources that will be created. 
-- adouPath : Provide OU to place AHSCI Cluster and Node Computer Objects
-- subnetMask: Subnet Mask of Managment Network
-- defaultGateway: Gateway IP of Managment Network
-- startingIPAddress : Starting Address for IP Range for ASHCI Infra Services (Requires 6 Consectutive IP Addresses)
-- endingIPAddress: Ending Address for IP Range for ASHCI Infra Services
-- dnsServers : IP Addresses of DNS Servers in Array Format
-- physicalNodesSettings : Array Table of ASHCI Node Names and Assigned IP Address
-- intentList                      : Array Table of ASHCI NetworkATC Intent. The Adapter array needs to be updated with the Consistent Network Adapter names across all ASHCI Nodes
-- storageNetworkList : Name of Storage Networks, the Network Adapter Names, and the Associated VLAN Tag
-- CustomLocation : The Name of your ASHCI Location, this will be the value that workloads (VM/AKS/AVDonHCI/etc will be deployed to. This is similar to Azure Region)
+- `DeploymentMode`: Choose between **Validate** & **Deploy**, your first deployment will always use the Validate Variable.
+- `KeyVaultName`: Provide the name of the Azure Key Vault that will be created to store ASHCI Cloud Deployment Secrets
+- `softDeleteRetentionDays`: Number of Days Azure Key Vault will be retained in case of Deletion (Optional)
+- `diagnosticStorageAccountName`: Name of Azure Storage Account that will be used for Diagnostic Logs associated with the Azure Key Vault
+- `logsRetentionInDays`: Number of Days Key Vault Diagnostics will be retained (Optional)
+- `storageAccountType`: Azure Storage Account Type
+- `secretsLocation`: URI to Azure Key Vault, this should match the name of your Key Vault
+- `ClusterWitnessStorageAccountName`: Name of Cloud Witness Azure Storage Account that was created in PreRequisites
+- `ClusterName`: Active Directory Name of the Desired ASHCI Cluster
+- `Location`: Provide the Azure Region
+- `TenantID`: Provide your Tenant ID
+- `localAdminSecretValue`: This should be base64 value in UserName:Password format of the Local Administrator Account
+- `domainAdminSecretValue`: This should be base64 value in UserName:Password format of the AD Service Account used to Join Domain, Create Cluster, etc.
+- `arbDeploymentSpnValue`: Azure EntraID SPN Account from Prerequisites, as a base64 value in ApplicationID:Client Secret format.
+- `storageWitnessValue`: This should be base64 value of the Storage Account Access Key in StorageAccountKey format.
+- `arcNodeResourceIds`: Provide the Arc-Enabled Machine Resource ID of all the ASHCI nodes
+- `domainFqdn`: Fully Qualified Domain Name that ASHCI Cluster will be deployed into
+- `namingPrefix`: Prefix for all ASHCI Infra Resources that will be created. 
+- `adouPath`: Provide OU to place AHSCI Cluster and Node Computer Objects
+- `subnetMask`: subnet mask of Management Network
+- `defaultGateway`: Gateway IP of Management Network
+- `startingIPAddress`: Starting Address for IP Range for ASHCI Infra Services (Requires 6 Consecutive IP Addresses)
+- `endingIPAddress`: Ending Address for IP Range for ASHCI Infra Services
+- `dnsServers`: IP Addresses of DNS Servers in Array Format
+- `physicalNodesSettings`: Array Table of ASHCI Node Names and Assigned IP Address
+- `intentList`: Array Table of ASHCI NetworkATC Intent. The Adapter array needs to be updated with the Consistent Network Adapter names across all ASHCI Nodes
+- `storageNetworkList`: Name of Storage Networks, the Network Adapter Names, and the Associated VLAN Tag
+- `CustomLocation`: The Name of your ASHCI Location, this will be the value that workloads (VM/AKS/AVDonHCI/etc will be deployed to. This is similar to Azure Region)
 
 
 ### Deploy using ARM template
@@ -158,12 +158,12 @@ With all the prerequisite and preparation steps complete, you're ready to deploy
 
 1. Select **Deployments**.
 
-1. Refresh and watch the deployment progress from the first server (also known as the seed server and is the first server where you deployed the cluster). Deployment takes between 2.5 and 3 hours. Several steps take 40-50 minutes or more.
+1. Refresh and watch the deployment progress from the first server (also known as the seed server and is the first server where you deployed the cluster). Deployment takes between 2.5 and 3 hours. Several steps take 40 to 50 minutes or more.
 
     > [!NOTE]
     > If you check back on the template deployment, you will see that it eventually times out. This is a known issue, so watching **Deployments** is the best way to monitor the progress of deployment.
 
-1. The step in deployment that takes the longest is **Deploy Moc and ARB Stack**. This step takes 40-45 minutes.
+1. The step in deployment that takes the longest is **Deploy Moc and ARB Stack**. This step takes ~40 to 45 minutes.
 
     Once complete, the task at the top updates with status and end time.
 
@@ -177,7 +177,7 @@ With all the prerequisite and preparation steps complete, you're ready to deploy
 
 After these steps have been completed you can begin work on deploying Workloads.
 1. [Deploy Arc Virtual Machines](https://learn.microsoft.com/en-us/azure-stack/hci/manage/create-arc-virtual-machines?tabs=azurecli)
-1. [Depoy Aks-Arc Clusters](https://learn.microsoft.com/en-us/azure/aks/hybrid/aks-create-clusters-portal)
+1. [Deploy AKS-Arc Clusters](https://learn.microsoft.com/en-us/azure/aks/hybrid/aks-create-clusters-portal)
 
 
 

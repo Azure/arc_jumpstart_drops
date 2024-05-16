@@ -8,9 +8,9 @@ description: >
 
 ## Test Azure Arc-enabled servers on a Linux Azure VM
 
-The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Onboarding an Azure VM as an Azure Arc-enabled server is not supported and this automation is intended for demo and testing purposes only.
+The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn't supported and this automation is intended for demo and testing purposes only.
 
-> **Note:** It is not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop  is unsupported and should ONLY be used for demo and testing purposes.
+> **Note:** It's not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop  is unsupported and should ONLY be used for demo and testing purposes.
 
 > **Note:** This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don't have an existing virtual machine, review the Jumpstart Scenario [Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_linux) that will create it for you.
 
@@ -67,13 +67,13 @@ This Jumpstart Drop was originally written by the following contributors:
 
     > **Note:** If you create multiple subsequent role assignments on the same service principal, your client secret (password) will be destroyed and recreated each time. Therefore, make sure you grab the correct password.
 
-    > **Note:** The Jumpstart drops are designed with as much ease of use in-mind and adhering to security-related best practices whenever possible. It is optional but highly recommended to scope the service principal to a specific [Azure subscription and resource group](https://learn.microsoft.com/cli/azure/ad/sp?view=azure-cli-latest) as well considering using a [less privileged service principal account](https://learn.microsoft.com/azure/role-based-access-control/best-practices).
+    > **Note:** The Jumpstart drops are designed with as much ease of use in-mind and adhering to security-related best practices whenever possible. It's optional but highly recommended to scope the service principal to a specific [Azure subscription and resource group](https://learn.microsoft.com/cli/azure/ad/sp?view=azure-cli-latest) as well considering using a [less privileged service principal account](https://learn.microsoft.com/azure/role-based-access-control/best-practices).
 
 - Azure Arc-enabled servers depends on the following Azure resource providers in your subscription in order to use this service. Registration is an asynchronous process, and registration may take approximately 10 minutes.
 
-  - Microsoft.HybridCompute
-  - Microsoft.GuestConfiguration
-  - Microsoft.HybridConnectivity
+  - `Microsoft.HybridCompute`
+  - `Microsoft.GuestConfiguration`
+  - `Microsoft.HybridConnectivity`
 
       ```shell
       az provider register --namespace 'Microsoft.HybridCompute'
