@@ -39,3 +39,4 @@ VMs
 hostnames
 Carboneras
 Dabas
+Automations
