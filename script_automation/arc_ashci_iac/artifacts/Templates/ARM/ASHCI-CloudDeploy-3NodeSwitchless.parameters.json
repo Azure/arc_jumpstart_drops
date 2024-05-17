@@ -1,0 +1,268 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "apiVersion": {
+        "value": "2024-02-15-preview"
+      },
+      "arcNodeResourceIds": {
+        "value":  [
+            "",
+            ""
+        ],
+        "metadata": {
+            "description": "Provide the Arc-Enabled Machine Resource ID of all the ASHCI nodes"}
+    },
+    "localAdminSecretValue": {
+        "value": "",
+        "metadata": {"description": "This should be base64 value in UserName:Password format."}  
+    },
+    "domainAdminSecretValue": {
+        "value": "",
+        "metadata": {"description": "This should be base64 value in UserName:Password format."} 
+    },
+    "arbDeploymentSpnValue": {
+        "value": "" ,
+        "metadata": {"description": "This should be base64 value in ApplicationID:Password format."}
+    },
+    "storageWitnessValue": {
+        "value": "",
+        "metadata": {"description": "This should be base64 value in StorageAccountKey format."} 
+    },
+      "domainFqdn": {
+          "value": "contoso.com"
+        },
+      "namingPrefix": {
+          "value": "HCI"
+        },
+        "clusterName": {
+          "value": "ThreeNCluster"
+        },
+        "keyVaultName": {
+          "value": "ThreeNClusterKeyVault"
+        },
+        "softDeleteRetentionDays": {
+          "value": 30
+        },
+        "diagnosticStorageAccountName": {
+          "value": "autoipoffdiagsa"
+        },
+        "logsRetentionInDays": {
+          "value": 30
+        },
+        "storageAccountType": {
+          "value": "Standard_LRS"
+        },
+      "adouPath": {
+          "value": "OU=HCI,DC=contoso,DC=com"
+        },
+      "subnetMask": {
+          "value": "255.255.255.0"
+        },
+      "defaultGateway": {
+          "value": "192.168.44.1"
+        },
+      "startingIPAddress": {
+          "value": "192.168.44.220"
+        },
+      "endingIPAddress": {
+          "value": "192.168.44.230"
+        },
+        "ClusterWitnessStorageAccountName": {
+          "value": "autoipoffsa"
+        },
+      "dnsServers": {
+          "value": ["192.168.1.254"]
+        },
+      "enableStorageAutoIp": {
+          "value": false
+        },
+      "storageConnectivitySwitchless": {
+          "value": true
+        },
+      "physicalNodesSettings": {
+          "value": [
+              {
+              "name": "Node1",
+              "ipv4Address": "192.168.44.201"
+          },
+          {
+              "name": "Node2",
+              "ipv4Address": "192.168.44.202"
+          },
+          {
+              "name": "Node3",
+              "ipv4Address": "192.168.44.203"
+        }
+                   ]
+        },
+        "networkingPattern": {
+          "value": "convergedManagementCompute"
+        },
+        "intentList": {
+          "value": [
+              {
+                  "name": "Compute_Management",
+                  "trafficType": [
+                      "Management",
+                      "Compute"
+                  ],
+                  "adapter": [
+                      "NIC1",
+                      "NIC2"
+                  ],
+                  "overrideVirtualSwitchConfiguration": false,
+                  "virtualSwitchConfigurationOverrides": {
+                      "enableIov": "",
+                      "loadBalancingAlgorithm": ""
+                  },
+                  "overrideQosPolicy": false,
+                  "qosPolicyOverrides": {
+                      "priorityValue8021Action_Cluster": "7",
+                      "priorityValue8021Action_SMB": "3",
+                      "bandwidthPercentage_SMB": "50"
+                  },
+                  "overrideAdapterProperty": false,
+                  "adapterPropertyOverrides": {
+                      "jumboPacket": "9014",
+                      "networkDirect": "Enabled",
+                      "networkDirectTechnology": "RoCEv2"
+                  }
+              },
+              {
+                  "name": "Storage",
+                  "trafficType": [
+                      "Storage"
+                  ],
+                  "adapter": [
+                      "SMB1",
+                      "SMB2",
+                      "SMB3",
+                      "SMB4"
+                  ],
+                  "overrideVirtualSwitchConfiguration": false,
+                  "virtualSwitchConfigurationOverrides": {
+                      "enableIov": "",
+                      "loadBalancingAlgorithm": ""
+                  },
+                  "overrideQosPolicy": false,
+                  "qosPolicyOverrides": {
+                      "priorityValue8021Action_Cluster": "7",
+                      "priorityValue8021Action_SMB": "3",
+                      "bandwidthPercentage_SMB": "50"
+                  },
+                  "overrideAdapterProperty": false,
+                  "adapterPropertyOverrides": {
+                      "jumboPacket": "9014",
+                      "networkDirect": "Enabled",
+                      "networkDirectTechnology": "RoCEv2"
+                  }
+              }
+          ]
+        },
+        "storageNetworkList": {
+          "value": [
+              {
+                  "name": "StorageNetwork1",
+                  "networkAdapterName": "SMB1",
+                  "vlanId": "711",
+                  "storageAdapterIPInfo": [
+                      {
+                          "physicalNode": "Node1",
+                          "ipv4Address": "10.0.1.1",
+                          "subnetMask": "255.255.255.0"
+                      },
+                      {
+                          "physicalNode": "Node2",
+                          "ipv4Address": "10.0.1.2",
+                          "subnetMask": "255.255.255.0"
+                      },
+                      {
+                          "physicalNode": "Node3",
+                          "ipv4Address": "10.0.5.3",
+                          "subnetMask": "255.255.255.0"
+                    }
+                  ]
+              },
+              {
+                  "name": "StorageNetwork2",
+                  "networkAdapterName": "SMB2",
+                  "vlanId": "711",
+                  "storageAdapterIPInfo": [
+                      {
+                          "physicalNode": "Node1",
+                          "ipv4Address": "10.0.2.1",
+                          "subnetMask": "255.255.255.0"
+                      },
+                      {
+                          "physicalNode": "Node2",
+                          "ipv4Address": "10.0.2.2",
+                          "subnetMask": "255.255.255.0"
+                      },
+                      {
+                          "physicalNode": "Node3",
+                          "ipv4Address": "10.0.4.3",
+                          "subnetMask": "255.255.255.0"
+                    }
+                  ]
+              },
+              {
+                "name": "StorageNetwork3",
+                "networkAdapterName": "SMB3",
+                "vlanId": "711",
+                "storageAdapterIPInfo": [
+                    {
+                        "physicalNode": "Node1",
+                        "ipv4Address": "10.0.5.1",
+                        "subnetMask": "255.255.255.0"
+                    },
+                    {
+                        "physicalNode": "Node2",
+                        "ipv4Address": "10.0.3.2",
+                        "subnetMask": "255.255.255.0"
+                    },
+                    {
+                        "physicalNode": "Node3",
+                        "ipv4Address": "10.0.3.3",
+                        "subnetMask": "255.255.255.0"
+                  }
+                ]
+            },
+            {
+              "name": "StorageNetwork4",
+              "networkAdapterName": "SMB4",
+              "vlanId": "711",
+              "storageAdapterIPInfo": [
+                  {
+                      "physicalNode": "Node1",
+                      "ipv4Address": "10.0.4.2",
+                      "subnetMask": "255.255.255.0"
+                  },
+                  {
+                      "physicalNode": "Node2",
+                      "ipv4Address": "10.0.6.1",
+                      "subnetMask": "255.255.255.0"
+                  },
+                  {
+                      "physicalNode": "Node3",
+                      "ipv4Address": "10.0.6.3",
+                      "subnetMask": "255.255.255.0"
+                }
+              ]
+          }
+          ]
+        },
+        "secretsLocation": {
+          "value": "https://ThreeNClusterKeyVault.vault.azure.net"
+        },
+        "networkingType": {
+          "value": "switchlessMultiServerDeployment"
+        },
+        "customLocation": {
+          "value": "MasMaria"
+        },
+        "deploymentMode": {
+          "value": "Validate"
+        }
+    }
+  }

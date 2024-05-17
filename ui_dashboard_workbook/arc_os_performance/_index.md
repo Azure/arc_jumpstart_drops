@@ -8,7 +8,7 @@ description: >
 
 ## Azure Arc-enabled servers OS Performance Workbook
 
-This Jumpstart Drop provides an Azure Monitor workbook that is intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.
+This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.
 
 ## Contributors
 
