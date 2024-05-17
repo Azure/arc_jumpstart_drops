@@ -15,12 +15,13 @@ jobs:
       uses: actions/checkout@v2
     
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '22'
+        node-version: 20.9.0
 
     - name: Install dependencies
-      run: npm ci
+      #run: npm install .github/content-validator
+      run: npm install node-fetch
 
     - name: Get the Drop schema json
       id: changed-files-specific
@@ -43,4 +44,4 @@ jobs:
         changed_files=$(echo "${ALL_CHANGED_FILES}" | tr '\n' ' ')
         
         echo "Changed files: $changed_files"
-        node validator.js changed_files
+        node ./.github/content-validator/validator.js $changed_files

@@ -1,5 +1,6 @@
 
 /node_modules
 package-lock.json
-package.json
 /.vscode
+/.github/content-validator/node_modules
+pull_request.json

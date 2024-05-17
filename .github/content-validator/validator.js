@@ -2,6 +2,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fetch from 'node-fetch';
+import fs from 'fs';
 
 class ProfanityEngine {
     constructor(config) {
@@ -102,7 +103,7 @@ class ProfanityEngine {
             if (sentence.trim().length === 0) {
                 return;
             }
-            
+
             const cleanedSentence = sentence.replace(/\s{2,}/g, ' ');
             const words = cleanedSentence.split(/\s+/).filter(word => word.trim().length > 0);
             const lowerCasedTerms = this.terms.map(term => term.toLowerCase());
@@ -143,7 +144,8 @@ class ProfanityEngine {
             const content = await response.text();
             const engine = new ProfanityEngine();
             await engine.initialize();
-            return await engine.hasCurseWords(content, "_index.md");
+            const fileName = url.split('/').pop();
+            return await engine.hasCurseWords(content, fileName);
         } catch (err) {
             console.error('Error checking URL content for profanity:', err);
             return false;
@@ -171,25 +173,79 @@ class ProfanityEngine {
 
 const engine = new ProfanityEngine();
 const urlsOrFilePaths = process.argv.slice(2);
+console.log('🚀 - Starting content validation...');
+
+const dropsFilePaths = urlsOrFilePaths.filter(urlOrFilePath => urlOrFilePath.includes('drops/'));
+if (dropsFilePaths.length > 1) {
+    console.warn('⚠️ - Warning - Multiple Drop JSON files found. Only the first file will be kept.');
+    dropsFilePaths.splice(1);
+} else if (dropsFilePaths.length === 0) {
+    console.warn('⚠️ - Warning - Drop JSON schema not found.');
+} else {
+    console.log('✅ - Success - Drop JSON schema found.');
+    const jsonData = JSON.parse(fs.readFileSync(dropsFilePaths[0], 'utf-8'));
+    const source = jsonData.Source;
+    console.log(' ℹ️ - Source:', source);
+    if (source.includes('arc_jumpstart_drops')) {
+        console.log(' ℹ️ - Drop hosted in Arc Jumpstart Drops, no extra fetch.');
+    } else {
+        console.log(' ℹ️ - Source hosted externally.');
+        console.log(' ℹ️ - Attempting to get README or Index.');
+
+        const sourceUrlParts = source.split('/');
+        const org = sourceUrlParts[3];
+        const repo = sourceUrlParts[4];
+        console.log(' ℹ️ - Org:', org);
+        console.log(' ℹ️ - Repo:', repo);
+
+        const readmeUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/README.md`;
+        console.log(' ℹ️ - README URL:', readmeUrl);
+        const readmeResponse = await fetch(readmeUrl);
+        if (readmeResponse.ok) {
+            console.log('✅ - Success - README.md found.');
+            urlsOrFilePaths.push(readmeUrl);
+        } else {
+            console.log(' ℹ️ - README.md not found. Attempting to get Index.md.');
+            const indexUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/index.md`;
+            console.log(' ℹ️ - Index URL:', indexUrl);
+            const indexResponse = await fetch(indexUrl);
+            if (indexResponse.ok) {
+                console.log('✅ - Success - Index.md found.');
+                urlsOrFilePaths.push(indexUrl);
+            } else {
+                console.log(' ℹ️ - Index.md not found. Attempting to get _index.md.');
+                const indexUnderUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/_index.md`;
+                console.log(' ℹ️ - Index URL:', indexUnderUrl);
+                const indexUnderResponse = await fetch(indexUnderUrl);
+                if (indexUnderResponse.ok) {
+                    console.log('✅ - Success - _index.md found.');
+                    urlsOrFilePaths.push(indexUnderUrl);
+                } else {
+                    console.log('❌ - Error - README.md, Index.md, and _index.md not found.');
+                }
+            }
+        }
+    }
+}
+
+console.log(' ℹ️ - Checking the following URLs or file paths:', urlsOrFilePaths);
 
 const promises = urlsOrFilePaths.map(urlOrFilePath => {
-  if (urlOrFilePath.startsWith('http')) {
-    return engine.checkURLContentForProfanity(urlOrFilePath);
-  } else {
-    return engine.checkFileContentForProfanity(urlOrFilePath);
-  }
+    if (urlOrFilePath.startsWith('http')) {
+        return engine.checkURLContentForProfanity(urlOrFilePath);
+    } else {
+        return engine.checkFileContentForProfanity(urlOrFilePath);
+    }
 });
 
 Promise.all(promises)
-  .then(results => {
-    const curseWords = results.flat();
-    if (curseWords.length > 0) {
-      console.warn('❌ - Error - Validation failed, curse words found');
-      console.table(curseWords, ['fileName', 'word', 'sentenceNumber']);
-    } else {
-      console.log('✅ - Success - Content validation passed.');
-    }
-  })
-  .catch(error => {
-    console.error('❌ - Error - Content validation failed:', error);
-  });
+    .then(results => {
+        const curseWords = results.flat();
+        if (curseWords.length > 0) {
+            console.warn('❌ - Error - Validation failed, curse words found');
+            console.table(curseWords, ['fileName', 'word', 'sentenceNumber']);
+        } else {
+            console.log('✅ - Success - Content validation passed.');
+            console.log('🚀 - Finished content validation...');
+        }
+    });
