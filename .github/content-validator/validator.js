@@ -20,7 +20,8 @@ class ProfanityEngine {
         this.filePath = await this.getLanguageFilePath(this.language);
         try {
             const fileContent = await this.readFileAndSplit(this.filePath);
-            this.terms = fileContent;
+            const modifiedFileContent = fileContent.map(line => line.replace(/\r/g, ''));
+            this.terms = modifiedFileContent;
         } catch (err) {
             if (!this.isTestMode) {
                 console.warn('Profanity words issue:', `Error reading file: ${err.message}`);
@@ -94,6 +95,13 @@ class ProfanityEngine {
             await this.initialize();
         }
 
+        if (fileName.endsWith('.json')) {
+            const jsonData = JSON.parse(content);
+            const jsonString = JSON.stringify(jsonData);
+            const words = jsonString.replace(/[^\w\s"]/g, ' ').replace(/\'/g, '').replace(/\"/g, '').split(/\s+/).filter(word => word.trim().length > 0);
+            content = words.join(' ');
+        }
+
         const curseWords = [];
         const lines = content.split('\n');
         let sentenceNumber = 0;
@@ -107,10 +115,10 @@ class ProfanityEngine {
             const cleanedSentence = sentence.replace(/\s{2,}/g, ' ');
             const words = cleanedSentence.split(/\s+/).filter(word => word.trim().length > 0);
             const lowerCasedTerms = this.terms.map(term => term.toLowerCase());
-
             words.forEach((word, index) => {
                 const lowerCasedWord = word.toLowerCase();
                 if (lowerCasedTerms.includes(lowerCasedWord)) {
+                    console.log('❌ - Curse word found:', lowerCasedWord);
                     curseWords.push({ fileName, word: lowerCasedWord, sentenceNumber });
                 }
             });
@@ -244,8 +252,10 @@ Promise.all(promises)
         if (curseWords.length > 0) {
             console.warn('❌ - Error - Validation failed, curse words found');
             console.table(curseWords, ['fileName', 'word', 'sentenceNumber']);
+            return process.exit(1);
         } else {
             console.log('✅ - Success - Content validation passed.');
             console.log('🚀 - Finished content validation...');
+            return process.exit(0);
         }
     });
