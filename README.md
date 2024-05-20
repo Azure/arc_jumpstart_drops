@@ -6,7 +6,7 @@ Welcome to the Arc Jumpstart Drops repository! This repository is your go-to res
   <img src="./img/drops_banner.png" alt="Arc Jumpstart logo" width="700">
 </p>
 
-To get started, please carefully read our [Contributing guidelines](./CONTRIBUTING.md). For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
+To get started, please carefully read our [Contributing guidelines](https://aka.ms/JumpstartDropsContribute). For any other question, check [Frequently Asked Questions (FAQ)](./FAQ.md) or submit an [Issue](./issues).
 
 Please note that before contributing or using any Arc Jumpstart Drop, it's important to carefully review our [disclaimer](./DISCLAIMER.md). This will help you understand the risks and limitations associated with the use of all Drops.
 
@@ -50,7 +50,7 @@ Your input and contributions are highly valued! If you have suggestions, feedbac
 This project welcomes contributions and suggestions. Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant Arc Jumpstart team the rights to use your contribution. For details, visit [Microsoft CLA](https://cla.opensource.microsoft.com).
 
-For more information about the Contribution process, see [Contributing](./CONTRIBUTING.md) guide.
+For more information about the Contribution process, see [Contributing](https://aka.ms/JumpstartDropsContribute) guidelines.
 
 ## Trademarks
 
