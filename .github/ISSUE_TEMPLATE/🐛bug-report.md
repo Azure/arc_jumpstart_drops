@@ -9,7 +9,7 @@ assignees: fcabrera23
 
 <!--- 🛑 Please check existing issues first before continuing: https://github.com/microsoft/azure_arc/issues --->
 
-<!---  Disclaimer: The intent of this "Bug report" template is to address issues related to the Azure Arc Jumpstart Drops, and all other project ares. The Azure Arc Jumpstart team does not handle the Drops code and feature requests and will try to assist on a best-effort basis. For other Azure Arc Jumpstart product issues or feature requests/feedback, please create an official [Azure Arc Jumpstart issue](https://github.com/microsoft/azure_arc/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=). --->
+<!---  Disclaimer: The intent of this "Bug report" template is to address issues related to the Arc Jumpstart Drops, and all other project ares. The Arc Jumpstart team will try to assist on a best-effort basis. For other Arc Jumpstart product issues or feature requests/feedback, please create an official [Arc Jumpstart issue](https://github.com/microsoft/azure_arc/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=). --->
 
 **Is your issue related to a Jumpstart Drop?**
 <!--- A link to the Jumpstart scenario you are working on. --->
