@@ -13,7 +13,8 @@
     "Type": "script_automation",
     "Difficulty": "Beginner",
     "ProgrammingLanguage": [
-        "Batch"
+        "Batch",
+        "PowerShell"
     ],
     "Products": [
         "Windows 11 IoT Enterprise"
