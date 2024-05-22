@@ -1,0 +1,20 @@
+{
+    "Title" : "Overview of MQTT topics per EventGrid namespace client",
+    "Summary" : "This drop show how to combine all Azure EventGrid namespace clients, client groups, topic spaces, and permission bindings, listing all topics with their permissions for each MQTT broker client.",
+    "Description" : "Demonstrator and library for reading all Azure EventGrid namespace clients, client groups, topic spaces, and permission bindings. These are combined to list all topics with their permissions for each MQTT broker client. You can use this library in your own applications.",
+    "Cover": "https://github.com/sandervandevelde/MqttBrokerGraphApp/blob/main/images/client-topics-01.png", 
+    "Authors" : [
+      {
+          "Name" : "Sander van de Velde",
+          "Link" : "https://www.linkedin.com/in/sandervandevelde"
+      }
+    ], 
+    "Source" : "https://github.com/sandervandevelde/MqttBrokerGraphApp",
+    "Type" : "sample_app",
+    "Difficulty" : "Medium",
+    "ProgrammingLanguage" : [ "C#/.Net" ] ,
+    "Products" : ["Azure EventGrid Namespace"],
+    "LastModified" : "2024-05-22T00:00:00.000Z",
+    "CreatedDate" : "2024-05-22T00:00:00.000Z",
+    "Topics" : []
+  }
