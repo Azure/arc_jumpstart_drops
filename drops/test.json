@@ -1,0 +1,29 @@
+{
+    "Title": "Simulate an ONVIF camera with RTSP",
+    "Summary": "This Jumpstart Drop provides a way to simulate an ONVIF camera and serve an RTSP feed with an MP4 file. It is particularly useful for testing and development purposes when you need to simulate a camera feed in a Docker/Kubernetes environment.",
+    "Description": "This project provides a set of tools and instructions for mocking an ONVIF-compliant IP camera and passing an RTSP stream to simulate a live video stream. It can be run as a Docker container or built locally. Users can also mount a volume or folder with the container to simulate the RTSP camera with the mounted video file.",
+    "Cover": "",
+    "Authors": [
+        {
+            "Name": "Francisco Cabrera Lieutier",
+            "Link": "https://www.linkedin.com/in/franciscocabreralieutier/"
+        },
+        {
+            "Name": "Laura Nicolas",
+            "Link": "https://www.linkedin.com/in/lauranicolasd"
+        }
+    ],
+    "Source": "https://github.com/fcabrera23/onvif-camera-mock",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "Python",
+        "C++"
+    ],
+    "Products": [
+        "Docker"
+    ],
+    "LastModified": "2024-03-15T18:25:43.511Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": ["ONVIF", "MP4", "RTSP"]
+}
