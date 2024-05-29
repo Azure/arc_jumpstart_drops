@@ -1,0 +1,20 @@
+{
+    "Title" : "Visualize Azure EventGrid MQTT messages on all incoming topics",
+    "Summary" : "This drop shows how to visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to '#'.",
+    "Description" : "This explorer tool can visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to '#'.",
+    "Cover": "https://github.com/sandervandevelde/MqttAuditApp/blob/main/assets/explorer-mainform.png", 
+    "Authors" : [
+      {
+          "Name" : "Sander van de Velde",
+          "Link" : "https://www.linkedin.com/in/sandervandevelde"
+      }
+    ], 
+    "Source" : "https://github.com/sandervandevelde/MqttAuditApp",
+    "Type" : "sample_app",
+    "Difficulty" : "Medium",
+    "ProgrammingLanguage" : [ "C#/.Net" ] ,
+    "Products" : ["Azure EventGrid Namespace"],
+    "LastModified" : "2024-05-22T00:00:00.000Z",
+    "CreatedDate" : "2024-05-22T00:00:00.000Z",
+    "Topics" : []
+  }

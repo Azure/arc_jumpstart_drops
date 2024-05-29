@@ -1,0 +1,20 @@
+{
+    "Title" : ".NET nanoFramework app with Azure EventGrid Namespace MQTT support",
+    "Summary" : "This drop show how to configure and deploy a .NET nanoFramework application running on an ESP32 as a client for Azure EventGrid Namespace MQTT support. The device is secured with certificates and supports MQTT features like sending and receiving messages and LWT",
+    "Description" : "Demonstrator for a .NET nanoFramework application running on an ESP32 as a client for Azure EventGrid Namespace MQTT support.",
+    "Cover": "https://github.com/sandervandevelde/Nanoframework-Cloud-MQTT-Broker-support/blob/main/assets/dotnet-nanoframework-flow.png", 
+    "Authors" : [
+      {
+          "Name" : "Sander van de Velde",
+          "Link" : "https://www.linkedin.com/in/sandervandevelde"
+      }
+    ], 
+    "Source" : "https://github.com/sandervandevelde/Nanoframework-Cloud-MQTT-Broker-support",
+    "Type" : "sample_app",
+    "Difficulty" : "Medium",
+    "ProgrammingLanguage" : [ "C#/.Net" ] ,
+    "Products" : ["Azure EventGrid Namespace"],
+    "LastModified" : "2024-05-22T00:00:00.000Z",
+    "CreatedDate" : "2024-05-22T00:00:00.000Z",
+    "Topics" : []
+  }
