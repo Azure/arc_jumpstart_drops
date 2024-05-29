@@ -17,7 +17,7 @@ helm install akri akri-helm-charts/akri `
 Write-Host "Downloading video artifacts"
 
 New-Item -Path $videoDir -ItemType directory -Force
-Invoke-WebRequest ("https://jsfiles.blob.core.windows.net/video/akri_is_dope.mp4") -OutFile $videoDir\video.mp4  
+Invoke-WebRequest ("https://jumpstartprodsg.blob.core.windows.net/video/akri_is_dope.mp4") -OutFile $videoDir\video.mp4  
 Invoke-WebRequest ($templateBaseUrl + "artifacts/video/video-streaming.yaml") -OutFile $videoDir\video-streaming.yaml
 Invoke-WebRequest ($templateBaseUrl + "artifacts/video/akri-video-streaming-app.yaml") -OutFile $videoDir\akri-video-streaming-app.yaml
 kubectl apply -f $videoDir\akri-video-streaming-app.yaml
