@@ -1,5 +1,5 @@
 {
-  "Title": "MEC/Edge app solution accelerator based on Azure IoT Operations",
+  "Title": "MEC/Edge app solution accelerator with AIO",
   "Summary": "This Jumpstart Drop provides a comprehensive example reference application implementing live video analytics at the edge.",
   "Description": "This comprehensive example application provides a solution for implementing and deploying a live video analytics application at the edge with guidance on how to implement a light microservices and event-driven pub/sub application for the edge.",
   "Cover": "",
