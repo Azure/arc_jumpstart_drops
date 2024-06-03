@@ -1,0 +1,31 @@
+{
+  "Title": "MEC/Edge app solution accelerator with AIO",
+  "Summary": "This Jumpstart Drop provides a comprehensive example reference application implementing live video analytics at the edge.",
+  "Description": "This comprehensive example application provides a solution for implementing and deploying a live video analytics application at the edge with guidance on how to implement a light microservices and event-driven pub/sub application for the edge.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Cesar De la Torre",
+      "Link": "https://www.linkedin.com/in/cesar-de-la-torre-b31b512"
+    }
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/mec_app_accelerator",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    ".NET/C#",
+    "Python",
+    "PowerShell",
+    "Bash"
+  ],
+  "Products": [
+    "AKS Edge Essentials",
+    "Azure IoT Operations",
+    "Azure IoT MQ",
+    "Azure IoT AKRI",
+    "Arc-enabled Servers",
+    "Azure Private 5G Core",
+    "MongoDB"
+  ],
+  "Topics": []
+}
