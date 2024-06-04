@@ -9,8 +9,8 @@
             "Link": "https://www.linkedin.com/in/anthonyjoint/"
         }
    ],
-    "Source": "https://github.com/ajoint/ESA_Single_Ubuntu_K3",
-    "Type": "sample_app",
+    "Source": "https://github.com/esa_jumpstart_drops/esa_ubuntu_k3_single",
+    "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
         "Kubernetes"
