@@ -1,5 +1,7 @@
 # This example can be used to install ESA on an Ubuntu system with K3s. 
 
+> ⚠️ **Disclaimer:** The Edge Storage Accelerator is currently in public preview and not generally available. Access to the feature may be limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
+
 This example requires an Ubuntu machine or VM running K3s. We will Arc Connect the system through this example. 
 You will need to create a storage account and provide your storage account name and container name in the below variables: 
 
