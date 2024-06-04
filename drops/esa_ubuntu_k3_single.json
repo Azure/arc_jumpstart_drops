@@ -1,0 +1,24 @@
+{
+    "Title": "Create ESA instance on Single Node Ubuntu K3s",
+    "Summary": "This Jumpstart Drop provides kubernetes files to create an ESA Cache Volume instance on an install on Ubuntu wit K3s.",
+    "Description": "This project provides example kubernetes files to create an ESA Cache Volume backed by your storage account. See README.md for details on editing and executing these kubernetes files.",
+    "Cover": "",
+    "Authors": [
+        {
+            "Name": "Anthony Joint",
+            "Link": "https://www.linkedin.com/in/anthonyjoint/"
+        }
+   ],
+    "Source": "https://github.com/ajoint/ESA_Single_Ubuntu_K3",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "Kubernetes"
+    ],
+    "Products": [
+        "Kubernetes"
+    ],
+    "LastModified": "2024-05-29T10:42:43.511Z",
+    "CreatedDate": "2024-05-29T10:42:43.511Z",
+    "Topics": ["ESA","Arc"]
+}
