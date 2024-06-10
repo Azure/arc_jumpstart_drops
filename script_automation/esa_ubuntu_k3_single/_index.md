@@ -38,6 +38,13 @@ export ARCNAME="myArcClusterName" # will be used as displayname in portal
 export STORAGEACCOUNT="myStorageAccountName"
 export STORAGECONTAINER="nameOfContainerInStorageAccount"
 ```
+## Apply inotify.max_user_instance increase
+Apply this change to increase the inotify space for your Ubuntu system: 
+
+```bash
+echo 'fs.inotify.max_user_instances = 1024' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
 
 ## Arc Connect Kubernetes
 This command connects your Kubernetes cluster to Azure Arc for management and access to Azure Arc Extensions. 
