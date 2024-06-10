@@ -12,7 +12,7 @@
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
-    "Bash",
+    "Bash"
   ],
   "Products": [
     "Azure IoT Operations",
