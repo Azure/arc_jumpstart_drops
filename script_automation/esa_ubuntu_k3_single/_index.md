@@ -1,12 +1,12 @@
-# Edge Storage Accelerator Single Node K3s on Ubuntu
+# Edge Storage Accelerator (ESA) Single Node K3s on Ubuntu
 This example can be used to install ESA on an Ubuntu system with K3s. 
 
 > ⚠️ **Disclaimer:** The Edge Storage Accelerator is currently in public preview and not generally available. Access to the feature may be limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
 
-## Edge Storage Acclerator (ESA) Overview
+#### Edge Storage Acclerator (ESA) Overview
 ![Edge Storage Accelerator Diagram.](esa_diagram.jpg)
 
-## Prerequisites
+#### Prerequisites
 * Ubuntu 22.04 or similar VM or hardware that meets [ESA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
