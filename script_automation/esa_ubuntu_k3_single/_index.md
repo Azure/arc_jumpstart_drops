@@ -66,7 +66,7 @@ az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${A
 For this example, the components are separate and applied separately to the Kubernetes cluster to create the volume entities for ESA, however you can chose to combine them into a single yaml to reduce the number of config files you have to maintain. 
 
 ```bash
-./get_storage_key.sh -g ${RESOURCE_GROUP} -s ${STORAGEACCOUNT} -n "default"
+bash get_storage_key.sh -g ${RESOURCE_GROUP} -s ${STORAGEACCOUNT} -n "default"
 cat pv.template.yaml | sed "s/STORAGEACCOUNT/$STORAGEACCOUNT/g" | sed "s/STORAGECONTAINER/$STORAGECONTAINER/g" > pv.yaml
 kubectl apply -f pv.yaml
 kubectl apply -f pvc.yaml
