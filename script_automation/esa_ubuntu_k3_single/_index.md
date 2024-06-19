@@ -1,12 +1,12 @@
-# Edge Storage Accelerator Single Node K3s on Ubuntu
+# Edge Storage Accelerator (ESA) Single Node K3s on Ubuntu
 This example can be used to install ESA on an Ubuntu system with K3s. 
 
 > ⚠️ **Disclaimer:** The Edge Storage Accelerator is currently in public preview and not generally available. Access to the feature may be limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
 
-## Getting Started
-![Edge Storage Accelerator Diagram.](esa_diagram.jpg)
+#### Edge Storage Acclerator (ESA) Overview
+![Edge Storage Accelerator Diagram.](esa_diagram.PNG)
 
-## Prerequisites
+#### Prerequisites
 * Ubuntu 22.04 or similar VM or hardware that meets [ESA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
@@ -18,7 +18,7 @@ This example can be used to install ESA on an Ubuntu system with K3s.
 
 * Create a [Storage Account and container](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal)
 
-### Set your environment variables
+#### Getting Started
 Use the following table to determine the values to be used in the export block below. If you exit your shell during configuration before you have completed all the steps, you must re-export the variables before continuing.  
 
 |Variable        | Required Parameter                                             | Example |
@@ -38,8 +38,15 @@ export ARCNAME="myArcClusterName" # will be used as displayname in portal
 export STORAGEACCOUNT="myStorageAccountName"
 export STORAGECONTAINER="nameOfContainerInStorageAccount"
 ```
+#### Apply inotify.max_user_instance increase
+Apply this change to increase the inotify space for your Ubuntu system: 
 
-## Arc Connect Kubernetes
+```bash
+echo 'fs.inotify.max_user_instances = 1024' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+
+#### Arc Connect Kubernetes
 This command connects your Kubernetes cluster to Azure Arc for management and access to Azure Arc Extensions. 
 ```bash
 az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION}
