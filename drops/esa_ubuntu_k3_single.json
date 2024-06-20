@@ -1,0 +1,33 @@
+{
+    "Title": "Create an Edge Storage Accelerator (ESA) instance on a Single Node Ubuntu K3s system",
+    "Summary": "This Jumpstart Drop provides Kubernetes files to create an ESA Cache Volume instance on an install on Ubuntu with K3s.",
+    "Description": "This project provides example Kubernetes files to create an ESA Cache Volume backed by your storage account. See README.md for details on editing and executing these kubernetes files.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/script_automation/esa_ubuntu_k3_single/esa_diagram.PNG",
+    "Authors": [
+        {
+            "Name": "Anthony Joint",
+            "Link": "https://www.linkedin.com/in/anthonyjoint/"
+        }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/script_automation/esa_ubuntu_k3_single",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "Bash",
+        "YAML",
+        "JSON"
+    ],
+    "Products": [
+        "Kubernetes",
+        "K3s",
+        "Edge Storage Accelerator",
+        "Arc-enabled Kubernetes",
+        "ArcK8s"
+    ],
+    "LastModified": "2024-05-29T10:42:43.511Z",
+    "CreatedDate": "2024-05-29T10:42:43.511Z",
+    "Topics": [
+        "ESA",
+        "Arc"
+    ]
+}
