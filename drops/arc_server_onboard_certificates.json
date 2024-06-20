@@ -9,17 +9,18 @@
         "Link": "https://www.linkedin.com/in/psinnathurai/"
       }
     ],
-    "Source": "https://blog.sinnathurai.ch/post/20240529_azurearconboarding/",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tutorial_guide/arc_server_onboard_certificates",
     "Type": "tutorial_guide",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
         "PowerShell"
     ],
     "Products": [
+      "Arc-enabled servers",
       "Azure Monitor",
       "Arc"
     ],
-    "LastModified": "",
-    "CreatedDate": "",
+    "LastModified": "2024-06-20T00:00:00.000Z",
+    "CreatedDate": "2024-06-20T00:00:00.000Z",
     "Topics": []
   }
