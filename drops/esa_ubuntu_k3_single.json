@@ -8,17 +8,26 @@
             "Name": "Anthony Joint",
             "Link": "https://www.linkedin.com/in/anthonyjoint/"
         }
-   ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/script_automation/esa_ubuntu_k3_single
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/script_automation/esa_ubuntu_k3_single",
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "Bash","YAML","JSON"
+        "Bash",
+        "YAML",
+        "JSON"
     ],
     "Products": [
-        "Kubernetes","K3s","Edge Storage Accelerator","Arc-enabled Kubernetes","ArcK8s"
+        "Kubernetes",
+        "K3s",
+        "Edge Storage Accelerator",
+        "Arc-enabled Kubernetes",
+        "ArcK8s"
     ],
     "LastModified": "2024-05-29T10:42:43.511Z",
     "CreatedDate": "2024-05-29T10:42:43.511Z",
-    "Topics": ["ESA","Arc"]
+    "Topics": [
+        "ESA",
+        "Arc"
+    ]
 }
