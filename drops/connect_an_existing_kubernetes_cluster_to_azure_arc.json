@@ -1,0 +1,25 @@
+{
+    "Title": "Connect a Kubernetes cluster to Azure Arc",
+    "Summary": "This Drop provides a guide to onboarding an existing Kubernetes cluster to Azure Arc using the Azure CLI.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to onboard an existing Kubernetes cluster to Azure Arc.",
+    "Authors": [
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/connect_an_existing_kubernetes_cluster_to_azure_arc",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "Bash"
+    ],
+    "Products": [
+      "Arc",
+      "Arc-enabled Kubernetes"
+    ],
+    "LastModified": "",
+    "CreatedDate": "",
+    "Topics": []
+  }
