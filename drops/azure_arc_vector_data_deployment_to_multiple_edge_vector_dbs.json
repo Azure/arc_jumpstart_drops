@@ -1,5 +1,5 @@
 {
-  "Title": "Vector Data Deployment with Azure Arc & Azure IoT Operations",
+  "Title": "Vector Data Deployment to multiple edge Vector DBs",
   "Summary": "This Drop provides a vector data deployment pattern with Azure Arc & Azure IoT Operations via deploying the centralized vector data from cloud to synchronize edge vector DBs across multiple edge machines.",
   "Description": "This Jumpstart Drop provides a vector data deployment pattern that hosting a vector DB in the cloud as a central hub for RAG indexing, and deploying vector data to synchronize edge vector DBs across multiple edge machines. This approach ensures that RAG-on-Edge systems operate efficiently with up-to-date vector data content. It also offers an efficient method to restore vector DB data on edge machines in case of data loss.",
   "Cover": "",
