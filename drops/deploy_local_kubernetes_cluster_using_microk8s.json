@@ -1,5 +1,5 @@
 {
-    "Title": "Deploy a local Kubernetes cluster using MicroK8s and connect it to Azure Arc",
+    "Title": "Deploy a Kubernetes cluster using MicroK8s",
     "Summary": "This Drop provides a guide to creating a Kubernetes cluster using Microk8s and connecting it to Azure using the Azure CLI.",
     "Description": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using MicroK8s and connecting it to Azure Arc.",
     "Authors": [
