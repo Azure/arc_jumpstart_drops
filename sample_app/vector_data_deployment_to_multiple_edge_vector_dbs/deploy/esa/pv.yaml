@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    ### Create a name here ###
+    name: vectorsink-esa-pv
+    ### Use a namespace that matches your intended consuming pod, or "default" ###
+    namespace: azure-iot-operations
+spec:
+    capacity:
+        ### This storage capacity value is not enforced at this layer. ###
+        storage: 10Gi
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    storageClassName: esa
+    csi:
+        driver: edgecache.csi.azure.com
+        readOnly: false
+        ### Make sure this volumeid is unique in the cluster. You must specify it in the spec:volumeName of the PVC. ###
+        volumeHandle: vectorsink-esa-pv
+        volumeAttributes:
+            protocol: edgecache
+            edgecache-storage-auth: AccountKey
+            ### Fill in the next two/three values with your information. ###
+            secretName: vectordatasource-secret ### From the previous step, this name is "{YOUR_STORAGE_ACCOUNT}-secret" ###
+            ### If you use a non-default namespace, uncomment the following line and add your namespace. ###
+            secretNamespace: azure-iot-operations
+            containerName: rag-vdb  # replace with your container name
+

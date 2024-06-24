@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-vdb-dapr-workload
+  labels:
+    app: rag-vdb-dapr-workload
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag-vdb-dapr-workload
+  template:
+    metadata:
+      labels:
+        app: rag-vdb-dapr-workload
+
+    spec:
+      imagePullSecrets:
+         - name: <your-acr-k3s-secret>
+
+      containers:
+        - name: rag-vdb
+          image: <>
+          imagePullPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rag-vdb-service
+  labels:
+    app: rag-vdb-dapr-workload
+spec:
+  selector:
+    app: rag-vdb-dapr-workload
+  ports:
+    - protocol: TCP
+      port: 8602
+      targetPort: 8602
+  type: LoadBalancer
