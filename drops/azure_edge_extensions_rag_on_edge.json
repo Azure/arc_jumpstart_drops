@@ -1,0 +1,27 @@
+{
+  "Title": " with Azure Arc & Azure IoT Operations",
+  "Summary": "This Drop provides a Retrieval-Augmented Generation(RAG) on edge pattern that facilitates text searches within files utilizing a local vector-based approach Chroma DB and an edge Small/Large Language Model.",
+  "Description": "RAG on Edge is a tool to perform text searches within files using a vector-based approach, and generate a readable response based on the search result with Large/Small Language Model.
+The solution is independent from cloud services, and can be deployed to the edge device. The messaging system follows a pub/sub pattern, ensuring adaptability to diverse edge computing scenarios.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Cheng Chen",
+      "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
+    }
+  ],
+  "Source": "https://github.com/Azure-Samples/azure-edge-extensions-retrieval-augmented-generation",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Python",
+    "Shell"
+  ],
+  "Products": [
+    "Azure IoT Operations",  
+    "Arc"
+  ],
+  "LastModified": "2024-06-24T00:00:00.000Z",
+  "CreatedDate": "2024-06-24T00:00:00.000Z",
+  "Topics": []
+}
