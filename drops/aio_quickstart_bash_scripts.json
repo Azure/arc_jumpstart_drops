@@ -1,0 +1,29 @@
+{
+  "Title": "Azure IoT Operations (AIO) using GitHub Codespaces - Quickstart Bash Scripts",
+  "Summary": "A growing set of bash scripts to kickstart Azure IoT Operations in Github Codespaces using K3s.",
+  "Description": "This project provides a set of bash scripts to quickly set up and start Azure IoT Operations in Github Codespaces. These scripts are designed to automate the setup process, making it easier and faster to get started with Azure IoT Operations, or re-run scenarios and quickly move onto the next learning steps.",
+  "Authors": [
+    {
+      "Name": "Dan Benitah",
+      "Link": "https://www.linkedin.com/in/danbenitah"
+    }
+  ],
+  "Source": "https://github.com/danuw/aio-quickstart-bash-scripts",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Bash"
+  ],
+  "Products": [
+    "Azure IoT Operations",
+    "Arc",
+    "Arc-enabled Servers",
+    "Kubernetes",
+    "K3s",
+    "K9s",
+    "GitHub Codespaces"
+  ],
+  "LastModified": "2024-06-06T18:25:43.511Z",
+  "CreatedDate": "2024-06-06T10:30:16.201Z",
+  "Topics": []
+}
