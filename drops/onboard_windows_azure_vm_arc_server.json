@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/lauranicolasd"
     }
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/script_automation/azure_windows_vm_test",
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/azure_windows_vm_test",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [

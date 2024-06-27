@@ -17,7 +17,7 @@
       "Link": "https://www.linkedin.com/in/yu-jin-kim/"
     }
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/sample_app/deploy_akri_and_mock_camera/",
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/deploy_akri_and_mock_camera/",
   "Type": "sample_app",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
