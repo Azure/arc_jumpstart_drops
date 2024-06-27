@@ -9,7 +9,7 @@
         "Link": "https://www.linkedin.com/in/psinnathurai/"
       }
     ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/tutorial_guide/arc_server_onboard_certificates",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/arc_server_onboard_certificates",
     "Type": "tutorial_guide",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
