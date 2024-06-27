@@ -42,14 +42,34 @@ jobs:
           exit 1
         fi
         source_url=$(jq -r '.Source' ${{ steps.changed-files-specific.outputs.all_changed_files }})
+
+        echo "Base Repository: ${{ github.event.pull_request.head.repo.full_name }}"
         
+        ORG_USER=$(echo "${{ github.event.pull_request.head.repo.full_name }}" | cut -d'/' -f1)
+        echo "Organization/User: $ORG_USER"
+        
+        echo "Base Branch Name: ${{ github.event.pull_request.head.ref }}"
+
+        # Check if the source URL contains "Azure/arc_jumpstart_drops"
+        if echo "$source_url" | grep -q 'Azure/arc_jumpstart_drops'; then
+          # Replace "Azure" with the incoming PR org/user
+          echo "Replacing Azure with $ORG_USER"
+          echo "Before: $source_url"
+          source_url=$(echo "$source_url" | sed "s/Azure/$ORG_USER/")
+
+          # Replace "tree/main" with "tree/<name-of-branch>"
+          source_url=$(echo "$source_url" | sed 's/tree\/main/tree\/${{ github.event.pull_request.head.ref }}/')
+        fi
+
+        echo "New source URL: $source_url"
+
         # Use curl to check if the URL returns a 200 OK status code
         if curl --head --fail --silent "$source_url" >/dev/null; then
           echo "✅ Success - The Source: $source_url exists."
         else
-          echo "❌ Error - The $source_url does not exists."
+          echo "❌ Error - The $source_url does not exist."
           exit 1
-        fi
+        fi    
       
     - name : Check MIT License
       if: steps.changed-files-specific.outputs.any_changed == 'true'
