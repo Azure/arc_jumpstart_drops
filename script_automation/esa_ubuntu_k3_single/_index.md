@@ -1,4 +1,4 @@
-# Edge Storage Accelerator (ESA) Single Node K3s on Ubuntu
+## Edge Storage Accelerator (ESA) Single Node K3s on Ubuntu
 This example can be used to install ESA on an Ubuntu system with K3s. 
 
 > ⚠️ **Disclaimer:** The Edge Storage Accelerator is currently in public preview and not generally available. Access to the feature may be limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
