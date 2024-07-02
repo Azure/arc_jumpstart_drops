@@ -1,0 +1,39 @@
+name: Drop last modification validator
+on:
+  # Trigger this pipeliene every week, on Mondays, 9AM ET
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.9.0
+
+    - name: Install dependencies
+      run: npm install node-fetch
+
+    - name : Check content
+
+        # 1. Get all the JSON files under the "drops" folder
+
+        # 2. For each file, read the files as a JSON Object, and then read the property "LastModified"
+
+        # 3. Cast the "LastModified" proprety from string to date (format 2024-04-28T18:25:43.511Z)
+
+        # 4. Grab the "Source" URL to check the repository, and get when was the latest commit/change into the repository
+
+        # 5. Compare the date from "LastModified" vs the date that was obtained from step 4
+
+        # 6. If it's smaller, then a new chane was introduced to the repository, so we need to mark this Drop as changed in a table
+
+        # 7. If it's bigger or equal, we can mark this repository as correct
+
+        # 8. Show the results of the table, with one row pere each JSON file that is under Drops
+
+        # 9. If there's at least 1 Drop that was marked as modified, send a GitHub alert to specific users (fcabrera23, dskibry and likamrat)
