@@ -3,10 +3,10 @@ This example can be used to install ESA on an Ubuntu system with K3s.
 
 > ⚠️ **Disclaimer:** The Edge Storage Accelerator is currently in public preview and not generally available. Access to the feature may be limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
 
-#### Edge Storage Acclerator (ESA) Overview
+### Overview
 ![Edge Storage Accelerator Diagram.](esa_diagram.PNG)
 
-#### Prerequisites
+### Prerequisites
 * Ubuntu 22.04 or similar VM or hardware that meets [ESA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
@@ -18,7 +18,7 @@ This example can be used to install ESA on an Ubuntu system with K3s.
 
 * Create a [Storage Account and container](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal)
 
-#### Getting Started
+### Getting Started
 Use the following table to determine the values to be used in the export block below. If you exit your shell during configuration before you have completed all the steps, you must re-export the variables before continuing.  
 
 |Variable        | Required Parameter                                             | Example |
