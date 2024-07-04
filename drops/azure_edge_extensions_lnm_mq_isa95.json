@@ -1,7 +1,7 @@
 {
     "Title": "Azure Edge Extensions AIO ISA-95 LNM and MQ",
     "Summary": "This is a solution to build an ISA-95 network model on top of Azure IoT Operations utilizing AIO LNM and AIO MQ.",
-    "Description": "This repository defines two level of an ISA-95 network model and enables MQTT bridging between the layers for bidirectional communication. This sample also showcases how to implement a Kafka Connector to retrieve data from a cloud-based Kafka Broker.",
+    "Description": "This repository defines two levels of an ISA-95 network model and enables MQTT bridging between the layers for bidirectional communication. This sample also showcases how to implement a Kafka Connector to retrieve data from a cloud-based Kafka Broker.",
     "Cover": "",
     "Authors": [
         {
