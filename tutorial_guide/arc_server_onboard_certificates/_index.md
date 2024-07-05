@@ -1,20 +1,18 @@
-# Overview
+## Overview
 Azure Arc version 1.41 introduces certificate-based authentication for connecting and disconnecting servers, replacing the old method of using passwords. This new feature makes managing servers easier and more secure.
-
-In this article, I will explain how to set up and use certificates for Azure Arc-enabled servers. You will learn how to create a certificate using Active Directory Certificate Services, export the certificate, and use it for onboarding servers to Azure Arc. Additionally, I will cover common issues you might face and suggest ways to improve the process.
 
 By the end of this guide, you will be able to use certificates to securely manage and onboard your servers to Azure Arc.
 
 ![Meme](./artifacts/media/meme.jpg#center)
 
-# Why Use Certificates Instead of Secrets?
+## Why Use Certificates Instead of Secrets?
 Previously, secrets were used for onboarding Azure Arc-enabled servers. However, certificates offer several advantages:
 - **Simplified Management:** No need to remember or manage complex passwords.
 - **Centralized Control:** Certificates can be centrally managed, and revocation can be used to disable them.
 - **Enhanced Security:** Certificates support a zero-trust architecture by requiring verification at each step.
+- **Segration of Duties:** Shared passwords hinder segregation of duties, as admins performing onboarding must know the secret, which is typically stored in the script file.
 
-# Create a Certificate
-## Active Directory Certificate Services
+## Active Directory Certificate Services 
 To create a certificate for onboarding, we will use an internal Active Directory Certificate Services (AD CS) infrastructure. AD CS is a Windows Server role for issuing and managing a public key infrastructure (PKI), which creates, manages, distributes, stores, and revokes digital certificates.
 
 For more information, visit: [Active Directory Certificate Services Overview](https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/active-directory-certificate-services-overview)
@@ -180,7 +178,7 @@ In this step, we will create a Service Principal for onboarding Azure Arc-enable
    ![](./artifacts/media/000033.jpg#center)
 
 ## Onboarding the Server
-Finally, we proceed to onboard the server But I failed 
+Finally, we proceed to onboard the server.
 
 1. **Convert the Certificate from .PFX to .PEM:**
    - Convert the .PFX File to a .PEM File. You can use openSSL for the conversion.
@@ -231,11 +229,3 @@ Finally, we proceed to onboard the server But I failed
 At the end we see that the server was successfully onboarded.
 
 ![](./artifacts/media/000040.jpg#center)
-
-
-# Conclusion
-In conclusion, Azure Arc version 1.41 brings a valuable new feature: certificate-based authentication for onboarding servers. This change makes the process more secure by using certificates instead of passwords, making it easier to manage and control access centrally.
-
-This article provided a step-by-step guide on how to create and use certificates for Azure Arc. We covered setting up Active Directory Certificate Services, creating a certificate template, exporting the certificates, and creating a service principal for Azure Arc. We also discussed common problems and improvements needed to make the process smoother.
-
-Overall, using certificates instead of passwords for Azure Arc onboarding is a big improvement. It simplifies the process and enhances security. With continued updates and user feedback, Microsoft can make Azure Arc even easier and more secure to use for managing servers.
