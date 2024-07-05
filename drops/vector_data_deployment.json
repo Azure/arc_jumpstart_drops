@@ -9,17 +9,19 @@
       "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
     }
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/vector_data_deployment_to_multiple_edge_vector_dbs",
+  "Source": "https://github.com/Azure-Samples/azure-edge-extension-vector-data-deployment/tree/main",
   "Type": "sample_app",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
     "Python",
-    "JSON"
+    "Shell"
   ],
   "Products": [
     "Azure IoT Operations", 
     "Edge Storage Accelerator", 
-    "Arc"
+    "Arc",
+    "Chroma DB",
+    "Kubernetes"
   ],
   "LastModified": "2024-06-24T00:00:00.000Z",
   "CreatedDate": "2024-06-24T00:00:00.000Z",
