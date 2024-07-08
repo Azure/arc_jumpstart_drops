@@ -1,0 +1,27 @@
+{
+  "Title": "Multi-Modal Retrieval-Augmented Generation on Edge",
+  "Summary": "This Drop provides a multi-modal (image + text) RAG on edge pattern that facilitates multi-modal searches within files, utilizing a multi-modal vector search engine, Marqo, and a multi-modal Large Language Model, LLaVa.",
+  "Description": "Multimodal RAG on Edge is a tool to perform multi-modal searches, which allows image, text, or combination of both as the input query, within files using a multi-modal vector search engine, Marqo, and to generate a readable response based on the search result with LLAVA. The tool can help on machine troubleshooting on-site and more use cases. In this sample, we demonstrate how to use the tool as industry copilot to help people on construction site quickly troubleshoot the excavators. During the construction operation, when the excavators is broken, it is usually time-consuming for the staff on site to find the solution from the technical manual and the past troubleshooting logs or contact technical specialist for help. The edge multi-modal RAG tool serves as the industry copilot helping the operator staff to quickly fix the problems. The solution is independent from cloud services, and can be deployed to the edge machine.",
+  "Cover": "https://www.youtube.com/watch?v=_1syJchZwcM",
+  "Authors": [
+    {
+      "Name": "Cheng Chen",
+      "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
+    }
+  ],
+  "Source": "https://github.com/Azure-Samples/azure-edge-extensions-retrieval-augmented-generation-multimodel",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Python"
+  ],
+  "Products": [
+    "Azure IoT Operations",  
+    "Arc",
+    "Marqo",
+    "LLaVa"
+  ],
+  "LastModified": "2024-07-08T00:00:00.000Z",
+  "CreatedDate": "2024-07-08T00:00:00.000Z",
+  "Topics": ["RAG", "LLM", "Edge", "AI", "Multi-Modal"]
+}
