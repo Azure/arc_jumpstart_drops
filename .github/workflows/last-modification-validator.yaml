@@ -1,0 +1,21 @@
+name: Drop last modification validator
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 14 * * 1 America/New_York"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.9.0
+        
+    - name: Run script to check LastModified
+      run: node ./.github/date-validator/validator.js
