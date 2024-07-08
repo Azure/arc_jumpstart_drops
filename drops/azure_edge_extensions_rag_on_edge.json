@@ -22,10 +22,10 @@ The solution is independent from cloud services, and can be deployed to the edge
     "Arc",
     "Kubernetes",
     "Chroma DB",
-    "Phi-series Small Language Model",
-    "Llama2 Large Language Model",
+    "Phi3",
+    "Llama2",
   ],
-  "LastModified": "2024-06-24T00:00:00.000Z",
-  "CreatedDate": "2024-06-24T00:00:00.000Z",
-  "Topics": [SLM, RAG, LLM, AI]
+  "LastModified": "2024-07-08T00:00:00.000Z",
+  "CreatedDate": "2024-07-08T00:00:00.000Z",
+  "Topics": ["SLM", "RAG", "LLM", "AI", "Edge"]
 }
