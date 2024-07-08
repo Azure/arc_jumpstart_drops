@@ -3,7 +3,7 @@ name: Drop last modification validator
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 14 * * 1 America/New_York"
+    - cron: "0 14 * * 1"
 
 jobs:
   validate:
