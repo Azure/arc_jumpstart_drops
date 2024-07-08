@@ -6,6 +6,10 @@
       {
         "Name": "Lior Kamrat",
         "Link": "https://www.linkedin.com/in/liorkamrat/"
+      },
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
       }
     ],
     "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_ubuntu_server_vagrant_connect_azure_arc",
