@@ -40,7 +40,7 @@ jobs:
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       uses: GrantBirki/json-yaml-validate@v3.0.0
       with:
-        comment : "true"
+        comment : "false"
         files: ${{ env.ALL_CHANGED_FILES }}
         json_schema: .github/schemas/default_schema.json
 
