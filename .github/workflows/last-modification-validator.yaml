@@ -2,6 +2,8 @@ name: Drop last modification validator
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 14 * * 1 America/New_York"
 
 jobs:
   validate:
@@ -15,8 +17,5 @@ jobs:
       with:
         node-version: 20.9.0
         
-    - name: Install dependencies
-      run: npm install
-
     - name: Run script to check LastModified
-      run: node checkLastModified.js
+      run: node ./.github/date-validator/validator.js

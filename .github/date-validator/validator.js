@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').execSync;
 
-const auxDir = "C:\\Users\\fcabrera\\Documents\\GitHub\\arc_jumpstart_drops";
+const auxDir = "./";
 const dropsDir = path.join(auxDir, 'drops');
 const files = fs.readdirSync(dropsDir).filter(file => file.endsWith('.json'));
 
@@ -79,5 +79,6 @@ const processFile = (file) => {
 files.forEach(processFile);
 
 console.table(resultTableData);
-console.log(`Changes Found: ${changesFound}`);
-console.log(`Changed Drops: ${changedDrops}`);
+console.log(`Changed Drops`);
+console.log(changedDrops.join('\n'));
+process.exit(changesFound ? 1 : 0);
