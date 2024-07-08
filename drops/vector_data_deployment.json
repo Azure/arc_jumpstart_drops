@@ -1,0 +1,29 @@
+{
+  "Title": "Vector Data Deployment to Multiple Edge Vector DBs",
+  "Summary": "This Drop provides a vector data deployment pattern with Azure Arc & Edge Storage Accelerator via deploying the centralized vector data from cloud to synchronize edge vector DBs across multiple edge machines.",
+  "Description": "This Jumpstart Drop provides a vector data deployment pattern that hosting a vector DB in the cloud as a central hub for RAG indexing, and deploying vector data to synchronize edge vector DBs across multiple edge machines for your edge RAG application. This approach ensures that RAG-on-Edge systems operate efficiently with up-to-date vector data content. It also offers an efficient method to restore vector DB data on edge machines in case of data loss.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Cheng Chen",
+      "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
+    }
+  ],
+  "Source": "https://github.com/Azure-Samples/azure-edge-extension-vector-data-deployment/tree/main",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Python",
+    "Shell"
+  ],
+  "Products": [
+    "Edge Storage Accelerator", 
+    "Azure IoT Operations", 
+    "Arc",
+    "Chroma DB",
+    "Kubernetes"
+  ],
+  "LastModified": "2024-07-08T00:00:00.000Z",
+  "CreatedDate": "2024-07-08T00:00:00.000Z",
+  "Topics": ["Vector DB", "Data Deployment", "AI", "Edge", "RAG"]
+}
