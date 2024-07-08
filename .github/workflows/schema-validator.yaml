@@ -7,12 +7,16 @@ on:
       - canary
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write # enable write permissions for pull request comments
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Get the Drop schema json
       id: changed-files-specific
@@ -22,17 +26,27 @@ jobs:
 
     - name: List changed JSON schema files
       if: steps.changed-files-specific.outputs.any_changed == 'true'
-      env:
-        ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
       run: |
-        echo "✅ Success - List all the files that have changed: $ALL_CHANGED_FILES"
+            CHANGED_FILES="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+            # Convert spaces to newlines and format it for GitHub environment variable
+            FORMATTED_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n')
+
+            # Export formatted files to the GitHub environment variable
+            echo "ALL_CHANGED_FILES<<EOF" >> $GITHUB_ENV
+            echo "$FORMATTED_FILES" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            
+            # Log success message with the list of all changed files
+            echo "✅ Success - Listed all the files that have changed:"
+            echo "$FORMATTED_FILES"
 
     - name: Validate JSON
       if: steps.changed-files-specific.outputs.any_changed == 'true'
-      uses: docker://orrosenblatt/validate-json-action:latest
-      env:
-        INPUT_SCHEMA:  .github/workflows/default_schema.json
-        INPUT_JSONS: ${{ steps.changed-files-specific.outputs.all_changed_files }}
+      uses: GrantBirki/json-yaml-validate@v3.0.0
+      with:
+        comment : "true"
+        files: ${{ env.ALL_CHANGED_FILES }}
+        json_schema: .github/schemas/default_schema.json
 
     - name : Validate source repo
       if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -108,4 +122,3 @@ jobs:
           echo "❌ Error - The $license_url does not have a LICENSE file"
           exit 1
         fi
-        
