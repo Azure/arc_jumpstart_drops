@@ -81,7 +81,7 @@ const processFile = (file) => {
 
 const processFilesAsync = async () => {
     for (const file of files) {
-        await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10 seconds due to GitHub API rate limits
+        await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds due to GitHub API rate limits (60 requests per hour for unauthenticated requests)
         await processFile(file);
     }
 };
@@ -94,6 +94,7 @@ processFilesAsync()
         process.exit(changesFound ? 1 : 0);
     })
     .catch(error => {
+        console.table(resultTableData);
         console.error(error);
         process.exit(1);
     });
