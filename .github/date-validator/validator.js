@@ -19,12 +19,15 @@ const getCommitDataFromGitHub = (owner, repo, commitHash) => {
 const getLatestCommit = (owner, repo, sourceUrl) => {
     const pathAfterRepo = sourceUrl.split('/');
     let commitUrl = `https://api.github.com/repos/${owner}/${repo}/commits`;
-    if (pathAfterRepo.length > 5 && pathAfterRepo.slice(5).join('/') !== 'tree/main') {
-        console.log(pathAfterRepo.slice(5).join('/'));
-        console.log(sourceUrl);
-        commitUrl += `?path=${pathAfterRepo.slice(5).join('/')}`;
+    if (pathAfterRepo.length > 5 && pathAfterRepo.slice(5).join('/') !== 'tree/main' && pathAfterRepo.slice(5).join('/') !== 'tree/master') {
+        commitUrl += `?path=${pathAfterRepo.slice(5).join('/').replace('tree/master', '').replace('tree/main', '')}`;
     }
     const commitResponse = exec(`curl -s ${commitUrl}`).toString().trim();
+    console.log(commitUrl);
+    if(commitResponse === '[]') {
+        console.log(`No commits found for ${sourceUrl}`);
+        return null;
+    }
     return JSON.parse(commitResponse)[0];
 };
 
@@ -76,9 +79,21 @@ const processFile = (file) => {
     }
 };
 
-files.forEach(processFile);
+const processFilesAsync = async () => {
+    for (const file of files) {
+        await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10 seconds due to GitHub API rate limits
+        await processFile(file);
+    }
+};
 
-console.table(resultTableData);
-console.log(`Changed Drops`);
-console.log(changedDrops.join('\n'));
-process.exit(changesFound ? 1 : 0);
+processFilesAsync()
+    .then(() => {
+        console.table(resultTableData);
+        console.log(`Changed Drops`);
+        console.log(changedDrops.join('\n'));
+        process.exit(changesFound ? 1 : 0);
+    })
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
