@@ -2,14 +2,10 @@ name: Drop schema validator
 
 on:
   pull_request:
-    types: [opened, synchronize] 
+    types: [opened, synchronize, reopened, edited]
     branches:
       - canary
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pull-requests: write # enable write permissions for pull request comments
 
 jobs:
   validate:
@@ -97,28 +93,32 @@ jobs:
 
         echo "Organization: $organization"
         echo "Repository: $repository"
+        echo "Branch: ${{ github.event.pull_request.head.ref }}"
 
-        # Create the URL for the LICENSE file
-        license_url="https://raw.githubusercontent.com/$organization/$repository/main/LICENSE"
+        # Define potential license URLs
+        base_url="https://raw.githubusercontent.com/$organization/$repository"
+        license_files=("LICENSE" "LICENSE.md")
+        branches=("main" "master")
 
-        if curl --head --fail --silent "$license_url" >/dev/null; then
-          # If the LICENSE file exists, look for "MIT License" in the file
-          if curl --silent "$license_url" | grep -q 'MIT License'; then
-            echo "✅ Success - The $organization/$repository has an MIT license"
-          else
-            echo "❌ Error - The $license_url does not have an MIT license"
-            exit 1
+        check_license() {
+          url=$1
+          if curl --head --fail --silent "$url" >/dev/null; then
+            if curl --silent "$url" | grep -q 'MIT License'; then
+              echo "✅ Success - The $url has an MIT license"
+              exit 0
+            else
+              echo "❌ Error - The $url does not have an MIT license"
+              exit 1
+            fi
           fi
-        elif curl --head --fail --silent "$license_url/LICENSE.md" >/dev/null; then
-          # If the LICENSE.md file exists, look for "MIT" in the file
-          if curl --silent "$license_url/LICENSE.md" | grep -q 'MIT License'; then
-            echo "✅ Success - The $license_url has an MIT license"
-          else
-            echo "❌ Error - The $license_url does not have an MIT license"
-            exit 1
-          fi
-        else
-          # If neither file exists, output an error message
-          echo "❌ Error - The $license_url does not have a LICENSE file"
-          exit 1
-        fi
+        }
+
+        for branch in "${branches[@]}"; do
+          for file in "${license_files[@]}"; do
+            check_license "$base_url/$branch/$file"
+          done
+        done
+
+        # If neither LICENSE nor LICENSE.md exists on both branches
+        echo "❌ Error - No LICENSE file found in $organization/$repository on main or master branch"
+        exit 1
