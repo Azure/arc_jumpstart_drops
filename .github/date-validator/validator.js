@@ -23,7 +23,6 @@ const getLatestCommit = (owner, repo, sourceUrl) => {
         commitUrl += `?path=${pathAfterRepo.slice(5).join('/').replace('tree/master', '').replace('tree/main', '')}`;
     }
     const commitResponse = exec(`curl -s ${commitUrl}`).toString().trim();
-    console.log(commitUrl);
     if(commitResponse === '[]') {
         console.log(`No commits found for ${sourceUrl}`);
         return null;
@@ -89,7 +88,7 @@ const processFilesAsync = async () => {
 processFilesAsync()
     .then(() => {
         console.table(resultTableData);
-        console.log(`Changed Drops`);
+        console.log(`\n ----- Changed Drops ------ \n`);
         console.log(changedDrops.join('\n'));
         process.exit(changesFound ? 1 : 0);
     })
