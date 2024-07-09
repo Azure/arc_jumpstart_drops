@@ -25,5 +25,9 @@
     ],
     "LastModified": "2024-03-15T18:25:43.511Z",
     "CreatedDate": "2024-03-15T10:30:16.201Z",
-    "Topics": ["ONVIF", "MP4", "RTSP"]
+    "Topics": [
+        "ONVIF",
+        "MP4",
+        "RTSP"
+    ]
 }

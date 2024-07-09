@@ -21,7 +21,7 @@
     "Type": "sample_app",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "PowerShell", 
+        "PowerShell",
         "C#",
         "Dockerfile",
         "Shell"
