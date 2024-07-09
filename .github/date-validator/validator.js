@@ -19,12 +19,14 @@ const getCommitDataFromGitHub = (owner, repo, commitHash) => {
 const getLatestCommit = (owner, repo, sourceUrl) => {
     const pathAfterRepo = sourceUrl.split('/');
     let commitUrl = `https://api.github.com/repos/${owner}/${repo}/commits`;
-    if (pathAfterRepo.length > 5 && pathAfterRepo.slice(5).join('/') !== 'tree/main') {
-        console.log(pathAfterRepo.slice(5).join('/'));
-        console.log(sourceUrl);
-        commitUrl += `?path=${pathAfterRepo.slice(5).join('/')}`;
+    if (pathAfterRepo.length > 5 && pathAfterRepo.slice(5).join('/') !== 'tree/main' && pathAfterRepo.slice(5).join('/') !== 'tree/master') {
+        commitUrl += `?path=${pathAfterRepo.slice(5).join('/').replace('tree/master', '').replace('tree/main', '')}`;
     }
     const commitResponse = exec(`curl -s ${commitUrl}`).toString().trim();
+    if(commitResponse === '[]') {
+        console.log(`No commits found for ${sourceUrl}`);
+        return null;
+    }
     return JSON.parse(commitResponse)[0];
 };
 
@@ -40,7 +42,8 @@ const processFile = (file) => {
     const [_, owner, repo] = repoUrlMatch;
 
     if (owner === 'Azure' && repo === 'arc_jumpstart_drops') {
-        const gitCommand = `git log -n 1 --format=%H -- ${filePath}`;
+        const finalUrl = sourceUrl.replace('tree/', '').replace('main/', '').replace('master/','').replace('https://github.com/Azure/arc_jumpstart_drops/', '').replace('blob/', '')
+        const gitCommand = `git log -n 1 --format=%H -- ${finalUrl}`;
         const commitHash = exec(gitCommand).toString().trim();
         const commitData = getCommitDataFromGitHub(owner, repo, commitHash);
         const commitDate = commitData.author?.date ? new Date(commitData.author.date) : null;
@@ -76,9 +79,22 @@ const processFile = (file) => {
     }
 };
 
-files.forEach(processFile);
+const processFilesAsync = async () => {
+    for (const file of files) {
+        await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds due to GitHub API rate limits (60 requests per hour for unauthenticated requests)
+        await processFile(file);
+    }
+};
 
-console.table(resultTableData);
-console.log(`Changed Drops`);
-console.log(changedDrops.join('\n'));
-process.exit(changesFound ? 1 : 0);
+processFilesAsync()
+    .then(() => {
+        console.table(resultTableData);
+        console.log(`\n ----- Changed Drops ------ \n`);
+        console.log(changedDrops.join('\n'));
+        process.exit(changesFound ? 1 : 0);
+    })
+    .catch(error => {
+        console.table(resultTableData);
+        console.error(error);
+        process.exit(1);
+    });
