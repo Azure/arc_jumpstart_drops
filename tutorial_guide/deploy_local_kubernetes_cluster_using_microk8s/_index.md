@@ -80,7 +80,7 @@ This Jumpstart Drop will guide you through creating a Kubernetes cluster using M
 
   WSL2:
 
-  [Refer to the MicroK8s guide](https://microk8s.io/docs/install-wsl2)) to install MicroK8s in Windows Subsystem for Linux (WSL) 2.
+  [Refer to the MicroK8s guide](https://microk8s.io/docs/install-wsl2) to install MicroK8s in Windows Subsystem for Linux (WSL) 2.
 
 ### Connect the cluster to Azure Arc
 
