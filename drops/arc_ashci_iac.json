@@ -14,7 +14,7 @@
     "Difficulty" : "Medium",
     "ProgrammingLanguage" : [ "PowerShell", "JSON"] ,
     "Products" : ["Azure Stack HCI", "Arc"],
-    "LastModified" : "2024-04-28T18:25:43.511Z",
+    "LastModified" : "2024-05-16T19:43:52.000Z",
     "CreatedDate" : "2024-04-28T18:25:43.511Z",
     "Topics" : ["Azure Stack HCI", "IaC", "ARM", "Bicep", "Azure"]
   }
