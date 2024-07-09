@@ -29,7 +29,9 @@
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "Jupyter Notebook", "Shell", "Bicep"
+        "Jupyter Notebook",
+        "Shell",
+        "Bicep"
     ],
     "Products": [
         "Azure IoT Operations",

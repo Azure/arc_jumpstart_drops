@@ -27,5 +27,10 @@
     ],
     "LastModified": "2024-07-04T00:00:00.000Z",
     "CreatedDate": "2024-07-04T00:00:00.000Z",
-    "Topics": ["ISA-95", "Purdue Model", "MQTT Bridge", "KafkaConnector"]
+    "Topics": [
+        "ISA-95",
+        "Purdue Model",
+        "MQTT Bridge",
+        "KafkaConnector"
+    ]
 }
