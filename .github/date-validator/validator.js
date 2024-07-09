@@ -42,7 +42,8 @@ const processFile = (file) => {
     const [_, owner, repo] = repoUrlMatch;
 
     if (owner === 'Azure' && repo === 'arc_jumpstart_drops') {
-        const gitCommand = `git log -n 1 --format=%H -- ${filePath}`;
+        const finalUrl = sourceUrl.replace('tree/', '').replace('main/', '').replace('master/','').replace('https://github.com/Azure/arc_jumpstart_drops/', '').replace('blob/', '')
+        const gitCommand = `git log -n 1 --format=%H -- ${finalUrl}`;
         const commitHash = exec(gitCommand).toString().trim();
         const commitData = getCommitDataFromGitHub(owner, repo, commitHash);
         const commitDate = commitData.author?.date ? new Date(commitData.author.date) : null;
