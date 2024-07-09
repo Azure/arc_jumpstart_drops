@@ -4,6 +4,10 @@
     "Description": "This Jumpstart Drop provides a step-by-step guide to onboard an existing Kubernetes cluster to Azure Arc.",
     "Authors": [
       {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat/"
+      },
+      {
         "Name": "Mike Rhoads",
         "Link": "https://www.linkedin.com/in/mike-rhoads/"
       }
@@ -19,7 +23,7 @@
       "Arc",
       "Arc-enabled Kubernetes"
     ],
-    "LastModified": "",
-    "CreatedDate": "",
-    "Topics": []
+    "LastModified": "2024-07-09T00:00:00.00Z",
+    "CreatedDate": "2024-07-09T00:00:00.00Z",
+    "Topics": ["Kubernetes"]
   }
