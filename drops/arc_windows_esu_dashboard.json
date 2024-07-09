@@ -1,0 +1,26 @@
+{
+    "Title": "Azure Arc Windows ESU Dashboard",
+    "Summary": "The dashboard provides a comprehensive view of Azure Arc-enabled Windows and Linux servers, showcasing the installed Arc agent count, operating system distribution, agent version details, detected SQL instances, Windows ESU status, and the allowance and status of Azure Arc extensions.",
+    "Cover": "The dashboard provides a comprehensive view of Azure Arc-enabled Windows and Linux servers, showcasing the installed Arc agent count, operating system distribution, agent version details, detected SQL instances, Windows ESU status, and the allowance and status of Azure Arc extensions.",
+    "Authors": [
+      {
+        "Name": "Sarah Lean",
+        "Link": "https://www.linkedin.com/in/sazlean"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_windows_esu",
+    "Type": "ui_dashboard_workbook",
+    "Difficulty": "Low",
+    "ProgrammingLanguage": [
+      "JSON"
+    ],
+    "Products": [
+      "Azure Monitor",
+      "Dashboard",
+      "Arc",
+      "Arc-enabled Servers"
+    ],
+    "LastModified": "2024-07-09T18:25:43.511Z",
+    "CreatedDate": "2024-07-09T10:30:16.201Z",
+    "Topics": []
+  }
