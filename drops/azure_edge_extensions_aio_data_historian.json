@@ -14,7 +14,7 @@
     "Difficulty" : "Medium",
     "ProgrammingLanguage" : [ "Terraform/HCL" ] ,
     "Products" : ["Azure IoT Operations", "Arc", "InfluxDB"],
-    "LastModified" : "2024-04-18T00:00:00.000Z",
+    "LastModified" : "2024-04-18T21:11:23.000Z",
     "CreatedDate" : "2024-04-18T00:00:00.000Z",
     "Topics" : []
   }
