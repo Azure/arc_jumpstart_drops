@@ -17,7 +17,7 @@
     "Shell"
   ],
   "Products": [
-    "Azure IoT Operations",  
+    "Azure IoT Operations",
     "Arc",
     "Kubernetes",
     "Chroma DB",
@@ -26,5 +26,11 @@
   ],
   "LastModified": "2024-07-08T00:00:00.000Z",
   "CreatedDate": "2024-07-08T00:00:00.000Z",
-  "Topics": ["SLM", "RAG", "LLM", "AI", "Edge"]
+  "Topics": [
+    "SLM",
+    "RAG",
+    "LLM",
+    "AI",
+    "Edge"
+  ]
 }

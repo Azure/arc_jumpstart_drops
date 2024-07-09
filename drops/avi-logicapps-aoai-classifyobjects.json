@@ -22,5 +22,11 @@
   ],
   "LastModified": "2024-06-24T12:48:16.000Z",
   "CreatedDate": "2024-06-24T12:48:16.000Z",
-  "Topics": ["AI", "GPT4o", "VisionAI", "VideoIndexer", "LogicApps"]
+  "Topics": [
+    "AI",
+    "GPT4o",
+    "VisionAI",
+    "VideoIndexer",
+    "LogicApps"
+  ]
 }

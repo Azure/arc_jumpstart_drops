@@ -21,7 +21,7 @@
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "Shell", 
+        "Shell",
         "Bicep",
         "Dockerfile"
     ],
