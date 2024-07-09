@@ -1,7 +1,7 @@
 ---
 type: docs
-title: "Azure Arc Windows ESU Dashboard"
-linkTitle: "Azure Arc Windows ESU Dashboard"
+title: "Azure Arc Windows Extended Security Updates (ESU) Dashboard"
+linkTitle: "Azure Arc Windows Extended Security Updates (ESU) Dashboard"
 weight: 1
 description: >
 ---
@@ -13,14 +13,14 @@ This dashboard has been created to enable you to view several elements of the Wi
 * A count of what operating systems are being used by these Arc enabled servers
 * A view of what Arc agent version is installed
 * A count of any SQL instances that have been detected on the servers with Arc agents installed
-* Current Windows ESU assignment status
+* Current Windows EExtended Security Updates (ESU) assignment status
 * An overview of whether the Azure Arc is allowed to enable [extensions](https://learn.microsoft.com/azure/azure-arc/servers/manage-vm-extensions) or not.  And the status of some of the extensions if they are allowed to be used. 
 
 ## Contributors
 
 This Jumpstart Drop was originally written by the following contributors:
 
-- [Sarah Lean | Senior Technical Specialist at Microsoft](www.linkedin.com/in/lauranicolasd)
+- [Sarah Lean | Senior Technical Specialist at Microsoft](www.linkedin.com/in/sazlean)
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ This Jumpstart Drop was originally written by the following contributors:
 
 ### Import the Azure Monitor Workbook
 
-To import the workbook navigate to the [workbook directory](https://github.com/Azure/arc_jumpstart_drops/workbooks/arc_windows_esu)and run these Azure CLI commands:
+To import the workbook navigate to the [workbook directory](https://github.com/Azure/arc_jumpstart_drops/workbooks/arc_windows_esu) and run these Azure CLI commands:
 
 ```bash
 # Variables
