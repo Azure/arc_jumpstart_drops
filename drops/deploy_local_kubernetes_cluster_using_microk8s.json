@@ -1,0 +1,30 @@
+{
+    "Title": "Deploy a Kubernetes cluster using MicroK8s using a Windows VM",
+    "Summary": "This Drop provides a guide to creating a Kubernetes cluster using Microk8s and connecting it to Azure using the Azure CLI.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using MicroK8s on Windows and connecting it to Azure Arc.",
+    "Authors": [
+      {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat/"
+      },
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_local_kubernetes_cluster_using_microk8s",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "Bash"
+    ],
+    "Products": [
+      "Arc",
+      "Arc-enabled Kubernetes",
+      "MicroK8s"
+    ],
+    "LastModified": "2024-07-09T00:00:00.00Z",
+    "CreatedDate": "2024-07-09T00:00:00.00Z",
+    "Topics": ["Kubernetes", "MicroK8s"]
+  }
