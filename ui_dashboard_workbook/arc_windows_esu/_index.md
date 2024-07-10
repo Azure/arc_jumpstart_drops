@@ -30,6 +30,7 @@ This Jumpstart Drop was originally written by the following contributors:
 * Azure Subscription
 * Azure Arc-enabled servers reporting to your Azure subscription
 * Download this drop to get the necessary Dashboard template file
+* If you wish to deploy this dashboard via the Azure CLI you will need to [install the tool](https://learn.microsoft.com/cli/azure/install-azure-cli)
 
 ## Getting Started
 
