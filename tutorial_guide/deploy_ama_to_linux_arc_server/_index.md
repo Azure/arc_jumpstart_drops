@@ -6,7 +6,7 @@ This Drop will you guide you through using the Azure Monitor Agent on an existin
 
 - this Drop starts at the point where you have already deployed and connected one or more machines to Azure Arc.  If you need an Azure Arc-enabled server, search for other Drops or use a Jumpstart scenario like [Deploy a local Ubuntu server hosted with Vagrant and connect it Azure Arc](https://azurearcjumpstart.io/azure_arc_jumpstart/azure_arc_servers/vagrant/local_vagrant_ubuntu/)
 
-- [Install or update Azure CLI to the latest version](https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest). Use the below command to check your current installed version.
+- [Install or update Azure CLI to the latest version](https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest).
 
 - an existing resource group in Azure
 
@@ -80,6 +80,12 @@ Syslog
 ![Screenshot of KQL query showing Syslog records](./media/05-kql-syslog.png)
 
 
-The actual content of these queries will differ based on the activity occuring on your Arc-enabled server.
+The actual content of these queries will differ based on the activity occuring on your Arc-enabled server.  From here, you can run additional KQL queries or create alert rules based on the data being collected.
 
 ## Resources
+
+For more information on KQL, such as to build your own queries, refer to [Get started with log queries in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/get-started-queries).
+
+To learn more about data collection rules, refer to [Data Collection rules in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/data-collection-rule-overview).
+
+Finally, to learn more about the Azure Monitor Agent, refer to [Azure Monitor Agent overview](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-overview)
