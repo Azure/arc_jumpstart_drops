@@ -1,0 +1,30 @@
+{
+  "Title": "Deploy an Ubuntu 22.04 server with Vagrant",
+  "Summary": "This Drop provides a guide to creating an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
+  "Description": "This Jumpstart Drop provides a step-by-step guide to create an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
+  "Authors": [
+    {
+      "Name": "Lior Kamrat",
+      "Link": "https://www.linkedin.com/in/liorkamrat/"
+    },
+    {
+      "Name": "Mike Rhoads",
+      "Link": "https://www.linkedin.com/in/mike-rhoads/"
+    }
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_ubuntu_server_vagrant_connect_azure_arc",
+  "Type": "tutorial_guide",
+  "Difficulty": "Beginner",
+  "ProgrammingLanguage": [
+    "Bash"
+  ],
+  "Products": [
+    "Arc",
+    "Arc-enabled Servers",
+    "Ubuntu",
+    "Vagrant"
+  ],
+  "LastModified": "2024-07-08T19:23:47.000Z",
+  "CreatedDate": "2024-07-08T00:00:00.000Z",
+  "Topics": []
+}

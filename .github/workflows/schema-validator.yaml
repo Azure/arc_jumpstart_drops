@@ -2,7 +2,7 @@ name: Drop schema validator
 
 on:
   pull_request:
-    types: [opened, synchronize] 
+    types: [opened, synchronize, reopened, edited]
     branches:
       - canary
   workflow_dispatch:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Get the Drop schema json
       id: changed-files-specific
@@ -22,17 +22,27 @@ jobs:
 
     - name: List changed JSON schema files
       if: steps.changed-files-specific.outputs.any_changed == 'true'
-      env:
-        ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
       run: |
-        echo "✅ Success - List all the files that have changed: $ALL_CHANGED_FILES"
+            CHANGED_FILES="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+            # Convert spaces to newlines and format it for GitHub environment variable
+            FORMATTED_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n')
+
+            # Export formatted files to the GitHub environment variable
+            echo "ALL_CHANGED_FILES<<EOF" >> $GITHUB_ENV
+            echo "$FORMATTED_FILES" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            
+            # Log success message with the list of all changed files
+            echo "✅ Success - Listed all the files that have changed:"
+            echo "$FORMATTED_FILES"
 
     - name: Validate JSON
       if: steps.changed-files-specific.outputs.any_changed == 'true'
-      uses: docker://orrosenblatt/validate-json-action:latest
-      env:
-        INPUT_SCHEMA:  .github/workflows/default_schema.json
-        INPUT_JSONS: ${{ steps.changed-files-specific.outputs.all_changed_files }}
+      uses: GrantBirki/json-yaml-validate@v3.0.0
+      with:
+        comment : "false"
+        files: ${{ env.ALL_CHANGED_FILES }}
+        json_schema: .github/schemas/default_schema.json
 
     - name : Validate source repo
       if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -42,14 +52,34 @@ jobs:
           exit 1
         fi
         source_url=$(jq -r '.Source' ${{ steps.changed-files-specific.outputs.all_changed_files }})
+
+        echo "Base Repository: ${{ github.event.pull_request.head.repo.full_name }}"
         
+        ORG_USER=$(echo "${{ github.event.pull_request.head.repo.full_name }}" | cut -d'/' -f1)
+        echo "Organization/User: $ORG_USER"
+        
+        echo "Base Branch Name: ${{ github.event.pull_request.head.ref }}"
+
+        # Check if the source URL contains "Azure/arc_jumpstart_drops"
+        if echo "$source_url" | grep -q 'Azure/arc_jumpstart_drops'; then
+          # Replace "Azure" with the incoming PR org/user
+          echo "Replacing Azure with $ORG_USER"
+          echo "Before: $source_url"
+          source_url=$(echo "$source_url" | sed "s/Azure/$ORG_USER/")
+
+          # Replace "tree/main" with "tree/<name-of-branch>"
+          source_url=$(echo "$source_url" | sed 's/tree\/main/tree\/${{ github.event.pull_request.head.ref }}/')
+        fi
+
+        echo "New source URL: $source_url"
+
         # Use curl to check if the URL returns a 200 OK status code
         if curl --head --fail --silent "$source_url" >/dev/null; then
           echo "✅ Success - The Source: $source_url exists."
         else
-          echo "❌ Error - The $source_url does not exists."
+          echo "❌ Error - The $source_url does not exist."
           exit 1
-        fi
+        fi    
       
     - name : Check MIT License
       if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -63,29 +93,32 @@ jobs:
 
         echo "Organization: $organization"
         echo "Repository: $repository"
+        echo "Branch: ${{ github.event.pull_request.head.ref }}"
 
-        # Create the URL for the LICENSE file
-        license_url="https://raw.githubusercontent.com/$organization/$repository/main/LICENSE"
+        # Define potential license URLs
+        base_url="https://raw.githubusercontent.com/$organization/$repository"
+        license_files=("LICENSE" "LICENSE.md")
+        branches=("main" "master")
 
-        if curl --head --fail --silent "$license_url" >/dev/null; then
-          # If the LICENSE file exists, look for "MIT License" in the file
-          if curl --silent "$license_url" | grep -q 'MIT License'; then
-            echo "✅ Success - The $organization/$repository has an MIT license"
-          else
-            echo "❌ Error - The $license_url does not have an MIT license"
-            exit 1
+        check_license() {
+          url=$1
+          if curl --head --fail --silent "$url" >/dev/null; then
+            if curl --silent "$url" | grep -q 'MIT License'; then
+              echo "✅ Success - The $url has an MIT license"
+              exit 0
+            else
+              echo "❌ Error - The $url does not have an MIT license"
+              exit 1
+            fi
           fi
-        elif curl --head --fail --silent "$license_url/LICENSE.md" >/dev/null; then
-          # If the LICENSE.md file exists, look for "MIT" in the file
-          if curl --silent "$license_url/LICENSE.md" | grep -q 'MIT License'; then
-            echo "✅ Success - The $license_url has an MIT license"
-          else
-            echo "❌ Error - The $license_url does not have an MIT license"
-            exit 1
-          fi
-        else
-          # If neither file exists, output an error message
-          echo "❌ Error - The $license_url does not have a LICENSE file"
-          exit 1
-        fi
-        
+        }
+
+        for branch in "${branches[@]}"; do
+          for file in "${license_files[@]}"; do
+            check_license "$base_url/$branch/$file"
+          done
+        done
+
+        # If neither LICENSE nor LICENSE.md exists on both branches
+        echo "❌ Error - No LICENSE file found in $organization/$repository on main or master branch"
+        exit 1

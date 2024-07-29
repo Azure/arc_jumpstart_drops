@@ -12,7 +12,7 @@
     "properties": {
       "Title": {
         "type": "string",
-        "maxLength": 50
+        "maxLength": 100
       },
       "Summary": {
         "type": "string",

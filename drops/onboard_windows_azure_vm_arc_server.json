@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/lauranicolasd"
     }
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/script_automation/azure_windows_vm_test",
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/azure_windows_vm_test",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
@@ -21,7 +21,7 @@
     "Arc",
     "Arc-enabled Servers"
   ],
-  "LastModified": "2024-03-15T18:25:43.511Z",
+  "LastModified": "2024-06-27T19:37:21.000Z",
   "CreatedDate": "2024-03-15T10:30:16.201Z",
   "Topics": []
 }
