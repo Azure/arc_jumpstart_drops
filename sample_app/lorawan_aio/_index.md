@@ -15,7 +15,7 @@ We are looking at more and more devices using LaRaWAN as their communication pro
 
 ## Architecture
 
-![alt text](/images/architecture.png)
+![alt text](./images/architecture.png)
 
 ## Solution overview
 
