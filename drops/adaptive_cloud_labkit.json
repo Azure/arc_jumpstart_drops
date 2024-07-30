@@ -1,0 +1,29 @@
+{
+    "Title": "Unofficial Azure Adaptive Cloud Lab Kit x Arc Jumpstart ",
+    "Summary": "The Azure Adaptive Cloud Lab Kit x Arc Jumpstart is a physical NUC device which allows you to explore various kinds of Azure Adaptive Cloud solutions for hybrid cloud and edge computing, using technologies such as Azure Arc, Azure Stack HCI, and IoT.",
+    "Description": "The Unofficial Azure Adaptive Cloud Lab Kit x Arc Jumpstart allows you to explore various kinds of Azure Adaptive Cloud solutions for hybrid cloud and edge computing, using technologies such as Azure Arc, Azure Stack HCI, and Azure IoT. It provides a physical NUC device running Windows Server 2025 with a virtualization environment specially designed to work with home labs and edge scenarios. It also provides automated zero-to-hero scenarios for Azure Arc and Azure IoT using the Arc Jumpstart.",
+    "Cover": "https://www.thomasmaurer.ch/wp-content/uploads/2024/07/Azure-Adaptive-Cloud-Lab-Kit-x-Arc-Jumpstart.jpg",
+    "Authors": [
+        {
+            "Name": "Thomas Maurer",
+            "Link": "https://www.linkedin.com/in/thomasmaurer2"
+        }
+    ],
+    "Source": "https://github.com/thomasmaurer/AdaptiveCloudLabKit",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "PowerShell"
+    ],
+    "Products": [
+        "Azure Arc",
+        "Windows Server",
+        "AKS",
+        "NUC",
+        "Arc",
+        "IoT"
+    ],
+    "LastModified": "2024-07-25T13:54:39.000Z",
+    "CreatedDate": "2024-07-25T10:30:16.201Z",
+    "Topics": []
+}
