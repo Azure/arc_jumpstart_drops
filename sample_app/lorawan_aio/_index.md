@@ -2,7 +2,7 @@
 
 ## Introduction
 
-According to Lora Alliance, “LoRaWAN® is a Low Power, Wide Area (LPWA) networking protocol designed to wirelessly connect battery operated ‘things’ to the internet in regional, national or global networks, and targets key Internet of Things (IoT) requirements such as bi-directional communication, end-to-end security, mobility and localization services.”
+According to [LoRa Alliance](https://lora-alliance.org/), “LoRaWAN® is a Low Power, Wide Area (LPWA) networking protocol designed to wirelessly connect battery operated ‘things’ to the internet in regional, national or global networks, and targets key Internet of Things (IoT) requirements such as bi-directional communication, end-to-end security, mobility and localization services.”
 In simple terms, LoRaWAN® allows low-cost and low-power communication between devices and gateways within the range of physical buildings.
 Advantages of LoRaWAN®:
 
