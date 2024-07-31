@@ -47,14 +47,10 @@ For our example, we are going to be using Ubuntu VM to build the solution.
 sudo apt install git
 ````
 
-### Clone the repo
+### Download the drop's files
 
-- Clone this repo to your Ubuntu VM where you would be running Azure IoT Operations and other components.
-- Open a new terminal window
-
-```bash
-git clone https://github.com/nabeelmsft/LoRaWAN.git
-```
+- Download the content of this drop to your Ubuntu VM where you would be running Azure IoT Operations and other components.
+- Extract the contents of this drop into a folder. Here we are using LoRaWAN folder for reference.
 
 ### Python 3.8 or above
 
@@ -168,7 +164,6 @@ export LOCATION=eastus2
 export RESOURCE_GROUP="[Your_ResourceGroup]"
 
 # Name of the Arc-enabled cluster to create in your resource group
-
 export CLUSTER_NAME="[Your_Cluster_Name]"
 export CLUSTER_TARGET_NAME="[Your_Cluster_Target_Name]"
 export CLUSTER_PROCESSOR_NAME="[Your_Cluster_Processor_Name]"
