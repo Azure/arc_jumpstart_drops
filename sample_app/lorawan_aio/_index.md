@@ -12,7 +12,7 @@ Advantages of LoRaWAN®:
 - Devices using LoRa tech have extended/long battery lives
 - Supports bidirectionality such as command-and-control functionality
 
-We are looking at more and more devices using LaRaWAN as their communication protocol. For those systems that are based on LoRaWAN®, how can we incorporate with Azure IoT Operations? To this answer this question, we are going to implement a solution that takes data from LoRaWAN® based system and then pushes it to Azure IoT Operations. This is done using a custom broker that understands LoRaWAN® communication data and talks to Azure IoT operations using MQTT and portforwarding using a broker listener.
+We are seeing an increasing number of devices using LoRaWAN® as their communication protocol. For systems based on LoRaWAN®, how can we integrate them with Azure IoT Operations? To address this question, we will implement a solution that takes data from LoRaWAN®-based systems and pushes it to Azure IoT Operations. This solution uses a custom broker that understands LoRaWAN® communication data and communicates with Azure IoT Operations via MQTT, using port forwarding through a broker listener.
 
 ## Architecture
 
