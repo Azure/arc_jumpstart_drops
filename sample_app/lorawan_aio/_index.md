@@ -24,7 +24,7 @@ A typical LoRaWAN® based architecture comprises of:
 
 - LoRa Devices
 - LoRaWAN® Gateway
-- A network server [optional]
+- A network server (optional)
 
 The UDP data originates from a LoRa device in the field is sent to LoRaWAN® Gateways that are service multiple LoRa devices. Once the data reaches LoRaWAN® Gateways, it is forwarded to a network server using a Gateway Bridge that is part of the LoRaWAN® Gateway. Typically a network server would have applications registred that would process the incoming UDP data fro upstream systems.
 
