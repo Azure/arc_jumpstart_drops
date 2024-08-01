@@ -26,7 +26,7 @@ A typical LoRaWAN® based architecture comprises of:
 - LoRaWAN® Gateway
 - A network server (optional)
 
-The UDP data originates from a LoRa device in the field is sent to LoRaWAN® Gateways that are service multiple LoRa devices. Once the data reaches LoRaWAN® Gateways, it is forwarded to a network server using a Gateway Bridge that is part of the LoRaWAN® Gateway. Typically a network server would have applications registred that would process the incoming UDP data fro upstream systems.
+The LoRa device sends LoRaWAN messages/packets which then the packet forwarder will decrypt and create a UDP packet. The UDP packet is then forwarded to a network server using a Gateway Bridge that is part of the LoRaWAN® Gateway. Typically a network server would have applications registred that would process the incoming UDP data for upstream systems.
 
 In our case we will be using LWN Simulator to simulate LoRa devices and LoRaWAN® Gateways. Instead of using network server, we will be implementing our own custom LoRaWAN® Broker that will receive UDP data from LoRaWAN® Gateway simulator as part of LWN Simulator using Gateway Bridge.
 
