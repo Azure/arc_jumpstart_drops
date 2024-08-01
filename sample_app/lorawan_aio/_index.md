@@ -277,17 +277,17 @@ make build
 
 Finally, there are two modes to start the simulator:
 
-- from source (without building the source)
+- From source (without building the source)
 
-```bash
-make run
-```
+    ```bash
+    make run
+    ```
 
-- from the built binary
+- From the built binary
 
-```bash
-make run-release
-```
+    ```bash
+    make run-release
+    ```
 
 #### Running the LWN Simulator
 
