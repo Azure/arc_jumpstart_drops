@@ -28,7 +28,7 @@ A typical LoRaWAN® based architecture comprises of:
 
 The LoRa device sends LoRaWAN messages/packets which then the packet forwarder will decrypt and create a UDP packet. The UDP packet is then forwarded to a network server using a Gateway Bridge that is part of the LoRaWAN® Gateway. Typically a network server would have applications registred that would process the incoming UDP data for upstream systems.
 
-In our case we will be using LWN Simulator to simulate LoRa devices and LoRaWAN® Gateways. Instead of using network server, we will be implementing our own custom LoRaWAN® Broker that will receive UDP data from LoRaWAN® Gateway simulator as part of LWN Simulator using Gateway Bridge.
+In our case we will be using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN-Simulator) to simulate LoRa devices and LoRaWAN® Gateways. Instead of using network server, we will be implementing our own custom LoRaWAN® Broker that will receive UDP data from LoRaWAN® Gateway simulator as part of LWN Simulator using Gateway Bridge.
 
 After receiving LoRaWAN® UDP data, the custom LoRaWAN® Broker, would forward data to Azure IoT Operations using MQTT broker. This is how the data from simulated LoRa device would make it to Azure IoT operations through simulated LoRaWAN® Gateway and custom LoRaWAN® Broker.
 
