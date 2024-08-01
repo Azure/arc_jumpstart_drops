@@ -204,7 +204,7 @@ az iot ops init --subscription $SUBSCRIPTION_ID -g $RESOURCE_GROUP --cluster $CL
 
 #### A quick word about LWN Simulator
 
-To test the LoRaWAN® broker, we can use actual LoRaWAN® Gateway that can talk to LoRaWAN® Broker or we can use a simulator to simulate the communication between LoRaWAN® Gateway and LoRaWAN® Broker. In our case we are using <https://github.com/UniCT-ARSLab/LWN-Simulator>.  LWN Simulator is easy and simple to use and also has been sited by IEEE at: <https://ieeexplore.ieee.org/document/10477816>.
+To test the LoRaWAN® broker, we can use actual LoRaWAN® Gateway that can talk to LoRaWAN® Broker or we can use a simulator to simulate the communication between LoRaWAN® Gateway and LoRaWAN® Broker. In our case we are using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN-Simulator).  LWN Simulator is easy, simple to use and also has been sited by IEEE at: [LWN Simulator - A LoRaWAN Network Simulator](https://ieeexplore.ieee.org/document/10477816).
 
 #### Setting up environment for LWN Simulator
 
