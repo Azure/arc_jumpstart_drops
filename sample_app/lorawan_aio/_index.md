@@ -63,14 +63,14 @@ sudo apt install git
     - Before running the following steps, please make sure you have installed Python in previous step.
     - Open a new terminal window and run the following commands.
 
-```bash
+        ```bash
 
-# Please make sure we have python3-pip installed. If not please run following command.
-sudo apt install python3-pip
+        # Please make sure we have python3-pip installed. If not please run following command.
+        sudo apt install python3-pip
 
-# To install Paho MQTT Client, run the following command.
-pip3 install paho-mqtt
-```
+        # To install Paho MQTT Client, run the following command.
+        pip3 install paho-mqtt
+        ```
 
 ## Solution Build Steps
 
