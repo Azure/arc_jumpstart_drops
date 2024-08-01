@@ -1,5 +1,3 @@
-# LoRaWAN® with Azure IoT operations
-
 ## Introduction
 
 According to [LoRa Alliance](https://lora-alliance.org/), “LoRaWAN® is a Low Power, Wide Area (LPWA) networking protocol designed to wirelessly connect battery operated ‘things’ to the internet in regional, national or global networks, and targets key Internet of Things (IoT) requirements such as bi-directional communication, end-to-end security, mobility and localization services.”
