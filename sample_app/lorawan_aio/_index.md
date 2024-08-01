@@ -32,40 +32,36 @@ In our case we will be using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN
 
 After receiving LoRaWAN® UDP data, the custom LoRaWAN® Broker, would forward data to Azure IoT Operations using MQTT broker. This is how the data from simulated LoRa device would make it to Azure IoT operations through simulated LoRaWAN® Gateway and custom LoRaWAN® Broker.
 
-## System requirements
+## Prerequisites
 
 ### VM that can run Azure IoT operations
 
 For our example, we are going to be using Ubuntu VM to build the solution.
 
-## Prerequisites
+#### Required tools on VM
 
 - Git
-
-### Install Git
 
 ````bash
 sudo apt install git
 ````
 
-### Download the drop's files
+- Download the drop's files
+  - Download the content of this drop to your Ubuntu VM where you would be running Azure IoT Operations and other components.
+  - Extract the contents of this drop into a folder. Here we are using LoRaWAN folder for reference.
 
-- Download the content of this drop to your Ubuntu VM where you would be running Azure IoT Operations and other components.
-- Extract the contents of this drop into a folder. Here we are using LoRaWAN folder for reference.
+- Python 3.8 or above
+  - Install <https://www.python.org/>
 
-### Python 3.8 or above
+- Paho MQTT Client Library
 
-- Install <https://www.python.org/>
+  - For LoRaWAN Broker, we will be leveraging Paho library to post messages to MQTT topic using from LoRaWAN Broker.
+  - For details about the Paho library, please visit: <https://pypi.org/project/paho-mqtt/>
 
-### Paho MQTT Client Library
+  - Install steps for Paho MQTT Library
 
-- For LoRaWAN Broker, we will be leveraging Paho library to post messages to MQTT topic using from LoRaWAN Broker.
-- For details about the Paho library, please visit: <https://pypi.org/project/paho-mqtt/>
-
-#### Install steps for Paho MQTT Library
-
-- Before running the following steps, please make sure you have installed Python in previous step.
-- Open a new terminal window
+    - Before running the following steps, please make sure you have installed Python in previous step.
+    - Open a new terminal window and run the following commands.
 
 ```bash
 
