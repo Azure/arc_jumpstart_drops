@@ -40,9 +40,9 @@ For our example, we are going to be using Ubuntu VM to build the solution.
 
 ## Prerequisites
 
-### Git
+- Git
 
-#### Install Git
+### Install Git
 
 ````bash
 sudo apt install git
