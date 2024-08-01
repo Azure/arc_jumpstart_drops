@@ -76,11 +76,11 @@ sudo apt install git
 
 ### Step 1 - Building an Ubuntu VM running Azure IoT Operation
 
-#### Complete the prerequisite steps for Prepare your Azure Arc-enabled Kubernetes cluster on Ubuntu
+#### Prepare your Azure Arc-enabled Kubernetes cluster on Ubuntu
 
-<https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster?tabs=ubuntu>
+Complete the prerequisites steps for [Prepare your Azure Arc-enabled Kubernetes cluster](https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster?tabs=ubuntu).
 
-Using the above mentioned documenation, we get the following scripts. Please note that these steps are based on the <https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster?tabs=ubuntu> documentation. Please update your deployment scripts accordingly.
+**_NOTE:_** Using the above mentioned documenation, we get the following scripts under "Ubuntu VM Install Steps" section. Please update your deployment scripts accordingly.
 
 #### Ubuntu VM Install Steps
 
