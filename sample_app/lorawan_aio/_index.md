@@ -51,7 +51,7 @@ sudo apt install git
   - Extract the contents of this drop into a folder. Here we are using LoRaWAN folder for reference.
 
 - Python 3.8 or above
-  - Install <https://www.python.org/>
+  - Install [Python 3.8](https://www.python.org/)
 
 - Paho MQTT Client Library
 
