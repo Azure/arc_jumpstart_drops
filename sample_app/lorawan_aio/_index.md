@@ -509,7 +509,7 @@ python3 listen.py
 - Click "Apply".
 - Our next step is to configure "+Add stages". Click "+Add stages" and choose "Transform" as shown below:
 ![alt text](./images/AddStage.png)
-- On the "Stage: Transorm" page, enter the name and description. Please make sure JQ Expression is kept with "." as shown below:
+- On the "Stage: Transform" page, enter the name and description. Please make sure JQ Expression is kept with "." as shown below:
 ![alt text](./images/TransformStage.png)
 - As the name that we entered above suggests, the purpose of the stage is just have a passthrough. It will get data from previous step and send it to the next step without making any changes.
 - The next and final step in creating the data pipeline is to add the destination. Click the "+Add destination" button and choose "MQ" as the destination as shown below:
