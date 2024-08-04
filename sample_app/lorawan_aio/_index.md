@@ -25,7 +25,7 @@ A typical LoRaWAN® based architecture comprises of:
 - LoRaWAN® Gateway
 - A network server (optional)
 
-The LoRa device sends LoRaWAN messages/packets which then the packet forwarder will decrypt and create a UDP packet. The UDP packet is then forwarded to a network server using a Gateway Bridge that is part of the LoRaWAN® Gateway. Typically a network server would have applications registred that would process the incoming UDP data for upstream systems.
+The LoRa device sends LoRaWAN messages/packets which then the packet forwarder will decrypt and create a UDP packet. The UDP packet is then forwarded to a network server using a Gateway Bridge that is part of the LoRaWAN® Gateway. Typically, a network server would have applications registered that would process the incoming UDP data for upstream systems.
 
 In our case we will be using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN-Simulator) to simulate LoRa devices and LoRaWAN® Gateways. Instead of using network server, we will be implementing our own custom LoRaWAN® Broker that will receive UDP data from LoRaWAN® Gateway simulator as part of LWN Simulator using Gateway Bridge.
 
@@ -79,7 +79,7 @@ sudo apt install git
 
 Complete the prerequisites steps for [Prepare your Azure Arc-enabled Kubernetes cluster](https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster?tabs=ubuntu).
 
-**_NOTE:_** Using the above mentioned documenation, we get the following scripts under "Ubuntu VM Install Steps" section. Please update your deployment scripts accordingly.
+**_NOTE:_** Using the above mentioned documentation, we get the following scripts under "Ubuntu VM Install Steps" section. Please update your deployment scripts accordingly.
 
 #### Ubuntu VM Install Steps
 
@@ -203,11 +203,11 @@ az iot ops init --subscription $SUBSCRIPTION_ID -g $RESOURCE_GROUP --cluster $CL
 
 ##### A quick word about LWN Simulator
 
-To test the LoRaWAN® broker, we can use actual LoRaWAN® Gateway that can talk to LoRaWAN® Broker or we can use a simulator to simulate the communication between LoRaWAN® Gateway and LoRaWAN® Broker. In our case we are using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN-Simulator).  LWN Simulator is easy, simple to use and also has been sited by IEEE at: [LWN Simulator - A LoRaWAN Network Simulator](https://ieeexplore.ieee.org/document/10477816).
+To test the LoRaWAN® broker, we can use actual LoRaWAN® Gateway that can talk to LoRaWAN® Broker or we can use a simulator to simulate the communication between LoRaWAN® Gateway and LoRaWAN® Broker. In our case we are using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN-Simulator).  LWN Simulator is easy, simple to use and also has been cited by IEEE at: [LWN Simulator - A LoRaWAN Network Simulator](https://ieeexplore.ieee.org/document/10477816).
 
 ##### Setting up environment for LWN Simulator
 
-- Install [Go](https://golang.org/ "Go website"). Version >= 1.16 and set up envronment. Following the following steps after opening a terminal on yoru Ubuntu machine:
+- Install [Go](https://golang.org/ "Go website"). Version >= 1.16 and set up environment. Following the following steps after opening a terminal on your Ubuntu machine:
 
 ```bash
 cd ..
@@ -295,7 +295,7 @@ Once the installation of LWN-Simulator is complete, open up a browser window and
 
 ##### Configure Gateway Bridge
 
-The very first step in in conguring the LWN Simulator is configuring the Gateway bridge.
+The very first step in configuring the LWN Simulator is configuring the Gateway bridge.
 
 - To configure this navigate to the Gateway Bridge page on the LWN Simulator.
 - Add Gateway Bridge's address. In our case we are using the same machine where we have Azure IoT Operations installed and running and the same machine where we will be running our custom LoRaWAN Broker. For that we will be entering "localhost" as the Gateway Bridge's address.
@@ -326,8 +326,8 @@ The very first step in in conguring the LWN Simulator is configuring the Gateway
 
 ###### Activation tab
 
-- On Activiation tab, make sure you have checked "Otaa supported"
-- For "App Key", click the button with two arrows next to App Key text box. This will auto-generate the App key. You can clik the "eye" button next to to reveal the value.
+- On Activation tab, make sure you have checked "Otaa supported"
+- For "App Key", click the button with two arrows next to App Key text box. This will auto-generate the App key. You can click the "eye" icon button next to reveal the value.
 - Here is how the Activation tab looks like:
 ![alt text](./images/ActivationSettings.png)
 - After completing the activation tab, move to "Frame Settings" tab.
@@ -473,11 +473,11 @@ python3 listen.py
 - Here is how the MQTTUI screen will show the data:
 ![alt text](./images/DataFromLoRaWANBrokerIsPostedToMQTTTopic.png)
 
-### Step 6 - Bulding Data pipeline using Azure IoT Operations
+### Step 6 - Building Data pipeline using Azure IoT Operations
 
 #### Check list before building
 
-- LWN-Simulator is depoyed and running.
+- LWN-Simulator is deployed and running.
 - MQTTClient is deployed and running.
 - Broker listener and port forwarder has been established.
 - LoRaWAN custom broker is up and running.
@@ -490,9 +490,9 @@ python3 listen.py
 ![alt text](./images/DigitalOperationsExperience_Sites.png)
 - Click "Unassigned instances" link to view Azure IoT Operations instances as shown below:
 ![alt text](./images/DigitalOperationsExperience_AIO_Instances.png)
-- Click Azure IoT Operations instance that you have  created as part of the Step 1. Since I used "lorawanaiovm03-cluster" as the cluster name in Step 1, I will selected "lorawanaiovm03-cluster" from previous screen and get the following screen:
+- Click Azure IoT Operations instance that you have  created as part of the Step 1. Since I used "lorawanaiovm03-cluster" as the cluster name in Step 1, I will select "lorawanaiovm03-cluster" from previous screen and get the following screen:
 ![alt text](./images/DigitalOperationsExperience_LoRaWANCluster.png)
-- The previous will take you to the "Assets" page. On the "Assets" page, click "Data pipelines" on the left nagivation menu.
+- The previous will take you to the "Assets" page. On the "Assets" page, click "Data pipelines" on the left navigation menu.
 ![alt text](./images/DigitalOperationsExperience_Assets.png)
 - On "Assets" page, click "Create pipeline".
 - On "Create pipeline" page, click "< pipeline name >" link on top.
@@ -502,14 +502,14 @@ python3 listen.py
 - Click "Apply"
 - Our next step is to configure source. For that click "+Configure source" button on screen and choose "MQ" as shown below:
 ![alt text](./images/ConfigureSourcePopup.png)
-- On "Source: MQ" page, enter the values for Name, Descirption, Topic and Data format as shown below:
+- On "Source: MQ" page, enter the values for Name, Description, Topic and Data format as shown below:
 ![alt text](./images/SourceMQ.png)
 - Topic name is the same topic name that is provided in the LoRaWAN broker
 - It is important to note that since LoRaWAN Gateway is using UDP protocol, we have to use "Raw" as the data format.
 - Click "Apply".
 - Our next step is to configure "+Add stages". Click "+Add stages" and chose "Transform" as shown below:
 ![alt text](./images/AddStage.png)
-- On "Stage: Tranform" page, enter name and description. Please make sure JQ Expression is kept with "." as shown below:
+- On "Stage: Transorm" page, enter name and description. Please make sure JQ Expression is kept with "." as shown below:
 ![alt text](./images/TransformStage.png)
 - As the name that we entered above, the purpose of the stage is just have a passthrough. It will get data from previous step and send it next step without making any changes.
 - The next and final step in creating the data pipeline is to add the destination. Click "+Add destination" button and choose "MQ" as the destination as shown below:
