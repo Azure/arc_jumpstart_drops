@@ -49,8 +49,7 @@ sudo apt install git
   - Download the content of this drop to your Ubuntu VM where you would be running Azure IoT Operations and other components.
   - Extract the contents of this drop into a folder. Here we are using LoRaWAN folder for reference.
 
-- Python 3.8 or above
-  - Install [Python 3.8](https://www.python.org/)
+- [Python 3.8 or above](https://www.python.org/)
 
 - Paho MQTT Client Library
 
@@ -199,13 +198,13 @@ az iot ops init --subscription $SUBSCRIPTION_ID -g $RESOURCE_GROUP --cluster $CL
 
 - Note: To create Data Pipelines using Azure IoT Operations, you have to ensure that you include '--include-dp' as the additional argument.
 
-#### Step 2 - Deploying and running LWN Simulator
+### Step 2 - Deploying and running LWN Simulator
 
-##### A quick word about LWN Simulator
+#### A quick word about LWN Simulator
 
 To test the LoRaWAN® broker, we can use actual LoRaWAN® Gateway that can communicate with the LoRaWAN® Broker or we can use a simulator to simulate the communication between LoRaWAN® Gateway and LoRaWAN® Broker. In our case,  we are using [LWN Simulator](https://github.com/UniCT-ARSLab/LWN-Simulator). The LWN Simulator is easy to use and has also been cited by IEEE at: [LWN Simulator - A LoRaWAN Network Simulator](https://ieeexplore.ieee.org/document/10477816).
 
-##### Setting up environment for LWN Simulator
+#### Setting up environment for LWN Simulator
 
 - Install [Go](https://golang.org/ "Go website") (version 1.16 or higher) and set up environment. Follow these steps after opening a terminal on your Ubuntu machine:
 
@@ -247,7 +246,7 @@ cd [yourhomefolder]
 
 ```
 
-##### Installation steps for LWN-Simulator
+#### Installation steps for LWN-Simulator
 
 Clone LWN-Simulator repository:
 
