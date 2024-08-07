@@ -383,9 +383,9 @@ With that a device will appear under List of devices as shown below:
 
 - Open a new terminal and run the following command.
 
-```bash
-sudo kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/explore-iot-operations/main/samples/quickstarts/mqtt-client.yaml
-```
+  ```bash
+  sudo kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/explore-iot-operations/main/samples/quickstarts/mqtt-client.yaml
+  ```
 
 - Here is what the output should look like for the above command:
 ![alt text](./images/InstallMQTTClient.png)
