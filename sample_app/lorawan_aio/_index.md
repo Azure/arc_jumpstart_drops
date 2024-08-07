@@ -41,9 +41,9 @@ For our example, we are going to be using Ubuntu VM to build the solution.
 
 - Git
 
-````bash
-sudo apt install git
-````
+  ````bash
+  sudo apt install git
+  ````
 
 - Download the drop's files
   - Download the content of this drop to your Ubuntu VM where you would be running Azure IoT Operations and other components.
