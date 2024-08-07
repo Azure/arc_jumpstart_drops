@@ -426,8 +426,6 @@ sudo kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/explore-io
 
 ### Step 5 - Running LoRaWAN® Broker
 
-#### Running LoRaWAN® broker
-
 - Open a new terminal window and browse to lorawan-broker
 
   ```bash
