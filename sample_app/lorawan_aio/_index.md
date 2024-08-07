@@ -424,7 +424,9 @@ sudo kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/explore-io
 
 **_NOTE:_**  Please note that this listener is not secured with TLS, so it should not be used for sensitive data or in production environments
 
-### Step 5 - Running LoRaWAN® Broker
+## Solution Run Steps
+
+### Step 1 - Running LoRaWAN® Broker
 
 - Open a new terminal window and browse to lorawan-broker
 
@@ -441,7 +443,7 @@ sudo kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/explore-io
 - Here is how the MQTTUI screen will show the data:
 ![alt text](./images/DataFromLoRaWANBrokerIsPostedToMQTTTopic.png)
 
-### Step 6 - Building Data pipeline using Azure IoT Operations
+### Step 2 - Building Data pipeline using Azure IoT Operations
 
 #### Checklist before building
 
