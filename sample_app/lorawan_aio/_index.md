@@ -420,16 +420,16 @@ sudo kubectl apply -f https://raw.githubusercontent.com/Azure-Samples/explore-io
 
 - Open a new terminal window and navigate to lorawan-broker
 
-```bash
-cd LoRaWAN/lorawan-broker/src/
+  ```bash
+  cd LoRaWAN/lorawan-broker/src/
 
-```
+  ```
 
 - Apply the YAML file to your Kubernetes cluster:
 
-```bash
-sudo kubectl apply -f non-tls-listener.yaml
-```
+  ```bash
+  sudo kubectl apply -f non-tls-listener.yaml
+  ```
 
 - Once the service is created, you can forward a local port to the service's port:
 
@@ -459,12 +459,12 @@ sudo kubectl apply -f non-tls-listener.yaml
 
 - Open a new terminal window and browse to lorawan-broker
 
-```bash
-cd LoRaWAN/lorawan-broker/src/
+  ```bash
+  cd LoRaWAN/lorawan-broker/src/
 
-python3 listen.py
+  python3 listen.py
 
-```
+  ```
 
 - The screen start showing the data that the LoRaWAN Broker will post.
 ![alt text](./images/LoRaWANBrokerRunning.png)
