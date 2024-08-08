@@ -1,0 +1,76 @@
+# Edge Storage Accelerator: Edge Volumes Single Node K3s on Ubuntu
+This example can be used to install ESA to provide a local unbacked ReadWriteMany Edge Volume on an Ubuntu system with K3s. 
+
+> ⚠️ **Disclaimer:** The Edge Storage Accelerator: Edge Volumes is currently in private preview and not generally available. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
+
+## Getting Started
+![Edge Storage Accelerator Diagram.](esa_diagram.png)
+
+## Prerequisites
+* Ubuntu 22.04 or similar VM or hardware that meets [ESA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
+  * Standard_D8ds_v4 VM recommended
+  * Equivalent specifications per node:
+    * 4 CPUs
+    * 16GB RAM
+  * 14G of free disk space in /var
+
+* Installation of [K3s](https://docs.k3s.io/quick-start)
+
+### Set your environment variables
+Use the following table to determine the values to be used in the export block below. If you exit your shell during configuration before you have completed all the steps, you must re-export the variables before continuing.  
+
+|Variable        | Required Parameter                                             | Example |
+|----------------|----------------------------------------------------------------|-----------------|
+|REGION          | Azure Region you wish to deploy in                             | eastus          |
+|RESOURCE_GROUP  | The Resource Group you created with the storage account in it  | myResourceGroup |
+|SUBSCRIPTION    | The Azure Subscription ID you are using                        | nnnn-nnnnnnn-nnn|
+|ARCNAME         | The name you would like your ARC cluster to be called in Azure | myArcClusterName|
+
+```bash
+export REGION="eastus"
+export RESOURCE_GROUP="myResourceGroup"
+export SUBSCRIPTION="your-subscription-id-here"
+export ARCNAME="myArcClusterName" # will be used as displayname in portal
+```
+## Apply inotify.max_user_instance increase
+Apply this change to increase the inotify space for your Ubuntu system: 
+
+```bash
+echo 'fs.inotify.max_user_instances = 1024' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+## Arc Connect Kubernetes
+```bash
+az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION}
+```
+## Install and Configure Open Service Mesh
+```bash
+az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm
+export extension_namespace=edgestorageaccelerator
+kubectl create namespace "${extension_namespace}"
+kubectl label namespace "${extension_namespace}" openservicemesh.io/monitored-by=osm
+kubectl annotate namespace "${extension_namespace}" openservicemesh.io/sidecar-injection=enabled
+# Disable OSM permissive mode.
+kubectl patch meshconfig osm-mesh-config   -n "arc-osm-system"   -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":'"false"'}}}'    --type=merge
+```
+
+## Install Edge Storage Accelerator Extension with Config CRD creation
+```bash
+az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "esa-`mktemp -u XXXXXX`" --extension-type microsoft.edgestorageaccelerator --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
+```
+## Configure ESA for Edge Volumes 
+For this example, the components are separate and applied separately, however you can chose to combine them into a single yaml to reduce the number of config files you have to maintain. 
+
+```bash
+kubectl apply -f pvc.yaml
+kubectl apply -f examplepod.yaml
+```
+
+## Attach to example pod to use /mnt/esa
+
+```bash
+example_pod=`kubectl get pod -o yaml | grep name | head -1 | awk -F ':' '{print $2}'`
+kubectl exec -it ${example_pod} -- bash
+```
+
+For help, visit https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator
