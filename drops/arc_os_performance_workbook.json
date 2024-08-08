@@ -11,7 +11,7 @@
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_os_performance",
   "Type": "ui_dashboard_workbook",
-  "Difficulty": "Low",
+  "Difficulty": "Beginner",
   "ProgrammingLanguage": [
     "JSON"
   ],
@@ -21,7 +21,7 @@
     "Arc",
     "Arc-enabled Servers"
   ],
-  "LastModified": "2024-04-01T18:25:43.511Z",
+  "LastModified": "2024-05-16T12:22:36.000Z",
   "CreatedDate": "2024-04-01T10:30:16.201Z",
   "Topics": []
 }

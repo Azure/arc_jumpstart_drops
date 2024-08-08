@@ -21,7 +21,7 @@
     "Type": "sample_app",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "PowerShell", 
+        "PowerShell",
         "C#",
         "Dockerfile",
         "Shell"
@@ -31,7 +31,7 @@
         "Arc",
         "Dapr"
     ],
-    "LastModified": "2024-04-18T00:00:00.000Z",
+    "LastModified": "2024-03-29T13:07:35.000Z",
     "CreatedDate": "2024-04-18T00:00:00.000Z",
     "Topics": []
 }

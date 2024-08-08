@@ -11,7 +11,7 @@
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/esu_licenses",
   "Type": "script_automation",
-  "Difficulty": "High",
+  "Difficulty": "Advanced",
   "ProgrammingLanguage": [
     "PowerShell",
     "CSV"
@@ -21,7 +21,7 @@
     "Arc",
     "Arc-enabled Servers"
   ],
-  "LastModified": "2024-03-15T18:25:43.511Z",
+  "LastModified": "2024-05-16T11:56:27.000Z",
   "CreatedDate": "2024-03-15T10:30:16.201Z",
   "Topics": []
 }
