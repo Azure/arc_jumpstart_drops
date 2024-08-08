@@ -1,7 +1,7 @@
 # Edge Storage Accelerator: Edge Volumes Single Node K3s on Ubuntu
 This example can be used to install ESA to provide a local unbacked ReadWriteMany Edge Volume on an Ubuntu system with K3s. 
 
-> ⚠️ **Disclaimer:** The Edge Storage Accelerator: Edge Volumes is currently in private preview and not generally available. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
+> ⚠️ **Disclaimer:** The Edge Storage Accelerator: Edge Volumes is currently in public preview and not generally available. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
 
 ## Getting Started
 ![Edge Storage Accelerator Diagram.](esaEdgeVolumes.png)
