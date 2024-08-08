@@ -17,7 +17,7 @@
     "Type": "sample_app",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "Jupyter Notebook", 
+        "Jupyter Notebook",
         "Go",
         "Dockerfile",
         "Shell"

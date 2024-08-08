@@ -188,7 +188,7 @@ if (dropsFilePaths.length > 1) {
     console.warn('⚠️ - Warning - Multiple Drop JSON files found. Only the first file will be kept.');
     dropsFilePaths.splice(1);
 } else if (dropsFilePaths.length === 0) {
-    console.warn('⚠️ - Warning - Drop JSON schema not found.');
+    console.warn('⚠️  - Warning - Drop JSON schema not found.');
 } else {
     console.log('✅ - Success - Drop JSON schema found.');
     const jsonData = JSON.parse(fs.readFileSync(dropsFilePaths[0], 'utf-8'));
@@ -236,9 +236,20 @@ if (dropsFilePaths.length > 1) {
     }
 }
 
-console.log(' ℹ️ - Checking the following URLs or file paths:', urlsOrFilePaths);
+console.log(' ℹ️ - Checking the following URLs or file paths: ', urlsOrFilePaths);
 
-const promises = urlsOrFilePaths.map(urlOrFilePath => {
+// Filter for files under the 'drops/' folder and exclude common binary and picture file extensions
+const validExtensions = ['.txt', '.md', '.json']; // Add more text-based extensions as needed
+const validDropsFilePaths = urlsOrFilePaths.filter(urlOrFilePath => {
+  return urlOrFilePath.includes('drops/') && validExtensions.some(ext => urlOrFilePath.endsWith(ext));
+});
+
+const excludedFiles = urlsOrFilePaths.filter(urlOrFilePath => !validDropsFilePaths.includes(urlOrFilePath));
+if (excludedFiles.length > 0) {
+    console.log(' ℹ️ - The following files were left out due to invalid extensions: ', excludedFiles);
+}
+
+const promises = validDropsFilePaths.map(urlOrFilePath => {
     if (urlOrFilePath.startsWith('http')) {
         return engine.checkURLContentForProfanity(urlOrFilePath);
     } else {

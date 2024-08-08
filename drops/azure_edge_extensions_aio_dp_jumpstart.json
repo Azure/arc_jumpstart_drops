@@ -29,13 +29,15 @@
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
-        "Jupyter Notebook", "Shell", "Bicep"
+        "Jupyter Notebook",
+        "Shell",
+        "Bicep"
     ],
     "Products": [
         "Azure IoT Operations",
         "Arc"
     ],
-    "LastModified": "2024-04-18T00:00:00.000Z",
+    "LastModified": "2024-04-24T23:22:28.000Z",
     "CreatedDate": "2024-04-18T00:00:00.000Z",
     "Topics": []
 }
