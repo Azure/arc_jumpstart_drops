@@ -15,7 +15,7 @@ No, it's not necessary to host your source code in the Jumpstart Drops repositor
 ## Do I need to authenticate to the Arc Jumpstart portal to contribute or use Jumpstart Drops?
 No, authentication and logging in to the portal aren't required to contribute or use Jumpstart Drops. However, if you are logged in, we're developing features to provide contributors with insights on their contributions and enhance their experience and submission.
 
-### What's the Jumnpstart Drop licensing schema?
+## What's the Jumpstart Drop licensing schema?
 Jumpstart Drops follows the same [MIT](https://github.com/Azure/arc_jumpstart_drops/blob/main/LICENSE) licensing as all the other Arc Jumpstart Products. All contributions should also be under an [MIT](https://github.com/Azure/arc_jumpstart_drops/blob/main/LICENSE) license. 
 
 The MIT license is a permissive open-source software license that allows for the use, modification, and distribution of the licensed software, as long as the original copyright notice and license terms are included in any copies or distributions of the software. 
