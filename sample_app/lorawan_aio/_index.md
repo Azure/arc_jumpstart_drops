@@ -96,8 +96,10 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 ##### Install azure-iot-ops extension
 
+**_NOTE:_** As we will be using the data processor, we must deploy Azure IoT Operations v0.5.1 with the additional argument to specify the correct version. To do that we will be adding '--version 0.5.1b1' parameter to the following command.
+
 ```bash
-az extension add --upgrade --name azure-iot-ops
+az extension add --upgrade --name azure-iot-ops --version 0.5.1b1 
 ```
 
 ##### Create a cluster
@@ -143,8 +145,10 @@ sudo sysctl -p
 
 #### ARC enable the cluster
 
+**_NOTE:_** As we will be using the data processor, we must deploy Azure IoT Operations v0.5.1 with the additional argument to specify the correct version. To do that we will be adding '--version 0.5.1b1' parameter to the following command.
+
 ```bash
-az extension add --upgrade --name azure-iot-ops
+az extension add --upgrade --name azure-iot-ops --version 0.5.1b1
 sudo apt update && sudo apt upgrade
 az login --tenant [Your_Tenant_Id]
 
@@ -188,7 +192,9 @@ kubectl get deployments,pods -n azure-arc
 
 az keyvault create --enable-rbac-authorization false --name $KEYVAULT_NAME --resource-group $RESOURCE_GROUP
 
-az extension add --upgrade --name azure-iot-ops
+**_NOTE:_** As we will be using the data processor, we must deploy Azure IoT Operations v0.5.1 with the additional argument to specify the correct version. To do that we will be adding '--version 0.5.1b1' parameter to the following command.
+
+az extension add --upgrade --name azure-iot-ops --version 0.5.1b1
 
 az iot ops verify-host
 
