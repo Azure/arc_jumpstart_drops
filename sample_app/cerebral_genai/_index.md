@@ -260,7 +260,7 @@ For the data plane, which handles the direct processing and movement of operatio
      ```
    - Apply the Cerebral namespace:
      ```bash
-     kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/cerebral-ns.yaml
+     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/cerebral-ns.yaml
      ```
    - Create a directory for persistent InfluxDB data:
      ```bash
@@ -269,15 +269,15 @@ For the data plane, which handles the direct processing and movement of operatio
      ```
    - Deploy InfluxDB:
      ```bash
-     kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/influxdb.yaml
+     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/influxdb.yaml
      ```
    - Configure InfluxDB:
      ```bash
-     kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/influxdb-setup.yaml
+     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/influxdb-setup.yaml
      ```
    - Deploy the data simulator:
      ```bash
-     kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/cerebral-simulator.yaml
+     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/cerebral-simulator.yaml
      ```
    - Validate the implementation:
      ```bash
@@ -293,14 +293,14 @@ For the data plane, which handles the direct processing and movement of operatio
 3. **Install Redis:**
    - Deploy Redis to store user sessions and conversation history:
      ```bash
-     kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/redis.yaml
+     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/redis.yaml
      ```
 
 4. **Deploy Cerebral Application:**
    - Create an Azure OpenAI service in your subscription and obtain the key and endpoint for use in the application configuration.
    - Download the Cerebral application deployment file:
      ```bash
-     wget https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/cerebral.yaml
+     wget https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/cerebral.yaml
      ```
    - Edit the file with your Azure OpenAI instance details:
      ```bash
@@ -462,18 +462,19 @@ As we proceed with this transition, users can expect a more dynamic and responsi
 
     - Deploy Azure IoT MQ - Dapr PubSub Component
       ```bash
-      kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/rag-on-the-edge/rag-mq-components.yaml
+      kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/rag-on-the-edge/rag-mq-components.yaml
       ```
 
 2. **Deploy RAG on the Edge:**
     - Deploy tho other components of RAG on the Edge
       ```bash
-      kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/rag-on-the-edge/rag-vdb-dapr-workload.yaml
-      kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/rag-on-the-edge/rag-interface-dapr-workload.yaml
-      kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/rag-on-the-edge/rag-web-workload.yaml
-      kubectl apply -f https://raw.githubusercontent.com/armandoblanco/cerebral-app/main/deployment/rag-on-the-edge/rag-llm-dapr-workload.yaml
+      kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/rag-on-the-edge/rag-vdb-dapr-workload.yaml
+      kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/rag-on-the-edge/rag-interface-dapr-workload.yaml
+      kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/rag-on-the-edge/rag-web-workload.yaml
+      kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/deployment/rag-on-the-edge/rag-llm-dapr-workload.yaml
       ```
 
+For more information about RAG on the Edge visit [Retrieval-Augmented Generation (RAG) on Edge](https://github.com/Azure-Samples/azure-edge-extensions-retrieval-augmented-generation)
 
 ### Conclusion
 

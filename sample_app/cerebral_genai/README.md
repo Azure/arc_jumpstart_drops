@@ -1,3 +1,0 @@
-# cerebral-app
-
-test
