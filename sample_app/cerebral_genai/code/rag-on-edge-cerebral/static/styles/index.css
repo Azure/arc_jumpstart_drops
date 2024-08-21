@@ -1,0 +1,144 @@
+body, html {
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px; 
+}
+
+.image-box {
+    width: 50%;
+    height: auto; 
+    background-size: cover;
+    background-position: center;
+}
+
+.chat-history, .image-display {
+    max-height: 900px; 
+    overflow-y: scroll; 
+    margin-bottom: 20px;
+    color: black;
+    padding: 0px;
+    text-align: left;
+}
+
+.question {
+    display: block;
+    text-align: left;
+    color: #333; /* Color oscuro para las preguntas */
+    margin-bottom: 5px; /* Espacio entre pregunta y respuesta */
+}
+
+.answer {
+    display: block;
+    text-align: left;
+    color: #007BFF; /* Color azul para las respuestas */
+    margin-bottom: 10px; /* Espacio después de la respuesta */
+}
+
+.chat-history p:nth-child(odd) {
+    display: block;
+    text-align: left;
+    color: #333; /* Color oscuro para las preguntas */
+    margin-bottom: 5px; /* Espacio entre pregunta y respuesta */
+}
+
+.chat-history p:nth-child(even) {
+    /*background-color: rgb(208, 208, 248);  */
+    display: block;
+    text-align: left;
+    
+    margin-bottom: 10px; /* Espacio después de la respuesta */
+
+}
+
+.image-display {
+    background-color: #e9ecef; 
+}
+
+
+input[type="text"], button {
+    margin: 5px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.button-small {
+    width: 200px;  
+    height: 50px;  
+    margin-bottom: 10px;
+}
+
+.button-large {
+    width: 500px;  
+    height: 70px;  
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.faq {
+    display: block;
+    text-align: center;
+    color: #333; /* Color oscuro para las preguntas */
+    margin-bottom: 10px; /* Espacio entre pregunta y respuesta */
+}
+
+.scale-half {
+    transform: scale(.7);
+    transform-origin: center;
+}
+
+.txtQuestion {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: left;
+    width: 800px;
+}
+
+.header-ribbon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(79, 77, 77);
+    padding: 10px 20px; /* Ajusta el relleno según sea necesario */
+    width: 100%;
+    box-sizing: border-box; /* Incluye el padding y border en el ancho del elemento */
+    color: white;
+}
+
+.header-ribbon img {
+    flex: 0 0 auto; /* No crecer, no encoger, basado en el contenido */
+}
+
+.header-ribbon h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin: 20px; /* Elimina el margen por defecto del h1 */
+    color: white; /* O cualquier color que prefieras para el texto */
+}
+
+.logout-button {
+    padding: 8px 16px;
+    background-color: #f44336; /* Rojo para indicar acción de logout */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #c33d2e; /* Un rojo más oscuro al hacer hover */
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerebral - AI for OT Efficiency Demo</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+        $(function() {
+            $("button").button();  // Aplica el estilo de botón de jQuery UI
+        });
+    </script>
+    <script>
+        $(function() {
+            $("button").button().click(function() {
+                var buttonId = $(this).attr('id');
+                var isVerboseChecked = $('#chkVerbose').prop('checked');  
+                $.ajax({
+                    url: '/handle_button_click',
+                    type: 'POST',
+                    data: {
+                        button_id: buttonId, 
+                        txtQuestion: $('#txtQuestion').val(),
+                        chkVerbose: isVerboseChecked  
+                    },
+                    success: function(response) {
+                        var historyHtml = "";
+                        response.history.forEach(function(item) {
+                            historyHtml += "<p>" + item + "</p>";
+                        });
+                        $('#historyContainer').html(historyHtml);
+                        $('#lastResponseContainer').html(response.last_response);
+
+                        $('#historyContainer').animate({scrollTop: $('#historyContainer')[0].scrollHeight}, 500);
+
+                        $('#txtQuestion').val('');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    
+    
+    <div class="container text-center">
+        <div class="header-ribbon">
+            <img src="{{ url_for('static', filename='images/contoso_motors.png') }}" alt="Contoso" >
+            <h1>Cerebral - SmartOps Assistant</h1>
+            <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12"> 
+                <h2>Chat history:</h2>
+                <div id="historyContainer" class="chat-history"></div>
+            </div>
+        </div>
+        
+        <form action="/" method="post">
+            <label for="txtQuestion">Ask question:</label>
+            <input type="text" id="txtQuestion" name="txtQuestion" class="txtQuestion">
+            <br></br>
+            <div>
+                <input type="checkbox" id="chkVerbose" name="chkVerbose">
+                <label for="chkVerbose">Verbose Mode</label>
+                
+            </div>
+            
+
+        </form>
+        <button id="btnSend" class="button-small">Send</button>
+
+        <label id="lblTypeQuestion">{{ last_response }}</label>
+        <div id="lastResponseContainer"></div>
+
+        <form action="/reset" method="post">
+            <button type="submit" class="button-small">Reset Chat History</button>
+        </form>
+        <h3 class="faq">Frequently Asked Questions (FAQ)</h3>
+        <button id="btnFAQ1" class="button-large">What is the last color manufactured?</button>
+        <button id="btnFAQ2" class="button-large">What is the Oil temperature in the last 15 minutes?</button>
+        <button id="btnFAQ3" class="button-large">What are the steps to maintain and change the oil in my kuka robotic arm?</button>
+        <button id="btnFAQ4" class="button-large">How can we fix the problem with the motor of my robotic arm? Are there any guidelines or manuals?</button>
+        <button id="btnFAQ5" class="button-large">What is the current performance of the assembly line?</button>
+        <button id="btnFAQ6" class="button-large">Estoy teniendo problemas con mi cinta transportadora FHM, como puedo reemplazar los tornillos y asegurar que no esten flojos</button>
+    </div>
+</body>
+</html>
