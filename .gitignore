@@ -6,3 +6,4 @@ package-lock.json
 pull_request.json
 .DS_Store
 .env
+.*
