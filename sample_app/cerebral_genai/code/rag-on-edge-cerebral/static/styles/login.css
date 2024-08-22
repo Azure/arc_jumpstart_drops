@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif; /* Asegura una tipografía legible */
+    background: #f4f4f4; /* Color de fondo suave */
+    display: flex;
+    /*justify-content: center;*/
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh; /* Asegura que el body tome todo el viewport vertical */
+    margin: 0; /* Remueve los márgenes por defecto */
+    flex-direction: column;
+
+}
+
+.ribbon {
+    background-color: rgb(79, 77, 77);
+    color: white;
+    width: 100%;
+    padding: 10px 20px; /* Espaciado interno */
+    box-sizing: border-box;
+    text-align: center; /* Alinea el texto a la izquierda */
+}
+
+.login-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra sutil */
+    width: 300px; /* Ancho fijo del formulario */
+    margin-top: 20px;
+}
+
+h2 {
+    text-align: center; /* Centra el título */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Organiza los campos de forma vertical */
+}
+
+label {
+    margin-bottom: 5px; /* Espacio debajo de cada etiqueta */
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin-bottom: 10px; /* Espacio debajo de cada input */
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+}
+
+button {
+    background-color: #007BFF; /* Color azul */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /* Estilo del cursor como un puntero */
+    transition: background-color 0.3s; /* Transición suave del color */
+}
+
+button:hover {
+    background-color: #0056b3; /* Cambia de color al pasar el mouse */
+}

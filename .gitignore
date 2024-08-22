@@ -4,3 +4,6 @@ package-lock.json
 /.vscode
 /.github/content-validator/node_modules
 pull_request.json
+.DS_Store
+.env
+.*

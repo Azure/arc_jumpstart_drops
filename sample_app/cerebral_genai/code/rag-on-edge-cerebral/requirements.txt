@@ -1,0 +1,9 @@
+Flask
+Flask-Session
+redis
+influxdb-client
+plotly
+pandas
+openai
+python-dotenv
+kaleido
