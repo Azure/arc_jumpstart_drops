@@ -16,6 +16,8 @@ This example can be used to install ESA to provide a local unbacked ReadWriteMan
 
 * Installation of [K3s](https://docs.k3s.io/quick-start)
 
+A sample [setup_env.sh](setup_env.sh) script is included in the Jumpstart Repository as a guide. 
+
 ### Set your environment variables
 Use the following table to determine the values to be used in the export block below. If you exit your shell during configuration before you have completed all the steps, you must re-export the variables before continuing.  
 
