@@ -9,7 +9,7 @@
             "Link": "https://www.linkedin.com/in/anthonyjoint/"
         }
    ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_local_ubuntu_k3_single
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_local_ubuntu_k3_single",
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
