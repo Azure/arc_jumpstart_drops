@@ -1,0 +1,43 @@
+{
+    "Title": "\"Cerebral\": An AI-Driven Assistant for Industrial Efficiency",
+    "Summary": "This Jumpstart Drop provides an intelligent assistant for real-time troubleshooting and data analysis in hybrid and edge environments, offering a unified platform for consistent management and issue resolution.",
+    "Description": "This Jumpstart Drop introduces Cerebral, an intelligent assistant designed to enhance operational efficiency by providing real-time troubleshooting and data analysis capabilities. Built to support hybrid, multi-cloud, and edge deployments, Cerebral ensures consistent and reliable management across diverse environments. By leveraging Azure's advanced AI and edge computing tools, this solution delivers a unified platform where users can interact using natural language to monitor, query, and resolve issues. The integration with Azure Monitor and other Azure services allows Cerebral to act as a powerful, flexible canvas for data analysis and visualization, offering an interactive and cohesive experience directly within the Azure portal.",
+    "Cover": "https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/sample_app/cerebral_genai/resources/images/architecture.png",
+    "Authors": [
+      {
+        "Name": "Armando Blanco",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      },
+      {
+        "Name": "Cheng Chen",
+        "Link": "https://www.linkedin.com/in/cheng-chen-a8496850"
+      },
+      {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/",
+    "Type": "sample_app",
+    "Difficulty": "Advanced",
+    "ProgrammingLanguage": [
+      "Paython",
+      "Bash"
+    ],
+    "Products": [
+      "Arc-enabled service",
+      "Arc",
+      "Azure Open AI",
+      "VectorDB",
+      "InfluxDB",
+      "Azure IoT Operations"
+    ],
+    "LastModified": "2024-08-16T10:25:43.511Z",
+    "CreatedDate": "2024-08-19T11:25:43.511Z",
+    "Topics": [
+        "SLM",
+        "LLM",
+        "Genertative AI",
+        "Industrial IoT"
+    ]
+  }
