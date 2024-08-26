@@ -38,7 +38,7 @@ Using an Azure Resource Manager (ARM) template, you'll deploy the following reso
 
 To deploy, run:
 
-```
+```shell
 az deployment group create -g $RESOURCE_GROUP --name drop-monitoring-deployment --template-file ama-windows-template.json --parameters workspaceName=$WORKSPACE_NAME --parameters vmName=$ARC_MACHINE_NAME
 ```
 
