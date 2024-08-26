@@ -1,8 +1,8 @@
-# Cerebral Implementation Guide
+# "Cerebral" Implementation Guide
 
 ## Introduction
 
-Cerebral is an innovative smart assistant tailored for industrial applications, specifically designed to enhance operational efficiency at Contoso Motors. This solution leverages advanced Generative AI technology to interact with factory workers using natural language, making it intuitive and user-friendly. Cerebral’s core aim is to streamline decision-making processes and reduce downtime by providing immediate access to critical information and operational insights.
+"Cerebral" is an innovative smart assistant tailored for industrial applications, specifically designed to enhance operational efficiency at Contoso Motors. This solution leverages advanced Generative AI technology to interact with factory workers using natural language, making it intuitive and user-friendly. Cerebral’s core aim is to streamline decision-making processes and reduce downtime by providing immediate access to critical information and operational insights.
 
 ### Key Features and Benefits
 
@@ -303,7 +303,7 @@ For the data plane, which handles the direct processing and movement of operatio
 2. **Access InfluxDB:**
    - Use a web browser to connect to the Server IP of the InfluxDB service to access its interface, example htttp://<IP Server>:8086. Validate that there is a bucket named `manufacturing` and that it contains a measurement called `assemblyline` with values. To access to Grafana the user is **admin** and the password id **ArcPassword123!!**
 
-   ![Grafana](./resources/images/grafana.png)
+      ![Grafana](./resources/images/grafana.png)
 
 
 3. **Install Redis:**
@@ -360,7 +360,7 @@ At this point in the setup, "Cerebral" is fully operational using only Azure Ope
 4. **Submitting Queries**:
    - Enter your question in the text box or choose a common question from the FAQ list displayed on the page. Hit the "Submit" button to see Cerebral in action.
 
-   ![Login to Cerebral](./resources/images/cerebral-ask.png)
+      ![Login to Cerebral](./resources/images/cerebral-ask.png)
 
 5. **Viewing Responses**:
    - The system will process your query using Azure Open AI, and the response, whether it be data visualizations or text information, will be displayed on the same page. This allows you to assess the accuracy and relevance of the response to your query.
@@ -384,7 +384,7 @@ At this point in the setup, "Cerebral" is fully operational using only Azure Ope
     - The interface is designed for ease of use, allowing users to quickly navigate through historical queries and responses. The session maintains a continuous flow, making it easy for users to follow the conversation and refer back to earlier interactions.
 
 
-   ![Response based in near real time data](./resources/images/query-data.png)
+      ![Response based in near real time data](./resources/images/query-data.png)
 
 
     #### 2. User Query based in Documents
@@ -408,7 +408,7 @@ At this point in the setup, "Cerebral" is fully operational using only Azure Ope
     ##### Functionality
     - Cerebral integrates with Retrieval-augmented generation (RAG) for document retrieval, dynamically accessing operational manuals and troubleshooting guides. When fully deployed, it will use indexed information from the Chroma vector database and contextualize responses using SLM phi-2, allowing for highly tailored and informed interactions.
 
-    ![Response based in near real time data](./resources/images/query-documents.png)
+      ![Response based in near real time data](./resources/images/query-documents.png)
 
 6. **Evaluating Performance**:
    - Test various queries to evaluate the performance and responsiveness of the system. Check how well the system interprets and responds to different types of queries, and note any areas for improvement.
@@ -454,7 +454,8 @@ As we proceed with this transition, users can expect a more dynamic and responsi
      az iot ops init --subscription $SUBSCRIPTION_ID -g $RESOURCE_GROUP --cluster $CLUSTER_NAME --custom-location testscriptscluster-cl-4694 -n $INSTANCE_NAME --broker broker --kv-id /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$KV_NAME --add-insecure-listener --simulate-plc
      ```
 
-     **--add-insecure-listener** will turn off authentication the Azure IoT Operations MQ should only be used for testing purposes with a test cluster that's not accessible from the internet. Don't use in production. Exposing MQTT broker to the internet without authentication and TLS can lead to unauthorized access and even DDOS attacks.
+      >[!NOTE]
+      > **--add-insecure-listener** will turn off authentication the Azure IoT Operations MQ should only be used for testing purposes with a test cluster that's not accessible from the internet. Don't use in production. Exposing MQTT broker to the internet without authentication and TLS can lead to unauthorized access and even DDOS attacks.
 
 2. **Deploy prerequisites:**
 
