@@ -1,7 +1,7 @@
 {
-    "Title": "Create an Edge Storage Accelerator Edge Volumes Local FS instance on a Single Node Ubuntu K3s system",
-    "Summary": "This Jumpstart Drop provides Kubernetes files to create an ESA Edge Volume Local Filesystem instance on an install on Ubuntu with K3s.",
-    "Description": "This project provides example Kubernetes files to create an ESA Edge Volume Local Filesystem. See README.md for details on editing and executing these kubernetes files.",
+    "Title": "Create an Azure Container Storage enabled by Azure Arc Edge Volumes Local FS instance on a Single Node Ubuntu K3s system",
+    "Summary": "This Jumpstart Drop provides Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume Local Filesystem instance on an install on Ubuntu with K3s.",
+    "Description": "This project provides example Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume Local Filesystem. See README.md for details on editing and executing these kubernetes files.",
     "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_local_ubuntu_k3_single/esaEdgeVolumes.png",
     "Authors": [
         {
@@ -16,9 +16,9 @@
         "Bash","YAML","JSON"
     ],
     "Products": [
-        "Kubernetes","K3s","Edge Storage Accelerator","Arc-enabled Kubernetes","ArcK8s"
+        "Kubernetes","K3s","Edge Storage Accelerator", "Azure Container Storage enabled by Azure Arc", "Arc-enabled Kubernetes","ArcK8s"
     ],
     "LastModified": "2024-08-08T12:10:43.511Z",
     "CreatedDate": "2024-08-08T12:10:43.511Z",
-    "Topics": ["ESA","Arc"]
+    "Topics": ["ESA","ACSA","ACS","Arc"]
 }
