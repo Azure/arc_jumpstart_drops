@@ -56,7 +56,7 @@ az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscr
 #### Install and Configure Open Service Mesh
 ```bash
 az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm
-export extension_namespace=edgestorageaccelerator
+export extension_namespace=azure-arc-containerstorage
 kubectl create namespace "${extension_namespace}"
 kubectl label namespace "${extension_namespace}" openservicemesh.io/monitored-by=osm
 kubectl annotate namespace "${extension_namespace}" openservicemesh.io/sidecar-injection=enabled
