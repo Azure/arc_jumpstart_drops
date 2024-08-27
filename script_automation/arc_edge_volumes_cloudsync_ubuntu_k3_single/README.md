@@ -65,12 +65,12 @@ kubectl patch meshconfig osm-mesh-config -n "arc-osm-system" -p '{"spec":{"traff
 ```
 ## Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
 ```bash
-az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "esa-`mktemp -u XXXXXX`" --extension-type microsoft.edgestorageaccelerator --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
+az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "acsa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.containerstorage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
 ```
 
 #### Assign role to storage account
 ```bash
-export pid=`az k8s-extension list --cluster-name "${ARCNAME}" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters | jq --arg extType "microsoft.edgestorageaccelerator" 'map(select(.extensionType == $extType)) | .[] | .identity.principalId' -r`
+export pid=`az k8s-extension list --cluster-name "${ARCNAME}" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters | jq --arg extType "microsoft.arc.containerstorage" 'map(select(.extensionType == $extType)) | .[] | .identity.principalId' -r`
 az role assignment create --assignee $pid --role "Storage Blob Data Owner" --scope "/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${STORAGEACCOUNT}"
 ```
 
