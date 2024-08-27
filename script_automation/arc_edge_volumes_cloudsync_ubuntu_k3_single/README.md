@@ -1,14 +1,14 @@
-# Edge Storage Accelerator: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu
-This example can be used to install ESA to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s.
+# Azure Container Storage enabled by Azure Arc: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu
+This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s.
 Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy. 
 
-> ⚠️ **Disclaimer:** The Edge Storage Accelerator: Edge Volumes is currently in public preview and not generally available. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Edge Storage Accelerator Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
+> ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
 
 #### Getting Started
-![Edge Storage Accelerator Diagram.](esaEdgeVolumes.png)
+![Azure Container Storage enabled by Azure Arc Diagram.](esaEdgeVolumes.png)
 
 #### Prerequisites
-* Ubuntu 22.04 or similar VM or hardware that meets [ESA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
+* Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
     * 4 CPUs
@@ -63,7 +63,7 @@ kubectl annotate namespace "${extension_namespace}" openservicemesh.io/sidecar-i
 # Disable OSM permissive mode.
 kubectl patch meshconfig osm-mesh-config -n "arc-osm-system" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":'"false"'}}}' --type=merge
 ```
-## Install Edge Storage Accelerator Extension with Config CRD creation
+## Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
 ```bash
 az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "esa-`mktemp -u XXXXXX`" --extension-type microsoft.edgestorageaccelerator --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
 ```
@@ -74,7 +74,7 @@ export pid=`az k8s-extension list --cluster-name "${ARCNAME}" --resource-group "
 az role assignment create --assignee $pid --role "Storage Blob Data Owner" --scope "/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${STORAGEACCOUNT}"
 ```
 
-#### Configure ESA for Edge Volumes 
+#### Configure ACSA for Edge Volumes 
 For this example, the components are separate and applied separately, however you can chose to combine them into a single yaml to reduce the number of config files you have to maintain. 
 
 ```bash
