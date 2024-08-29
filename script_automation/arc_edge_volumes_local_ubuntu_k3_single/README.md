@@ -58,7 +58,7 @@ kubectl patch meshconfig osm-mesh-config   -n "arc-osm-system"   -p '{"spec":{"t
 
 ## Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
 ```bash
-az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "esa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.storage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
+az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "acsa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.containerstorage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
 ```
 ## Configure ACSA for Edge Volumes 
 For this example, the components are separate and applied separately, however you can chose to combine them into a single yaml to reduce the number of config files you have to maintain. 
