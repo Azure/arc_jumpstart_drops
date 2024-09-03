@@ -1,0 +1,24 @@
+{
+    "Title": "Create an Azure Container Storage enabled by Azure Arc Edge Volumes with CloudSync instance on a Single Node Ubuntu K3s system",
+    "Summary": "This Jumpstart Drop provides Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume with CloudSync instance on an install on Ubuntu with K3s.",
+    "Description": "This project provides example Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume with CloudSync backed by your storage account. Files placed in the volume will be copied to the specified blob account and purged providing a bottomless ingest location. See README.md for details on editing and executing these kubernetes files.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3_single/esaEdgeVolumes.png",
+    "Authors": [
+        {
+            "Name": "Anthony Joint",
+            "Link": "https://www.linkedin.com/in/anthonyjoint/"
+        }
+   ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3_single",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "Bash","YAML","JSON"
+    ],
+    "Products": [
+        "Kubernetes","K3s","Edge Storage Accelerator","Azure Container Storage enabled by Azure Arc","Arc-enabled Kubernetes","ArcK8s"
+    ],
+    "LastModified": "2024-08-08T12:10:43.511Z",
+    "CreatedDate": "2024-08-08T12:10:43.511Z",
+    "Topics": ["ESA","ACSA","ACS","Arc"]
+}
