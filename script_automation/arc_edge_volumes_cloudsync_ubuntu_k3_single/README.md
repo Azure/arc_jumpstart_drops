@@ -1,13 +1,15 @@
-# Azure Container Storage enabled by Azure Arc: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu
+## Overview
+
+#### Azure Container Storage enabled by Azure Arc: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu
 This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s.
 Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy. 
 
 > ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
 
-#### Getting Started
-![Azure Container Storage enabled by Azure Arc Diagram.](esaEdgeVolumes.png)
+## Architecture
+![Azure Container Storage enabled by Azure Arc Diagram.](./esaEdgeVolumes.png)
 
-#### Prerequisites
+## Prerequisites
 * Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
@@ -18,6 +20,8 @@ Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume t
 * Installation of [K3s](https://docs.k3s.io/quick-start)
 
 A sample [setup_env.sh](setup_env.sh) script is included in the Jumpstart Repository as a guide. 
+
+## Getting Started
 
 #### Set your environment variables
 Use the following table to determine the values to be used in the export block below. If you exit your shell during configuration before you have completed all the steps, you must re-export the variables before continuing.  
@@ -32,7 +36,6 @@ Use the following table to determine the values to be used in the export block b
 |STORAGECONTAINER| The name of the container you created in your storage account  | nameOfContainer |
 |SUBVOLPATH      | The subvolume path(will present as subdirectory from PVC mount)| blob1           |
 
-
 ```bash
 export REGION="eastus"
 export RESOURCE_GROUP="myResourceGroup"
@@ -42,6 +45,7 @@ export STORAGEACCOUNT="myStorageAccountName"
 export STORAGECONTAINER="nameOfContainerInStorageAccount"
 export SUBVOLPATH="blob1"
 ```
+
 #### Apply inotify.max_user_instance increase
 Apply this change to increase the inotify space for your Ubuntu system: 
 
@@ -49,10 +53,12 @@ Apply this change to increase the inotify space for your Ubuntu system:
 echo 'fs.inotify.max_user_instances = 1024' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
+
 #### Arc Connect Kubernetes
 ```bash
 az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION}
 ```
+
 #### Install and Configure Open Service Mesh
 ```bash
 az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm
@@ -63,7 +69,8 @@ kubectl annotate namespace "${extension_namespace}" openservicemesh.io/sidecar-i
 # Disable OSM permissive mode.
 kubectl patch meshconfig osm-mesh-config -n "arc-osm-system" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":'"false"'}}}' --type=merge
 ```
-## Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
+
+#### Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
 ```bash
 az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "acsa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.containerstorage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
 ```
@@ -85,10 +92,9 @@ kubectl apply -f examplepod.yaml
 ```
 
 #### Attach to example pod to use /mnt/esa
-
 ```bash
 example_pod=`kubectl get pod -o yaml | grep name | head -1 | awk -F ':' '{print $2}'`
 kubectl exec -it ${example_pod} -- bash
 ```
 
-For help, visit https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator
+For help, visit [Azure Container Storage enabled by Azure Arc documentation (preview)](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator).
