@@ -19,11 +19,13 @@ spec:
         - image: mcr.microsoft.com/cbl-mariner/base/core:2.0
           name: mariner
           command:
-            - sleep
-            - infinity
+command:
+            - "/bin/sh"
+            - "-c"
+            - "dd if=/dev/urandom of=/mnt/acsa/csa-pvc/esaingesttestfile count=16 bs=1M && while true; do ls /data &>/dev/null || break; sleep 1; done"
           volumeMounts:
             - name: csa
-              mountPath: "/mnt/csa"
+              mountPath: "/mnt/acsa"
       volumes:
         - name: csa
           persistentVolumeClaim:
