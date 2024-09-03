@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: example-static
+  labels:
+    app: example-static
+  namespace: "default"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-static
+  template:
+    metadata:
+      labels:
+        app: example-static
+    spec:
+      containers:
+        - image: mcr.microsoft.com/cbl-mariner/base/core:2.0
+          name: mariner
+          command:
+            - sleep
+            - infinity
+          volumeMounts:
+            - name: esa
+              mountPath: "/mnt/esa"
+      volumes:
+        - name: esa
+          persistentVolumeClaim:
+            claimName: esa-pvc

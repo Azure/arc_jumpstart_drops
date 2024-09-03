@@ -1,0 +1,12 @@
+apiVersion: "arccontainerstorage.azure.net/v1"
+kind: EdgeSubvolume
+metadata:
+  name: csa-pvc
+spec:
+  edgevolume: csa-pvc
+  path: exampleSubDir # If you change this path, line 33 in deploymentExample.yaml must be updated. Don't use a preceding slash.
+  auth:
+    authType: MANAGED_IDENTITY
+  storageaccountendpoint: "https://STORAGEACCOUNT.blob.core.windows.net/"
+  container: STORAGECONTAINER
+#  ingestPolicy: edgeingestpolicy-default # Optional: See the following instructions if you want to update the ingestPolicy with your own configuration
