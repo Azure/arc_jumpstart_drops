@@ -21,7 +21,7 @@
         "K3s",
         "Arc-enabled Kubernetes",
         "Edge Storage Accelerator",
-        "Azure Container Storage enabled by Azure Arc",
+        "Azure Container Storage enabled by Azure Arc"
     ],
     "LastModified": "2024-08-08T12:10:43.511Z",
     "CreatedDate": "2024-08-08T12:10:43.511Z",
