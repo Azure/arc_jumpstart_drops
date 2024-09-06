@@ -1,18 +1,3 @@
-## Rough Draft
-
-- show CloudFormation template for onboarding
-- highlight resources other than EC2 instances (e.g. S3 buckets, databases, etc.)
-- KQL queries to show AWS resources
-- show onboarding EC2 instances
-- KQL queries for EC2 instances (e.g. OS details to show all Ubuntu 22.04, etc.)
-- show periodic sync by adding a resource in AWS after setting up the connector
-
-## Questions for Lior
-
-- [ ] do we want this to just be for Drops or include scenarios too?  one drop for Multicloud Inventory and one for Onboarding VMs?
-- [ ] any specific ties to other components you want highlighted, like AMA? Defender.
-- [ ] ~3 EC2 instances good enough to show the solution while staying under budget?
-
 ## Overview
 
 The following Jumpstart Drop will guide you through using the multicloud connector enabled by Azure Arc.  It will show how to onboard EC2 instances from Amazon Web Services (AWS) as well as view an inventory of AWS resources within Azure.
@@ -143,6 +128,55 @@ In the screenshot below, the tag of **arc** is sufficient to have this instance 
 
 ![EC2 instances with arc tag](./media/12-aws-ec2-tag.png)
 
-In addition, the next screenshot shows the ArcForServerSSMRole successfully attached to this instance.  Refer to [this](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#attach-iam-role) documentaion for attaching this role to the EC2 instance(s). 
+In addition, the next screenshot shows the ArcForServerSSMRole successfully attached to this instance.  Refer to [this](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#attach-iam-role) documentation for attaching this role to the EC2 instance(s). 
+
+![EC2 instance with IAM role](./media/13-ec2-iam-role.png)
+
+After the next hourly sync, your EC2 instances should appear connected within the Azure portal.  Because these instances were tagged in AWS with the **arc** key and have the ArcForServerSSMRole attached, they are automatically onboarded to Azure Arc.
+
+![EC2 instances onboarded to Azure Arc](./media/14-aws-onboarded-ec2.png)
+
+After onboarding, consider using additional Azure features like deploying the [Azure Monitor Agent](https://azurearcjumpstart.com/deploy_the_azure_monitor_agent_to_an_azure_arc-enabled_server) to monitor EC2 instances from Azure.
+
+## AWS Inventory in Azure
+
+In addition to onboarding EC2 instances to Azure Arc, the multicloud connector also shows an inventory of other AWS resources in Azure.  These resources are created in a resource group that follows the naming convension of **aws_yourAwsAccountId**.
+
+Because AWS resources are now represented in Azure, Azure Resource Graph queries can be used to find resources across clouds.  To see how this works, do the following:
+
+1. In the Azure portal, go to Azure Resource Graph Explorer.
+
+2. In the query field, paste the query below to identify Azure Virtual Machines and AWS EC2 instances:
+
+```shell
+resources 
+| where (['type'] == "microsoft.compute/virtualmachines") 
+| union (awsresources | where type == "microsoft.awsconnector/ec2instances")
+| extend cloud=iff(type contains "ec2", "AWS", "Azure")
+| extend awsTags=iff(type contains "microsoft.awsconnector", properties.awsTags, ""), azureTags=tags
+| extend size=iff(type contains "microsoft.compute", properties.hardwareProfile.vmSize, properties.awsProperties.instanceType.value)
+| project subscriptionId, cloud, resourceGroup, id, size, azureTags, awsTags, properties
+```
+
+![Azure Resource Graph query showing VMs and EC2 instances](./media/15-arg-all-vms.png)
+
+In the above screenshot, note that the first two results are EC2 instances, whereas the third result is an Azure VM.  While this is a small example, imagine having thousands of VMs spread across Azure and another cloud.  Because the multicloud connector is pulling in resources from another cloud, it's easy to see your full IT estate.
+
+Working across clouds, you may want to find all resources containing a particular tag regardless of which cloud the resource is in.  An Azure Resource Graph query can be used to identify these resources.  For example, consider an example where AWS and Azure resources are tagged with **demo**.  The query below identifies these tagged resources across clouds:
+
+```shell
+resources 
+| extend awsTags=iff(type contains "microsoft.awsconnector", properties.awsTags, ""), azureTags=tags 
+| where awsTags contains "demo" or azureTags contains "demo" 
+| project subscriptionId, resourceGroup, name, azureTags, awsTags
+```
+
+![Azure Resource Graph query showing resources tagged with demo](./media/16-arg-demo-tag.png)
 
 ## Resources
+
+For help deploying the multicloud connector, refer to [Connect to AWS with the multicloud connector in the Azure portal](https://learn.microsoft.com/en-us/azure/azure-arc/multicloud-connector/connect-to-aws).
+
+[Onboard VMs to Azure Arc through the multicloud connector](https://learn.microsoft.com/en-us/azure/azure-arc/multicloud-connector/onboard-multicloud-vms-arc) describes the specific steps to onboard EC2 instances to Azure.
+
+Finally, [View multicloud inventory with the multicloud connector enabled by Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/multicloud-connector/view-multicloud-inventory) describes how metadata from multicloud resources are synchronized and represented in Azure.
