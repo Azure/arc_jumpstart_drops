@@ -61,11 +61,7 @@ az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscr
 
 #### Install and Configure Open Service Mesh
 ```bash
-az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm
-export extension_namespace=azure-arc-containerstorage
-kubectl create namespace "${extension_namespace}"
-kubectl label namespace "${extension_namespace}" openservicemesh.io/monitored-by=osm
-kubectl annotate namespace "${extension_namespace}" openservicemesh.io/sidecar-injection=enabled
+az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.
 # Disable OSM permissive mode.
 kubectl patch meshconfig osm-mesh-config -n "arc-osm-system" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":'"false"'}}}' --type=merge
 ```
@@ -86,8 +82,8 @@ For this example, the components are separate and applied separately, however yo
 
 ```bash
 kubectl apply -f pvc.yaml
-export ev=`kubectl get edgevolumes | tail -1 | awk '{print $1}'`
-kubectl patch edgevolumes ${ev} --type=json -p="[{"op": "add", "path": "/spec/subvolumes/-", "value": {"path": "${SUBVOLPATH}", "auth": {"authType": "MANAGED_IDENTITY"}, "container": "${STORAGECONTAINER}", "storageaccountendpoint": "https://${STORAGEACCOUNT}.blob.core.windows.net"}}]"
+cat edgesubvoltemp.yaml | sed "s/STORAGEACCOUNT/$STORAGEACCOUNT/g" | sed "s/STORAGECONTAINER/$STORAGECONTAINER/g" > edgesubvol.yaml
+kubectl apply -f edgesubvol.yaml
 kubectl apply -f examplepod.yaml
 ```
 
