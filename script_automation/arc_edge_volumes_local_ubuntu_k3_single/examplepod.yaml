@@ -22,9 +22,9 @@ spec:
             - sleep
             - infinity
           volumeMounts:
-            - name: esa
-              mountPath: "/mnt/esa"
+            - name: acsa
+              mountPath: "/mnt/acsa"
       volumes:
-        - name: esa
+        - name: acsa
           persistentVolumeClaim:
-            claimName: esa-pvc
+            claimName: acsa-pvc
