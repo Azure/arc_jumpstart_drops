@@ -1,4 +1,0 @@
-{
-    "acstorController.enabled": false,
-    "feature.diskStorageClass": "local-path"
-}

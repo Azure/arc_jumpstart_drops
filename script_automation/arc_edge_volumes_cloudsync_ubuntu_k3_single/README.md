@@ -4,13 +4,13 @@
 This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s.
 Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy. 
 
-> ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
+> ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/overview).
 
 ## Architecture
 ![Azure Container Storage enabled by Azure Arc Diagram.](./esaEdgeVolumes.png)
 
 ## Prerequisites
-* Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
+* Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
     * 4 CPUs
@@ -61,11 +61,7 @@ az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscr
 
 #### Install and Configure Open Service Mesh
 ```bash
-az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm
-export extension_namespace=azure-arc-containerstorage
-kubectl create namespace "${extension_namespace}"
-kubectl label namespace "${extension_namespace}" openservicemesh.io/monitored-by=osm
-kubectl annotate namespace "${extension_namespace}" openservicemesh.io/sidecar-injection=enabled
+az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.
 # Disable OSM permissive mode.
 kubectl patch meshconfig osm-mesh-config -n "arc-osm-system" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":'"false"'}}}' --type=merge
 ```
@@ -86,15 +82,15 @@ For this example, the components are separate and applied separately, however yo
 
 ```bash
 kubectl apply -f pvc.yaml
-export ev=`kubectl get edgevolumes | tail -1 | awk '{print $1}'`
-kubectl patch edgevolumes ${ev} --type=json -p="[{"op": "add", "path": "/spec/subvolumes/-", "value": {"path": "${SUBVOLPATH}", "auth": {"authType": "MANAGED_IDENTITY"}, "container": "${STORAGECONTAINER}", "storageaccountendpoint": "https://${STORAGEACCOUNT}.blob.core.windows.net"}}]"
+cat edgesubvoltemp.yaml | sed "s/STORAGEACCOUNT/$STORAGEACCOUNT/g" | sed "s/STORAGECONTAINER/$STORAGECONTAINER/g" > edgesubvol.yaml
+kubectl apply -f edgesubvol.yaml
 kubectl apply -f examplepod.yaml
 ```
 
-#### Attach to example pod to use /mnt/esa
+#### Attach to example pod to use /mnt/acsa
 ```bash
 example_pod=`kubectl get pod -o yaml | grep name | head -1 | awk -F ':' '{print $2}'`
 kubectl exec -it ${example_pod} -- bash
 ```
 
-For help, visit [Azure Container Storage enabled by Azure Arc documentation (preview)](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator).
+For help, visit [Azure Container Storage enabled by Azure Arc documentation (preview)](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/).
