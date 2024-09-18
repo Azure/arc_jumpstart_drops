@@ -4,13 +4,13 @@
 This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s.
 Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy. 
 
-> ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator/overview).
+> ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/overview).
 
 ## Architecture
 ![Azure Container Storage enabled by Azure Arc Diagram.](./esaEdgeVolumes.png)
 
 ## Prerequisites
-* Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/edge-storage-accelerator/prepare-linux#minimum-hardware-requirements)
+* Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/prepare-linux#minimum-hardware-requirements)
   * Standard_D8ds_v4 VM recommended
   * Equivalent specifications per node:
     * 4 CPUs
@@ -87,10 +87,10 @@ kubectl apply -f edgesubvol.yaml
 kubectl apply -f examplepod.yaml
 ```
 
-#### Attach to example pod to use /mnt/esa
+#### Attach to example pod to use /mnt/acsa
 ```bash
 example_pod=`kubectl get pod -o yaml | grep name | head -1 | awk -F ':' '{print $2}'`
 kubectl exec -it ${example_pod} -- bash
 ```
 
-For help, visit [Azure Container Storage enabled by Azure Arc documentation (preview)](https://learn.microsoft.com/azure/azure-arc/edge-storage-accelerator).
+For help, visit [Azure Container Storage enabled by Azure Arc documentation (preview)](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/).
