@@ -2,6 +2,7 @@
     "Title": "Connect a Kubernetes cluster to Azure Arc",
     "Summary": "This Drop provides a guide to onboarding an existing Kubernetes cluster to Azure Arc using the Azure CLI.",
     "Description": "This Jumpstart Drop provides a step-by-step guide to onboard an existing Kubernetes cluster to Azure Arc.",
+    "Cover": "",
     "Authors": [
       {
         "Name": "Lior Kamrat",
