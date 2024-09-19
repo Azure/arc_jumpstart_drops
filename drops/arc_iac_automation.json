@@ -2,6 +2,7 @@
   "Title": "Azure Arc Infrastructure as Code Automation",
   "Summary": "This Drop provides a single view for scaling Arc resources through cloud driven deployment method by using Infrastructure as Code DevOps process",
   "Description": "This Jumpstart Drop provides an automation workflow to accelerate customers adopting Infrastructure as Code as their DevOps process to provision and manage their infrastructure at scale",
+  "Cover": "",
   "Authors": [
     {
       "Name": "Wen Xu",
