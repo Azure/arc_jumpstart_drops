@@ -1,0 +1,25 @@
+{
+    "Title": "How to Use the Key Vault Extension to Acquire Certificates on Arc-Enabled Windows Servers",
+    "Summary": "Managing certificates in a hybrid cloud environment can be complex, but Azure Arc-enabled servers simplify this process. By using the Azure Key Vault extension, you can securely acquire and manage certificates. Here’s a quick step-by-step guide:",
+    "Description": "This Jumpstart Drop provides guidance on how to use Azure Key Vault extension with Windows Arc-enabled servers to manage certificate distribution and lifecycle management.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "George Markou",
+        "Link": "https://www.linkedin.com/in/george-markou-06111617/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/arc_server_windows_keyvault_extension",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "",
+    "CreatedDate": "",
+    "Topics": []
+  }
