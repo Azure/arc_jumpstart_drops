@@ -1,0 +1,27 @@
+{
+  "Title": "Talk to Your Factory: Optimizing Factory Operations with Generative AI",
+  "Summary": "Explore how Generative AI is transforming factory operations with this end-to-end demo.",
+  "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
+  "Cover": "https://github.com/chriscrcodes/smart-factory/blob/main/artifacts/media/factory-assistant-ui.png",
+  "Authors": [
+    {
+      "Name": "Christophe Cremon",
+      "Link": "https://github.com/chriscrcodes"
+    }
+  ],
+  "Source": "https://github.com/chriscrcodes/smart-factory/tree/main",
+  "Type": "sample_app",
+  "Difficulty": "Advanced",
+  "ProgrammingLanguage": [
+    "Python",
+    "Bash"
+  ],
+  "Products": [
+    "Azure IoT Operations",
+    "Arc",
+    "Azure Arc-enabled Kubernetes",
+    "Microsoft Fabric",
+    "Azure OpenAI Service",
+    "Streamlit"
+  ]
+}
