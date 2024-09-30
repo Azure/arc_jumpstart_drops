@@ -1,0 +1,29 @@
+{
+  "Title": "Talk to Your Factory: Optimizing Factory Operations with Generative AI",
+  "Summary": "'Talk to Your Factory' uses Industrial IoT, Edge & Cloud Computing, and Generative AI to streamline factory operations. It enables real-time, natural language communication with factory systems, allowing operators to identify equipment issues, improve efficiency, and reduce downtime.",
+  "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
+  "Cover": "https://github.com/chriscrcodes/smart-factory/blob/main/artifacts/media/factory-assistant-ui.png",
+  "Authors": [
+    {
+      "Name": "Christophe Crémon",
+      "Link": "https://github.com/chriscrcodes"
+    }
+  ],
+  "Source": "https://github.com/chriscrcodes/smart-factory/tree/main",
+  "Type": "sample_app",
+  "Difficulty": "Advanced",
+  "ProgrammingLanguage": [
+    "Python",
+    "Bash"
+  ],
+  "Products": [
+    "Azure IoT Operations",
+    "Arc",
+    "Microsoft Fabric",
+    "Azure OpenAI Service",
+    "Streamlit"
+  ],
+  "LastModified": "2024-09-30T16:00:00.000Z",
+  "CreatedDate": "2024-09-06T16:38:00.000Z",
+  "Topics": ["python", "cloud-computing", "microsoft-azure", "edge-computing", "industrial-iot", "streamlit", "azure-openai", "generative-ai", "medallion-architecture", "semantic-kernel", "microsoft-fabric", "azure-iot-operations"]
+}
