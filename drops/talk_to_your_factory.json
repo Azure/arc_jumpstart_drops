@@ -19,9 +19,11 @@
   "Products": [
     "Azure IoT Operations",
     "Arc",
-    "Azure Arc-enabled Kubernetes",
     "Microsoft Fabric",
     "Azure OpenAI Service",
     "Streamlit"
-  ]
+  ],
+  "LastModified": "2024-09-30T13:50:00.000Z",
+  "CreatedDate": "2024-09-06T16:38:00.000Z",
+  "Topics": ["python", "cloud-computing", "microsoft-azure", "edge-computing", "industrial-iot", "streamlit", "azure-openai", "generative-ai", "medallion-architecture", "semantic-kernel", "microsoft-fabric", "azure-iot-operations"]
 }
