@@ -1,6 +1,6 @@
 {
   "Title": "Talk to Your Factory: Optimizing Factory Operations with Generative AI",
-  "Summary": "Explore how Generative AI is transforming factory operations with this end-to-end demo.",
+  "Summary": ""Talk to Your Factory" integrates advanced technologies like Industrial IoT, Edge and Cloud Computing, and Generative AI to revolutionize factory operations. It enables seamless, real-time communication between operators and factory systems, allowing personnel to query equipment in natural language. This interaction helps quickly identify issues, reduce diagnosis times, and improve operational efficiency by leveraging real-time data insights. The system empowers shop floor operators to make informed decisions faster, enhancing productivity and minimizing downtime.",
   "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
   "Cover": "https://github.com/chriscrcodes/smart-factory/blob/main/artifacts/media/factory-assistant-ui.png",
   "Authors": [
