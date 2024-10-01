@@ -1,5 +1,5 @@
 {
-  "Title": "Talk to Your Factory: Optimizing Factory Operations with Generative AI",
+  "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
   "Summary": "'Talk to Your Factory' leverages Industrial IoT, Edge & Cloud Computing, and Generative AI to streamline factory operations. It allows real-time, natural language communication with factory systems, helping operators quickly identify issues, boost efficiency, and minimize downtime.",
   "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
   "Cover": "https://github.com/chriscrcodes/smart-factory/blob/main/artifacts/media/factory-assistant-ui.png",
@@ -19,9 +19,9 @@
   "Products": [
     "Azure IoT Operations",
     "Arc",
+    "Streamlit",
     "Microsoft Fabric",
-    "Azure OpenAI Service",
-    "Streamlit"
+    "Azure OpenAI Service"
   ],
   "LastModified": "2024-09-30T16:00:00.000Z",
   "CreatedDate": "2024-09-06T16:38:00.000Z",
