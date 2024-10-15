@@ -10,7 +10,7 @@
     }
   ],
   "Source": "https://github.com/danuw/aio-quickstart-bash-scripts",
-  "Type": "script_automationtuandv",
+  "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
     "Bash"
