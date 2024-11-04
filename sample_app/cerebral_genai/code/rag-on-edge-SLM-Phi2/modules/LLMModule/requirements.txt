@@ -17,7 +17,7 @@ transformers>=4.35.2
 gguf>=0.1.0
 protobuf>=4.21.0
 langchain==0.2.10
-langchain-community==0.2.9
+langchain-community==0.3.0
 langchain-core==0.1.35
 langsmith==0.0.87
 llama_cpp_python==0.2.43
