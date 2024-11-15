@@ -1,8 +1,8 @@
 {
   "Title": "NVIDIA Omniverse Azure Operation Twin",
-  "Summary": "This Drop provides a ......",
-  "Description": "This Jumpstart Drop provides .....",
-  "Cover": "GitHub URL to cover image",
+  "Summary": "NVIDIA Omniverse | Microsoft Azure - Operations Twin",
+  "Description": "This project shares sample code and content for building an Operations Twin using OpenUSD and an integration between NVIDIA Omniverse and Azure Services: Azure IoT Operations, Microsoft Fabric, Microsoft Power BI, and NVIDIA Omniverse Kit App Streaming on Azure Kubernetes using A10 NVIDIA GPU",
+  "Cover": "",
   "Authors": [
     {
       "Name": "Drew Dudek",
