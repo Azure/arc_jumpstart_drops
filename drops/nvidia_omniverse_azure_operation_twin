@@ -1,0 +1,32 @@
+{
+  "Title": "NVIDIA Omniverse Azure Operation Twin",
+  "Summary": "This Drop provides a ......",
+  "Description": "This Jumpstart Drop provides .....",
+  "Cover": "GitHub URL to cover image",
+  "Authors": [
+    {
+      "Name": "Drew Dudek",
+      "Link": "https://www.linkedin.com/in/drewdudek/"
+    },
+    {
+      "Name": "Martin Karlsson",
+      "Link": "https://github.com/fcabrera23"
+    }
+  ],
+  "Source": "https://github.com/microsoft/NVIDIA-Omniverse-Azure-Operations-Twin",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "TypeScript",
+    "JSON",
+    "React"
+  ],
+  "Products": [
+    "Azure Kubernetes Service",
+    "Azure Application Gateway",
+    "Azure API Management Service"
+  ],
+  "LastModified": "2024-11-14T21:44:18Z",
+  "CreatedDate": "2024-11-14T21:44:18Z",
+  "Topics": []
+}
