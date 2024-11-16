@@ -1,0 +1,32 @@
+{
+  "Title": "Paul Jumpstart test",
+  "Summary": "Test Jumpstart dpcumentation formatting.",
+  "Description": "Test Jumpstart dpcumentation formatting.",
+  "Cover": "https://github.com/psorensen-nvidia/msft-jumpstart-doc-test/img/undefined",
+  "Type": "tutorial_guide",
+  "Authors": [
+    {
+      "Name": "paul",
+      "Link": "https://github.com/psorensen-nvidia"
+    }
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Azure IoT Operations"
+  ],
+  "Source": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/tutorial_guide/paul_jumpstart_test",
+  "ProgrammingLanguage": [
+    "TypeScript",
+    "Bash",
+    "NodeJS",
+    "Python"
+  ],
+  "Difficulty": "Advanced",
+  "Topics": [
+    "Kubernetes",
+    "Container",
+    "Industrial IoT"
+  ],
+  "LastModified": "2024-11-16T01:03:34.982Z",
+  "CreatedDate": "2024-11-16T01:03:34.982Z"
+}
