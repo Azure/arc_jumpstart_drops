@@ -7,7 +7,7 @@
     {
       "Name": "Drew Dudek",
       "Link": "https://www.linkedin.com/in/drewdudek/"
-    },
+    }
   ],
   "Source": "https://github.com/microsoft/NVIDIA-Omniverse-Azure-Operations-Twin",
   "Type": "sample_app",
@@ -16,7 +16,6 @@
     "TypeScript",
     "JSON",
     "React"
- 
   ],
   "Products": [
     "Azure Kubernetes Service",
