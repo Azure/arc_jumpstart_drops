@@ -8,18 +8,15 @@
       "Name": "Drew Dudek",
       "Link": "https://www.linkedin.com/in/drewdudek/"
     },
-    {
-      "Name": "Martin Karlsson",
-      "Link": "https://github.com/fcabrera23"
-    }
   ],
   "Source": "https://github.com/microsoft/NVIDIA-Omniverse-Azure-Operations-Twin",
-  "Type": "script_automation",
+  "Type": "sample_app",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
     "TypeScript",
     "JSON",
     "React"
+ 
   ],
   "Products": [
     "Azure Kubernetes Service",
