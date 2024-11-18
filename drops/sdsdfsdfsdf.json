@@ -1,0 +1,34 @@
+{
+  "Title": "sdsdfsdfsdf",
+  "Summary": "fsdfsdfsdfsdfsdf",
+  "Description": "fsdfsdfsdfsdfsdf",
+  "Cover": "https://github.com/PankajaNarayanaswamy05//img/undefined",
+  "Type": "sample_app",
+  "Authors": [
+    {
+      "Name": "asdsds",
+      "Link": "facebook.com/asdsd"
+    }
+  ],
+  "Products": [
+    "Azure Kubernetes Service Edge Essentials",
+    "Azure DevOps",
+    "Azure Arc",
+    "Azure IoT Operations"
+  ],
+  "Source": "https://github.com/PankajaNarayanaswamy05/",
+  "ProgrammingLanguage": [
+    "Bash",
+    "Go",
+    "Bicep",
+    ".NET / C#",
+    "Ansible"
+  ],
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI",
+    "IoT"
+  ],
+  "LastModified": "2024-11-18T08:59:56.713Z",
+  "CreatedDate": "2024-11-18T08:59:56.713Z"
+}
