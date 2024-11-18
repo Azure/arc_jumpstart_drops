@@ -1,0 +1,27 @@
+{
+  "Title": "Azure Arc-enabled servers OS Performance Workbook",
+  "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance.",
+  "Description": "This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
+  "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_os_performance/img/undefined",
+  "Authors": [
+    {
+      "Name": "Alejandro Sánchez",
+      "Link": "www.linkedin.com/in/asgsanchezgomez"
+    }
+  ],
+  "Source": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/azure_arc-enabled_servers_os_performance_workbook",
+  "Type": "ui_dashboard_workbook",
+  "Difficulty": "Beginner",
+  "ProgrammingLanguage": [
+    "JSON"
+  ],
+  "Products": [
+    "Azure Monitor",
+    "Workbook",
+    "Arc",
+    "Arc-enabled Servers"
+  ],
+  "LastModified": "2024-05-16T12:22:36.000Z",
+  "CreatedDate": "2024-04-01T10:30:16.201Z",
+  "Topics": []
+}
