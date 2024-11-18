@@ -1,0 +1,41 @@
+{
+  "Title": "NVIDIA Omniverse Azure Operations Twin",
+  "Summary": "NVIDIA Omniverse | Microsoft Azure - Operations Twin",
+  "Description": "This project shares sample code and content for building an Operations Twin using OpenUSD and an integration between NVIDIA Omniverse and Azure Services: Azure IoT Operations, Microsoft Fabric, Microsoft Power BI, and NVIDIA Omniverse Kit App Streaming on Azure Kubernetes using A10 NVIDIA GPU",
+  "Cover": "",
+  "Authors": [
+   {
+     "Name": "Drew Dudek",
+     "Link": "https://www.linkedin.com/in/drewdudek/"
+   },
+    {
+     "Name": "Aaron Weissbart",
+      "Link": "aweissbart@microsoft.com"
+   }
+  ],
+  "Source": "https://github.com/microsoft/NVIDIA-Omniverse-Azure-Operations-Twin",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+   "TypeScript",
+   "JSON",
+   "React",
+    "Python"
+  ],
+  "Products": [
+   "Azure Kubernetes Service",
+   "Azure Application Gateway",
+   "Azure API Management Service",
+   "Azure IoT Operations",
+   "Arc-enabled Kubernetes",
+   "Microsoft Fabric",
+   "Microsoft Fabric Real-Time Intelligence",
+   "Microsoft Power BI",
+   "Azure Blob Storage",
+   "Microsoft Entra ID",
+   "NVIDIA Omniverse Kit App Streaming"
+  ],
+  "LastModified": "2024-11-17T21:44:18Z",
+  "CreatedDate": "2024-11-17T21:44:18Z",
+  "Topics": []
+}
