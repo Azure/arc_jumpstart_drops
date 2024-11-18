@@ -13,7 +13,7 @@
       "Link": "https://github.com/katriendg"
     }
   ],
-  "Source": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/script_automation/azure_edge_extensions_aks_ee_proxy_certs",
+  "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aksee-proxy-certs",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
