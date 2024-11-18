@@ -1,0 +1,33 @@
+{
+  "Title": "test",
+  "Summary": "testing",
+  "Description": "testing",
+  "Cover": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/sample_app/test/img/artifacts (1).png",
+  "Type": "sample_app",
+  "Authors": [
+    {
+      "Name": "user1",
+      "Link": "facebook.com/111"
+    }
+  ],
+  "Products": [
+    "Azure Video Indexer",
+    "Azure Operator Insights",
+    "Azure VM",
+    "Azure SQL Edge"
+  ],
+  "Source": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/sample_app/test",
+  "ProgrammingLanguage": [
+    "Ansible",
+    "Bash",
+    "Java",
+    "Python"
+  ],
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI",
+    "K3s"
+  ],
+  "LastModified": "2024-11-18T06:13:10.830Z",
+  "CreatedDate": "2024-11-18T06:13:10.831Z"
+}
