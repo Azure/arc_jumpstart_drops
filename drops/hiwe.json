@@ -1,0 +1,29 @@
+{
+  "Title": "hiwe",
+  "Summary": "chjbehwjc ufcwc vuhwdivb",
+  "Description": "chjbehwjc ufcwc vuhwdivb",
+  "Cover": "/img/undefined",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "abcjd",
+      "Link": "facebook.com/users"
+    }
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "cbdncjhd",
+    "cjdsnbcvdvc",
+    "Azure IoT Operations"
+  ],
+  "Source": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/hiwe",
+  "ProgrammingLanguage": [
+    "PowerShell"
+  ],
+  "Difficulty": "Beginner",
+  "Topics": [
+    "K3s"
+  ],
+  "LastModified": "2024-11-18T11:33:09.460Z",
+  "CreatedDate": "2024-11-18T11:33:09.460Z"
+}
