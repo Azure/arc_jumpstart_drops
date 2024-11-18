@@ -13,7 +13,7 @@
             "Link": "https://www.linkedin.com/in/lauranicolasd"
         }
     ],
-    "Source": "https://github.com/fcabrera23/onvif-camera-mock",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/onvif_camera_mock",
     "Type": "sample_app",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
