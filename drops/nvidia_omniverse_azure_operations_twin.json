@@ -24,18 +24,19 @@
   ],
   "Products": [
    "Azure Kubernetes Service",
-   "Azure Application Gateway",
-   "Azure API Management Service",
    "Azure IoT Operations",
    "Arc-enabled Kubernetes",
-   "Microsoft Fabric",
-   "Microsoft Fabric Real-Time Intelligence",
-   "Microsoft Power BI",
-   "Azure Blob Storage",
-   "Microsoft Entra ID",
    "NVIDIA Omniverse Kit App Streaming"
   ],
   "LastModified": "2024-11-17T21:44:18Z",
   "CreatedDate": "2024-11-17T21:44:18Z",
-  "Topics": []
+  "Topics": [  
+    "Azure Application Gateway",
+   "Azure API Management Service",
+   "Microsoft Fabric",
+   "Microsoft Fabric Real-Time Intelligence",
+   "Microsoft Power BI",
+   "Azure Blob Storage",
+   "Microsoft Entra ID"
+  ]
 }
