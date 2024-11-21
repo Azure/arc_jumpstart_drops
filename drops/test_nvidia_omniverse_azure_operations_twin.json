@@ -1,0 +1,50 @@
+{
+  "Title": "Test NVIDIA Omniverse Azure Operations Twin",
+  "Summary": "Learn how Microsoft and NVIDIA empower developers create advanced 3D workflows that integrate IoT data with physics-based visualizations.",
+  "Description": "Learn how Microsoft and NVIDIA empower developers create advanced 3D workflows that integrate IoT data with physics-based visualizations. The Fabric platform supports data management, while Omniverse and OpenUSD offer collaboration, simulation, and rendering capabilities. These tools help operations teams innovate and optimize for sustainability, safety, and efficiency. This project shares sample code and content for building an Operations Twin using OpenUSD and an integration between NVIDIA Omniverse and Azure Services: Azure IoT Operations, Microsoft Fabric, Microsoft Power BI, and NVIDIA Omniverse Kit App Streaming on Azure Kubernetes using A10 NVIDIA GPU.",
+  "Cover": "https://github.com/microsoft/NVIDIA-Omniverse-Azure-Operations-Twin/img/undefined",
+  "Authors": [
+    {
+      "Name": "Drew Dudek",
+      "Link": "https://www.linkedin.com/in/drewdudek/"
+    },
+    {
+      "Name": "Aaron Weissbart",
+      "Link": "https://github.com/aweissbart"
+    },
+    {
+      "Name": "Raj Nemani",
+      "Link": "https://www.linkedin.com/in/rajnemani/"
+    },
+    {
+      "Name": "Rajesh Vasireddy",
+      "Link": "https://www.linkedin.com/in/rajesh-vasireddy-73551217/"
+    }
+  ],
+  "Source": "https://github.com/fcabrera23/arc_jumpstart_drops/tree/main/sample_app/test_nvidia_omniverse_azure_operations_twin",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "TypeScript",
+    "JSON",
+    "React",
+    "Python"
+  ],
+  "Products": [
+    "Azure Kubernetes Service",
+    "Azure IoT Operations",
+    "Arc-enabled Kubernetes",
+    "NVIDIA Omniverse Kit App Streaming"
+  ],
+  "LastModified": "2024-11-17T21:44:18Z",
+  "CreatedDate": "2024-11-17T21:44:18Z",
+  "Topics": [
+    "Azure Application Gateway",
+    "Azure API Management Service",
+    "Microsoft Fabric",
+    "Microsoft Fabric Real-Time Intelligence",
+    "Microsoft Power BI",
+    "Azure Blob Storage",
+    "Microsoft Entra ID"
+  ]
+}
