@@ -55,9 +55,7 @@ az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscr
 
 #### Install and Configure Open Service Mesh
 ```bash
-az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm
-# Disable OSM permissive mode.
-kubectl patch meshconfig osm-mesh-config   -n "arc-osm-system"   -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":'"false"'}}}'    --type=merge
+az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm --config "osm.osm.featureFlags.enableWASMStats=false" --config "osm.osm.enablePermissiveTrafficPolicy=false" --config "osm.osm.configResyncInterval=10s" --config "osm.osm.osmController.resource.requests.cpu=100m" --config "osm.osm.osmBootstrap.resource.requests.cpu=100m" --config "osm.osm.injector.resource.requests.cpu=100m"
 ```
 
 #### Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
