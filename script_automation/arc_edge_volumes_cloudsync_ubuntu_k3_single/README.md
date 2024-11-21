@@ -66,7 +66,7 @@ az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCN
 
 #### Install aio platform package for certificate management
 ```bash
-az k8s-extension create --cluster-name "${ARCNAME}" --name "${ARCNAME}-certmgr" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters --extension-type microsoft.iotoperations.platform --scope cluster --release-namespace cert-manager
+az k8s-extension create --cluster-name "${ARCNAME}" --name "${ARCNAME}-certmgr" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters --release-train preview --extension-type microsoft.iotoperations.platform --scope cluster --release-namespace cert-manager
 ```
 
 #### Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
