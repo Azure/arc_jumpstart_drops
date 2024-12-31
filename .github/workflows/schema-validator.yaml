@@ -7,12 +7,25 @@ on:
       - canary
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Sanitize Branch Name
+      run: |
+        sanitized_ref=$(echo "${{ github.event.pull_request.head.ref }}" | grep -E '^[a-zA-Z0-9/_-]+$')
+        if [ -z "$sanitized_ref" ]; then
+          echo "Invalid branch name detected. Exiting."
+          exit 1
+        fi
+        echo "Sanitized branch name: $sanitized_ref"
+        echo "SANITIZED_BRANCH=$sanitized_ref" >> $GITHUB_ENV
 
     - name: Get the Drop schema json
       id: changed-files-specific
@@ -40,11 +53,11 @@ jobs:
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       uses: GrantBirki/json-yaml-validate@v3.0.0
       with:
-        comment : "false"
+        comment: "false"
         files: ${{ env.ALL_CHANGED_FILES }}
         json_schema: .github/schemas/default_schema.json
 
-    - name : Validate source repo
+    - name: Validate source repo
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       run: |
         if ! jq 'has("Source")' ${{ steps.changed-files-specific.outputs.all_changed_files }} >/dev/null; then
@@ -58,7 +71,7 @@ jobs:
         ORG_USER=$(echo "${{ github.event.pull_request.head.repo.full_name }}" | cut -d'/' -f1)
         echo "Organization/User: $ORG_USER"
         
-        echo "Base Branch Name: ${{ github.event.pull_request.head.ref }}"
+        echo "Base Branch Name: $SANITIZED_BRANCH"
 
         # Check if the source URL contains "Azure/arc_jumpstart_drops"
         if echo "$source_url" | grep -q 'Azure/arc_jumpstart_drops'; then
@@ -67,8 +80,8 @@ jobs:
           echo "Before: $source_url"
           source_url=$(echo "$source_url" | sed "s/Azure/$ORG_USER/")
 
-          # Replace "tree/main" with "tree/<name-of-branch>"
-          source_url=$(echo "$source_url" | sed 's/tree\/main/tree\/${{ github.event.pull_request.head.ref }}/')
+          # Replace "tree/main" with "tree/<sanitized-branch>"
+          source_url=$(echo "$source_url" | sed 's/tree\/main/tree\/$SANITIZED_BRANCH/')
         fi
 
         echo "New source URL: $source_url"
@@ -81,7 +94,7 @@ jobs:
           exit 1
         fi    
       
-    - name : Check MIT License
+    - name: Check MIT License
       if: steps.changed-files-specific.outputs.any_changed == 'true'
       run: |
         # Use curl to check if the LICENSE file exists in the repository
@@ -93,7 +106,7 @@ jobs:
 
         echo "Organization: $organization"
         echo "Repository: $repository"
-        echo "Branch: ${{ github.event.pull_request.head.ref }}"
+        echo "Branch: $SANITIZED_BRANCH"
 
         # Define potential license URLs
         base_url="https://raw.githubusercontent.com/$organization/$repository"
