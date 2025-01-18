@@ -1,0 +1,22 @@
+{
+  "Title": "testing",
+  "Summary": "dewrgthyjuhtrew",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "testing",
+      "Link": "htpps://github.com/testing"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/testing",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ]
+}
