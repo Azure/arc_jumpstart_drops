@@ -47,5 +47,6 @@ module k3sSecretStoreDeployment 'modules/k3s.bicep' = {
     azureLocation: location
     vmName : k3sArcDataClusterName
     namingGuid: namingGuid
+    keyVaultName: mgmtArtifacts.outputs.keyVaultName
   }
 }

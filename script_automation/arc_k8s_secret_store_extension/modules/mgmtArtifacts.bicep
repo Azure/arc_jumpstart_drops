@@ -298,3 +298,4 @@ resource userAssignedIdentity_KVSecretsUser 'Microsoft.Authorization/roleAssignm
 output vnetId string = cloudVirtualNetwork.id
 output k3sSubnetId string = cloudVirtualNetwork.properties.subnets[0].id
 output virtualNetworkNameCloud string = cloudVirtualNetwork.name
+output keyVaultName string = kvName

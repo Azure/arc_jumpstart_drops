@@ -39,19 +39,14 @@ param templateBaseUrl string
 @description('Random GUID')
 param namingGuid string
 
+@description('The name of the Key Vault')
+param keyVaultName string
+
 var publicIpAddressName = '${vmName}-pip'
 var networkInterfaceName = '${vmName}-nic'
-var userAssignedIdentityName = '${vmName}-uai'
 var osDiskType = 'Premium_LRS'
-// var k3sControlPlane = 'true' // deploy single-node k3s control plane
 var diskSize = 512
 var numberOfIPAddresses =  1 // The number of IP addresses to create
-
-// Create User Assigned Identity
-resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
-  location: azureLocation
-  name: userAssignedIdentityName
-}
 
 // Create multiple public IP addresses
 resource publicIpAddresses 'Microsoft.Network/publicIpAddresses@2022-01-01' = [for i in range(1, numberOfIPAddresses): {
@@ -164,7 +159,7 @@ resource vmRoleAssignment_KVSecretsOfficer 'Microsoft.Authorization/roleAssignme
 
 resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = {
   parent: vm
-  name: 'installscript_k3s'
+  name: 'installscript_k3sWithSSE'
   location: azureLocation
   properties: {
     publisher: 'Microsoft.Azure.Extensions'
@@ -173,9 +168,9 @@ resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-0
     autoUpgradeMinorVersion: true
     settings: {}
     protectedSettings: {
-      commandToExecute: 'bash installK3s.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name}'
+      commandToExecute: 'bash k3sWithSSE.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name} ${keyVaultName}'
       fileUris: [
-        '${templateBaseUrl}scripts/installK3s.sh'
+        '${templateBaseUrl}scripts/k3sWithSSE.sh'
       ]
     }
   }

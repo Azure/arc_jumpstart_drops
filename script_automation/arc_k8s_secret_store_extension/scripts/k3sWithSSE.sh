@@ -16,6 +16,7 @@ echo $templateBaseUrl:$5 | awk '{print substr($1,2); }' >> vars.sh
 # echo $storageContainerName:$6 | awk '{print substr($1,2); }' >> vars.sh
 # echo $k3sControlPlane:$6 | awk '{print substr($1,2); }' >> vars.sh
 echo $resourceGroup:$6| awk '{print substr($1,2); }' >> vars.sh
+echo $kvName:$7| awk '{print substr($1,2); }' >> vars.sh
 
 sed -i '2s/^/export adminUsername=/' vars.sh
 sed -i '3s/^/export subscriptionId=/' vars.sh
@@ -26,13 +27,14 @@ sed -i '6s/^/export templateBaseUrl=/' vars.sh
 # sed -i '7s/^/export storageContainerName=/' vars.sh
 # sed -i '7s/^/export k3sControlPlane=/' vars.sh
 sed -i '7s/^/export resourceGroup=/' vars.sh
+sed -i '8s/^/export kvName=/' vars.sh
 
 export vmName=$3
 
 # Save the original stdout and stderr
 exec 3>&1 4>&2
 
-exec >installK3s-${vmName}.log
+exec >k3sWithSSE-${vmName}.log
 exec 2>&1
 
 # Set k3 deployment variables
@@ -46,7 +48,7 @@ curl -v -o /etc/profile.d/welcomeK3s.sh ${templateBaseUrl}scritps/welcomeK3s.sh
 
 # Syncing this script log to 'jumpstart_logs' directory for ease of troubleshooting
 sudo -u $adminUsername mkdir -p /home/${adminUsername}/jumpstart_logs
-while sleep 1; do sudo -s rsync -a /var/lib/waagent/custom-script/download/0/installK3s-$vmName.log /home/${adminUsername}/jumpstart_logs/installK3s-$vmName.log; done &
+while sleep 1; do sudo -s rsync -a /var/lib/waagent/custom-script/download/0/k3sWithSSE-$vmName.log /home/${adminUsername}/jumpstart_logs/k3sWithSSE-$vmName.log; done &
 
 # Function to check if dpkg lock is in place
 check_dpkg_lock() {
@@ -186,7 +188,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername az connectedk8s connect --name $vmName --resource-group $resourceGroup --location $location
+    sudo -u $adminUsername az connectedk8s connect --name $vmName --resource-group $resourceGroup --location $location --enable-oidc-issuer
     if [ $? -eq 0 ]; then
         success=true
         break
@@ -255,14 +257,107 @@ is_extension_installed() {
 #     sudo -u $adminUsername az k8s-extension create --name "azurepolicy" --cluster-name $vmName --resource-group $resourceGroup --cluster-type connectedClusters --extension-type Microsoft.PolicyInsights --only-show-errors
 # fi
 
+serviceAccountIssuer="$(az connectedk8s show --name $vmName --resource-group $resourceGroup --query "oidcIssuerProfile.issuerUrl" --output tsv)"
+echo $serviceAccountIssuer
+
+# sudo vim /etc/systemd/system/k3s.service
+
+# ExecStart=/usr/local/bin/k3s \
+#   server --write-kubeconfig-mode=644 \
+#      '--kube-apiserver-arg=--service-account-issuer=https://oidcdiscovery-northamerica-endpoint-gbcge4adgqebgxev.z01.azurefd.net/2ffc1db7-b373-4be0-a5ec-f54edd5bf695/14fd38d8-3ed1-47de-852f-12f1bf3e4a89/' \
+#      '--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement' \
+
+# sudo systemctl daemon-reload
+# sudo systemctl restart k3s
+
+az keyvault secret set --vault-name $kvName --name 'js-secret' --value 'JumpstartDrops!'
+
+# ###
+# ### Create a federated identity credential
+# ###
+# kubectl create ns ${KUBERNETES_NAMESPACE}
+
+# cat <<EOF | kubectl apply -f -
+#   apiVersion: v1
+#   kind: ServiceAccount
+#   metadata:
+#     name: ${SERVICE_ACCOUNT_NAME}
+#     namespace: ${KUBERNETES_NAMESPACE}
+# EOF
+
+# az identity federated-credential create --name ${FEDERATED_IDENTITY_CREDENTIAL_NAME} --identity-name ${USER_ASSIGNED_IDENTITY_NAME} --resource-group ${RESOURCE_GROUP} --issuer ${SERVICE_ACCOUNT_ISSUER} --subject system:serviceaccount:${KUBERNETES_NAMESPACE}:${SERVICE_ACCOUNT_NAME}
+
+# ###
+# ### Install the SSE
+# ###
+
+# helm repo add jetstack https://charts.jetstack.io/ --force-update
+# helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.2 --set crds.enabled=true
+
+# helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
+
+# az k8s-extension create \
+#   --cluster-name ${CLUSTER_NAME} \
+#   --cluster-type connectedClusters \
+#   --extension-type microsoft.azure.secretstore \
+#   --resource-group ${RESOURCE_GROUP} \
+#   --release-train preview \
+#   --name ssarcextension \
+#   --scope cluster
+
+# ###
+# ### Configure the SSE
+# ###
+
+# # Create a SecretProviderClass resource
+# cat <<EOF > spc.yaml
+# apiVersion: secrets-store.csi.x-k8s.io/v1
+# kind: SecretProviderClass
+# metadata:
+#   name: secret-provider-class-name                      # Name of the class; must be unique per Kubernetes namespace
+#   namespace: ${KUBERNETES_NAMESPACE}                    # Kubernetes namespace to make the secrets accessible in
+# spec:
+#   provider: azure
+#   parameters:
+#     clientID: "${USER_ASSIGNED_CLIENT_ID}"               # Managed Identity Client ID for accessing the Azure Key Vault with.
+#     keyvaultName: ${KEYVAULT_NAME}                       # The name of the Azure Key Vault to synchronize secrets from.
+#     objects: |
+#       array:
+#         - |
+#           objectName: ${KEYVAULT_SECRET_NAME}            # The name of the secret to sychronize.
+#           objectType: secret
+#           objectVersionHistory: 2                       # [optional] The number of versions to synchronize, starting from latest.
+#     tenantID: "${AZURE_TENANT_ID}"                       # The tenant ID of the Key Vault 
+# EOF
+
+# # Create a SecretSync object
+# cat <<EOF > ss.yaml
+# apiVersion: secret-sync.x-k8s.io/v1alpha1
+# kind: SecretSync
+# metadata:
+#   name: secret-sync-name                                  # Name of the object; must be unique per Kubernetes namespace
+#   namespace: ${KUBERNETES_NAMESPACE}                      # Kubernetes namespace
+# spec:
+#   serviceAccountName: ${SERVICE_ACCOUNT_NAME}             # The Kubernetes service account to be given permissions to access the secret.
+#   secretProviderClassName: secret-provider-class-name     # The name of the matching SecretProviderClass with the configuration to access the AKV storing this secret
+#   secretObject:
+#     type: Opaque
+#     data:
+#     - sourcePath: ${KEYVAULT_SECRET_NAME}/0                # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
+#       targetKey: ${KEYVAULT_SECRET_NAME}-data-key0         # Target name of the secret in the Kubernetes secret store (must be unique)
+# EOF
+
+# # Apply the configuration CRs
+# kubectl apply -f ./spc.yaml
+# kubectl apply -f ./ss.yaml
 
 # # Uploading this script log to staging storage for ease of troubleshooting
 # echo ""
 # echo "Uploading the script logs to staging storage"
 # echo ""
 # exec 1>&3 2>&4 # Further commands will now output to the original stdout and stderr and not the log file
-# log="/home/$adminUsername/jumpstart_logs/installK3s-$vmName.log"
+# log="/home/$adminUsername/jumpstart_logs/k3sWithSSE-$vmName.log"
 # storageContainerNameLower=$(echo $storageContainerName | tr '[:upper:]' '[:lower:]')
-# azcopy cp $log "https://$stagingStorageAccountName.blob.core.windows.net/$storageContainerNameLower/installK3s-$vmName.log" --check-length=false >/dev/null 2>&1
+# azcopy cp $log "https://$stagingStorageAccountName.blob.core.windows.net/$storageContainerNameLower/k3sWithSSE-$vmName.log" --check-length=false >/dev/null 2>&1
 
 exit 0
