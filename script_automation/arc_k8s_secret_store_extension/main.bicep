@@ -26,7 +26,7 @@ param sshRSAPublicKey string
 @description('The name of the Azure Arc K3s cluster')
 param k3sArcDataClusterName string = 'js-k3s-${namingGuid}'
 
-var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/azure_arc/${githubBranch}/azure_jumpstart_ag/'
+var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/azure_arc/${githubBranch}/script_automation/arc_k8s_secret_store_extension/'
 
 module mgmtArtifacts 'modules/mgmtArtifacts.bicep' = {
   name: 'mgmtArtifacts'
@@ -38,7 +38,6 @@ module mgmtArtifacts 'modules/mgmtArtifacts.bicep' = {
     namingGuid: namingGuid
   }
 }
-
 module k3sSecretStoreDeployment 'modules/k3s.bicep' = {
   name: 'ubuntuRancherK3s2Deployment'
   params: {

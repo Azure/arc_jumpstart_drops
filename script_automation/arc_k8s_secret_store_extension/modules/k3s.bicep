@@ -175,7 +175,7 @@ resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-0
     protectedSettings: {
       commandToExecute: 'bash installK3s.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name}'
       fileUris: [
-        '${templateBaseUrl}artifacts/kubernetes/K3s/installK3s.sh'
+        '${templateBaseUrl}scripts/installK3s.sh'
       ]
     }
   }
