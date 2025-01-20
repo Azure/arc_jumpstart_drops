@@ -39,9 +39,9 @@ param templateBaseUrl string
 @description('Random GUID')
 param namingGuid string
 
-var publicIpAddressName = '${vmName}-PIP'
-var networkInterfaceName = '${vmName}-NIC'
-var userAssignedIdentityName = '${vmName}-UAI'
+var publicIpAddressName = '${vmName}-pip'
+var networkInterfaceName = '${vmName}-nic'
+var userAssignedIdentityName = '${vmName}-uai'
 var osDiskType = 'Premium_LRS'
 // var k3sControlPlane = 'true' // deploy single-node k3s control plane
 var diskSize = 512
@@ -100,7 +100,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-03-01' = {
     }
     storageProfile: {
       osDisk: {
-        name: '${vmName}-OSDisk'
+        name: '${vmName}-osdisk'
         caching: 'ReadWrite'
         createOption: 'FromImage'
         managedDisk: {

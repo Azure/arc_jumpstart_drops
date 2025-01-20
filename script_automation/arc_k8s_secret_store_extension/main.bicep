@@ -18,7 +18,7 @@ param deployBastion bool = false
 param virtualNetworkNameCloud string = 'js-vnet-prod'
 
 @description('Name of the Staging AKS subnet in the cloud virtual network')
-param subnetNameCloudK3s string = 'JS-Subnet-K3s'
+param subnetNameCloudK3s string = 'js-subnet-k3s'
 
 @description('Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example \'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm\'')
 param sshRSAPublicKey string
@@ -26,7 +26,7 @@ param sshRSAPublicKey string
 @description('The name of the Azure Arc K3s cluster')
 param k3sArcDataClusterName string = 'js-k3s-${namingGuid}'
 
-var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/azure_arc/${githubBranch}/script_automation/arc_k8s_secret_store_extension/'
+var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/arc_jumpstart_drops/${githubBranch}/script_automation/arc_k8s_secret_store_extension/'
 
 module mgmtArtifacts 'modules/mgmtArtifacts.bicep' = {
   name: 'mgmtArtifacts'
