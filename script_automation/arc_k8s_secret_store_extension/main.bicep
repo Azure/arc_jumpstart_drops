@@ -48,5 +48,6 @@ module k3sSecretStoreDeployment 'modules/k3s.bicep' = {
     vmName : k3sArcDataClusterName
     namingGuid: namingGuid
     keyVaultName: mgmtArtifacts.outputs.keyVaultName
+    userAssignedIdentityName: mgmtArtifacts.outputs.userAssignedIdentityName
   }
 }
