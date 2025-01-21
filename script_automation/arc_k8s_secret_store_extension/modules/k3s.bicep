@@ -42,6 +42,25 @@ param namingGuid string
 @description('The name of the Key Vault')
 param keyVaultName string
 
+@description('The name of the Key Vault secret')
+param keyVaultSecretName string = 'js-secret'
+
+@description('Azure Key Vault tenant ID')
+param tenantId string = subscription().tenantId
+
+@description('The name of the user assigned identity')
+param userAssignedIdentityName string
+
+@description('The name of the Kubernetes namespace')
+param kubernetesNamespace string = 'js-namespace'
+
+@description('The name of the service account')
+param serviceAccountName string = 'js-sa'
+
+@description('The name of the federated credential identity')
+param federatedCredentialIdentityName string = 'js-fci'
+
+
 var publicIpAddressName = '${vmName}-pip'
 var networkInterfaceName = '${vmName}-nic'
 var osDiskType = 'Premium_LRS'
@@ -168,7 +187,7 @@ resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-0
     autoUpgradeMinorVersion: true
     settings: {}
     protectedSettings: {
-      commandToExecute: 'bash k3sWithSSE.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name} ${keyVaultName}'
+      commandToExecute: 'bash k3sWithSSE.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name} ${keyVaultName} ${keyVaultSecretName} ${tenantId} ${userAssignedIdentityName} ${kubernetesNamespace} ${serviceAccountName} ${federatedCredentialIdentityName}'      
       fileUris: [
         '${templateBaseUrl}scripts/k3sWithSSE.sh'
       ]

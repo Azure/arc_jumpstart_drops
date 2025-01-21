@@ -31,6 +31,9 @@ param akvSku string = 'standard'
 @description('Random GUID')
 param namingGuid string
 
+@description('The name of the user assigned identity')
+param userAssignedIdentityName string = 'js-uai-sse'
+
 var addressPrefixCloud = '10.16.0.0/16'
 var subnetAddressPrefixK3s = '10.16.80.0/21'
 var bastionSubnetIpPrefix = '10.16.3.64/26'
@@ -38,8 +41,7 @@ var bastionSubnetName = 'AzureBastionSubnet'
 var bastionSubnetRef = '${cloudVirtualNetwork.id}/subnets/${bastionSubnetName}'
 var bastionName = 'js-bastion'
 var bastionPublicIpAddressName = '${bastionName}-pip'
-var userAssignedIdentityName = 'js-uai-sse'
-var kvName = 'js-kv-${namingGuid}'
+var keyVaultName = 'js-kv-${namingGuid}'
 
 var bastionSubnet = [
   {
@@ -253,7 +255,7 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2023-02-01' = if (deployBas
 }
 
 resource akv 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: kvName
+  name: keyVaultName
   location: location
   tags: resourceTags
   properties: {
@@ -298,4 +300,5 @@ resource userAssignedIdentity_KVSecretsUser 'Microsoft.Authorization/roleAssignm
 output vnetId string = cloudVirtualNetwork.id
 output k3sSubnetId string = cloudVirtualNetwork.properties.subnets[0].id
 output virtualNetworkNameCloud string = cloudVirtualNetwork.name
-output keyVaultName string = kvName
+output keyVaultName string = keyVaultName
+output userAssignedIdentityName string = userAssignedIdentityName
