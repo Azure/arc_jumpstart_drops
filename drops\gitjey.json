@@ -1,0 +1,22 @@
+{
+  "Title": "gitJey",
+  "Summary": "gitJeygitJeygitJeygitJey",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "gitJey",
+      "Link": "https://github.com/gitJey"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/gitjey",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ]
+}
