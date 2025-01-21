@@ -103,7 +103,60 @@ resource networkSecurityGroupCloud 'Microsoft.Network/networkSecurityGroups@2023
   location: location
   tags: resourceTags
   properties: {
-    securityRules: []
+    securityRules: [
+      {
+        name: 'allow_k8s_80'
+        properties: {
+          priority: 1000
+          protocol: 'TCP'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '80'
+        }
+      }
+      {
+        name: 'allow_k8s_8080'
+        properties: {
+          priority: 1010
+          protocol: 'TCP'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '8080'
+        }
+      }
+      {
+        name: 'allow_k8s_443'
+        properties: {
+          priority: 1020
+          protocol: 'TCP'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '443'
+        }
+      }
+      {
+        name: 'allow_k8s_kubelet'
+        properties: {
+          priority: 1060
+          protocol: 'Tcp'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '10250'
+        }
+      }
+    ]
   }
 }
 

@@ -16,10 +16,11 @@ echo $resourceGroup:$6| awk '{print substr($1,2); }' >> vars.sh
 echo $keyVaultName:$7| awk '{print substr($1,2); }' >> vars.sh
 echo $keyVaultSecretName:$8 | awk '{print substr($1,2); }' >> vars.sh
 echo $azureTenantId:$9 | awk '{print substr($1,2); }' >> vars.sh
-echo $userAssignedIdentityName:$10 | awk '{print substr($1,2); }' >> vars.sh
-echo $kubernetesNamespace:$11 | awk '{print substr($1,2); }' >> vars.sh
-echo $serviceAccountName:$12 | awk '{print substr($1,2); }' >> vars.sh
-echo $federatedCredentialIdentityName:$13 | awk '{print substr($1,2); }' >> vars.sh
+echo $userAssignedIdentityName:${10} | awk '{print substr($1,2); }' >> vars.sh
+echo $kubernetesNamespace:${11} | awk '{print substr($1,2); }' >> vars.sh
+echo $serviceAccountName:${12} | awk '{print substr($1,2); }' >> vars.sh
+echo $federatedCredentialIdentityName:${13} | awk '{print substr($1,2); }' >> vars.sh
+echo $certManagerVersion:${14} | awk '{print substr($1,2); }' >> vars.sh
 
 sed -i '2s/^/export adminUsername=/' vars.sh
 sed -i '3s/^/export subscriptionId=/' vars.sh
@@ -34,6 +35,7 @@ sed -i '11s/^/export userAssignedIdentityName=/' vars.sh
 sed -i '12s/^/export kubernetesNamespace=/' vars.sh
 sed -i '13s/^/export serviceAccountName=/' vars.sh
 sed -i '14s/^/export federatedCredentialIdentityName=/' vars.sh
+sed -i '15s/^/export certManagerVersion=/' vars.sh
 
 export vmName=$3
 
@@ -50,7 +52,7 @@ chmod +x vars.sh
 . ./vars.sh
 
 # Creating login message of the day (motd)
-curl -v -o /etc/profile.d/welcomeK3s.sh ${templateBaseUrl}scritps/welcomeK3s.sh
+sudo curl -v -o /etc/profile.d/welcomeK3s.sh ${templateBaseUrl}scritps/welcomeK3s.sh
 
 # Syncing this script log to 'jumpstart_logs' directory for ease of troubleshooting
 sudo -u $adminUsername mkdir -p /home/${adminUsername}/jumpstart_logs
@@ -65,23 +67,6 @@ check_dpkg_lock() {
 }
 # Run the lock check before attempting the installation
 check_dpkg_lock
-
-# Downloading azcopy
-echo ""
-echo "Downloading azcopy"
-echo ""
-wget -O azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux
-if [[ $? -ne 0 ]]; then
-    echo "ERROR: Failed to download azcopy"
-    exit 1
-fi
-
-tar -xf azcopy.tar.gz
-sudo mv azcopy_linux_amd64_*/azcopy /usr/local/bin/azcopy
-sudo chmod +x /usr/local/bin/azcopy
-
-# Authorize azcopy by using a system-wide managed identity
-export AZCOPY_AUTO_LOGIN_TYPE=MSI
 
 # Run the lock check before attempting the installation
 check_dpkg_lock
@@ -127,7 +112,7 @@ check_dpkg_lock
 echo ""
 echo "Installing Azure Arc extensions"
 echo ""
-sudo -u $adminUsername az extension add --name connectedk8s --version 1.9.3
+sudo -u $adminUsername az extension add --name connectedk8s
 sudo -u $adminUsername az extension add --name k8s-configuration
 sudo -u $adminUsername az extension add --name k8s-extension
 
@@ -194,13 +179,14 @@ if [ "$success" = false ]; then
     exit 1
 fi
 
+echo ""
 echo "Onboarding the k3s cluster to Azure Arc completed"
+echo ""
 
 # Verify if cluster is connected to Azure Arc successfully
 connectedClusterInfo=$(sudo -u $adminUsername az connectedk8s show --name $vmName --resource-group $resourceGroup)
 echo "Connected cluster info: $connectedClusterInfo"
 
-# Wait
 # Function to check if an extension is already installed
 is_extension_installed() {
     extension_name=$1
@@ -213,17 +199,41 @@ is_extension_installed() {
     fi
 }
 serviceAccountIssuer=$(sudo -u $adminUsername az connectedk8s show --name $vmName --resource-group $resourceGroup --query "oidcIssuerProfile.issuerUrl" --output tsv)
+echo ""
 echo "OIDC issuer URL: $serviceAccountIssuer"
+echo ""
 
 # sudo vim /etc/systemd/system/k3s.service
 
 # ExecStart=/usr/local/bin/k3s \
 #   server --write-kubeconfig-mode=644 \
-#      '--kube-apiserver-arg=--service-account-issuer=https://oidcdiscovery-northamerica-endpoint-gbcge4adgqebgxev.z01.azurefd.net/2ffc1db7-b373-4be0-a5ec-f54edd5bf695/14fd38d8-3ed1-47de-852f-12f1bf3e4a89/' \
-#      '--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement' \
+    #  '--kube-apiserver-arg=--service-account-issuer=https://oidcdiscovery-northamerica-endpoint-gbcge4adgqebgxev.z01.azurefd.net/2ffc1db7-b373-4be0-a5ec-f54edd5bf695/84daf1c1-8694-406d-9ca3-fd9f423ac1e3/' \
+    #  '--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement' \
 
-# sudo systemctl daemon-reload
-# sudo systemctl restart k3s
+sudo sed -i '$ a\ '\''--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}'\'' \\' /etc/systemd/system/k3s.service
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to append service-account-issuer to k3s.service"
+    exit 1
+fi
+
+sudo sed -i '$ a\ '\''--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement'\'' \\' /etc/systemd/system/k3s.service
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to append enable-admission-plugins to k3s.service"
+    exit 1
+fi
+
+
+sudo systemctl daemon-reload
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to reload systemd daemon"
+    exit 1
+fi
+
+sudo systemctl restart k3s
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to restart k3s service"
+    exit 1
+fi
 
 max_retries=5
 retry_count=0
@@ -246,85 +256,105 @@ if [ "$success" = false ]; then
     exit 1
 fi
 
-# ###
-# ### Create a federated identity credential
-# ###
-# kubectl create ns $kubernetesNamespace
+# Create a federated identity credential
+cat <<EOF | kubectl apply -f -
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+        name: $kubernetesNamespace
+EOF
 
-# cat <<EOF | kubectl apply -f -
-#   apiVersion: v1
-#   kind: ServiceAccount
-#   metadata:
-#     name: $serviceAccountName
-#     namespace: $kubernetesNamespace
-# EOF
+cat <<EOF | kubectl apply -f -
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: $serviceAccountName
+    namespace: $kubernetesNamespace
+EOF
 
-# userAssignedClientId=$(sudo -u $adminUsername az identity show --resource-group $resourceGroup --name $userAssignedIdentityName --query 'clientId' -otsv)
+userAssignedClientId=$(sudo -u $adminUsername az identity show --resource-group $resourceGroup --name $userAssignedIdentityName --query 'clientId' -otsv)
 
-# sudo -u $adminUsername az identity federated-credential create --name $federatedCredentialIdentityName -identity-name $userAssignedIdentityName --resource-group $resourceGroup --issuer $serviceAccountIssuer --subject system:serviceaccount:${kubernetesNamespace}:${serviceAccountName}
+sudo -u $adminUsername az identity federated-credential create --name $federatedCredentialIdentityName --identity-name $userAssignedIdentityName --resource-group $resourceGroup --issuer $serviceAccountIssuer --subject system:serviceaccount:${kubernetesNamespace}:${serviceAccountName}
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to create federated credential"
+    exit 1
+fi
 
-# ###
-# ### Install the SSE
-# ###
+#
+# Install the Secret Store Extension for Kubernetes
+#
 
-# helm repo add jetstack https://charts.jetstack.io/ --force-update
-# helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.2 --set crds.enabled=true
+helm repo add jetstack https://charts.jetstack.io/ --force-update
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Failed to add jetstack helm repo"
+    exit 1
+fi
 
-# helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Failed to install cert-manager"
+    exit 1
+fi
 
-# # Enabling Secret Store Extension for Kubernetes on the cluster
-# echo ""
-# echo "Enabling Secret Store Extension for Kubernetes on the cluster"
-# echo ""
+helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Failed to upgrade/install trust-manager"
+    exit 1
+fi
 
-# # Check and install arc-azurepolicy extension
-# if is_extension_installed "ssarcextension "; then
-#     echo "Extension 'ssarcextension' is already installed."
-# else
-#     echo "Extension 'ssarcextension' is not installed -  triggering installation"
-#     sudo -u $adminUsername az k8s-extension create --cluster-name $vmName --cluster-type connectedClusters --extension-type microsoft.azure.secretstore --resource-group $resourceGroup --release-train preview --name ssarcextension --scope cluster
-# fi
+# Enabling Secret Store Extension for Kubernetes on the cluster
+echo ""
+echo "Enabling Secret Store Extension for Kubernetes on the cluster"
+echo ""
 
-# ###
-# ### Configure the SSE
-# ###
+# Check and install Secret Store Extension extension
+if is_extension_installed "ssarcextension "; then
+    echo "Extension 'ssarcextension' is already installed."
+else
+    echo "Extension 'ssarcextension' is not installed -  triggering installation"
+    sudo -u $adminUsername az k8s-extension create --cluster-name $vmName --cluster-type connectedClusters --extension-type microsoft.azure.secretstore --resource-group $resourceGroup --release-train preview --name ssarcextension --scope cluster
+fi
 
-# # Create a SecretProviderClass resource
-# kubectl apply -f - <<EOF
-# apiVersion: secrets-store.csi.x-k8s.io/v1
-# kind: SecretProviderClass
-# metadata:
-#   name: secret-provider-class-name                      # Name of the class; must be unique per Kubernetes namespace
-#   namespace: ${kubernetesNamespace}                    # Kubernetes namespace to make the secrets accessible in
-# spec:
-#   provider: azure
-#   parameters:
-#     clientID: "${userAssignedClientId}"               # Managed Identity Client ID for accessing the Azure Key Vault with.
-#     keyvaultName: ${keyVaultName}                       # The name of the Azure Key Vault to synchronize secrets from.
-#     objects: |
-#       array:
-#         - |
-#           objectName: ${keyVaultSecretName}            # The name of the secret to sychronize.
-#           objectType: secret
-#           objectVersionHistory: 2                       # [optional] The number of versions to synchronize, starting from latest.
-#     tenantID: "${azureTenantId}"                       # The tenant ID of the Key Vault 
-# EOF
+###
+### Configure the SSE
+###
 
-# # Create a SecretSync object
-# kubectl apply -f - <<EOF
-# apiVersion: secret-sync.x-k8s.io/v1alpha1
-# kind: SecretSync
-# metadata:
-#   name: secret-sync-name                                  # Name of the object; must be unique per Kubernetes namespace
-#   namespace: ${kubernetesNamespace}                      # Kubernetes namespace
-# spec:
-#   serviceAccountName: ${serviceAccountName}             # The Kubernetes service account to be given permissions to access the secret.
-#   secretProviderClassName: secret-provider-class-name     # The name of the matching SecretProviderClass with the configuration to access the AKV storing this secret
-#   secretObject:
-#     type: Opaque
-#     data:
-#     - sourcePath: ${keyVaultSecretName}/0                # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
-#       targetKey: ${keyVaultSecretName}-data-key0         # Target name of the secret in the Kubernetes secret store (must be unique)
-# EOF
+# Create a SecretProviderClass resource
+kubectl apply -f - <<EOF
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-provider-class-name                      # Name of the class; must be unique per Kubernetes namespace
+  namespace: ${kubernetesNamespace}                    # Kubernetes namespace to make the secrets accessible in
+spec:
+  provider: azure
+  parameters:
+    clientID: "${userAssignedClientId}"               # Managed Identity Client ID for accessing the Azure Key Vault with.
+    keyvaultName: ${keyVaultName}                       # The name of the Azure Key Vault to synchronize secrets from.
+    objects: |
+      array:
+        - |
+          objectName: ${keyVaultSecretName}            # The name of the secret to sychronize.
+          objectType: secret
+          objectVersionHistory: 2                       # [optional] The number of versions to synchronize, starting from latest.
+    tenantID: "${azureTenantId}"                       # The tenant ID of the Key Vault 
+EOF
+
+# Create a SecretSync object
+kubectl apply -f - <<EOF
+apiVersion: secret-sync.x-k8s.io/v1alpha1
+kind: SecretSync
+metadata:
+  name: secret-sync-name                                  # Name of the object; must be unique per Kubernetes namespace
+  namespace: ${kubernetesNamespace}                      # Kubernetes namespace
+spec:
+  serviceAccountName: ${serviceAccountName}             # The Kubernetes service account to be given permissions to access the secret.
+  secretProviderClassName: secret-provider-class-name     # The name of the matching SecretProviderClass with the configuration to access the AKV storing this secret
+  secretObject:
+    type: Opaque
+    data:
+    - sourcePath: ${keyVaultSecretName}/0                # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
+      targetKey: ${keyVaultSecretName}-data-key0         # Target name of the secret in the Kubernetes secret store (must be unique)
+EOF
 
 exit 0

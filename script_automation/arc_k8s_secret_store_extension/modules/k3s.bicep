@@ -23,15 +23,6 @@ param vmSize string = 'Standard_B4ms'
 @description('Resource Id of the subnet in the virtual network')
 param subnetId string
 
-// @description('Name for the staging storage account using to hold kubeconfig. This value is passed into the template as an output from mgmtStagingStorage.json')
-// param stagingStorageAccountName string
-
-// @description('Name of the Log Analytics workspace used with cluster extensions')
-// param logAnalyticsWorkspace string
-
-// @description('Storage account container name for artifacts')
-// param storageContainerName string
-
 @description('The base URL used for accessing artifacts and automation artifacts')
 param templateBaseUrl string
 
@@ -60,6 +51,8 @@ param serviceAccountName string = 'js-sa'
 @description('The name of the federated credential identity')
 param federatedCredentialIdentityName string = 'js-fci'
 
+@description('Cert Manager version')
+param certManagerVersion string = 'v1.16.2'
 
 var publicIpAddressName = '${vmName}-pip'
 var networkInterfaceName = '${vmName}-nic'
@@ -187,7 +180,7 @@ resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-0
     autoUpgradeMinorVersion: true
     settings: {}
     protectedSettings: {
-      commandToExecute: 'bash k3sWithSSE.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name} ${keyVaultName} ${keyVaultSecretName} ${tenantId} ${userAssignedIdentityName} ${kubernetesNamespace} ${serviceAccountName} ${federatedCredentialIdentityName}'      
+      commandToExecute: 'bash k3sWithSSE.sh ${adminUsername} ${subscription().subscriptionId} ${vmName} ${azureLocation} ${templateBaseUrl} ${resourceGroup().name} ${keyVaultName} ${keyVaultSecretName} ${tenantId} ${userAssignedIdentityName} ${kubernetesNamespace} ${serviceAccountName} ${federatedCredentialIdentityName} ${certManagerVersion}'      
       fileUris: [
         '${templateBaseUrl}scripts/k3sWithSSE.sh'
       ]
