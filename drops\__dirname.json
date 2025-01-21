@@ -1,0 +1,22 @@
+{
+  "Title": "__dirname",
+  "Summary": "__dirname__dirname__dirname",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "__dirname",
+      "Link": "https://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/__dirname",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ]
+}
