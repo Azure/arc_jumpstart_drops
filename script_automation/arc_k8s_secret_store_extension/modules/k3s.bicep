@@ -64,7 +64,7 @@ param federatedCredentialIdentityName string = 'js-fci'
 var publicIpAddressName = '${vmName}-pip'
 var networkInterfaceName = '${vmName}-nic'
 var osDiskType = 'Premium_LRS'
-var diskSize = 512
+var diskSize = 32
 var numberOfIPAddresses =  1 // The number of IP addresses to create
 
 // Create multiple public IP addresses
