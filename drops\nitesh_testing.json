@@ -1,0 +1,22 @@
+{
+  "Title": "nitesh testing",
+  "Summary": "nitesh testing",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "nitesh testing",
+      "Link": "http://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh_testing",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ]
+}
