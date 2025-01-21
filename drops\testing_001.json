@@ -1,0 +1,22 @@
+{
+  "Title": "testing 001",
+  "Summary": "testing 001testing 001testing 001",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "testing 001",
+      "Link": "https://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/testing_001",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "K3s"
+  ]
+}
