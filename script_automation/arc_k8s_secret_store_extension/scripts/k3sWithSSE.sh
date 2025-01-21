@@ -257,7 +257,7 @@ is_extension_installed() {
 #     sudo -u $adminUsername az k8s-extension create --name "azurepolicy" --cluster-name $vmName --resource-group $resourceGroup --cluster-type connectedClusters --extension-type Microsoft.PolicyInsights --only-show-errors
 # fi
 
-serviceAccountIssuer="$(az connectedk8s show --name $vmName --resource-group $resourceGroup --query "oidcIssuerProfile.issuerUrl" --output tsv)"
+serviceAccountIssuer=$(sudo -u $adminUsername az connectedk8s show --name $vmName --resource-group $resourceGroup --query "oidcIssuerProfile.issuerUrl" --output tsv)
 echo $serviceAccountIssuer
 
 # sudo vim /etc/systemd/system/k3s.service
@@ -270,7 +270,26 @@ echo $serviceAccountIssuer
 # sudo systemctl daemon-reload
 # sudo systemctl restart k3s
 
-az keyvault secret set --vault-name $kvName --name 'js-secret' --value 'JumpstartDrops!'
+max_retries=5
+retry_count=0
+success=false
+
+while [ $retry_count -lt $max_retries ]; do
+    sudo -u $adminUsername az keyvault secret set --vault-name $kvName --name 'js-secret' --value 'JumpstartDrops!'
+    if [ $? -eq 0 ]; then
+        success=true
+        break
+    else
+        echo "Failed to set secret in Key Vault. Retrying (Attempt $((retry_count+1)))..."
+        retry_count=$((retry_count+1))
+        sleep 10
+    fi
+done
+
+if [ "$success" = false ]; then
+    echo "Error: Failed to set secret in Key Vault after $max_retries attempts."
+    exit 1
+fi
 
 # ###
 # ### Create a federated identity credential
