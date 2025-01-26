@@ -288,21 +288,64 @@ fi
 # Install the Secret Store Extension for Kubernetes
 #
 
-helm repo add jetstack https://charts.jetstack.io/ --force-update
-if [[ $? -ne 0 ]]; then
-    echo "ERROR: Failed to add jetstack helm repo"
+max_retries=5
+retry_count=0
+success=false
+
+while [ $retry_count -lt $max_retries ]; do
+    helm repo add jetstack https://charts.jetstack.io/ --force-update
+    if [[ $? -eq 0 ]]; then
+        success=true
+        break
+    else
+        echo "Failed to add jetstack helm repo. Retrying (Attempt $((retry_count+1)))..."
+        retry_count=$((retry_count+1))
+        sleep 10
+    fi
+done
+
+if [ "$success" = false ]; then
+    echo "ERROR: Failed to add jetstack helm repo after $max_retries attempts."
     exit 1
 fi
 
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
-if [[ $? -ne 0 ]]; then
-    echo "ERROR: Failed to install cert-manager"
+retry_count=0
+success=false
+
+while [ $retry_count -lt $max_retries ]; do
+    helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
+    if [[ $? -eq 0 ]]; then
+        success=true
+        break
+    else
+        echo "Failed to install cert-manager. Retrying (Attempt $((retry_count+1)))..."
+        retry_count=$((retry_count+1))
+        sleep 10
+    fi
+done
+
+if [ "$success" = false ]; then
+    echo "ERROR: Failed to install cert-manager after $max_retries attempts."
     exit 1
 fi
 
-helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
-if [[ $? -ne 0 ]]; then
-    echo "ERROR: Failed to upgrade/install trust-manager"
+retry_count=0
+success=false
+
+while [ $retry_count -lt $max_retries ]; do
+    helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
+    if [[ $? -eq 0 ]]; then
+        success=true
+        break
+    else
+        echo "Failed to upgrade/install trust-manager. Retrying (Attempt $((retry_count+1)))..."
+        retry_count=$((retry_count+1))
+        sleep 10
+    fi
+done
+
+if [ "$success" = false ]; then
+    echo "ERROR: Failed to upgrade/install trust-manager after $max_retries attempts."
     exit 1
 fi
 
