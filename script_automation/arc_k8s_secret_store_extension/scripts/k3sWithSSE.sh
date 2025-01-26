@@ -293,7 +293,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    helm repo add jetstack https://charts.jetstack.io/ --force-update
+    sudo -u $adminUsername helm repo add jetstack https://charts.jetstack.io/ --force-update
     if [[ $? -eq 0 ]]; then
         success=true
         break
@@ -313,7 +313,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
+    sudo -u $adminUsername helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
     if [[ $? -eq 0 ]]; then
         success=true
         break
@@ -333,7 +333,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
+    sudo -u $adminUsername helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
     if [[ $? -eq 0 ]]; then
         success=true
         break
