@@ -203,30 +203,23 @@ echo ""
 echo "OIDC issuer URL: $serviceAccountIssuer"
 echo ""
 
-# sudo vim /etc/systemd/system/k3s.service
-
-# ExecStart=/usr/local/bin/k3s \
-#   server --write-kubeconfig-mode=644 \
-    #  '--kube-apiserver-arg=--service-account-issuer=https://oidcdiscovery-northamerica-endpoint-gbcge4adgqebgxev.z01.azurefd.net/2ffc1db7-b373-4be0-a5ec-f54edd5bf695/84daf1c1-8694-406d-9ca3-fd9f423ac1e3/' \
-    #  '--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement' \
-# sed -i "$ a\ '--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}' \\\/" service
-
 # Ensure the last line is empty and delete it if it is
-sed -i '${/^$/d}' /etc/systemd/system/k3s.service
+sudo -u $adminUsername sed -i '${/^$/d}' /etc/systemd/system/k3s.service
 
 # Append the required flags to the k3s.service file
-sudo sed -i '$ a\ '\''--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement'\'' \\' /etc/systemd/system/k3s.service
+sudo -u $adminUsername sed -i '$ a\ '\''--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement'\'' \\' /etc/systemd/system/k3s.service
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to append enable-admission-plugins to k3s.service"
     exit 1
 fi
 
-sudo sed -i "$ a\ '--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}'" /etc/systemd/system/k3s.service
+sudo -u $adminUsername sed -i "$ a\ '--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}'" /etc/systemd/system/k3s.service
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to append service-account-issuer to k3s.service"
     exit 1
 fi
 
+# Reload systemd daemon and restart k3s service
 sudo systemctl daemon-reload
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to reload systemd daemon"
@@ -239,6 +232,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Set up the Azure Key Vault and create a secret
 max_retries=5
 retry_count=0
 success=false
@@ -284,68 +278,22 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-#
 # Install the Secret Store Extension for Kubernetes
-#
-
-max_retries=5
-retry_count=0
-success=false
-
-while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername helm repo add jetstack https://charts.jetstack.io/ --force-update
-    if [[ $? -eq 0 ]]; then
-        success=true
-        break
-    else
-        echo "Failed to add jetstack helm repo. Retrying (Attempt $((retry_count+1)))..."
-        retry_count=$((retry_count+1))
-        sleep 10
-    fi
-done
-
-if [ "$success" = false ]; then
-    echo "ERROR: Failed to add jetstack helm repo after $max_retries attempts."
+sudo -u $adminUsername helm repo add jetstack https://charts.jetstack.io/ --force-update
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Failed to add jetstack helm repo."
     exit 1
 fi
 
-retry_count=0
-success=false
-
-while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
-    if [[ $? -eq 0 ]]; then
-        success=true
-        break
-    else
-        echo "Failed to install cert-manager. Retrying (Attempt $((retry_count+1)))..."
-        retry_count=$((retry_count+1))
-        sleep 10
-    fi
-done
-
-if [ "$success" = false ]; then
-    echo "ERROR: Failed to install cert-manager after $max_retries attempts."
+sudo -u $adminUsername helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $certManagerVersion --set crds.enabled=true
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Failed to install cert-manager."
     exit 1
 fi
 
-retry_count=0
-success=false
-
-while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
-    if [[ $? -eq 0 ]]; then
-        success=true
-        break
-    else
-        echo "Failed to upgrade/install trust-manager. Retrying (Attempt $((retry_count+1)))..."
-        retry_count=$((retry_count+1))
-        sleep 10
-    fi
-done
-
-if [ "$success" = false ]; then
-    echo "ERROR: Failed to upgrade/install trust-manager after $max_retries attempts."
+sudo -u $adminUsername helm upgrade trust-manager jetstack/trust-manager --install --namespace cert-manager --wait
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Failed to upgrade/install trust-manager."
     exit 1
 fi
 
@@ -362,11 +310,7 @@ else
     sudo -u $adminUsername az k8s-extension create --cluster-name $vmName --cluster-type connectedClusters --extension-type microsoft.azure.secretstore --resource-group $resourceGroup --release-train preview --name ssarcextension --scope cluster
 fi
 
-###
-### Configure the SSE
-###
-
-# Create a SecretProviderClass resource
+# Create a SecretProviderClass resource for Secret Store Extension
 kubectl apply -f - <<EOF
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -387,7 +331,7 @@ spec:
     tenantID: "${azureTenantId}"                       # The tenant ID of the Key Vault 
 EOF
 
-# Create a SecretSync object
+# Create a SecretSync object for Secret Store Extension
 kubectl apply -f - <<EOF
 apiVersion: secret-sync.x-k8s.io/v1alpha1
 kind: SecretSync
