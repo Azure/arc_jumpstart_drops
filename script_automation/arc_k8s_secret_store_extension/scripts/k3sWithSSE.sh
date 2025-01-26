@@ -209,19 +209,23 @@ echo ""
 #   server --write-kubeconfig-mode=644 \
     #  '--kube-apiserver-arg=--service-account-issuer=https://oidcdiscovery-northamerica-endpoint-gbcge4adgqebgxev.z01.azurefd.net/2ffc1db7-b373-4be0-a5ec-f54edd5bf695/84daf1c1-8694-406d-9ca3-fd9f423ac1e3/' \
     #  '--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement' \
+# sed -i "$ a\ '--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}' \\\/" service
 
-sudo sed -i '$ a\ '\''--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}'\'' \\' /etc/systemd/system/k3s.service
-if [ $? -ne 0 ]; then
-    echo "ERROR: Failed to append service-account-issuer to k3s.service"
-    exit 1
-fi
+# Ensure the last line is empty and delete it if it is
+sed -i '${/^$/d}' /etc/systemd/system/k3s.service
 
+# Append the required flags to the k3s.service file
 sudo sed -i '$ a\ '\''--kube-apiserver-arg=--enable-admission-plugins=OwnerReferencesPermissionEnforcement'\'' \\' /etc/systemd/system/k3s.service
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to append enable-admission-plugins to k3s.service"
     exit 1
 fi
 
+sudo sed -i "$ a\ '--kube-apiserver-arg=--service-account-issuer=${serviceAccountIssuer}'" /etc/systemd/system/k3s.service
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to append service-account-issuer to k3s.service"
+    exit 1
+fi
 
 sudo systemctl daemon-reload
 if [ $? -ne 0 ]; then
