@@ -311,7 +311,11 @@ else
 fi
 
 # Create a SecretProviderClass resource for Secret Store Extension
-kubectl apply -f - <<EOF
+echo ""
+echo "Enabling Secret Store Extension for Kubernetes on the cluster"
+echo ""
+
+cat <<EOF | kubectl apply -f -
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
@@ -332,7 +336,11 @@ spec:
 EOF
 
 # Create a SecretSync object for Secret Store Extension
-kubectl apply -f - <<EOF
+echo ""
+echo "Creating SecretSync object for Secret Store Extension"
+echo ""
+
+cat <<EOF | kubectl apply -f -
 apiVersion: secret-sync.x-k8s.io/v1alpha1
 kind: SecretSync
 metadata:
@@ -347,5 +355,39 @@ spec:
     - sourcePath: ${keyVaultSecretName}/0                # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
       targetKey: ${keyVaultSecretName}-data-key0         # Target name of the secret in the Kubernetes secret store (must be unique)
 EOF
+
+# # Create the pod with volume referencing the secret
+# echo ""
+# echo "Deploying App referencing the secret"
+# echo ""
+
+# cat <<EOF | kubectl apply -f -
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: busybox-secrets-sync
+#   namespace: ${kubernetesNamespace}
+# spec:
+#   containers:
+#   - name: busybox
+#     image: registry.k8s.io/busybox
+#     env:
+#     - name: SECRET_USERNAME
+#       valueFrom:
+#         secretKeyRef:
+#           name: dbusername
+#           key: username
+#     command:
+#       - "/bin/sleep"
+#       - "10000"
+#     volumeMounts:
+#     - name: secrets-store-inline
+#       mountPath: "/mnt/secrets-store"
+#       readOnly: true
+#   volumes:
+#     - name: secrets-store-inline
+#       secret:
+#         secretName: ${keyVaultSecretName}           
+# EOF
 
 exit 0
