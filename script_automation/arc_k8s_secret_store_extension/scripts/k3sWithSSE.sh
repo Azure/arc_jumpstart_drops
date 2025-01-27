@@ -46,7 +46,7 @@ exec >k3sWithSSE-${vmName}.log
 exec 2>&1
 
 # Set k3 deployment variables
-export K3S_VERSION="1.29.6+k3s2" # Do not change!
+export K3S_VERSION="v1.32.0+k3s1" # Do not change!
 
 chmod +x vars.sh
 . ./vars.sh
@@ -356,38 +356,32 @@ spec:
       targetKey: ${keyVaultSecretName}-data-key0         # Target name of the secret in the Kubernetes secret store (must be unique)
 EOF
 
-# # Create the pod with volume referencing the secret
-# echo ""
-# echo "Deploying App referencing the secret"
-# echo ""
+# Create the pod with volume referencing the secret
+echo ""
+echo "Deploying App referencing the secret"
+echo ""
 
-# cat <<EOF | kubectl apply -f -
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: busybox-secrets-sync
-#   namespace: ${kubernetesNamespace}
-# spec:
-#   containers:
-#   - name: busybox
-#     image: registry.k8s.io/busybox
-#     env:
-#     - name: SECRET_USERNAME
-#       valueFrom:
-#         secretKeyRef:
-#           name: dbusername
-#           key: username
-#     command:
-#       - "/bin/sleep"
-#       - "10000"
-#     volumeMounts:
-#     - name: secrets-store-inline
-#       mountPath: "/mnt/secrets-store"
-#       readOnly: true
-#   volumes:
-#     - name: secrets-store-inline
-#       secret:
-#         secretName: ${keyVaultSecretName}           
-# EOF
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-secrets-sync
+  namespace: js-namespace
+spec:
+  containers:
+  - name: busybox
+    image: registry.k8s.io/busybox
+    command:
+      - "/bin/sleep"
+      - "10000"
+    volumeMounts:
+    - name: secrets-store-inline
+      mountPath: "/mnt/secrets-store"
+      readOnly: true
+  volumes:
+    - name: secrets-store-inline
+      secret:
+        secretName: secret-sync-name        
+EOF
 
 exit 0
