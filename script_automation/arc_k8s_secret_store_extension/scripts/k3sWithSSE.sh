@@ -352,7 +352,7 @@ spec:
   secretObject:
     type: Opaque
     data:
-    - sourcePath: ${keyVaultSecretName}               # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
+    - sourcePath: ${keyVaultSecretName}/0               # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
       targetKey: ${keyVaultSecretName}        # Target name of the secret in the Kubernetes secret store (must be unique)
 EOF
 
@@ -372,7 +372,7 @@ spec:
   - name: busybox
     image: registry.k8s.io/busybox
     command: ["/bin/sh"]
-    args: ["-c", "while true; do echo \$SECRETVALUE - synced secret from kv; sleep 30; done"]
+    args: ["-c", "while true; do echo \$SECRETVALUE :synced secret from kv; sleep 30; done"]
     env:
     - name: SECRETVALUE
       valueFrom:
