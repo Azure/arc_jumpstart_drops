@@ -369,10 +369,10 @@ metadata:
   namespace: ${kubernetesNamespace} 
 spec:
   containers:
-  - name: busybox2
+  - name: busybox
     image: registry.k8s.io/busybox
     command: ["/bin/sh"]
-    args: ["-c", "while true; do echo \$SECRETVALUE; sleep 10; done"]
+    args: ["-c", "while true; do echo \$SECRETVALUE - synced secret from kv; sleep 30; done"]
     env:
     - name: SECRETVALUE
       valueFrom:
