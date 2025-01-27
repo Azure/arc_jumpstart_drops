@@ -319,7 +319,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: secret-provider-class-name                      # Name of the class; must be unique per Kubernetes namespace
+  name: js-secret-provider-class                     # Name of the class; must be unique per Kubernetes namespace
   namespace: ${kubernetesNamespace}                    # Kubernetes namespace to make the secrets accessible in
 spec:
   provider: azure
@@ -344,16 +344,16 @@ cat <<EOF | kubectl apply -f -
 apiVersion: secret-sync.x-k8s.io/v1alpha1
 kind: SecretSync
 metadata:
-  name: secret-sync-name                                  # Name of the object; must be unique per Kubernetes namespace
+  name: js-secret-sync                                  # Name of the object; must be unique per Kubernetes namespace
   namespace: ${kubernetesNamespace}                      # Kubernetes namespace
 spec:
   serviceAccountName: ${serviceAccountName}             # The Kubernetes service account to be given permissions to access the secret.
-  secretProviderClassName: secret-provider-class-name     # The name of the matching SecretProviderClass with the configuration to access the AKV storing this secret
+  secretProviderClassName: js-secret-provider-class    # The name of the matching SecretProviderClass with the configuration to access the AKV storing this secret
   secretObject:
     type: Opaque
     data:
-    - sourcePath: ${keyVaultSecretName}/0                # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
-      targetKey: ${keyVaultSecretName}-data-key0         # Target name of the secret in the Kubernetes secret store (must be unique)
+    - sourcePath: ${keyVaultSecretName}               # Name of the secret in Azure Key Vault with an optional version number (defaults to latest)
+      targetKey: ${keyVaultSecretName}        # Target name of the secret in the Kubernetes secret store (must be unique)
 EOF
 
 # Create the pod with volume referencing the secret
@@ -365,23 +365,20 @@ cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: Pod
 metadata:
-  name: busybox-secrets-sync
-  namespace: js-namespace
+  name: js-app-secrets-sync
+  namespace: ${kubernetesNamespace} 
 spec:
   containers:
-  - name: busybox
+  - name: busybox2
     image: registry.k8s.io/busybox
-    command:
-      - "/bin/sleep"
-      - "10000"
-    volumeMounts:
-    - name: secrets-store-inline
-      mountPath: "/mnt/secrets-store"
-      readOnly: true
-  volumes:
-    - name: secrets-store-inline
-      secret:
-        secretName: secret-sync-name        
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo \$SECRETVALUE; sleep 10; done"]
+    env:
+    - name: SECRETVALUE
+      valueFrom:
+        secretKeyRef:
+          name: js-secret-sync
+          key: ${keyVaultSecretName}    
 EOF
 
 exit 0
