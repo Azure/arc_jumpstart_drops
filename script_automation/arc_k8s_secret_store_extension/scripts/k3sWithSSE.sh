@@ -52,7 +52,7 @@ chmod +x vars.sh
 . ./vars.sh
 
 # Creating login message of the day (motd)
-sudo curl -v -o /etc/profile.d/welcomeK3s.sh ${templateBaseUrl}scritps/welcomeK3s.sh
+curl -v -o /etc/profile.d/welcomeK3s.sh ${templateBaseUrl}scripts/welcomeK3s.sh
 
 # Syncing this script log to 'jumpstart_logs' directory for ease of troubleshooting
 sudo -u $adminUsername mkdir -p /home/${adminUsername}/jumpstart_logs
@@ -65,9 +65,6 @@ check_dpkg_lock() {
         sleep 5
     done
 }
-# Run the lock check before attempting the installation
-check_dpkg_lock
-
 # Run the lock check before attempting the installation
 check_dpkg_lock
 
