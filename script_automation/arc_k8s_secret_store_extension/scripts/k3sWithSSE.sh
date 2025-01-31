@@ -235,7 +235,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername az keyvault secret set --vault-name $keyVaultName --name $keyVaultSecretName --value 'JumpstartDrops!'
+    sudo -u $adminUsername az keyvault secret set --vault-name $keyVaultName --name $keyVaultSecretName --value $(openssl rand -base64 10)
     if [ $? -eq 0 ]; then
         success=true
         break
