@@ -2,7 +2,7 @@
 param vmName string = 'js-k3s-${namingGuid}'
 
 @description('Username for the Virtual Machine')
-param adminUsername string = 'jumpstart'
+param adminUsername string = 'jumpstartuser'
 
 @description('RSA public key used for securing SSH access to ArcBox resources. This parameter is only needed when deploying the DataOps or DevOps flavors.')
 @secure()
