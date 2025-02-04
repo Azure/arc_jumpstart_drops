@@ -6,7 +6,7 @@ param location string = resourceGroup().location
 param namingGuid string = toLower(substring(newGuid(), 0, 5))
 
 @description('Target GitHub account')
-param githubAccount string = 'microsoft'
+param githubAccount string = 'azure'
 
 @description('Target GitHub branch')
 param githubBranch string = 'main'
