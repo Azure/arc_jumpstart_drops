@@ -7,4 +7,3 @@ pull_request.json
 .DS_Store
 .env
 .*
-script_automation/arc_k8s_secret_store_extension/main.bicepparam
