@@ -1,7 +1,7 @@
 ## Overview
 
-#### Using Secret Store extension to fetch secrets in Azure Arc-enabled Kubernetes cluster
-This Jumpstart drop provides comprehensive automation to set up a lightweight Kubernetes (K3s) cluster, connect it to Azure Arc and configure the Azure Key Vault Secret Store Extension. Secret Store extension synchronizes secrets from Azure Key Vault to your Kubernetes cluster. The automation script handles the installation of all necessary dependencies and deploys a sample application that demonstrates the use of the synchronized secrets within the Kubernetes environment. This setup ensures that your Kubernetes applications can securely access secrets stored in Azure Key Vault, even when operating offline.
+#### Using Secret Store extension to fetch secrets in Arc-enabled Kubernetes cluster
+This Jumpstart drop provides comprehensive automation to set up a lightweight Kubernetes (K3s) cluster, connect it to Azure Arc and configure the Azure Key Vault Secret Store Extension. Secret Store extension synchronizes secrets from Key Vault to your Kubernetes cluster. The automation script handles the installation of all necessary dependencies and deploys a sample application that demonstrates the use of the synchronized secrets within the Kubernetes environment. This setup ensures that your Kubernetes applications can securely access secrets stored in Key Vault, even when operating offline.
 
 > ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension).
 
