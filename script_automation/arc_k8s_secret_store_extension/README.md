@@ -101,7 +101,7 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
   ```
   ![Screenshot showing secret value](./artifacts/media/k8sSecrets.png)
 
-- Check deployed application logs to see the synced secret value.
+- We have deployed a sample application running a BusyBox container that continuously prints the value of the synchronized secret via the Secret Store Extension to the logs every 30 seconds. Check the deployed application logs to see the synced secret value.
   ```shell
     kubectl --namespace js-namespace logs js-app-secrets-sync
   ```
