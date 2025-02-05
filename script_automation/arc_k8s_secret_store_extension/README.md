@@ -1,9 +1,9 @@
 ## Overview
 
 #### Using Secret Store extension to fetch secrets in Azure Arc-enabled Kubernetes cluster
-This Jumpstart drop provides comprehensive automation to set up a lightweight Kubernetes (K3s) cluster and connect it to Azure Arc. It includes steps to configure the Azure Key Vault Secret Store Extension, which synchronizes secrets from Azure Key Vault to your Kubernetes cluster. The automation script handles the installation of all necessary dependencies and deploys a sample application that demonstrates the use of the synchronized secrets within the Kubernetes environment. This setup ensures that your Kubernetes applications can securely access secrets stored in Azure Key Vault, even when operating offline.
+This Jumpstart drop provides comprehensive automation to set up a lightweight Kubernetes (K3s) cluster, connect it to Azure Arc and configure the Azure Key Vault Secret Store Extension. Secret Store extension synchronizes secrets from Azure Key Vault to your Kubernetes cluster. The automation script handles the installation of all necessary dependencies and deploys a sample application that demonstrates the use of the synchronized secrets within the Kubernetes environment. This setup ensures that your Kubernetes applications can securely access secrets stored in Azure Key Vault, even when operating offline.
 
-> ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s).
+> ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension).
 
 ## Architecture
 ![Secret Store Extension Architecture.](./artifacts/media/sseArcExtensionArch.png)
@@ -42,13 +42,12 @@ This Jumpstart drop provides comprehensive automation to set up a lightweight Ku
   SSH public key example output:
 
   ```shell
-  ssh-rsa o1djFhyNe5NXyYk7XVF7wOBAAABgQDO/QPJ6IZHujkGRhiI+6s1ngK8V4OK+iBAa15GRQqd7scWgQ1RUSFAAKUxHn2TJPx/Z/IU60aUVmAq/OV9w0RMrZhQkGQz8CHRXc28S156VMPxjk/gRtrVZXfoXMr86W1nRnyZdVwojy2++sqZeP/2c5GoeRbv06NfmHTHYKyXdn0lPALC6i3OLilFEnm46Wo+azmxDuxwi66RNr9iBi6WdIn/zv7tdeE34VAutmsgPMpynt1+vCgChbdZR7uxwi66RNr9iPdMR7gjx3W7dikQEo1djFhyNe5rrejrgjerggjkXyYk7XVF7wOk0t8KYdXvLlIyYyUCk1cOD2P48ArqgfRxPIwepgW78znYuwiEDss6g0qrFKBcl8vtiJE5Vog/EIZP04XpmaVKmAWNCCGFJereRKNFIl7QfSj3ZLT2ZXkXaoLoaMhA71ko6bKBuSq0G5YaMq3stCfyVVSlHs7nzhYsX6aDU6LwM/BTO1c= user@pc
+  ssh-rsa o1djFhyNe5NxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxaDU6LwM/BTO1c= user@pc
   ```
 
 - Edit the [main.bicepparam](https://github.com/microsoft/azure_arc/blob/main/azure_jumpstart_arcbox/bicep/main.bicepparam) template parameters file and supply values for your environment.
   - _`sshRSAPublicKey`_ - Your SSH public key
   - _`bastion`_ - Set to _`true`_ if you want to use Azure Bastion to connect to _js-k3s_
-  - _`windowsAdminUsername`_ - K3s VM username
 
 ![Screenshot showing Bicep parameters.](./artifacts/media/bicepParameters.png)
 
@@ -70,7 +69,7 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
   ![Screenshot showing all deployed resources in the resource group](./artifacts/media/deployed_resources.png)
 
-   > **Note:** For enhanced ArcBox security posture, SSH (22) ports aren't open by default. You will need to create a network security group (NSG) rule to allow network access to port 22, or use [Azure Bastion](https://learn.microsoft.com/azure/bastion/bastion-overview) access to connect to the VM.
+   > **Note:** For enhanced security posture, SSH (22) ports aren't open by default. You will need to create a network security group (NSG) rule to allow network access to port 22, or use [Azure Bastion](https://learn.microsoft.com/azure/bastion/bastion-overview) access to connect to the VM.
 
 - SSH to the js-k3s virtual machine.
   ```shell
@@ -96,7 +95,7 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
   ```
   ![Screenshot showing k8s secrets](./artifacts/media/syncK8sSecrets.png)
 
-- Run below command to validate the synchronized secret values, now stored in the Kubernetes secret store. You can also validate the value from the Key Vault deployed in the resource group.
+- Run below command to validate the synchronized secret values, stored in the Kubernetes secret store. You can also validate the value from the Key Vault deployed in the resource group.
   ```shell
     kubectl get secret js-secret-sync --namespace js-namespace -o jsonpath="{.data.js-secret}" | base64 -d
   ```
@@ -116,6 +115,6 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 ### Resources
 
-For more information, visit [Secret Store extension (preview)](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s).
+For more information, visit [Secret Store extension (preview)](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension).
 
-To troubleshoot provider issue, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s#troubleshooting)
+To troubleshoot provider issue, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
