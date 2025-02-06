@@ -1,0 +1,24 @@
+{
+    "Title": "Connecting PLC using Modbus and Dapr to Azure IoT Operations",
+    "Summary": "This Drop provides a tutorial on how to connect a MODBUS PLC (Programmable Logic Controller) to an edge device running Azure IoT Operations (AIO), leveraging the Dapr Runtime and AIO's MQTT broker.",
+    "Description": "This Jumpstart Drop provides an example of a complete application that allows the connection of a PLC (Programmable Logic Controller) device, widely used by the industry to control and monitor machines, to Azure IoT Operations through an application written in C# .NET 9 that makes use of the Modbus.NET library to communicate with the PLC through a USB serial connection, and then forward the state of the registers that monitor the logic gates, to the Azure IoT Operations MQTT broker with the help of the Dapr runtime and its integration in the pubsub standard.",
+    "Cover": "https://github.com/waltercoan/reactor2025-azureiotoperations-modbus-dapr/blob/main/diagramas/clp-edgedevice.png",
+    "Authors": [
+      {
+        "Name": "Walter Silvestre Coan",
+        "Link": "https://www.linkedin.com/in/waltercoan/"
+      }
+    ],
+    "Source": "https://github.com/waltercoan/reactor2025-azureiotoperations-modbus-dapr",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C#"
+    ],
+    "Products": [
+      "Azure IoT Operations"
+    ],
+    "LastModified": "2025-01-20T18:12:00.000Z",
+    "CreatedDate": "2025-01-20T18:12:00.000Z",
+    "Topics": []
+  }

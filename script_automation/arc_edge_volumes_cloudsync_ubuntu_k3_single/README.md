@@ -64,6 +64,11 @@ az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscr
 az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm --config "osm.osm.featureFlags.enableWASMStats=false" --config "osm.osm.enablePermissiveTrafficPolicy=false" --config "osm.osm.configResyncInterval=10s" --config "osm.osm.osmController.resource.requests.cpu=100m" --config "osm.osm.osmBootstrap.resource.requests.cpu=100m" --config "osm.osm.injector.resource.requests.cpu=100m"
 ```
 
+#### Install aio platform package for certificate management
+```bash
+az k8s-extension create --cluster-name "${ARCNAME}" --name "${ARCNAME}-certmgr" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters --release-train preview --extension-type microsoft.iotoperations.platform --scope cluster --release-namespace cert-manager
+```
+
 #### Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
 ```bash
 az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "acsa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.containerstorage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
