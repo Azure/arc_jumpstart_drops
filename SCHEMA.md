@@ -32,12 +32,12 @@ This JSON file provides an example of how a Drop schema file should be structure
   "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg",
   "Authors": [
     {
-      "Name": "Laura Nicolas",
-      "Link": "https://www.linkedin.com/in/lauranicolasd"
+      "Name": "Jane Doe",
+      "Link": "https://www.linkedin.com/in/janedoe"
     },
     {
-      "Name": "Francisco Cabrera",
-      "Link": "https://github.com/fcabrera23"
+      "Name": "John Smith",
+      "Link": "https://github.com/johnsmith"
     }
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/workbooks/arc_management_full",
@@ -51,8 +51,8 @@ This JSON file provides an example of how a Drop schema file should be structure
     "Azure Monitor",
     "Arc"
   ],
-  "LastModified": "2024-03-08T18:25:43.511Z",
-  "CreatedDate": "2024-03-01T10:30:16.201Z",
+  "LastModified": "2025-02-07T18:25:43.511Z",
+  "CreatedDate": "2025-02-01T10:30:16.201Z",
   "Topics": []
 }
 ```
