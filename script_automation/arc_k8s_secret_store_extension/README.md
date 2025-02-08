@@ -3,6 +3,8 @@
 #### Using Secret Store extension to fetch secrets in Arc-enabled Kubernetes cluster
 This Jumpstart drop provides comprehensive automation to set up a lightweight Kubernetes (K3s) cluster, connect it to Azure Arc and configure the Azure Key Vault Secret Store Extension. Secret Store extension synchronizes secrets from Key Vault to your Kubernetes cluster. The automation script handles the installation of all necessary dependencies and deploys a sample application that demonstrates the use of the synchronized secrets within the Kubernetes environment. This setup ensures that your Kubernetes applications can securely access secrets stored in Key Vault, even when operating offline.
 
+> **Note:** This Jumpstart guide demonstrates how to set up and use the Secret Store extension. For enhanced security, it is recommended to enable encryption of the Kubernetes secret store using [KMS](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) plugin.
+
 > ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension).
 
 ## Architecture
@@ -53,6 +55,17 @@ This Jumpstart drop provides comprehensive automation to set up a lightweight Ku
 
 ## Getting Started
 
+The automation performs the following steps:
+
+- Deploy the infrastructure and create an Azure Key Vault with a secret.
+- Install the K3s cluster and onboard it as an Azure Arc-enabled Kubernetes cluster.
+- Create a managed identity with access to the secret.
+- Enable workload identity federation in the cluster.
+- Federate a local service account with the managed identity that has access to the secret.
+- Deploy the Azure Key Vault Secret Store Extension (SSE).
+- Create two custom resources to define the Azure Key Vault secret to pull and how to store the secret in the cluster.
+- Deploy an application pod that references the secret and prints the secret value in the logs.
+
 ### Run the automation
 
 Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/sse/script_automation/arc_k8s_secret_store_extension/artifacts/Bicep/) and run the below command:
@@ -62,6 +75,8 @@ az login
 az group create --name "<resource-group-name>"  --location "<preferred-location>"
 az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.bicepparam"
 ```
+
+> **Note:** Secret Store extension is currently available in the following regions: East US, East US2, West US, West US2, West US3, West Europe, and North Europe. For the most up-to-date list of available regions, refer to the [prerequisites](https://learn.microsoft.com/en-gb/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s#prerequisites) section.
 
 ### Verify the deployment
 
@@ -76,12 +91,6 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
     ssh jumpstartuser@js-k3s-*
   ```
   ![Screenshot showing ssh to the vm](./artifacts/media/ssh.png)
-
-- SSE uses [cert-manager](cert-manager.io) to support TLS for intracluster log communication.
-  ```shell
-    kubectl --namespace cert-manager get pods
-  ```
-  ![Screenshot showing cert manager pods](./artifacts/media/sseCertManager.png)
 
 - SSE deployment contains a pod with two containers: the controller, which manages storing secrets in the cluster, and the provider, which manages access to, and pulling secrets from, the Azure Key Vault.
   ```shell
@@ -107,7 +116,7 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
   ```
   ![Screenshot showing app logs](./artifacts/media/appLogs.png)
 
-- Run describe command to get detailed status messages for each synchronization event. This can be used to diagnose connection or configuration errors, and to observe when the secret value changes.
+- Run the describe command to get detailed status messages for each synchronization event. This can be used to diagnose connection or configuration errors, and to observe when the secret value changes.
   ```shell
     kubectl describe secretsync js-secret-sync --namespace js-namespace
   ```
@@ -115,6 +124,6 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 ### Resources
 
-For more information, visit [Secret Store extension (preview)](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension).
+See [Secret Store extension (preview)](https://learn.microsoft.com/en-gb/azure/azure-arc/kubernetes/secret-store-extension) for the full instructions to set this up yourself.
 
-To troubleshoot provider issue, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
+To troubleshoot Secret Store extension issues, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
