@@ -76,7 +76,7 @@ az group create --name "<resource-group-name>"  --location "<preferred-location>
 az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.bicepparam"
 ```
 
-> **Note:** Secret Store extension is currently available in the following regions: East US, East US2, West US, West US2, West US3, West Europe, and North Europe. For the most up-to-date list of available regions, refer to the [prerequisites](https://learn.microsoft.com/en-gb/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s#prerequisites) section.
+> **Note:** Secret Store extension is currently available in the following regions: East US, East US2, West US, West US2, West US3, West Europe, and North Europe. For the most up-to-date list of available regions, refer to the [prerequisites](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s#prerequisites) section.
 
 ### Verify the deployment
 
@@ -124,6 +124,6 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 ### Resources
 
-See [Secret Store extension (preview)](https://learn.microsoft.com/en-gb/azure/azure-arc/kubernetes/secret-store-extension) for the full instructions to set this up yourself.
+See [Secret Store extension (preview)](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension) for the full instructions to set this up yourself.
 
-To troubleshoot Secret Store extension issues, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
+To troubleshoot Secret Store extension issues, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
