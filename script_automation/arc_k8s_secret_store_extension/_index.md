@@ -5,7 +5,7 @@ This Jumpstart drop provides comprehensive automation to set up a lightweight Ku
 
 > **Note:** This Jumpstart guide demonstrates how to set up and use the Secret Store extension. For enhanced security, it is recommended to enable encryption of the Kubernetes secret store using [KMS](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) plugin.
 
-> ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/secret-store-extension).
+> ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension).
 
 ## Architecture
 ![Secret Store Extension Architecture.](./artifacts/media/sseArcExtensionArch.png)
