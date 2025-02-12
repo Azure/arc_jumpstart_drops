@@ -27,7 +27,7 @@ Unfortunately up to now Litmus only provides a container image for Litmus Edge t
 
 You can either pull down the image to your local Docker repository and push it to your private container registry or use the following Azure command line (shown for version 3.16.2 of Litmus Edge as currently available at the time of writing this):
 
-```console
+```bash
 $litmusRepoPassword = Get-Content ./litmus-se-read.json
 
 az acr import --name <name of your Azure container registry> --source us-docker.pkg.dev/litmus-sales-enablement/litmusedge/litmusedge-std-docker:latest `
@@ -36,7 +36,7 @@ az acr import --name <name of your Azure container registry> --source us-docker.
 
 Next you have to create a namespace and a secret for the used docker configuration. If you haven’t moved the Litmus Edge image to your own private repository, then you have to do:
 
-```console
+```bash
 kubectl create namespace 'le-prod'
 $litmusRepoPassword = Get-Content ./litmus-se-read.json
 kubectl create secret docker-registry litmus-credential --docker-server=us-docker.pkg.dev --docker-username=_json_key --docker-password=$litmusRepoPassword
@@ -48,20 +48,20 @@ Since we have the Litmus Edge image ready to be deployed to the Kubernetes clust
 
 To use the Helm chart, start by doing (Replace ‘jmayrbaeurl’ with your preference for the Helm repo name):
 
-```console
+```bash
 helm repo add jmayrbaeurl https://raw.githubusercontent.com/jmayrbaeurl/helmchart-repo/master/index
 helm repo update jmayrbaeurl
 ```
 
 If you are happy with the default values for the Helm chart parameters, then you can immediately start the deployment with:
 
-```console
+```bash
 helm upgrade --install litmusedge jmayrbaeurl/litmusedge -n le-prod --create-namespace 
 ```
 
 By default the Helm chart only deploys a service that’s reachable internally. If you want to access the Litmus Edge portal, you will have to either use ‘kubectl port-forward’ or add an additional service of type NodePort or LoadBalancer for port 443 of Litmus Edge. Or rerun the Helm deployment with the following comand (will expose Litmus portal on the load balancer):
 
-```console
+```bash
 helm upgrade --install litmusedge jmayrbaeurl/litmusedge -n le-prod --create-namespace --set service.externalAccess=true
 ```
 
@@ -77,13 +77,13 @@ Azure IoT Operation’s MQTT broker comes with several listener, that can be use
 
 But first let’s start creating and collecting the required certificates. For TLS we will have to collect the ca certificate of the default listener of the Azure IoT Operations MQTT broker, that is stored in a secret on the Kubernetes cluster. Run the following command in Powershell. The certificate will be stored in a file called ca.cert in the current folder.
 
-```console
+```bash
 kubectl get configmap azure-iot-operations-aio-ca-trust-bundle -n azure-iot-operations -o "jsonpath={.data['ca\.crt']}" > ca.cert
 ```
 
 For Litmus Edge, used as client for the Azure IoT Operations MQTT broker, we have to create client-side X509 certificates for authentication. This can be done with the step cli by the following commands:
 
-```console
+```bash
 # Create root certificate
 step certificate create "Litmus Edge Root CA" litmusedge_root_ca.crt litmusedge_root_ca.key --profile root-ca --no-password --insecure
 
@@ -106,7 +106,7 @@ With this certificates we can now add the already mentioned authentication polic
 
 Use the following json for the X.509 authentication details and 18884 for the port.
 
-```console
+```bash
 {
     "authorizationAttributes": {
         "intermediate": {
