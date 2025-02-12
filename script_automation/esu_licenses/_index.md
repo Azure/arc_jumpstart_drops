@@ -76,5 +76,5 @@ For more information about ESU licenses, review the following resources:
 
 - How to deploy [ESU licenses on Azure Arc-enabled servers](https://learn.microsoft.com/windows-server/get-started/extended-security-updates-deploy)
 - The Extended Security Updates licenses' [API documentation](https://learn.microsoft.com/azure/azure-arc/servers/api-extended-security-updates)
-- Jumpstart Scenario on ESU licenses for [Azure Arc-enabled Servers](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/day2/arc_extended_security_updates)
-- Jumpstart scenario on ESU and [Azure Arc-enabled SQL Server.](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_sqlsrv/day2/esu/)
+- Jumpstart Scenario on ESU licenses for [Azure Arc-enabled Servers](https://jumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/day2/arc_extended_security_updates)
+- Jumpstart scenario on ESU and [Azure Arc-enabled SQL Server.](https://jumpstart.azure.com/azure_arc_jumpstart/azure_arc_sqlsrv/day2/esu/)
