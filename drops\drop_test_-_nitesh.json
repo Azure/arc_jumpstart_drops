@@ -1,0 +1,27 @@
+{
+  "Title": "Drop test - Nitesh",
+  "Summary": "Drop test desc",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "niteshsoni",
+      "Link": "https://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible",
+    ".NET / C#"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/drop_test_-_nitesh",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Agora_Manufacturing (2).jpg",
+  "CreatedDate": "2025-02-12T10:33:47.751Z",
+  "LastModified": "2025-02-12T10:33:47.751Z"
+}
