@@ -11,7 +11,7 @@ Basically Azure IoT Operations runs on Azure Arc enabled Kubernetes clusters. Be
 
 ## Prerequisites
 
-Note that to complete this Drop, you will need a complete [Azure IoT Operations installation](https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/overview-deploy). Additionally you will need access to the Litmus portal to get the Litmus Edge container image and access credentials as described below.  
+Note that to complete this Drop, you will need a complete [Azure IoT Operations installation](https://learn.microsoft.com/azure/iot-operations/deploy-iot-ops/overview-deploy). Additionally you will need access to the Litmus portal to get the Litmus Edge container image and access credentials as described below.  
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ $litmusRepoPassword = Get-Content ./litmus-se-read.json
 kubectl create secret docker-registry litmus-credential --docker-server=us-docker.pkg.dev --docker-username=_json_key --docker-password=$litmusRepoPassword
 ```
 
-If you are using your own private repository, replace the ‘kubectl create secret…’ line accordingly. For further guidance, see [Azure documentation](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-auth-kubernetes).
+If you are using your own private repository, replace the ‘kubectl create secret…’ line accordingly. For further guidance, see [Azure documentation](https://learn.microsoft.com/azure/container-registry/container-registry-auth-kubernetes).
 
 Since we have the Litmus Edge image ready to be deployed to the Kubernetes cluster, we can now start the deployment. Litmus Automation is providing yaml configurations for the deployment on their website. Unfortunately they don’t provide a Helm chart and therefore I’ve created a sample implementation for the Helm deployment. It’s available on [GitHub](https://github.com/JMayrbaeurl/helmchart-repo/blob/main/litmusedge.MD) and used in the following description.
 
@@ -73,7 +73,7 @@ Attention: The helm chart creates a persistent volume claim for the default stor
 
 Now that Litmus Edge is running as a pod on the Azure IoT Operation Kubernetes cluster, it’s also interesting to stream the data from Litmus Edge to Azure IoT Operations for further processing. Litmus Edge provides a connector called ‘[MQTT — Generic over SSL](https://docs.litmus.io/litmusedge/product-features/integration/integration-connectors/message-brokers/mqtt-generic-over-ssl)’ that can be used to securily connect Litmus Edge to a generic MQTT broker, like the one from Azure IoT Operations.
 
-Azure IoT Operation’s MQTT broker comes with several listener, that can be used to connect other services to it. We will use the so called internal [default listener](https://learn.microsoft.com/en-us/azure/iot-operations/manage-mqtt-broker/howto-configure-brokerlistener?tabs=portal%2Ctest#default-brokerlistener) of the MQTT broker, that out-of-the-box only supports Kubernetes service account authentication, but has full TLS support. We are not really changing the default listener, because that’s not recommended and needed to work correctly for internal purposes of Azure IoT Operations. We’ll just add another authentication policy for X509 certificates, since Litmus Edge is not supporting Kubernetes service accounts for MQTT connections yet.
+Azure IoT Operation’s MQTT broker comes with several listener, that can be used to connect other services to it. We will use the so called internal [default listener](https://learn.microsoft.com/azure/iot-operations/manage-mqtt-broker/howto-configure-brokerlistener?tabs=portal%2Ctest#default-brokerlistener) of the MQTT broker, that out-of-the-box only supports Kubernetes service account authentication, but has full TLS support. We are not really changing the default listener, because that’s not recommended and needed to work correctly for internal purposes of Azure IoT Operations. We’ll just add another authentication policy for X509 certificates, since Litmus Edge is not supporting Kubernetes service accounts for MQTT connections yet.
 
 But first let’s start creating and collecting the required certificates. For TLS we will have to collect the ca certificate of the default listener of the Azure IoT Operations MQTT broker, that is stored in a secret on the Kubernetes cluster. Run the following command in Powershell. The certificate will be stored in a file called ca.cert in the current folder.
 
@@ -100,7 +100,7 @@ step certificate create aiomqttconnector aiomqttconnector.crt aiomqttconnector.k
 kubectl create configmap litmusedge-ca -n azure-iot-operations --from-file=client_ca.pem=litmusedge_root_ca.crt
 ```
 
-With this certificates we can now add the already mentioned authentication policy with the name ‘litmusedge’ for the default listener (see [tutorial](https://learn.microsoft.com/en-us/azure/iot-operations/manage-mqtt-broker/tutorial-tls-x509#configure-mqtt-broker)).
+With this certificates we can now add the already mentioned authentication policy with the name ‘litmusedge’ for the default listener (see [tutorial](https://learn.microsoft.com/azure/iot-operations/manage-mqtt-broker/tutorial-tls-x509#configure-mqtt-broker)).
 
 ![alt text](./media/authpolicies.png)
 
