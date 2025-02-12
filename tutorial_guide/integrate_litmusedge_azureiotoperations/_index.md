@@ -106,7 +106,7 @@ With this certificates we can now add the already mentioned authentication polic
 
 Use the following json for the X.509 authentication details and 18884 for the port.
 
-```bash
+```json
 {
     "authorizationAttributes": {
         "intermediate": {
