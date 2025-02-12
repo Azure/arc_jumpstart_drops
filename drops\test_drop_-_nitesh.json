@@ -1,0 +1,27 @@
+{
+  "Title": "Test Drop - NItesh",
+  "Summary": "Test drops ",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "Nitesh Soni",
+      "Link": "https://niteshsoni.com/profile"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Azure Arc"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/test_drop_-_nitesh",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Screenshot_11-2-2025_3033_msazure.visualstudio.com.jpeg",
+  "CreatedDate": "2025-02-12T09:08:01.540Z",
+  "LastModified": "2025-02-12T09:08:01.540Z"
+}
