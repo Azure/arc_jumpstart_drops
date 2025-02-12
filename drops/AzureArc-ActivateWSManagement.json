@@ -16,7 +16,8 @@
     "PowerShell"
   ],
   "Products": [
-    "Azure Arc"
+    "Azure Arc",
+    "Arc-enabled Servers"
   ],
   "LastModified": "2025-02-11T07:30:43.511Z",
   "CreatedDate": "2025-02-08T07:20:16.201Z",
