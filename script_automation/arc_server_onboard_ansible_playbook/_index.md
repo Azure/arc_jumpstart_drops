@@ -10,7 +10,7 @@ description: >
 
 The following Jumpstart Drop will guide you on how to use an Ansible playbook to onboard Linux and Windows VMs at scale.
 
-> **Note:** This Jumpstart Drop provides the playbook to onboard into Azure Arc an existing VM inventory, if you don't have a set of VMs to onboard review the Jumpstart Scenario [Dynamic scaled onboarding of AWS EC2 instances to Azure Arc using Ansible](https://azurejumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/scaled_deployment/aws_scaled_ansible) that will create VMs in AWS EC2 for you.
+> **Note:** This Jumpstart Drop provides the playbook to onboard into Azure Arc an existing VM inventory, if you don't have a set of VMs to onboard review the Jumpstart Scenario [Dynamic scaled onboarding of AWS EC2 instances to Azure Arc using Ansible](https://jumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/scaled_deployment/aws_scaled_ansible) that will create VMs in AWS EC2 for you.
 
 ## Contributors
 
@@ -92,5 +92,5 @@ ansible-playbook arc-server-onboard-ansible-playbook.yml -i hosts
 For more information about at scale onboarding to Azure Arc, review the following resources:
 
 - [Connect machines at scale using Ansible playbooks](https://learn.microsoft.com/azure/azure-arc/servers/onboard-ansible-playbooks)
-- Dynamic scaled onboarding of AWS EC2 instances to Azure Arc using Ansible [Jumpstart scenario](https://azurejumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/scaled_deployment/aws_scaled_ansible)
+- Dynamic scaled onboarding of AWS EC2 instances to Azure Arc using Ansible [Jumpstart scenario](https://jumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/scaled_deployment/aws_scaled_ansible)
 - AWS EC2 scaled onboarding with Azure Arc enabled servers using Ansible [video](https://www.youtube.com/watch?v=0Eb2j8XlxUQ&t=15s)
