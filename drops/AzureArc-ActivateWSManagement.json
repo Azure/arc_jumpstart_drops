@@ -1,0 +1,29 @@
+{
+  "Title": "Azure Arc Windows Server Management License Activation",
+  "Summary": "This Jumpstart Drop provides a PowerShell script automates the process of checking and enabling Windows Server licenses for Azure Arc-enabled machines.",
+  "Description": "This Jumpstart Drop provides a PowerShell script automates the process of checking and enabling Windows Server management capabilities for Azure Arc-enabled machines.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Mustafa Kaya",
+      "Link": "https://www.linkedin.com/in/mustafakaya"
+    }
+  ],
+  "Source": "https://github.com/mustafakaya/azure-arc-tools/tree/main",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "PowerShell"
+  ],
+  "Products": [
+    "Azure Arc",
+    "Arc-enabled servers"
+  ],
+  "LastModified": "2025-02-11T07:30:43.511Z",
+  "CreatedDate": "2025-02-08T07:20:16.201Z",
+  "Topics": [
+    "Arc-enabled servers",
+    "Licensing",
+    "Windows Server"
+  ]
+}
