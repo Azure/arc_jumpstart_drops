@@ -1,9 +1,27 @@
+# Dot-files and directories
+.*
+!.gitignore
+!.github
 
-/node_modules
+# Node.js dependencies
+node_modules/
 package-lock.json
-/.vscode
+
+# Project specific files
 /.github/content-validator/node_modules
 pull_request.json
-.DS_Store
+
+# Development tools and IDEs
+/.vscode
+/.idea/
+*.sublime-*
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.code-workspace
+
+# Environment and system files
 .env
-.*
+.DS_Store
