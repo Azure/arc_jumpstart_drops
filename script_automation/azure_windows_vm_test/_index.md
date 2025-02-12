@@ -12,7 +12,7 @@ The following Jumpstart Drop will guide you on how to project an existing Window
 
 > **Note:** It's not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop  is unsupported and should ONLY be used for demo and testing purposes.
 
-> **Note:** This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don't have an existing virtual machine, review the Jumpstart Scenario [Deploy a Windows Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_win) that will create it for you.
+> **Note:** This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don't have an existing virtual machine, review the Jumpstart Scenario [Deploy a Windows Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurejumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_win) that will create it for you.
 
 ## Contributors
 
@@ -116,4 +116,4 @@ For more information about onboarding Azure VMs to Azure Arc, review the followi
 
 - [Evaluate Azure Arc-enabled servers on an Azure virtual machine](https://learn.microsoft.com/azure/azure-arc/servers/plan-evaluate-on-azure-virtual-machine)
 - Manual Ubuntu server onboarding with Azure Arc-enabled servers [video](https://www.youtube.com/watch?v=F_0w_fEqx6Y&list=PLZuSmETs0xIauYQB1UeyZbBGhdj7BREOG&index=7)
-- Jumpstart Scenario on how to [Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurearcjumpstart.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_linux).
+- Jumpstart Scenario on how to [Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template](https://azurejumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/azure/azure_arm_template_linux).

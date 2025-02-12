@@ -120,7 +120,7 @@ Refer to the [MicroK8s guide](https://microk8s.io/docs/install-wsl2) to install 
 
 Now that your Kubernetes cluster is connected to Azure Arc, you might want to explore the following scenario:
 
-- [Deploy GitOps configurations and perform Helm-based GitOps flow on MicroK8s as an Azure Arc Connected Cluster](https://arcjumpstart.com/azure_arc_jumpstart/azure_arc_k8s/day2/microk8s/local_microk8s_gitops_helm).
+- [Deploy GitOps configurations and perform Helm-based GitOps flow on MicroK8s as an Azure Arc Connected Cluster](https://jumpstart.azure.com/azure_arc_jumpstart/azure_arc_k8s/day2/microk8s/local_microk8s_gitops_helm).
 
 ### Delete the Deployment
 
