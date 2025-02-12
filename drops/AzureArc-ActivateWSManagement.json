@@ -1,5 +1,5 @@
 {
-  "Title": "Azure Arc Windows Server Management License Activation ",
+  "Title": "Azure Arc Windows Server Management License Activation",
   "Summary": "This Jumpstart Drop provides a PowerShell script automates the process of checking and enabling Windows Server licenses for Azure Arc-enabled machines.",
   "Description": "This Jumpstart Drop provides a PowerShell script automates the process of checking and enabling Windows Server management capabilities for Azure Arc-enabled machines.",
   "Cover": "",
