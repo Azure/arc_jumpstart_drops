@@ -1,4 +1,4 @@
-[![Stale Issues and PRs](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yml/badge.svg?branch=main)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yml) [![Stale Branches](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yml/badge.svg)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yml)
+[![Stale Issues and PRs](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yaml/badge.svg?branch=main)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yaml) [![Stale Branches](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yaml/badge.svg)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yaml)
 
 # Arc Jumpstart Drops
 
