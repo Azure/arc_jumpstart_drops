@@ -17,16 +17,13 @@
   ],
   "Products": [
     "Azure Arc",
-    "Arc-enabled Servers"
+    "Arc-enabled servers"
   ],
   "LastModified": "2025-02-11T07:30:43.511Z",
   "CreatedDate": "2025-02-08T07:20:16.201Z",
   "Topics": [
-    "Azure Arc",
-    "Azure Update Manager",
-    "Azure Change Tracking and Inventory",
-    "Azure Machine Configuration",
-    "Windows Admin Center in Azure for Arc",
-    "Best Practices Assessment"
+    "Arc-enabled servers",
+    "Licensing",
+    "Windows Server"
   ]
 }
