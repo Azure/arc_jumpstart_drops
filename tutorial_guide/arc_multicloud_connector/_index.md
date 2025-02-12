@@ -136,7 +136,7 @@ After the next hourly sync, your EC2 instances should appear connected within th
 
 ![EC2 instances onboarded to Azure Arc](./media/14-aws-onboarded-ec2.png)
 
-After onboarding, consider using additional Azure features like deploying the [Azure Monitor Agent](https://azurearcjumpstart.com/deploy_the_azure_monitor_agent_to_an_azure_arc-enabled_server) to monitor EC2 instances from Azure.
+After onboarding, consider using additional Azure features like deploying the [Azure Monitor Agent](https://azurejumpstart.azure.com/deploy_the_azure_monitor_agent_to_an_azure_arc-enabled_server) to monitor EC2 instances from Azure.
 
 ## AWS Inventory in Azure
 
