@@ -1,0 +1,27 @@
+{
+  "Title": "New dropp  by Ns",
+  "Summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "Nitesh soni",
+      "Link": "https://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Azure Event Grid Namespace"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/new_dropp_by_ns",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Agora_Manufacturing (2).jpg",
+  "CreatedDate": "2025-02-13T11:31:11.132Z",
+  "LastModified": "2025-02-13T11:31:11.132Z"
+}
