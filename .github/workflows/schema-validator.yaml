@@ -81,7 +81,7 @@ jobs:
           source_url=$(echo "$source_url" | sed "s/Azure/$ORG_USER/")
 
           # Replace "tree/main" with "tree/<sanitized-branch>"
-          source_url=$(echo "$source_url" | sed 's/tree\/main/tree\/$SANITIZED_BRANCH/')
+          source_url=$(echo "$source_url" | sed "s/tree\/main/tree\/$SANITIZED_BRANCH/")
         fi
 
         echo "New source URL: $source_url"
