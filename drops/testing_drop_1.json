@@ -1,0 +1,26 @@
+{
+  "Title": "Testing drop 1",
+  "Summary": "Lorem ipsum, placeholder or dummy text used in typesetting and graphic design for previewing layouts. It features scrambled Latin text, which emphasizes the design over content of the layout.",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "nitesh soni",
+      "Link": "https://githuv.com/mnitedh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Bicep"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/testing_drop_1",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Screenshot_11-2-2025_25738_msazure.visualstudio.com.jpeg",
+  "CreatedDate": "2025-02-14T08:27:31.321Z",
+  "LastModified": "2025-02-14T08:27:31.321Z"
+}
