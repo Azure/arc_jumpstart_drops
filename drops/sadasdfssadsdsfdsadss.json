@@ -1,0 +1,26 @@
+{
+  "Title": "sadasdfssadsdsfdsadss",
+  "Summary": "Lorem ipsum, placeholder or dummy text used in typesetting and graphic design for previewing layoutsLorem ipsum, placeholder or dummy text used in typesetting and graphic design for previewing layouts",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "safadsfds",
+      "Link": "https://nits.com/nskdn"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/sadasdfssadsdsfdsadss",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Agora_Manufacturing-min.jpg",
+  "CreatedDate": "2025-02-14T08:02:40.336Z",
+  "LastModified": "2025-02-14T08:02:40.336Z"
+}
