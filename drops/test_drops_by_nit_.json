@@ -1,0 +1,26 @@
+{
+  "Title": "Test Drops by Nit ",
+  "Summary": "Lorem ipsum is a placeholder or dummy text used in typesetting and graphic design for previewing layouts.",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "NItesh Soni",
+      "Link": "https://nitehsoni.info/profile"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/test_drops_by_nit_",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Screenshot_8-8-2024_14226_localhost.jpeg",
+  "CreatedDate": "2025-02-14T06:59:46.839Z",
+  "LastModified": "2025-02-14T06:59:46.839Z"
+}
