@@ -1,7 +1,6 @@
 {
   "Title": "Azure Local Endpoints Codified",
-  "Summary": "This Drop for Azure Local includes a PowerShell script and GitHub workflow to retrieve all of the outbound URL endpoints required for each Azure region. The output is codified in JSON format to aid in automation purposes.
-",
+  "Summary": "This Drop for Azure Local includes a PowerShell script and GitHub workflow to retrieve all of the outbound URL endpoints required for each Azure region. The output is codified in JSON format to aid in automation purposes.",
   "Cover": "",
   "Authors": [
     {
