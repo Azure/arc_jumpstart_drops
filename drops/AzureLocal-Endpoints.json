@@ -12,12 +12,12 @@
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
-    "PowerShell",
-    "JSON"
+    "JSON",
+    "PowerShell"
   ],
   "Products": [
-    "Azure Local",
-    "Arc"
+    "Arc",
+    "Azure Local"
   ],
   "LastModified": "2025-02-22T21:23:43.511Z",
   "CreatedDate": "2025-02-22T21:23:43.511Z",
