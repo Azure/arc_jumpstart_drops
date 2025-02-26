@@ -76,8 +76,6 @@ az group create --name "<resource-group-name>"  --location "<preferred-location>
 az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.bicepparam"
 ```
 
-> **Note:** Secret Store extension is currently available in the following regions: East US, East US2, West US, West US2, West US3, West Europe, and North Europe. For the most up-to-date list of available regions, refer to the [prerequisites](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension?tabs=arc-k8s#prerequisites) section.
-
 ### Verify the deployment
 
 - Once your deployment is complete, you can open the Azure portal and see the resources inside your resource group. You will be using the _js-k3s-*_ Azure virtual machine to review the secret store extension automation. You will need to remotely access _js-k3s-*_.

@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/mustafakaya"
     }
   ],
-  "Source": "https://github.com/mustafakaya/azure-arc-tools/tree/main",
+  "Source": "https://github.com/mustafakaya/azure-arc-tools",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [

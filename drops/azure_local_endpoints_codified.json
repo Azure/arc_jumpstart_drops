@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/erikgraa"
     }
   ],
-  "Source": "https://github.com/erikgraa/azure-local-endpoints/tree/main",
+  "Source": "https://github.com/erikgraa/azure-local-endpoints",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
