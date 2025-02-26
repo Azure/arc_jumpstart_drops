@@ -1,0 +1,26 @@
+{
+  "Title": "drops dev testing",
+  "Summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud e",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "NItesh",
+      "Link": "https://nits.com/nskdn"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/drops_dev_testing",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Agora_Retail-min (2).jpg",
+  "CreatedDate": "2025-02-26T06:46:08.333Z",
+  "LastModified": "2025-02-26T06:46:08.333Z"
+}
