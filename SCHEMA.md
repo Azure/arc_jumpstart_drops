@@ -5,7 +5,7 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 
 | Parameter | Description | Required | Type | Options |
 |---|---|---|---|---|
-| `Title` | A short, descriptive title that reflects the artifact and user experience provided by the Drop | Yes | String | Maximum 100 characters |
+| `Title` | A short, descriptive title that reflects the artifact and user experience provided by the Drop | Yes | String | Maximum 55 characters |
 | `Summary` | A brief, one or two sentence description of the Drop and its purpose. This will be displayed as the Drop Card description. | Yes | String | Maximum 250 characters |
 | `Description` | A more detailed description of the Drop. This will be displayed in the right bar when a user clicks on the Drop Card. | Yes | String | Maximum 1000 characters |
 | `Cover` | A link to an image or video thumbnail that will be displayed as the Drop Card's display image. | No | String |  |
