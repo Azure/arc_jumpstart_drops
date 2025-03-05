@@ -74,6 +74,7 @@
       },
       "Products": {
         "type": "array",
+        "maxItems": 3,
         "items": {
           "type": "string"
         }

@@ -46,5 +46,16 @@
     "LastModified": "2024-10-16T15:41:45.000Z",
     "CreatedDate": "2024-10-16T15:41:45.000Z",
     "Topics": [
+      "ai",
+      "rag",
+      "edge-ai",
+      "k3s",
+      "industrial-iot",
+      "slms",
+      "azure-openai",
+      "generative-ai",
+      "azure-iot-operations",
+      "custom-models",
+      "azure-ml-extension"
     ]
 }
