@@ -1,7 +1,7 @@
 {
   "Title": "Azure Arc Infrastructure as Code Automation",
-  "Summary": "This Drop provides a single view for scaling Arc resources through cloud driven deployment method by using Infrastructure as Code DevOps process",
-  "Description": "This Jumpstart Drop provides an automation workflow to accelerate customers adopting Infrastructure as Code as their DevOps process to provision and manage their infrastructure at scale",
+  "Summary": "This Jumpstart Drop provides a single view for scaling Arc resources through cloud driven deployment method by using Infrastructure as Code DevOps process.",
+  "Description": "This Jumpstart Drop provides an automation workflow to accelerate customers adopting Infrastructure as Code as their DevOps process to provision and manage their infrastructure at scale.",
   "Cover": "",
   "Authors": [
     {
@@ -17,9 +17,9 @@
     "PowerShell"
   ],
   "Products": [
-    "Arc",
-    "AKS Arc",
-    "Azure Stack HCI"
+    "Azure Arc",
+    "Arc-enabled Kubernetes",
+    "Azure Local"
   ],
   "LastModified": "2024-09-13T04:00:33.000Z",
   "CreatedDate": "2024-03-25T10:30:16.201Z",

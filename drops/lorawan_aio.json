@@ -1,6 +1,6 @@
 {
-  "Title": "LoRaWAN® with Azure IoT operations",
-  "Summary": "This Drop implements a solution that takes data from LoRaWAN® based system and devices and then pushes it to the cloud using Azure IoT Operations.",
+  "Title": "LoRaWAN® with Azure IoT Operations",
+  "Summary": "This Jumpstart Drop implements a solution that takes data from LoRaWAN® based system and devices and then pushes it to the cloud using Azure IoT Operations.",
   "Description": "Implementing a solution that takes data from LoRaWAN® based system and then pushes it to Azure IoT Operations. This is done using a custom broker that understands LoRaWAN® communication data and talks to Azure IoT operations using MQTT and port forwarding using a broker listener.",
   "Cover": "",
   "Authors": [
