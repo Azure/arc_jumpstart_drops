@@ -1,7 +1,7 @@
 {
   "Title": "Azure Local Releases API with Pode",
-  "Summary": "This Drop for Azure Local helps increasing observability of Azure Local releases by offering them as PowerShell objects or as JSON through an API running Pode.",
-  "Description": "This Drop for Azure Local helps increasing observability of Azure Local releases by offering them as PowerShell objects or as JSON through an API running Pode.",
+  "Summary": "This Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
+  "Description": "This Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
   "Cover": "",
   "Authors": [
     {
