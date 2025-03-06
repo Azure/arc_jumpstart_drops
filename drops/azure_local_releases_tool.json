@@ -1,0 +1,29 @@
+{
+  "Title": "Azure Local Releases Tool",
+  "Summary": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
+  "Description": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Erik Grina Raassum",
+      "Link": "https://www.linkedin.com/in/erikgraa"
+    }
+  ],
+  "Source": "https://github.com/erikgraa/azure-local-releases",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "JSON",
+    "PowerShell"
+  ],
+  "Products": [
+    "Azure Arc",
+    "Azure Local"
+  ],
+  "LastModified": "2025-03-05T22:30:00.511Z",
+  "CreatedDate": "2025-03-05T22:30:00.511Z",
+  "Topics": [
+    "Azure Local",
+    "IaC"
+  ]
+}
