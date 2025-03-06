@@ -31,7 +31,6 @@
     "Python"
   ],
   "Products": [
-    "Azure Kubernetes Service",
     "Azure IoT Operations",
     "Arc-enabled Kubernetes",
     "NVIDIA Omniverse Kit App Streaming"
