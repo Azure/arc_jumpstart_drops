@@ -26,5 +26,6 @@ Fixes # (issue)
 - [ ] My change requires a documentation update
 - [ ] I have updated the documentation accordingly
 - [ ] I've read the [Jumpstart contribution guidelines](https://aka.ms/JumpstartContribution)
+- [ ] I've read the [Jumpstart Drops contribution guidelines](https://jumpstart.azure.com/drops_contribution_guidelines)
 - [ ] All new scripts include proper error handling
 - [ ] All deployment parameters are properly documented
