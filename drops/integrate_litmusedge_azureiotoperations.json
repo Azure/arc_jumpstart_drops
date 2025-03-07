@@ -1,7 +1,7 @@
 {
     "Title": "Integrating Litmus Edge with Azure IoT Operations",
-    "Summary": "This Drop shows how to use Litmus Edge together with Azure IoT Operations. A better together story.",
-    "Description": "This Drop provides a guide to integrate Litmus Edge with Azure IoT Operations. It describes how to deploy Litmus Edge on an Azure Arc-enabled Kubernetes cluster, configure the Litmus Edge agent to send data to the MQTT broker of Azure IoT Operations, and monitor the data in Azure IoT Operations.",
+    "Summary": "This Jumpstart Drop explains how to integrate Litmus Edge with Azure IoT Operations, covering the deployment of Litmus Edge on Arc-enabled Kubernetes and configuring it to send data to Azure IoT Operations for monitoring.",
+    "Description": "This Jumpstart Drop provides a guide to integrate Litmus Edge with Azure IoT Operations. It describes how to deploy Litmus Edge on an Azure Arc-enabled Kubernetes cluster, configure the Litmus Edge agent to send data to the MQTT broker of Azure IoT Operations, and monitor the data in Azure IoT Operations.",
     "Cover": "https://github.com/Azure/arc_jumpstart_drops/tutorial_guide/integrate_litmusedge_azureiotoperations/media/Azure_IoT_Operations_with_LitmusEdge_overview_architecture.png",
     "Authors": [
       {
@@ -17,7 +17,6 @@
     ],
     "Products": [
       "Azure Arc",
-      "Arc-enabled servers",
       "Azure IoT Operations",
       "Litmus Edge"
     ],

@@ -1,7 +1,7 @@
 {
     "Title": "Azure Edge Extensions AKS EE Proxy Certs",
-    "Summary": "Provisioning AKS Edge Essentials with configuration of a proxy requiring TLS termination.",
-    "Description": "This repository contains PowerShell script that demonstrates how to provision AKS Edge Essentials (AKS EE) single node Linux K3s cluster with configuration of a proxy requiring TLS termination.",
+    "Summary": "This Jumpstart Drop contains PowerShell script that demonstrates how to provision AKS Edge Essentials (AKS EE) single node Linux K3s cluster with configuration of a proxy requiring TLS termination.",
+    "Description": "This Jumpstart Drop contains PowerShell script that demonstrates how to provision AKS Edge Essentials (AKS EE) single node Linux K3s cluster with configuration of a proxy requiring TLS termination.",
     "Cover": "",
     "Authors": [
         {
@@ -20,7 +20,7 @@
         "PowerShell"
     ],
     "Products": [
-        "AKS EE"
+        "AKS Edge Essentials"
     ],
     "LastModified": "2024-04-18T00:00:00.000Z",
     "CreatedDate": "2024-04-18T00:00:00.000Z",

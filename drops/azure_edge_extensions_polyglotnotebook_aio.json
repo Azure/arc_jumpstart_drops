@@ -1,7 +1,7 @@
 {
     "Title": "Azure IoT Operations through Polyglot Notebooks",
-    "Summary": "This repository contains a set of Polyglot Notebooks that demonstrate how to use Azure IoT Operations using Codespaces.",
-    "Description": "This repository contains a set of Polyglot Notebooks that demonstrate how to use Azure IoT Operations using Codespaces.",
+    "Summary": "This Jumpstart Drop contains a set of Polyglot Notebooks that demonstrate how to use Azure IoT Operations using Codespaces.",
+    "Description": "This Jumpstart Drop contains a set of Polyglot Notebooks that demonstrate how to use Azure IoT Operations using Codespaces.",
     "Cover": "",
     "Authors": [
         {
@@ -24,7 +24,7 @@
     ],
     "Products": [
         "Azure IoT Operations",
-        "Arc"
+        "Azure Arc"
     ],
     "LastModified": "2024-04-18T00:00:00.000Z",
     "CreatedDate": "2024-04-18T00:00:00.000Z",

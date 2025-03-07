@@ -1,7 +1,7 @@
 {
-    "Title": "Deploy a Kubernetes cluster using MicroK8s using a Windows VM",
-    "Summary": "This Drop provides a guide to creating a Kubernetes cluster using Microk8s and connecting it to Azure using the Azure CLI.",
-    "Description": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using MicroK8s on Windows and connecting it to Azure Arc.",
+    "Title": "Deploy a MicroK8s Kubernetes Cluster on Windows VM",
+    "Summary": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using Microk8s on Windows and connecting it to Azure Arc using the Azure CLI.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using MicroK8s on Windows and connecting it to Azure Arc using the Azure CLI.",
     "Cover": "",
     "Authors": [
       {
@@ -21,7 +21,7 @@
       "Bash"
     ],
     "Products": [
-      "Arc",
+      "Azure Arc",
       "Arc-enabled Kubernetes",
       "MicroK8s"
     ],

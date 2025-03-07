@@ -1,6 +1,6 @@
 {
-  "Title": "Using the Multicloud Connector Enabled by Azure Arc",
-  "Summary": "This Drop provides a guide to using the Multicloud connector enabled by Azure Arc to onboard EC2 instances to Azure and view AWS resources in Azure.",
+  "Title": "Using the Multicloud connector enabled by Azure Arc",
+  "Summary": "This Jumpstart Drop describes how to use the Multicloud connector enabled by Azure Arc to onboard EC2 instances to Azure Arc, view an inventory of AWS resources in Azure, and run Azure Resource Graph queries to view resources across clouds.",
   "Description": "This Jumpstart Drop describes how to use the Multicloud connector enabled by Azure Arc to onboard EC2 instances to Azure Arc, view an inventory of AWS resources in Azure, and run Azure Resource Graph queries to view resources across clouds.",
   "Cover": "",
   "Authors": [
@@ -16,10 +16,8 @@
     "CloudFormation"
   ],
   "Products": [
-    "Arc",
-    "Arc-enabled Servers",
+    "Arc-enabled servers",
     "AWS EC2",
-    "AWS",
     "Multicloud connector"
   ],
   "LastModified": "2024-09-18T00:00:00.000Z",

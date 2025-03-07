@@ -1,6 +1,6 @@
 {
     "Title": "Connecting IIoT Gateway to Azure IoT Operations",
-    "Summary": "This Drop is a tutorial on how to securely connect an IIoT Gateway to the AIO instance and publish MQTT messages from an MCU device.",
+    "Summary": "This Jumpstart Drop is a tutorial on how to securely connect an IIoT Gateway to the AIO instance and publish MQTT messages from an MCU device.",
     "Description": "This Jumpstart Drop provides details regarding how to install and configure the IIoT Gateway, bridge to the AIO broker over mTLS, and finally provided a sample Zephyr app (in C) to publsih MQTT messages.",
     "Cover": "https://github.com/rickijen/azureiotoperations-elastel-zephyr/blob/main/artifacts/media/Elastel-HiveMQ.png",
     "Authors": [

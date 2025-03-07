@@ -18,8 +18,8 @@
   ],
   "Products": [
     "Azure VM",
-    "Arc",
-    "Arc-enabled Servers"
+    "Azure Arc",
+    "Arc-enabled servers"
   ],
   "LastModified": "2024-06-27T19:37:21.000Z",
   "CreatedDate": "2024-03-15T10:30:16.201Z",
