@@ -64,7 +64,7 @@ body:
     id: terms
     attributes:
       label: Code of Conduct and Licensing
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Azure/arc_jumpstart_docs/blob/main/CODE_OF_CONDUCT.md) and the project's [MIT license](https://github.com/microsoft/azure_arc/blob/main/LICENSE-CODE). 
+      description: By submitting this feature request, you agree to follow our [Code of Conduct](https://github.com/Azure/arc_jumpstart_docs/blob/main/CODE_OF_CONDUCT.md) and the project's [MIT license](https://github.com/microsoft/azure_arc/blob/main/LICENSE-CODE). 
       options:
         - label: I agree to follow this project's Code of Conduct and Licensing terms.
           required: true
