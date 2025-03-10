@@ -1,6 +1,6 @@
 [![Stale Issues and PRs](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yaml/badge.svg?branch=main)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yaml) [![Stale Branches](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yaml/badge.svg)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yaml)
 
-# Arc Jumpstart Drops
+# Arc Jumpstart Drops 
 
 Welcome to the Arc Jumpstart Drops repository! This repository is your go-to resource for all the source code and data for the Arc Jumpstart Drops collection. Whether you're a beginner discovering the curated Drops collection or an experienced user looking to submit a new, you'll find valuable insights tailored to your needs here.
 
