@@ -1,5 +1,5 @@
 {
-  "Title": "Azure Edge Extensions AIO Data Historian",
+  "Title": "InfluxDB-based Data Historian for Azure IoT Operations",
   "Summary": "InfluxDB-based Data Historian, deployed and managed by Azure IoT Operations.",
   "Description": "Data Historian for Azure IoT Operations (AIO). Telegraf, InfluxDB, and Grafana (TIG stack) Infrastructure as Code (IaC, Terraform) utilizing Azure IoT Data Processor and Azure IoT MQ (MQTT Broker).",
   "Cover": "",
@@ -13,11 +13,11 @@
   "Type": "sample_app",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
-    "Terraform/HCL"
+    "Terraform"
   ],
   "Products": [
     "Azure IoT Operations",
-    "Arc",
+    "Azure Arc",
     "InfluxDB"
   ],
   "LastModified": "2024-08-14T18:53:13.000Z",

@@ -1,6 +1,6 @@
 {
-  "Title": "Retrieval-Augmented Generation on Edge with Azure Arc & Azure IoT Operations",
-  "Summary": "This Drop provides a Retrieval-Augmented Generation(RAG) on edge pattern that facilitates text searches within files utilizing a local vectorDB and an edge LLM. It follows Pub/Sub messaging pattern with Arc-enabled Azure IoT Operations MQTT broker.",
+  "Title": "RAG on Edge with Azure Arc & Azure IoT Operations",
+  "Summary": "This Jumpstart Drop provides a Retrieval-Augmented Generation (RAG) on edge pattern that facilitates text searches within files utilizing a local vectorDB and an edge LLM. It follows Pub/Sub messaging pattern with Azure IoT Operations MQTT broker.",
   "Description": "RAG on Edge is a tool to perform text searches within files using a vector-based approach, and generate a readable response based on the search result with Large/Small Language Model. The solution is independent from cloud services, and can be deployed to the edge device. The messaging system follows a pub/sub pattern, ensuring adaptability to diverse edge computing scenarios.",
   "Cover": "https://www.youtube.com/watch?v=rb7-xRnFuPY",
   "Authors": [
@@ -18,11 +18,8 @@
   ],
   "Products": [
     "Azure IoT Operations",
-    "Arc",
-    "Kubernetes",
-    "Chroma DB",
-    "Phi3",
-    "Llama2"
+    "Azure Arc",
+    "Kubernetes"
   ],
   "LastModified": "2024-08-21T07:55:30.000Z",
   "CreatedDate": "2024-07-08T00:00:00.000Z",

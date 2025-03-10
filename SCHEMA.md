@@ -5,7 +5,7 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 
 | Parameter | Description | Required | Type | Options |
 |---|---|---|---|---|
-| `Title` | A short, descriptive title that reflects the artifact and user experience provided by the Drop | Yes | String | Maximum 100 characters |
+| `Title` | A short, descriptive title that reflects the artifact and user experience provided by the Drop | Yes | String | Maximum 55 characters |
 | `Summary` | A brief, one or two sentence description of the Drop and its purpose. This will be displayed as the Drop Card description. | Yes | String | Maximum 250 characters |
 | `Description` | A more detailed description of the Drop. This will be displayed in the right bar when a user clicks on the Drop Card. | Yes | String | Maximum 1000 characters |
 | `Cover` | A link to an image or video thumbnail that will be displayed as the Drop Card's display image. | No | String |  |
@@ -14,7 +14,7 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 | `Type` | The type of Drop, based on the Jumpstart Drops list. | Yes | String | ui_dashboard_workbook, sample_app, library_package, script_automation, template, tutorial_guide |
 | `Difficulty` | The level of difficulty required to understand and run the Drop, based on the Microsoft Education Center Levels. | Yes | String | Beginner (L100), Medium (L200), Advanced (L300+) |
 | `ProgrammingLanguage` | A list of tags for the programming languages used in the Drop. Contributors can add their own language if necessary. | No | Array | PowerShell, .NET/C#, Python, Go, Node, Bash, Bicep, Terraform, Ansible, Helm, Other |
-| `Products` | A list of products and services used in the Drop. Contributors can add their own if necessary. | No | Array | AKS, Windows IoT, SQL Server, Arc, Arc-enabled service, App Services, VMware |
+| `Products` | A list of products and services used in the Drop. Contributors can add their own if necessary. | No | Array | Maximum 3 items/elements in the array.<br>Examples of Products: Azure Arc, AKS, Windows IoT, SQL Server, Arc-enabled service, App Services, VMware |
 | `LastModified` | Not filled by the user. Used to track the last modification of the Drops source code | No | String |  |
 | `CreatedDate` | Not filled by the user. Used to track when the Drop was created | No | String |  |
 | `Topics` | Not filled by user, but gathered automatically leveraging the GitHub repository topics | No | Array |  |
@@ -49,7 +49,7 @@ This JSON file provides an example of how a Drop schema file should be structure
   ],
   "Products": [
     "Azure Monitor",
-    "Arc"
+    "Azure Arc"
   ],
   "LastModified": "2025-02-07T18:25:43.511Z",
   "CreatedDate": "2025-02-01T10:30:16.201Z",
