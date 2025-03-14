@@ -1,8 +1,8 @@
 ## Overview
 
-#### Azure Container Storage enabled by Azure Arc: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu
-This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s.
-Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy. 
+#### Azure Container Storage enabled by Azure Arc: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu with an SFTP Front End
+This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s and then put an SFTP front end. This allows you all the functionality of the base product as well as being able to accept writes from SFTP clients. 
+Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy, according to your ingest policy. 
 
 > ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/overview).
 
@@ -59,12 +59,7 @@ sudo sysctl -p
 az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION}
 ```
 
-#### Install and Configure Open Service Mesh
-```bash
-az k8s-extension create --resource-group ${RESOURCE_GROUP} --cluster-name ${ARCNAME} --cluster-type connectedClusters --extension-type Microsoft.openservicemesh --scope cluster --name osm --config "osm.osm.featureFlags.enableWASMStats=false" --config "osm.osm.enablePermissiveTrafficPolicy=false" --config "osm.osm.configResyncInterval=10s" --config "osm.osm.osmController.resource.requests.cpu=100m" --config "osm.osm.osmBootstrap.resource.requests.cpu=100m" --config "osm.osm.injector.resource.requests.cpu=100m"
-```
-
-#### Install aio platform package for certificate management
+#### Install package for certificate management
 ```bash
 az k8s-extension create --cluster-name "${ARCNAME}" --name "${ARCNAME}-certmgr" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters --release-train preview --extension-type microsoft.iotoperations.platform --scope cluster --release-namespace cert-manager
 ```
@@ -87,6 +82,8 @@ For this example, the components are separate and applied separately, however yo
 kubectl apply -f pvc.yaml
 cat edgesubvoltemp.yaml | sed "s/STORAGEACCOUNT/$STORAGEACCOUNT/g" | sed "s/STORAGECONTAINER/$STORAGECONTAINER/g" > edgesubvol.yaml
 kubectl apply -f edgesubvol.yaml
+
+#### This needs to change
 kubectl apply -f examplepod.yaml
 ```
 
