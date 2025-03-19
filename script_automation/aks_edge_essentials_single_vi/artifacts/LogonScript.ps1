@@ -8,6 +8,9 @@ $versionAksEdgeConfig = "1.0"
 $guid = ([System.Guid]::NewGuid()).ToString().subString(0,5).ToLower()
 $clusterName = "$Env:resourceGroup-$guid"
 
+# Verify EdgeEssentails features are installed
+Install-AksEdgeHostFeatures
+
 ########################################################################
 # Connect to Azure
 ########################################################################
@@ -84,9 +87,7 @@ $aksedgeConfig = @"
         "Location": "${env:location}",
         "ResourceGroupName": "${env:resourceGroup}",
         "SubscriptionId": "${env:subscriptionId}",
-        "TenantId": "${env:tenantId}",
-        "ClientId": "${env:appId}",
-        "ClientSecret": "${env:password}"
+        "TenantId": "${env:tenantId}"
     },
     "Machines": [
         {
@@ -154,7 +155,10 @@ Write-Host "`n"
 $kubectlMonShell = Start-Process -PassThru PowerShell { for (0 -lt 1) { kubectl get pod -A; Start-Sleep -Seconds 5; Clear-Host } }
 
 # Connect Arc-enabled kubernetes
-Connect-AksEdgeArc -JsonConfigFilePath $tempDir\aksedge-config.json
+# Connect-AksEdgeArc -JsonConfigFilePath $tempDir\aksedge-config.json
+cp c:\ProgramData\chocolatey\bin\kubectl.exe ~\.azure\kubectl-client\
+az connectedk8s connect -n $clusterName -l $env:location -g $Env:resourceGroup --subscription $env:subscriptionId
+
 
 #####################################################################
 ### Install ingress-nginx
@@ -197,26 +201,30 @@ az k8s-extension create --name azure-arc-containerstorage `
 #####################################################################
 ### Video Indexer setup
 #####################################################################
-$viApiVersion="2023-06-02-preview" 
+#$viApiVersion="2024-09-23-preview" 
+#$viApiVersion="2023-06-02-preview"
+$viApiVersion="2025-03-01"
 $extensionName="video-indexer"
-$version="1.0.41" # switch to blank
+#$version="1.0.41" # switch to blank
+$version="1.1.30"
 $namespace="video-indexer"
 $releaseTrain="release" # switch to release
 $storageClass="unbacked-sc"
+$enable_gpu=false
 
-Write-Host "Create Cognitive Services on VI resource provider"
-$createResourceUri = "https://management.azure.com/subscriptions/${env:subscriptionId}/resourceGroups/${env:resourceGroup}/providers/Microsoft.VideoIndexer/accounts/${env:videoIndexerAccountName}/CreateExtensionDependencies?api-version=${viApiVersion}"
+#Write-Host "Create Cognitive Services on VI resource provider"
+#$createResourceUri = "https://management.azure.com/subscriptions/${env:subscriptionId}/resourceGroups/${env:resourceGroup}/providers/Microsoft.VideoIndexer/accounts/${env:videoIndexerAccountName}/CreateExtensionDependencies?api-version=${viApiVersion}"
 
-$result = $(az rest --method post --uri $createResourceUri) | ConvertFrom-Json
+#$result = $(az rest --method post --uri $createResourceUri) | ConvertFrom-Json
 
 
-$getSecretsUri="https://management.azure.com/subscriptions/${env:subscriptionId}/resourceGroups/${env:resourceGroup}/providers/Microsoft.VideoIndexer/accounts/${env:videoIndexerAccountName}/ListExtensionDependenciesData?api-version=$viApiVersion"
-while ($null -eq $csResourcesData) {
-    Write-Host "Retrieving Cognitive Service Credentials..."
-    $csResourcesData=$(az rest --method post --uri $getSecretsUri) | ConvertFrom-Json
-    Start-Sleep -Seconds 10
-}
-Write-Host
+#$getSecretsUri="https://management.azure.com/subscriptions/${env:subscriptionId}/resourceGroups/${env:resourceGroup}/providers/Microsoft.VideoIndexer/accounts/${env:videoIndexerAccountName}/ListExtensionDependenciesData?api-version=$viApiVersion"
+#while ($null -eq $csResourcesData) {
+#    Write-Host "Retrieving Cognitive Service Credentials..."
+#    $csResourcesData=$(az rest --method post --uri $getSecretsUri) | ConvertFrom-Json
+#    Start-Sleep -Seconds 10
+#}
+#Write-Host
 
 Write-Host "Getting VM public IP address..."
 $hostname = hostname
@@ -232,19 +240,18 @@ az k8s-extension create --name $extensionName `
                         --resource-group $Env:resourceGroup `
                         --cluster-type connectedClusters `
                         --version $version `
+                        --release-train "preview" ` 
                         --auto-upgrade-minor-version false `
-                        --config-protected-settings "speech.endpointUri=$($csResourcesData.speechCognitiveServicesEndpoint)" `
-                        --config-protected-settings "speech.secret=$($csResourcesData.speechCognitiveServicesPrimaryKey)" `
-                        --config-protected-settings "translate.endpointUri=$($csResourcesData.translatorCognitiveServicesEndpoint)" `
-                        --config-protected-settings "translate.secret=$($csResourcesData.translatorCognitiveServicesPrimaryKey)" `
-                        --config-protected-settings "ocr.endpointUri=$($csResourcesData.ocrCognitiveServicesEndpoint)" `
-                        --config-protected-settings "ocr.secret=$($csResourcesData.ocrCognitiveServicesPrimaryKey)" `
-                        --config "frontend.endpointUri=https://$ipAddress" `
+                        --config "videoIndexer.endpointUri=https://$ipAddress" `
                         --config "videoIndexer.accountId=${Env:videoIndexerAccountId}" `
                         --config "storage.storageClass=$storageClass" `
                         --config "storage.accessMode=ReadWriteMany"
+                        --config AI.nodeSelector."beta\\.kubernetes\\.io/os"=linux \
+                        --config "ViAi.gpu.enabled=$enable_gpu" \
+                        --config "ViAi.gpu.tolerations.key=nvidia.com/gpu" \
+                        --config "ViAi.gpu.nodeSelector.workload=summarization"
 
-# Allow access to the frontend through the VM NIC interface
+                        # Allow access to the frontend through the VM NIC interface
 Write-Host "Adding Windows Defender firewall rule for VI frontend..."
 New-NetFirewallRule -DisplayName "Allow Inbound Port 80" -Direction Inbound -LocalPort 80 -Protocol TCP -Action Allow
 New-NetFirewallRule -DisplayName "Allow Inbound Port 443" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Allow
