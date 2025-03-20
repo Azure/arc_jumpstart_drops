@@ -1,5 +1,5 @@
 {
-    "Title": "IaC Terraform for Azure IoT Operations",
+    "Title": "Azure Edge Extensions AIO IaC Terraform",
     "Summary": "Infrastructure as Code (IaC) Terraform for Azure IoT Operations (AIO) components. This Jumpstart Drop includes initial infrastructure setup through Terraform, Self-Signed certificate generation, OPC PLC Simulator connected to the AIO OPC UA Broker.",
     "Description": "Infrastructure as Code (IaC) Terraform for Azure IoT Operations (AIO) components. Includes initial infrastructure setup through Terraform, Self-Signed certificate generation, OPC PLC Simulator connected to the AIO OPC UA Broker.",
     "Cover": "",
