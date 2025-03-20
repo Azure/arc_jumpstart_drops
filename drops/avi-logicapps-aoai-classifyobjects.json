@@ -1,5 +1,5 @@
 {
-  "Title": "Azure Video Indexer - Classify Objects with GPT4o",
+  "Title": "Azure Video Indexer - Classify objects in a video with GPT4o",
   "Summary": "A no-code sample for automating the classification of objects in a video using Azure Video Indexer and GPT4o.",
   "Description": "In this LogicApp flow sample, you will learn how to add aditional details on the cars detected in an indexed video, the sample leverage Video Indexer's BYO capability and detected objects in additon to Azure OpenAI.",
   "Cover": "https://www.youtube.com/watch?v=yMqJufR9Rfs",
