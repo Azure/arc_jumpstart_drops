@@ -1,5 +1,5 @@
 {
-  "Title": "Azure IoT Operations with GitHub Codespaces Quickstart",
+  "Title": "Azure IoT Operations (AIO) using GitHub Codespaces - Quickstart Bash Scripts",
   "Summary": "A set of Bash scripts to quickly set up Azure IoT Operations in GitHub Codespaces using K3s. These scripts automate the setup process for faster deployment, scenario re-runs, and seamless learning progression.",
   "Description": "This project provides a set of bash scripts to quickly set up and start Azure IoT Operations in Github Codespaces. These scripts are designed to automate the setup process, making it easier and faster to get started with Azure IoT Operations, or re-run scenarios and quickly move onto the next learning steps.",
   "Cover": "",

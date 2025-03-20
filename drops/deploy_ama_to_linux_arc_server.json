@@ -1,5 +1,5 @@
 {
-    "Title": "Deploy Azure Monitor Agent to Linux Arc-enabled servers",
+    "Title": "Deploy the Azure Monitor Agent to an Azure Arc-enabled Server",
     "Summary": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Linux Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show typical performance counters and Syslog being collected.",
     "Description": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Linux Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show typical performance counters and Syslog being collected.",
     "Cover": "",

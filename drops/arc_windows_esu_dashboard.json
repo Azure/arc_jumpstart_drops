@@ -1,5 +1,5 @@
 {
-    "Title": "Azure Arc Windows Extended Security Updates Dashboard",
+    "Title": "Azure Arc Windows Extended Security Updates (ESU) Dashboard",
     "Summary": "This dashboard gives an overview of Azure Arc-enabled servers and provides a quick glance overview of your environment, especially around the status of your Windows Extended Security Updates (ESU) Arc-enabled servers.",
     "Description": "The dashboard provides a comprehensive view of Azure Arc-enabled Windows and Linux servers, showcasing the installed Arc agent count, operating system distribution, agent version details, detected SQL instances, Windows ESU status, and the allowance and status of Azure Arc extensions.",
     "Cover": "",

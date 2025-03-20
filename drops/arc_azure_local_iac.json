@@ -1,5 +1,5 @@
 {
-  "Title": "Azure Local - IaC Template Examples",
+  "Title": "Azure Stack HCI - IaC Template Examples",
   "Summary": "This Jumpstart Drop provides examples of Infrastructure as Code (IaC) templates for Deploying Azure Local.",
   "Description": "This Jumpstart Drop provides example of Infrastructure as Code (IaC) templates for Deploying Azure Local. The templates are written in ARM and Bicep and can be used to deploy Azure Local clusters in Azure in a scalable manner.",
   "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg",

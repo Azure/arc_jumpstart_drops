@@ -1,5 +1,5 @@
 {
-    "Title": "Deploy Azure Monitor to Windows Arc-enabled servers",
+    "Title": "Deploy the Azure Monitor Agent to a Windows Azure Arc-enabled Server",
     "Summary": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Windows Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show performance counters and Windows Event Logs being collected.",
     "Description": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Windows Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show typical performance counters and Windows Event Logs being collected.",
     "Cover": "",
