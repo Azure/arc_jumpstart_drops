@@ -25,7 +25,7 @@ jobs:
 
     - name: Get the Drop schema json
       id: changed-files-specific
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v46
 
     - name: List changed JSON schema files
       if: steps.changed-files-specific.outputs.any_changed == 'true'
