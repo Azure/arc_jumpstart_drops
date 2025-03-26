@@ -1,0 +1,27 @@
+{
+    "Title": "Graph User Photo Sync Automation",
+    "Summary": "Script automating user photo updates in Microsoft Entra ID (Azure AD) using Microsoft Graph API.",
+    "Description": "It retrieves all users first, stores them in an ordered hash table, finds matching photos in a local directory (such as an Azure Arc-enabled server), and updates their profile photos—without requiring the Microsoft.Graph PowerShell module.",
+    "Cover": "https://images.squarespace-cdn.com/content/661c4130c6c2c45436f6bf0a/1742684735876-OOD9SUL1HMGDL56YD96I/AzureAutomation.jpg",
+    "Authors": [
+        {
+            "Name": "Hailey Phillips",
+            "Link": "https://www.linkedin.com/in/hailey-phillips-b1744882"
+        }
+    ],
+    "Source": "https://github.com/AllwaysHyPe/graph-automation",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "PowerShell"
+    ],
+    "Products": [
+        "Azure Arc",
+        "Windows Server",
+        "Microsoft Graph",
+        "Entra ID"
+    ],
+    "LastModified": "2025-03-26T20:41:39.000Z",
+    "CreatedDate": "2025-03-26T20:41:39.000Z",
+    "Topics": []
+}
