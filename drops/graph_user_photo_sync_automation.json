@@ -17,7 +17,6 @@
     ],
     "Products": [
         "Azure Arc",
-        "Windows Server",
         "Microsoft Graph",
         "Entra ID"
     ],
