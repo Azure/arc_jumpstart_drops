@@ -21,11 +21,11 @@ spec:
           command:
             - "/bin/sh"
             - "-c"
-            - "dd if=/dev/urandom of=/mnt/acsa/csa-pvc/esaingesttestfile count=16 bs=1M && while true; do ls /data &>/dev/null || break; sleep 1; done"
+            - "dd if=/dev/urandom of=/data/exampleSubDir/acsaingesttestfile count=16 bs=1M && while true; do ls /data &>/dev/null || break; sleep 1; done"
           volumeMounts:
-            - name: csa
-              mountPath: "/mnt/acsa"
+            - name: acsa
+              mountPath: "/data/"
       volumes:
-        - name: csa
+        - name: acsa
           persistentVolumeClaim:
-            claimName: csa-pvc
+            claimName: acsa-pvc

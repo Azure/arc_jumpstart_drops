@@ -1,9 +1,9 @@
 apiVersion: "arccontainerstorage.azure.net/v1"
 kind: EdgeSubvolume
 metadata:
-  name: csa-pvc
+  name: acsa-pvc
 spec:
-  edgevolume: csa-pvc
+  edgevolume: acsa-pvc
   path: exampleSubDir # If you change this path, line 33 in deploymentExample.yaml must be updated. Don't use a preceding slash.
   auth:
     authType: MANAGED_IDENTITY

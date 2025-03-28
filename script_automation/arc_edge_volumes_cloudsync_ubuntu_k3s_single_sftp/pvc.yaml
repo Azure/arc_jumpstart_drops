@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim 
 metadata:
     ### Create a name for your PVC ###
-    name: csa-pvc
+    name: acsa-pvc
     ### Use a namespace that matched your intended consuming pod, or "default" ###
     namespace: default
 spec: 

@@ -87,6 +87,10 @@ kubectl apply -f edgesubvol.yaml
 kubectl apply -f examplepod.yaml
 ```
 
+#### Create the SFTP Front End
+sudo apt install ssh
+
+
 #### Attach to example pod to use /mnt/acsa
 ```bash
 example_pod=`kubectl get pod -o yaml | grep name | head -1 | awk -F ':' '{print $2}'`
