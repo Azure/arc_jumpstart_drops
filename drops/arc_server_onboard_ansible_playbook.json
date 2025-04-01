@@ -1,7 +1,7 @@
 {
   "Title": "Azure Arc onboarding using Ansible playbooks",
-  "Summary": "The following Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
-  "Description": "The following Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
+  "Summary": "This Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
+  "Description": "This Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
   "Cover": "",
   "Authors": [
     {
@@ -22,8 +22,8 @@
   ],
   "Products": [
     "Ansible",
-    "Arc",
-    "Arc-enabled Servers"
+    "Azure Arc",
+    "Arc-enabled servers"
   ],
   "LastModified": "2024-05-16T12:22:36.000Z",
   "CreatedDate": "2024-03-15T10:30:16.201Z",

@@ -1,6 +1,6 @@
 {
     "Title": "Azure Edge Extensions - Azure IoT Operations ISA-95 Layered Network Management and MQ Setup",
-    "Summary": "This is a solution to build an ISA-95 network model on top of Azure IoT Operations utilizing Azure IoT Layered Network Management and Azure IoT MQ.",
+    "Summary": "This Jumpstart Drop provides a solution to build an ISA-95 network model on top of Azure IoT Operations utilizing Azure IoT Layered Network Management and Azure IoT MQ.",
     "Description": "This repository defines two levels of an ISA-95 network model and enables MQTT bridging between the layers for bidirectional communication. This sample also showcases how to implement a KafkaConnector to retrieve data from a cloud-based Kafka Broker.",
     "Cover": "",
     "Authors": [
@@ -22,8 +22,7 @@
     "Products": [
         "Azure IoT Operations",
         "Azure IoT MQ",
-        "Arc",
-        "KafkaConnector"
+        "Azure Arc"
     ],
     "LastModified": "2024-08-13T13:09:59.000Z",
     "CreatedDate": "2024-07-04T00:00:00.000Z",

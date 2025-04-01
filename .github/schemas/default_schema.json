@@ -12,7 +12,7 @@
     "properties": {
       "Title": {
         "type": "string",
-        "maxLength": 100
+        "maxLength": 50
       },
       "Summary": {
         "type": "string",
@@ -74,6 +74,7 @@
       },
       "Products": {
         "type": "array",
+        "maxItems": 3,
         "items": {
           "type": "string"
         }

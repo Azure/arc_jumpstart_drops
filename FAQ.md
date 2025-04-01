@@ -1,7 +1,7 @@
 # FAQs
 
 ## What's Arc Jumpstart Drops?
-Arc Jumpstart Drops serves as a curated collection of scripts, tools, and other resources that can help developers/IT/OT and maintenance professionals streamline their day-to-day operations and smooth their [Adaptive Cloud](https://arcjumpstart.com/adaptive_cloud) journey. 
+Arc Jumpstart Drops serves as a curated collection of scripts, tools, and other resources that can help developers/IT/OT and maintenance professionals streamline their day-to-day operations and smooth their [Adaptive Cloud](https://jumpstart.azure.com/adaptive_cloud) journey. 
 
 ## Can I contribute a Drop?
 Arc Jumpstart Drops is fully open-source and welcomes all contributions that follow the Jumpstart Drops [contribution process](../contribution_guidelines/). Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant Arc Jumpstart team the rights to use your contribution. For details, visit [Microsoft CLA](https://cla.opensource.microsoft.com).
@@ -23,13 +23,13 @@ The MIT license is a permissive open-source software license that allows for the
 For more information, see [contribution process](../contribution_guidelines/).
 
 ## How can I discover a Jumsptart Drop?
-To discover a Jumpstart Drop tailored to your needs, leverage the filters and sorting options available on the Arc Jumpstart Drops main page. Start by visiting [Arc Jumpstart Drops](https://arcjumpstart.com/arc_jumpstart_drops) and then use the panel on the right-hand side to filter by criteria such as *Programming* *Language*, *Product*, *Difficulty*, *Industry*, *Topic*, and more. Additionally, you can always use the search bar at the top to search across all Jumpstart content, including Jumpstart Drops.
+To discover a Jumpstart Drop tailored to your needs, leverage the filters and sorting options available on the Arc Jumpstart Drops main page. Start by visiting [Arc Jumpstart Drops](https://jumpstart.azure.com/arc_jumpstart_drops) and then use the panel on the right-hand side to filter by criteria such as *Programming* *Language*, *Product*, *Difficulty*, *Industry*, *Topic*, and more. Additionally, you can always use the search bar at the top to search across all Jumpstart content, including Jumpstart Drops.
 
 ## How do I use a Jumpstart Drop?
 Using Jumsptart Drops is straightforward. Simply download the Jumnpstart Drop by clicking the Download button on the Jumpstart Drop's page. After downloading, you will have a .zip file containing all the necessary source code to run the Jumpstart Drop. Depending on the Jumpstart Drop, you may need to configure some prerequisites, but all instructions should be included in the **_index.md** file of the Jumpstart Drop.
 
 ## How do I submit a Jumpstart Drop?
-Submitting a Jumpstart Drop is easy. You can choose to create a pull request directly in the Arc Jumpstart Drops repository or use the [Submit Jumpstart Drop](https://arcjumpstart.com/arc_jumpstart_drops) form for a streamlined process. Refer to the Jumpstart Drops [contribution process](../contribution_guidelines/) guide for detailed instructions.
+Submitting a Jumpstart Drop is easy. You can choose to create a pull request directly in the Arc Jumpstart Drops repository or use the [Submit Jumpstart Drop](https://jumpstart.azure.com/arc_jumpstart_drops) form for a streamlined process. Refer to the Jumpstart Drops [contribution process](../contribution_guidelines/) guide for detailed instructions.
 
 ## How's support and maintenance handled for Jumpstart Drops?
 Support and maintenance for Jumpstart Drops are managed through GitHub Issues, where bugs and feature requests can be tracked. The project follows the support approach outlined in [Arc Jumpstart Support](https://github.com/Azure/arc_jumpstart_docs/blob/main/SUPPORT.md).

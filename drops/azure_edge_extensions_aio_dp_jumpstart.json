@@ -1,6 +1,6 @@
 {
     "Title": "Azure Edge Extensions AIO Data Processor Jumpstart",
-    "Summary": "Azure IoT Data Processor automation, quickstart, and Jumpstart.",
+    "Summary": "This Jumpstart Drop offers a sample implementation of Azure IoT Operations Data Processor pipelines for industrial scenarios. It enables you to aggregate, enrich, normalize, and filter data using tag enhancements.",
     "Description": "This repository provides a comprehensive sample implementation of Azure IoT Operations Data Processor pipelines for industrial related scenarios using tag enhancements. The Azure IoT Operations Data Processor is a component of Azure IoT Operations (AIO) designed to handle the complexity and diversity of industrial data. It achieves this by offering data pipelines that enable you to aggregate, enrich, normalize, and filter data from your devices.",
     "Cover": "",
     "Authors": [
@@ -35,7 +35,7 @@
     ],
     "Products": [
         "Azure IoT Operations",
-        "Arc"
+        "Azure Arc"
     ],
     "LastModified": "2024-08-14T18:43:55.000Z",
     "CreatedDate": "2024-04-18T00:00:00.000Z",

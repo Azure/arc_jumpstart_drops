@@ -13,11 +13,11 @@
   "Type": "sample_app",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
-    "Terraform/HCL"
+    "Terraform"
   ],
   "Products": [
     "Azure IoT Operations",
-    "Arc",
+    "Azure Arc",
     "InfluxDB"
   ],
   "LastModified": "2024-08-14T18:53:13.000Z",

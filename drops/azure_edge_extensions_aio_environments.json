@@ -1,6 +1,6 @@
 {
     "Title": "Azure Edge Extensions AIO Environments",
-    "Summary": "This is a solution to build Azure IoT Operations (AIO) VM environments.",
+    "Summary": "This Jumpstart Drop sets up the infrastructure to create VHDX images and VMs for Azure IoT Operations on Arc-enabled servers. This enables you to install instrumentation tools and collect memory dumps for applications and core components.",
     "Description": "This repository sets up the infrastructure to create VHDX images and VMs for Azure IoT Operations on Arc-enabled servers. This infrastructure enables you to install instrumentation tools and collect memory dumps for applications and core components.",
     "Cover": "",
     "Authors": [
@@ -23,7 +23,7 @@
     ],
     "Products": [
         "Azure IoT Operations",
-        "Arc"
+        "Azure Arc"
     ],
     "LastModified": "2024-09-12T11:26:25.000Z",
     "CreatedDate": "2024-04-18T00:00:00.000Z",
