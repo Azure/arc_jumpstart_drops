@@ -52,4 +52,4 @@ For more information about Azure Monitor workbooks and monitoring, review the fo
 
 - [Azure Monitor workbooks](https://learn.microsoft.com/azure/azure-monitor/visualize/workbooks-overview)
 - Azure Arc-enabled server's workbook [video](https://www.youtube.com/@azurearcjumpstart/search?query=workbook)
-- [ArcBox Azure Monitor Workbook documentation](https://azurearcjumpstart.com/azure_jumpstart_arcbox/workbook/flavors/Full).
+- [ArcBox Azure Monitor Workbook documentation](https://jumpstart.azure.com/azure_jumpstart_arcbox/workbook/flavors/Full).

@@ -1,4 +1,6 @@
-# Azure Arc Jumpstart Drops
+[![Stale Issues and PRs](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yaml/badge.svg?branch=main)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-issues-pr.yaml) [![Stale Branches](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yaml/badge.svg)](https://github.com/Azure/arc_jumpstart_drops/actions/workflows/stale-branches.yaml)
+
+# Arc Jumpstart Drops
 
 Welcome to the Arc Jumpstart Drops repository! This repository is your go-to resource for all the source code and data for the Arc Jumpstart Drops collection. Whether you're a beginner discovering the curated Drops collection or an experienced user looking to submit a new, you'll find valuable insights tailored to your needs here.
 
@@ -14,7 +16,7 @@ Please note that before contributing or using any Arc Jumpstart Drop, it's impor
 
 - **Drops:** All the JSON [schema](./SCHEMA.md) files of the submitted Drops. Each file represents a Drop that's published in the Jumpstart Drops curated list. 
 - **Drops Source Code:** Files and artifacts for Drops that opted to publish their source code to this repository.
-- **Supportive Documents and Files:** Additional resources used across the [Arc Jumpstart Drops](https://arcjumpstart.com/azure_jumpstart_drops) website, aiding in various contexts and providing supplemental information.
+- **Supportive Documents and Files:** Additional resources used across the [Arc Jumpstart Drops](https://jumpstart.azure.com/azure_jumpstart_drops) website, aiding in various contexts and providing supplemental information.
 
 ## How to utilize this repository
 
@@ -32,8 +34,8 @@ The following branches are currently maintained:
 
 | Branch                                                       | Website                    | Description                                                                                      |
 | ------------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------ |
-| [main](https://github.com/Azure/arc_jumpstart_drops/) (primary)               | https://arcjumpstart.com/azure_jumpstart_drops      | Latest Arc Jumpstart public website. This is the latest documentation and Drops available in the deployed to the production slot. |
-| [canary](https://github.com/Azure/arc_jumpstart_drops/tree/canary) (preview) | https://preview.arcjumpstart.com/azure_jumpstart_drops | Pre-release documentation. Document and Drops updates should be merged to the canary branch for preview validation before merging to the main branch. |
+| [main](https://github.com/Azure/arc_jumpstart_drops/) (primary)               | https://jumpstart.azure.com/azure_jumpstart_drops      | Latest Arc Jumpstart public website. This is the latest documentation and Drops available in the deployed to the production slot. |
+| [canary](https://github.com/Azure/arc_jumpstart_drops/tree/canary) (preview) | https://preview.jumpstart.azure.com/azure_jumpstart_drops | Pre-release documentation. Document and Drops updates should be merged to the canary branch for preview validation before merging to the main branch. |
 
 ## Cloning the repositories
 

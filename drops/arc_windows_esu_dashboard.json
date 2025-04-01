@@ -17,9 +17,8 @@
     ],
     "Products": [
       "Azure Monitor",
-      "Dashboard",
-      "Arc",
-      "Arc-enabled Servers"
+      "Azure Arc",
+      "Arc-enabled servers"
     ],
     "LastModified": "2024-07-10T18:25:43.511Z",
     "CreatedDate": "2024-07-09T10:30:16.201Z",

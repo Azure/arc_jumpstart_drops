@@ -1,6 +1,6 @@
 {
   "Title": "Deploy an Ubuntu 22.04 server with Vagrant",
-  "Summary": "This Drop provides a guide to creating an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
+  "Summary": "This Jumpstart Drop provides a guide to creating an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
   "Description": "This Jumpstart Drop provides a step-by-step guide to create an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
   "Cover": "",
   "Authors": [
@@ -20,9 +20,8 @@
     "Bash"
   ],
   "Products": [
-    "Arc",
-    "Arc-enabled Servers",
-    "Ubuntu",
+    "Azure Arc",
+    "Arc-enabled servers",
     "Vagrant"
   ],
   "LastModified": "2024-07-08T19:23:47.000Z",

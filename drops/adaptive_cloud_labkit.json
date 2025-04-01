@@ -18,10 +18,7 @@
     "Products": [
         "Azure Arc",
         "Windows Server",
-        "AKS",
-        "NUC",
-        "Arc",
-        "IoT"
+        "AKS"
     ],
     "LastModified": "2024-07-25T13:54:39.000Z",
     "CreatedDate": "2024-07-25T10:30:16.201Z",

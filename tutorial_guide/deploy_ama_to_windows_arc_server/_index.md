@@ -4,7 +4,7 @@ This Drop will you guide you through using the Azure Monitor Agent on an existin
 
 ## Prerequisites
 
-- This Drop starts at the point where you have already deployed and connected one or more machines to Azure Arc.  If you need an Azure Arc-enabled server, search for other Drops or use a Jumpstart scenario like [Deploy a local Windows server hosted with Vagrant and connect it Azure Arc](https://azurearcjumpstart.io/azure_arc_jumpstart/azure_arc_servers/vagrant/local_vagrant_windows/).  The official documentation for connecting a machine to Azure Arc is available [here](https://learn.microsoft.com/en-us/azure/azure-arc/servers/learn/quick-enable-hybrid-vm).
+- This Drop starts at the point where you have already deployed and connected one or more machines to Azure Arc.  If you need an Azure Arc-enabled server, search for other Drops or use a Jumpstart scenario like [Deploy a local Windows server hosted with Vagrant and connect it Azure Arc](https://jumpstart.azure.com/azure_arc_jumpstart/azure_arc_servers/vagrant/local_vagrant_windows/).  The official documentation for connecting a machine to Azure Arc is available [here](https://learn.microsoft.com/en-us/azure/azure-arc/servers/learn/quick-enable-hybrid-vm).
 
 - [Install or update Azure CLI to the latest version](https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest).
 

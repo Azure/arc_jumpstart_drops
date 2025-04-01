@@ -25,11 +25,8 @@
       "Bash"
     ],
     "Products": [
-      "Arc-enabled service",
-      "Arc",
-      "Azure Open AI",
-      "VectorDB",
-      "InfluxDB",
+      "Azure Arc",
+      "Azure OpenAI",
       "Azure IoT Operations"
     ],
     "LastModified": "2024-08-16T10:25:43.511Z",
