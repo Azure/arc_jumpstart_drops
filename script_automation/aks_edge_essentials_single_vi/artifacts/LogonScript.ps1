@@ -201,30 +201,13 @@ az k8s-extension create --name azure-arc-containerstorage `
 #####################################################################
 ### Video Indexer setup
 #####################################################################
-#$viApiVersion="2024-09-23-preview" 
-#$viApiVersion="2023-06-02-preview"
 $viApiVersion="2025-03-01"
 $extensionName="video-indexer"
-#$version="1.0.41" # switch to blank
-$version="1.1.30"
+$version="1.1.31"
 $namespace="video-indexer"
 $releaseTrain="release" # switch to release
 $storageClass="unbacked-sc"
 $enable_gpu=false
-
-#Write-Host "Create Cognitive Services on VI resource provider"
-#$createResourceUri = "https://management.azure.com/subscriptions/${env:subscriptionId}/resourceGroups/${env:resourceGroup}/providers/Microsoft.VideoIndexer/accounts/${env:videoIndexerAccountName}/CreateExtensionDependencies?api-version=${viApiVersion}"
-
-#$result = $(az rest --method post --uri $createResourceUri) | ConvertFrom-Json
-
-
-#$getSecretsUri="https://management.azure.com/subscriptions/${env:subscriptionId}/resourceGroups/${env:resourceGroup}/providers/Microsoft.VideoIndexer/accounts/${env:videoIndexerAccountName}/ListExtensionDependenciesData?api-version=$viApiVersion"
-#while ($null -eq $csResourcesData) {
-#    Write-Host "Retrieving Cognitive Service Credentials..."
-#    $csResourcesData=$(az rest --method post --uri $getSecretsUri) | ConvertFrom-Json
-#    Start-Sleep -Seconds 10
-#}
-#Write-Host
 
 Write-Host "Getting VM public IP address..."
 $hostname = hostname
@@ -240,7 +223,6 @@ az k8s-extension create --name $extensionName `
                         --resource-group $Env:resourceGroup `
                         --cluster-type connectedClusters `
                         --version $version `
-                        --release-train "preview" ` 
                         --auto-upgrade-minor-version false `
                         --config "videoIndexer.endpointUri=https://$ipAddress" `
                         --config "videoIndexer.accountId=${Env:videoIndexerAccountId}" `
