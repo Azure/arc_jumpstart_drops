@@ -65,6 +65,13 @@ Start-Sleep 45
 Import-Module AksEdge
 Get-Command -Module AKSEdge | Format-Table Name, Version
 
+# Verify requisites for EE
+Write-Host "`n"
+Write-Host "Checking node pre-requisites for Edge Essentials"
+Write-Host "`n"
+Install-AksEdgeHostFeatures -Confirm:$false
+
+
 # Here string for the json content
 $aksedgeConfig = @"
 {
@@ -207,7 +214,7 @@ $version="1.1.31"
 $namespace="video-indexer"
 $releaseTrain="release" # switch to release
 $storageClass="unbacked-sc"
-$enable_gpu=false
+$enable_gpu="false"
 
 Write-Host "Getting VM public IP address..."
 $hostname = hostname
@@ -227,10 +234,10 @@ az k8s-extension create --name $extensionName `
                         --config "videoIndexer.endpointUri=https://$ipAddress" `
                         --config "videoIndexer.accountId=${Env:videoIndexerAccountId}" `
                         --config "storage.storageClass=$storageClass" `
-                        --config "storage.accessMode=ReadWriteMany"
-                        --config AI.nodeSelector."beta\\.kubernetes\\.io/os"=linux \
-                        --config "ViAi.gpu.enabled=$enable_gpu" \
-                        --config "ViAi.gpu.tolerations.key=nvidia.com/gpu" \
+                        --config "storage.accessMode=ReadWriteMany" `
+                        --config AI.nodeSelector."beta\\.kubernetes\\.io/os"=linux `
+                        --config "ViAi.gpu.enabled=$enable_gpu" `
+                        --config "ViAi.gpu.tolerations.key=nvidia.com/gpu" `
                         --config "ViAi.gpu.nodeSelector.workload=summarization"
 
                         # Allow access to the frontend through the VM NIC interface
