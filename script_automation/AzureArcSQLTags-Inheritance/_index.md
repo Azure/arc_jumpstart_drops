@@ -19,7 +19,7 @@ By default, Azure Arc SQL Instances do not inherit tags from the associated Azur
 ## Deploying Artifacts
 
 The script **`AzureArcSQLTags-Inheritance.ps1`** can be used in a **runbook** and is available in the **scripts** folder of this repository. You can access it directly at the following link:  
-[AzureArcSQLTags-Inheritance.ps1](https://github.com/fabiotreze/arc_jumpstart_drops/blob/main/script_automation/AzureArcSQLTags-Inheritance/AzureArcSQLTags-Inheritance.ps1).
+[AzureArcSQLTags-Inheritance.ps1](https://raw.githubusercontent.com/fabiotreze/AzureArcBRTips/refs/heads/main/azure_arc_jumpstart_drops/script_automation/AzureArcSQLTags-Inheritance/AzureArcSQLTags-Inheritance.ps1).
 
 ### Prerequisites
 

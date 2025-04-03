@@ -17,7 +17,7 @@ This script was created to help identify connectivity issues with the Azure Arc 
 
 ## Getting Started
 
-Download the [ArcEndpointCheck.ps1](https://github.com/fabiotreze/arc_jumpstart_drops/blob/main/script_automation/ArcEndpointCheck/ArcEndpointCheck.ps1) and follow these steps to set up and use the script:
+Download the [ArcEndpointCheck.ps1](https://raw.githubusercontent.com/fabiotreze/AzureArcBRTips/refs/heads/main/azure_arc_jumpstart_drops/script_automation/ArcEndpointCheck/ArcEndpointCheck.ps1) and follow these steps to set up and use the script:
 
 1. **Define the Region**  
    Set the region for your Azure Arc deployment. For example:  
