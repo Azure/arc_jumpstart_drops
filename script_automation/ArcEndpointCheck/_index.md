@@ -13,7 +13,7 @@ This script was created to help identify connectivity issues with the Azure Arc 
 ## Prerequisites
 
 - PowerShell
-- Network connectivity
+- Network connectivity 
 
 ## Getting Started
 
