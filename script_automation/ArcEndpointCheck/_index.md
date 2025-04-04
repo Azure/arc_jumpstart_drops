@@ -13,19 +13,11 @@ This script was created to help identify connectivity issues with the Azure Arc 
 ## Prerequisites
 
 - PowerShell
-<<<<<<< HEAD
 - Network connectivity 
 
 ## Getting Started
 
 Download the [ArcEndpointCheck.ps1](./ArcEndpointCheck.ps1) and follow these steps to set up and use the script:
-=======
-- Network connectivity
-
-## Getting Started
-
-Download the [ArcEndpointCheck.ps1](https://raw.githubusercontent.com/fabiotreze/AzureArcBRTips/refs/heads/main/azure_arc_jumpstart_drops/script_automation/ArcEndpointCheck/ArcEndpointCheck.ps1) and follow these steps to set up and use the script:
->>>>>>> b4bf0a831f11a6c37679ade45fa40019cf8d0b3e
 
 1. **Define the Region**  
    Set the region for your Azure Arc deployment. For example:  
