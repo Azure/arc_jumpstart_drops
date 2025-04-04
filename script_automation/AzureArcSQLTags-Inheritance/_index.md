@@ -19,7 +19,7 @@ By default, Azure Arc SQL Instances do not inherit tags from the associated Azur
 ## Deploying Artifacts
 
 The script **`AzureArcSQLTags-Inheritance.ps1`** can be used in a **runbook** and is available in the **scripts** folder of this repository. You can access it directly at the following link:  
-[AzureArcSQLTags-Inheritance.ps1](https://raw.githubusercontent.com/fabiotreze/AzureArcBRTips/refs/heads/main/azure_arc_jumpstart_drops/script_automation/AzureArcSQLTags-Inheritance/AzureArcSQLTags-Inheritance.ps1).
+[AzureArcSQLTags-Inheritance.ps1](./AzureArcSQLTags-Inheritance.ps1).
 
 ### Prerequisites
 
@@ -34,9 +34,9 @@ The script **`AzureArcSQLTags-Inheritance.ps1`** can be used in a **runbook** an
 
 The script requires the following parameters:
 
-- **ResourceGroupName**: The name of the resource group where the Azure Arc SQL Instance and the associated VM are located.  
-- **SubscriptionID**: The ID of the Azure subscription where the resources are registered.  
-- **tagName**: The name of the tag to be applied to the Azure Arc SQL Instance, based on the tags configured on the associated VM.  
+- `ResourceGroupName`: The name of the resource group where the Azure Arc SQL Instance and the associated VM are located.  
+- `SubscriptionID`: The ID of the Azure subscription where the resources are registered.  
+- `tagName`: The name of the tag to be applied to the Azure Arc SQL Instance, based on the tags configured on the associated VM.  
 
 ### What Does This Solve?
 These parameters ensure that the tags are properly synchronized between the Azure Arc resources and their related VMs, promoting more efficient and organized resource management. 
