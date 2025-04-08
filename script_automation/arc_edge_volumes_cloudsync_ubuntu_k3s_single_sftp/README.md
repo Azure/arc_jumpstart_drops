@@ -1,13 +1,13 @@
 ## Overview
 
-#### Azure Container Storage enabled by Azure Arc: Edge Volumes Cloud Backed Botomless Ingest Single Node K3s on Ubuntu with an SFTP Front End
-This example can be used to install Azure Container Storage enabled by Azure Arc to provide a Cloud Backed ReadWriteMany Edge Volume on an Ubuntu system with K3s and then put an SFTP front end. This allows you all the functionality of the base product as well as being able to accept writes from SFTP clients. 
-Cloud Backed Bottomless Ingest volumes will transfer files saved to the volume to cloud and purge the local copy, according to your ingest policy. 
+#### Azure Container Storage enabled by Azure Arc: Cloud Ingest Edge Volume on a Single Node Ubuntu K3s Cluster with an SFTP Front End
+This example can be used to install Azure Container Storage enabled by Azure Arc to provide a ReadWriteMany Cloud Ingest Edge Volume on an Ubuntu system with K3s and an SFTP front end. This allows you all the functionality of the base product as well as being able to accept writes from SFTP clients. 
+Cloud Ingest edge volumes will transfer files saved to the volume to cloud and purge the local copy, according to your ingest policy. 
 
 > ⚠️ **Disclaimer:** Azure Container Storage enabled by Azure Arc: Edge Volumes is currently in public preview. Access to the feature is limited and subject to specific terms and conditions. For further details and updates on availability, please refer to the [Azure Container Storage enabled by Azure Arc Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/overview).
 
 ## Architecture
-![Azure Container Storage enabled by Azure Arc Diagram.](./esaEdgeVolumes.png)
+![Azure Container Storage enabled by Azure Arc Diagram.](./acsaedgevolarch.png)
 
 ## Prerequisites
 * Ubuntu 22.04 or similar VM or hardware that meets [ACSA requirements](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/prepare-linux#minimum-hardware-requirements)
@@ -43,7 +43,7 @@ export SUBSCRIPTION="your-subscription-id-here"
 export ARCNAME="myArcClusterName" # will be used as displayname in portal
 export STORAGEACCOUNT="myStorageAccountName"
 export STORAGECONTAINER="nameOfContainerInStorageAccount"
-export SUBVOLPATH="blob1"
+export SUBVOLPATH="exampleSubDir"
 ```
 
 #### Apply inotify.max_user_instance increase
@@ -82,14 +82,21 @@ For this example, the components are separate and applied separately, however yo
 kubectl apply -f pvc.yaml
 cat edgesubvoltemp.yaml | sed "s/STORAGEACCOUNT/$STORAGEACCOUNT/g" | sed "s/STORAGECONTAINER/$STORAGECONTAINER/g" > edgesubvol.yaml
 kubectl apply -f edgesubvol.yaml
-
-#### This needs to change
-kubectl apply -f examplepod.yaml
 ```
 
 #### Create the SFTP Front End
-sudo apt install ssh
-
+```bash
+sudo snap install helm --classic
+helm repo add emberstack https://emberstack.github.io/helm-charts
+helm repo update
+helm upgrade --install sftp emberstack/sftp --values values.yaml
+```
+Next we need to get the address of your SFTP server:
+```bash
+kubectl get service
+```
+Note the CLUSTER-IP of the sftp server.
+sftp demo@10.43.4.7 
 
 #### Attach to example pod to use /mnt/acsa
 ```bash
