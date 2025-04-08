@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/fabiotreze/"
     }
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/AzureArcSQLTags-Inheritance",
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_sql_tags_inheritance",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
