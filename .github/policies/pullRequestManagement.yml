@@ -131,8 +131,8 @@ configuration:
               or: 
                 - isActivitySender:
                       user: likamrat
-                # - isActivitySender:
-                #       user: kianaharris4
+                - isActivitySender:
+                      user: kianaharris4
         then:
           # Provide educational feedback about our branch workflow
           - addReply:
