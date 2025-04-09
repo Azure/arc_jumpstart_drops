@@ -1,0 +1,22 @@
+{
+    "Title": "Explore KAITO with Arc-enabled AKS",
+    "Summary": "This guide provides a quick way to explore KAITO enabled by Azure Arc. ",
+    "Description": "The guide includes a optional Bicep template for setting up an Arc-enabled cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script.",
+     "Authors": [
+      {
+        "Name": "Dale Kirby",
+        "Link": "https://www.linkedin.com/in/dale-kirby"
+      }
+    ],
+    "Source": "https://github.com/dkirby-ms/jsdrop_kaito/",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Bicep"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Azure OpenAI"
+    ]
+  }
