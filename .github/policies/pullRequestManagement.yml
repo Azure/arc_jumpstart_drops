@@ -85,8 +85,8 @@ configuration:
           - or: 
             - isActivitySender:
                   user: likamrat
-            # - isActivitySender:
-            #       user: kianaharris4
+            - isActivitySender:
+                  user: kianaharris4
         then:
           # Add a label to track exempt PRs for auditing purposes
           - addLabel:
