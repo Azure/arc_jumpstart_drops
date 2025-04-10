@@ -35,7 +35,7 @@ Once the deployment completes, continue to the next step.
 
 ### Step 2: Arc-enable the cluster
 
-After the cluster is deployed, edit the `_infra/scripts/install_arc.sh_` script to adjust the Azure resource group name to match the one you used in your deployment.
+After the cluster is deployed, edit the `infra/scripts/install_arc.sh` script to adjust the Azure resource group name to match the one you used in your deployment.
 
 ```shell
 chmod 700 ./artifacts/scripts/install_arc.sh
@@ -47,7 +47,7 @@ Running this script requires an interactive login with Azure so login when promp
 
 ### Step 3: Deploy KAITO and a falcon-7b-instruct model and ask a question
 
-Next, open a new shell. Run the `_install_kaito.sh_` script deploy KAITO and ask an LLM a question.
+Next, open a new shell. Run the `install_kaito.sh` script deploy KAITO and ask an LLM a question.
 
 ```shell
 cd ./script_automation/aks_kaito
