@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide provides a quick way to explore KAITO enabled by Azure Arc. The guide includes a optional Bicep template for setting up an Arc-enabled cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script. You can see a quick demo of the results of the script in [this video](https://www.youtube.com/watch?v=Kef9WFyCeQA).
+This guide provides a quick way to explore [KAITO](https://github.com/kaito-project/kaito) enabled by [Azure Arc](https://learn.microsoft.com/azure/aks/aksarc/deploy-ai-model?tabs=portal). The guide includes a optional Bicep template for setting up an Arc-enabled cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script. You can see a quick demo of the results of the script in [this video](https://www.youtube.com/watch?v=Kef9WFyCeQA).
 
 ## Prerequisites
 
@@ -15,9 +15,11 @@ Before you begin, ensure you have the following:
 
 ## Step-by-Step Guide
 
-### Step 1 (required if not bringing your own Kubernetes): Deploy a Kubernetes environment with GPU
+### Step 1: Deploy a Kubernetes environment with GPU
 
-Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep template, you will need Compute quota for 24 Standard_NCSv3 series vCPU. The script was tested with East US and East US 2.
+> **Note:** If you already have a Kubernetes cluster with an available GPU node pool. skip to Step 2.
+
+Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep template, you will need Compute quota for 24 Standard_NCSv3 series vCPU. The script was tested in Azure regions East US and East US 2.
 
 Open a Bash shell where you cloned the [GitHub repository](https://github.com/Azure/arc_jumpstart_drops). From the shell, run the following commands to create an Azure resource group and begin a deployment of AKS using a Bicep template.
 
@@ -53,4 +55,4 @@ Next, open a new shell. Run the install_kaito.sh script deploy KAITO and ask an 
 
 * **GPU Quota Issues**: If you encounter GPU quota issues, request quota relief through the appropriate channels. Ensure that your subscription has access to the necessary GPU resources.
 
-* **Deployment Failures**: If KAITO fails to deploy, check the configuration files and ensure that all dependencies are installed correctly. Refer to the logs for more details on the errors.
+* **Deployment Failures**: If KAITO fails to deploy, inspect the pod logs using kubectl for more details on the errors.
