@@ -1,7 +1,7 @@
 {
-    "Title": "Explore KAITO with Arc-enabled AKS",
+    "Title": "Explore Kubernetes AI Toolchain Operator (KAITO) with AKS Arc",
     "Summary": "This guide provides a quick way to explore KAITO enabled by Azure Arc. ",
-    "Description": "The guide includes a optional Bicep template for setting up an Arc-enabled cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script.",
+    "Description": "The guide includes an optional Azure Bicep template for setting up an Arc-enabled Kubernetes cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script.",
      "Authors": [
       {
         "Name": "Dale Kirby",
