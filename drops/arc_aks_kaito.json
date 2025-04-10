@@ -1,5 +1,5 @@
 {
-    "Title": "Explore Kubernetes AI Toolchain Operator (KAITO) with AKS Arc",
+    "Title": "Kubernetes AI Toolchain Operator (KAITO) & AKS Arc",
     "Summary": "This guide provides a quick way to explore KAITO enabled by Azure Arc. ",
     "Description": "The guide includes an optional Azure Bicep template for setting up an Arc-enabled Kubernetes cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script.",
      "Authors": [
@@ -12,7 +12,7 @@
     "LastModified": "2023-10-01",
     "CreatedDate": "2023-10-01",
     "Topics": [],
-    "Source": "https://github.com/dkirby-ms/jsdrop_kaito/",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/aks_kaito",
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
