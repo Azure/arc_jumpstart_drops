@@ -10,7 +10,7 @@ Before you begin, ensure you have the following:
 
 * An Azure subscription with access to Azure Kubernetes Service (AKS) and Azure Arc.
 * Available NCSv12 or other GPU quota in your Azure subscription OR bring your own Kubernetes cluster with GPU.
-* Access to the code by cloning [the repo](https://github.com/dkirby-ms/jsdrop_kaito) to a local dev folder.
+* Access to the code by cloning [the Jumpstart Drops repo](https://github.com/Azure/arc_jumpstart_drops) to a local dev folder.
 * Azure CLI installed and logged into the Azure subscription you will use.
 
 ## Step-by-Step Guide
@@ -19,9 +19,10 @@ Before you begin, ensure you have the following:
 
 Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep template, you will need Compute quota for 24 Standard_NCSv3 series vCPU. The script was tested with East US and East US 2.
 
-Open a Bash shell where you cloned the [GitHub repository](https://github.com/dkirby-ms/jsdrop_kaito). From the shell, run the following commands to create an Azure resource group and begin a deployment of AKS using a Bicep template.
+Open a Bash shell where you cloned the [GitHub repository](https://github.com/Azure/arc_jumpstart_drops). From the shell, run the following commands to create an Azure resource group and begin a deployment of AKS using a Bicep template.
 
     ```shell
+    cd ./script_automation/aks_kaito
     az group create -n Jumpstart-KAITO -l eastus2
     az deployment group create -g JumpstartKAITO -f infra/aks.bicep
     ```

@@ -1,7 +1,7 @@
 {
     "Title": "Kubernetes AI Toolchain Operator (KAITO) & AKS Arc",
-    "Summary": "This guide provides a quick way to explore KAITO enabled by Azure Arc. ",
-    "Description": "The guide includes an optional Azure Bicep template for setting up an Arc-enabled Kubernetes cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script.",
+    "Summary": "This Jumpstart Drop provides a quick way to explore KAITO enabled by Azure Arc with an AKS cluster with GPU.",
+    "Description": "The Kubernetes AI Toolchain Operator (KAITO) is a powerful tool that simplifies the deployment and management of AI workloads on Kubernetes. This Jumpstart Drop provides a quick way to explore KAITO enabled by Azure Arc with an AKS cluster with GPU. The deployment includes a Bicep template for creating the AKS cluster and a Bash script for deploying KAITO and its dependencies.",
      "Authors": [
       {
         "Name": "Dale Kirby",
