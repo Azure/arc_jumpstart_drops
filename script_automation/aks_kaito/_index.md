@@ -21,9 +21,10 @@ Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep 
 
 Open a Bash shell where you cloned the [GitHub repository](https://github.com/dkirby-ms/jsdrop_kaito). From the shell, run the following commands to create an Azure resource group and begin a deployment of AKS using a Bicep template.
 
+    ```shell
     az group create -n Jumpstart-KAITO -l eastus2
-
     az deployment group create -g JumpstartKAITO -f infra/aks.bicep
+    ```
 
 Once the deployment completes, continue to the next step.
 
@@ -31,8 +32,10 @@ Once the deployment completes, continue to the next step.
 
 After the cluster is deployed, edit the _infra/scripts/install_arc.sh_ script to adjust the Azure resource group name to match the one you used in your deployment.
 
+    ```shell
     chmod 700 ./infra/scripts/install_arc.sh
     ./infra/scripts/install_arc.sh
+    ```
 
 Running this script requires an interactive login with Azure so login when prompted. After logging in, the script will onboard your cluster as an Arc-enabled cluster and then open a proxy connection to the remote cluster using the cluster connect feature of Arc-enabled Kubernetes. Leave this connection open and do not press Ctrl-C until finished with the exercise.
 
@@ -40,8 +43,10 @@ Running this script requires an interactive login with Azure so login when promp
 
 Next, open a new shell. Run the install_kaito.sh script deploy KAITO and ask an LLM a question.
 
+    ```shell
     chmod 700 ./infra/scripts/install_kaito.sh
     ./infra/scripts/install_kaito.sh
+    ```
 
 ## Troubleshooting
 
