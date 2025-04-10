@@ -17,6 +17,7 @@
     ],
     "Products": [
       "Arc-enabled Kubernetes",
-      "Azure OpenAI"
+      "Azure OpenAI",
+      "KAITO"
     ]
   }
