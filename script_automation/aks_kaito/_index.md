@@ -17,9 +17,9 @@ Before you begin, ensure you have the following:
 
 ### Step 1: Deploy a Kubernetes environment with GPU
 
-> **Note:** If you already have a Kubernetes cluster with an available GPU node pool. skip to Step 2.
+> **Note:** If you already have a Kubernetes cluster with an available GPU node pool skip to Step 2.
 
-Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep template, you will need Compute quota for 24 Standard_NCSv3 series vCPU. The script was tested in Azure regions East US and East US 2.
+Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep template, you will need Compute quota for **24 Standard_NCSv3** series vCPU. The script was tested in the East US and East US2 Azure regions.
 
 Open a Bash shell where you cloned the [GitHub repository](https://github.com/Azure/arc_jumpstart_drops). From the shell, run the following commands to create an Azure resource group and begin a deployment of AKS using a Bicep template.
 
@@ -35,49 +35,49 @@ Once the deployment completes, continue to the next step.
 
 ### Step 2: Arc-enable the cluster
 
-After the cluster is deployed, edit the _infra/scripts/install_arc.sh_ script to adjust the Azure resource group name to match the one you used in your deployment.
+After the cluster is deployed, edit the `_infra/scripts/install_arc.sh_` script to adjust the Azure resource group name to match the one you used in your deployment.
 
-    ```shell
-    chmod 700 ./artifacts/scripts/install_arc.sh
-    ./artifacts/scripts/install_arc.sh
-    ```
+```shell
+chmod 700 ./artifacts/scripts/install_arc.sh
+./artifacts/scripts/install_arc.sh
+```
 Running this script requires an interactive login with Azure so login when prompted. After logging in, the script will onboard your cluster as an Arc-enabled cluster and then open a proxy connection to the remote cluster using the cluster connect feature of Arc-enabled Kubernetes. Leave this connection open and do not press Ctrl-C until finished with the exercise.
 
 ![Screenshot of Azure Arc installed](./arc_installed.png)
 
 ### Step 3: Deploy KAITO and a falcon-7b-instruct model and ask a question
 
-Next, open a new shell. Run the install_kaito.sh script deploy KAITO and ask an LLM a question.
+Next, open a new shell. Run the `_install_kaito.sh_` script deploy KAITO and ask an LLM a question.
 
-    ```shell
-    cd ./script_automation/aks_kaito
-    chmod 700 ./artifacts/scripts/install_kaito.sh
-    ./artifacts/scripts/install_kaito.sh
-    ```
+```shell
+cd ./script_automation/aks_kaito
+chmod 700 ./artifacts/scripts/install_kaito.sh
+./artifacts/scripts/install_kaito.sh
+```
 ![Screenshot of KAITO installed](./kaito_installed.png)
 
 ### Step 4: Prompt the model
 
 You can send your own prompts to the model using simple shell commands. Use the example below to send your own prompts.
 
-    ```shell
-    # Get the cluster IP
-    export CLUSTERIP=$(kubectl get \
-        svc workspace-falcon-7b-instruct \
-        -o jsonpath="{.spec.clusterIPs[0]}")
+```shell
+# Get the cluster IP
+export CLUSTERIP=$(kubectl get \
+    svc workspace-falcon-7b-instruct \
+    -o jsonpath="{.spec.clusterIPs[0]}")
 
-    # Set the prompt
-    export PROMPT="What is a major benefit of using Microsoft Azure?"
+# Set the prompt
+export PROMPT="What is a major benefit of using Microsoft Azure?"
 
-    # Prompt the model
-    kubectl run -it --rm --restart=Never curl --image=curlimages/curl -- curl -X POST http://$CLUSTERIP/v1/completions \
-    -H "Content-Type: application/json" \
-    -d "{\"model\": \"falcon-7b-instruct\",
-        \"prompt\": \"$PROMPT\",
-        \"max_tokens\": 50,
-        \"temperature\": 0
-    }"
-    ```
+# Prompt the model
+kubectl run -it --rm --restart=Never curl --image=curlimages/curl -- curl -X POST http://$CLUSTERIP/v1/completions \
+-H "Content-Type: application/json" \
+-d "{\"model\": \"falcon-7b-instruct\",
+    \"prompt\": \"$PROMPT\",
+    \"max_tokens\": 50,
+    \"temperature\": 0
+}"
+```
 
 ![Screenshot of a custom prompt](./custom_prompt.png)
 
@@ -90,4 +90,4 @@ You can send your own prompts to the model using simple shell commands. Use the 
 ## Further learning
 
 * Check out the [KAITO](https://github.com/kaito-project/kaito) repository for more examples and use cases to try.
-* Learn about the [KAITO AKS extension](https://learn.microsoft.com/en-us/azure/aks/aks-extension-kaito)
+* Learn about the [KAITO AKS extension](https://learn.microsoft.com/azure/aks/aks-extension-kaito)
