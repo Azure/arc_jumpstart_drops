@@ -24,7 +24,7 @@ Open a Bash shell where you cloned the [GitHub repository](https://github.com/Az
     ```shell
     cd ./script_automation/aks_kaito
     az group create -n Jumpstart-KAITO -l eastus2
-    az deployment group create -g JumpstartKAITO -f infra/aks.bicep
+    az deployment group create -g JumpstartKAITO -f ./artifacts/bicep/aks.bicep
     ```
 
 Once the deployment completes, continue to the next step.
@@ -34,8 +34,8 @@ Once the deployment completes, continue to the next step.
 After the cluster is deployed, edit the _infra/scripts/install_arc.sh_ script to adjust the Azure resource group name to match the one you used in your deployment.
 
     ```shell
-    chmod 700 ./infra/scripts/install_arc.sh
-    ./infra/scripts/install_arc.sh
+    chmod 700 ./artifacts/scripts/install_arc.sh
+    ./artifacts/scripts/install_arc.sh
     ```
 
 Running this script requires an interactive login with Azure so login when prompted. After logging in, the script will onboard your cluster as an Arc-enabled cluster and then open a proxy connection to the remote cluster using the cluster connect feature of Arc-enabled Kubernetes. Leave this connection open and do not press Ctrl-C until finished with the exercise.
@@ -45,8 +45,8 @@ Running this script requires an interactive login with Azure so login when promp
 Next, open a new shell. Run the install_kaito.sh script deploy KAITO and ask an LLM a question.
 
     ```shell
-    chmod 700 ./infra/scripts/install_kaito.sh
-    ./infra/scripts/install_kaito.sh
+    chmod 700 ./artifacts/scripts/install_kaito.sh
+    ./artifacts/scripts/install_kaito.sh
     ```
 
 ## Troubleshooting
