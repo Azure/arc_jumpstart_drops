@@ -23,11 +23,11 @@ Setup an AKS cluster to simulate an on-premises cluster and GPU. For this Bicep 
 
 Open a Bash shell where you cloned the [GitHub repository](https://github.com/Azure/arc_jumpstart_drops). From the shell, run the following commands to create an Azure resource group and begin a deployment of AKS using a Bicep template.
 
-    ```shell
-    cd ./script_automation/aks_kaito
-    az group create -n Jumpstart-KAITO -l eastus2
-    az deployment group create -g Jumpstart-KAITO -f ./artifacts/bicep/aks.bicep
-    ```
+```shell
+cd ./script_automation/aks_kaito
+az group create -n Jumpstart-KAITO -l eastus2
+az deployment group create -g Jumpstart-KAITO -f ./artifacts/bicep/aks.bicep
+```
 
 Once the deployment completes, continue to the next step.
 
