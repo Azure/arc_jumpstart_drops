@@ -26,7 +26,7 @@ Open a Bash shell where you cloned the [GitHub repository](https://github.com/Az
     ```shell
     cd ./script_automation/aks_kaito
     az group create -n Jumpstart-KAITO -l eastus2
-    az deployment group create -g JumpstartKAITO -f ./artifacts/bicep/aks.bicep
+    az deployment group create -g Jumpstart-KAITO -f ./artifacts/bicep/aks.bicep
     ```
 
 Once the deployment completes, continue to the next step.
