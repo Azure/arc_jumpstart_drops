@@ -3,7 +3,7 @@ pandas==2.0.3
 openpyxl==3.1.2
 langchain==0.3.0
 tiktoken==0.5.1
-PyPDF2==3.0.1
+PyPDF2==3.9.0
 chromadb==0.4.15
 pathlib==1.0.1 
 ruamel-yaml==0.17.16
