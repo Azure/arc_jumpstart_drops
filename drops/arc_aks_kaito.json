@@ -9,8 +9,8 @@
       }
     ],
     "Cover": "",
-    "LastModified": "2023-10-01",
-    "CreatedDate": "2023-10-01",
+    "LastModified": "",
+    "CreatedDate": "",
     "Topics": [],
     "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/aks_kaito",
     "Type": "script_automation",

@@ -31,7 +31,7 @@ Open a Bash shell where you cloned the [GitHub repository](https://github.com/Az
 
 Once the deployment completes, continue to the next step.
 
-![Screenshot of a running deploy](./deploy.png)
+![Screenshot of a running deploy](./artifacts/media/deploy.png)
 
 ### Step 2: Arc-enable the cluster
 
@@ -43,7 +43,7 @@ After the cluster is deployed, edit the _infra/scripts/install_arc.sh_ script to
     ```
 Running this script requires an interactive login with Azure so login when prompted. After logging in, the script will onboard your cluster as an Arc-enabled cluster and then open a proxy connection to the remote cluster using the cluster connect feature of Arc-enabled Kubernetes. Leave this connection open and do not press Ctrl-C until finished with the exercise.
 
-![Screenshot of Azure Arc installed](./arc_installed.png)
+![Screenshot of Azure Arc installed](./artifacts/media/arc_installed.png)
 
 ### Step 3: Deploy KAITO and a falcon-7b-instruct model and ask a question
 
@@ -54,7 +54,7 @@ Next, open a new shell. Run the install_kaito.sh script deploy KAITO and ask an 
     chmod 700 ./artifacts/scripts/install_kaito.sh
     ./artifacts/scripts/install_kaito.sh
     ```
-![Screenshot of KAITO installed](./kaito_installed.png)
+![Screenshot of KAITO installed](./artifacts/media/kaito_installed.png)
 
 ### Step 4: Prompt the model
 
@@ -79,7 +79,7 @@ You can send your own prompts to the model using simple shell commands. Use the 
     }"
     ```
 
-![Screenshot of a custom prompt](./custom_prompt.png)
+![Screenshot of a custom prompt](./artifacts/media/custom_prompt.png)
 
 ## Troubleshooting
 
