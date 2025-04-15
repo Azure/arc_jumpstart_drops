@@ -15,8 +15,8 @@ As part of the review process, the Jumpstart team will thoroughly examine each o
 | `Difficulty` | The level of difficulty required to understand and run the Drop, based on the Microsoft Education Center Levels. | Yes | String | Beginner (L100), Medium (L200), Advanced (L300+) |
 | `ProgrammingLanguage` | A list of tags for the programming languages used in the Drop. Contributors can add their own language if necessary. | No | Array | PowerShell, .NET/C#, Python, Go, Node, Bash, Bicep, Terraform, Ansible, Helm, Other |
 | `Products` | A list of products and services used in the Drop. Contributors can add their own if necessary. | No | Array | Maximum 3 items/elements in the array.<br>Examples of Products: Azure Arc, AKS, Windows IoT, SQL Server, Arc-enabled service, App Services, VMware |
-| `LastModified` | Not filled by the user. Used to track the last modification of the Drops source code | No | String |  |
-| `CreatedDate` | Not filled by the user. Used to track when the Drop was created | No | String |  |
+| `LastModified` | Used to track the last modification of the Drops source code | Yes | String | Example of accepted format: 2025-02-07T18:25:43.511Z |
+| `CreatedDate` | Used to track when the Drop was created | Yes | String | Example of accepted format: 2025-02-07T18:25:43.511Z |
 | `Topics` | Not filled by user, but gathered automatically leveraging the GitHub repository topics | No | Array |  |
 
 If you believe that any fields are missing or that your Drop content doesn't fit into the JSON schema described above, please create an [Issue](./Issues) and we will do our best to address your concerns.
