@@ -1,6 +1,6 @@
 {
-  "Title": "Azure Arc PowerBI Dashboard",
-  "Summary": "This Jumpstart Drop provides a sample PowerBI dashboard, to demonstrate the inventory and insights available to Arc-connected and Azure Virtual Machines.",
+  "Title": "Arc Insights PBI Dashboards Powered by Jumpstart",
+  "Summary": "This Jumpstart Drop provides a sample PowerBI dashboard, to demonstrate the inventory and insights available across both Arc-connected and Azure native Virtual Machines.",
   "Description": "PowerBI is a powerful tool that can be connected to Azure Resource Graph to inventory Arc-connected and Azure native Virtual Machines, providing users a flexible alternative to dashboards within the Azure Portal. This Jumpstart PowerBI dashboard provides a single pane of glass across Arc-connected and Azure native Virtual Machines. The dashboard includes an inventory of Virtual Machines, SQL Server Instances on Virtual Machines, SQL Databases on Virtual Machines, and Extended Security Update cost forecasting. The deployment includes a one-click install PowerBI template which can be downloaded and connected to your Azure subscriptions through the built-in Azure Resource Graph connector.",
  "Cover":"",
   "Authors": [

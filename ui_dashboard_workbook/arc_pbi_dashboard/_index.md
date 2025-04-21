@@ -1,12 +1,12 @@
 ---
 type: docs
-title: "Azure Arc PowerBI Dashboard"
-linkTitle: "Azure Arc PowerBI Dashboard"
+title: "Arc Insights PBI Dashboards Powered by Jumpstart"
+linkTitle: "Arc Insights PBI Dashboards Powered by Jumpstart"
 weight: 1
 description: >
 ---
 
-## Azure Arc PowerBI Dashboard
+## Arc Insights PBI Dashboards Powered by Jumpstart
 
 This is a sample PowerBI dashboard used to demonstrate the insights available via Arc and Azure Resource Graph for your IT infrastructure. The dashboard covers a wide range of components including servers, SQL Instances on Virtual Machines, SQL Databases on Virtual Machines and Extended Security Update forecasting for servers connected to Arc or in Azure. The Dashboard uses the PowerBI connector for Azure Resource Graph to connect to your Azure Subscription(s). 
 
@@ -15,7 +15,7 @@ The Dashboard contains:
 * **Server Inventory** - A detailed inventory of all servers, both Azure and Azure Arc-connected, providing a clear overview of server landscape
 * **SQL Inventory** - Information on SQL instances, including both Azure SQL and Azure Arc-enabled SQL servers, ensuring you have a complete view of your SQL VM environment
 * **Databases** - Insights into databases managed through Azure Arc, helping you track and manage your database assets effectively.
-* **ESU Forecast** - An estimate of future costs for Extended Security Updates (ESUs) for Windows Server 2016 and SQL Server 2016, based on current pricing. For detailed prices of ESUs see: [Azure Arc pricing](https://azure.microsoft.com/en-us/pricing/details/azure-arc/core-control-plane/)
+* **ESU Forecast** - An estimate of future costs for Extended Security Updates (ESUs) for Windows Server 2016 and SQL Server 2016, based on current pricing. For detailed prices of ESUs see: [Azure Arc pricing](https://azure.microsoft.com/pricing/details/azure-arc/core-control-plane/)
 
 ## Screenshots
 
@@ -29,20 +29,14 @@ Here are some screenshots of the Arc Dashboard:
   <img src="artifacts/media/esu_forecast_screenshot.png" alt="ESU Forecast" width="45%" />
 </p>
 
-## Contributors
-
-This Jumpstart Drop was originally written by the following contributors:
-
-* [Mark Jones | Principal Cloud Solution Architect at Microsoft](www.linkedin.com/in/joneslmark)
-
 ## Prerequisites
 
 * Azure Subscription(s)
 * Azure Arc-enabled servers within your Azure subscription(s)
 * If you have SQL server VMs that are Arc-enabled, these will require the SQL Server Extension to be enabled
-* Azure Credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see: [Permissions in Azure Resource Graph](https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
+* Azure Credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see: [Permissions in Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
 * Internet Connection
-* PowerBI Desktop. You can download this at: [Download PowerBI Desktop](https://www.microsoft.com/en-us/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee)
+* PowerBI Desktop. You can download this at: [Download PowerBI Desktop](https://www.microsoft.com/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee)
 
 ## Getting Started
 
@@ -69,9 +63,9 @@ The Dashboard has the following data sources:
 
 For more information please review the following resources:
 
-* [Azure Resource Graph](https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
-* [Arc-Connected Servers](https://learn.microsoft.com/en-us/azure/azure-arc/servers/overview)
-* [PowerBI Connector](https://learn.microsoft.com/en-us/azure/governance/resource-graph/power-bi-connector-quickstart?tabs=power-bi-desktop#connect-azure-resource-graph-with-power-bi-connector)
+* [Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
+* [Arc-Connected Servers](https://learn.microsoft.com/azure/azure-arc/servers/overview)
+* [PowerBI Connector](https://learn.microsoft.com/azure/governance/resource-graph/power-bi-connector-quickstart?tabs=power-bi-desktop#connect-azure-resource-graph-with-power-bi-connector)
 
 
 ## Known Issues
