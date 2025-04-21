@@ -12,6 +12,11 @@
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard",
   "Type": "ui_dashboard_workbookion",
   "Difficulty": "Beginner",
+  "ProgrammingLanguage": [
+    "Kusto",
+    "DAX",
+    "M-Query"
+  ],
   "Products": [
     "Azure Arc",
     "Microsoft PowerBI Desktop"
