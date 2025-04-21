@@ -52,7 +52,7 @@ This Jumpstart Drop was originally written by the following contributors:
 2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
 3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph"
 
-<img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="95%" />
+<img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="80%" />
 
 5. Sign in with a login that has Read Access to Azure Resource Graph for the subscription(s) you want the report to view
 6. Click "Connect" each time you are prompted
@@ -61,9 +61,9 @@ This Jumpstart Drop was originally written by the following contributors:
 
 ### Data Sources Used
 The Dashboard has the following data sources:
-1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries are saved to [Kusto Queries](/artifacts/arg_queries/)
+1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries are saved to: <a href="/artifacts/arg_queries/">Azure Resource Graph Queries</a>
 2. Learn.microsoft.com - Used to gather latest SQL Patch information
-3. Reference CSVs [See here](/artifacts/reference/) - CSVs containing Azure SKUs and Product Lifecycle dates
+3. Reference CSVs - See <a href="/artifacts/reference/">Here</a> - CSVs containing Azure SKUs and Product Lifecycle dates
 
 ## Resources
 
