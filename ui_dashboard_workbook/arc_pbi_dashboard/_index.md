@@ -1,7 +1,7 @@
 ---
 type: docs
-title: "Azure Arc PowerBI Dashboard"
-linkTitle: "Azure Arc PowerBI Dashboard"
+title: "Jumpstart Azure Arc PowerBI Dashboard"
+linkTitle: "Jumpstart Azure Arc PowerBI Dashboard"
 weight: 1
 description: >
 ---
