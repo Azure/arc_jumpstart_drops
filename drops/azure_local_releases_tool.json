@@ -1,5 +1,5 @@
 {
-  "Title": "Azure Local Releases Tool",
+  "Title": "Azure Local Releases Tracker",
   "Summary": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
   "Description": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
   "Cover": "",
