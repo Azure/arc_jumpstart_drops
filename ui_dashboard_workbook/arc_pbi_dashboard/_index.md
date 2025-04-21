@@ -63,7 +63,7 @@ This Jumpstart Drop was originally written by the following contributors:
 The Dashboard has the following data sources:
 1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries are saved to: <a href="/artifacts/arg_queries/">Azure Resource Graph Queries</a>
 2. Learn.microsoft.com - Used to gather latest SQL Patch information
-3. Reference CSVs - See <a href="/artifacts/reference/">Here</a> - CSVs containing Azure SKUs and Product Lifecycle dates
+3. Reference CSVs - CSVs containing Azure SKUs and Product Lifecycle dates: <a href="/artifacts/reference/">See here</a>
 
 ## Resources
 
