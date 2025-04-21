@@ -44,7 +44,7 @@ Here are some screenshots of the Arc Insights PBI Dashboards:
 
 ### How to install the Arc Insights PBI Dashboards
 
-1. Download the PowerBI Template file: <a href="/azure_arc_dashboard_v1.pbit">Jumpstart PBI Dashboard</a>
+1. Download the PowerBI Template file: <a href="/arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
 2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
 3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph" as shown below:
 
