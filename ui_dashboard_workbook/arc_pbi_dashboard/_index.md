@@ -16,7 +16,7 @@ Using PowerBI over Azure native dashbaords provides several benefits to users wh
 2. PowerBI has a rich program language allowing for more advanced queries and joining of datasets that sit outside Azure
 3. PowerBI has numerous visualisation options to build feature rich dashboards
 
-The Arc Insights PBI Dashboards use the PowerBI connector for Azure Resource Graph, which connects the Dashboards to your Azure Subscription(s), visualising all your Servers either Azure Native or connected to Azure Arc. As PowerBI provides a rich set of visualisations and query tools, advanced scenarios such as **Extended Support Updates Cost forecasting for SQL and Windows 2016 can help you manage your modernisation projects, avoiding the costs or risks of Extended Security Updates for windows and SQL Server**.
+The Arc Insights Power BI Dashboards utilize the Power BI connector for Azure Resource Graph, which connects the dashboards to your Azure Subscription(s), visualizing all your servers, whether Azure native or connected to Azure Arc. Power BI offers a rich set of visualizations and query tools, enabling advanced scenarios such as **Extended Support Updates cost forecasting for SQL and Windows Server 2016. This insight helps you manage and prioritise your modernization projects effectively, helping to avoiding the costs and risks associated with Extended Security Updates**.
 
 The Arc Insights PBI Dashboards contain:
 
