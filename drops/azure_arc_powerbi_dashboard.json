@@ -10,7 +10,7 @@
     }
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard",
-  "Type": "ui_dashboard_workbookion",
+  "Type": "ui_dashboard_workbook",
   "Difficulty": "Beginner",
   "ProgrammingLanguage": [
     "Kusto",
