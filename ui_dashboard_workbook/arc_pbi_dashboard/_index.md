@@ -12,9 +12,9 @@ The Arc Insights PBI Dashboards provides users with single pane of glass insight
 
 Using PowerBI over Azure native dashbaords provides several benefits to users which include:
 
-1. PowerBI provides a platform to visualise and share your IT Infrastructure with users, without the need for Azure portal access.
+1. PowerBI provides a platform to visualise and share your IT Infrastructure with users, without the need for Azure portal access
 2. PowerBI has a rich program language allowing for more advanced queries and joining of datasets that sit outside Azure
-3. PowerBI has numerous visualisation options to build appealing and rich dashboards
+3. PowerBI has numerous visualisation options to build feature rich dashboards
 
 The Arc Insights PBI Dashboards use the PowerBI connector for Azure Resource Graph, which connects the Dashboards to your Azure Subscription(s), visualising all your Virtual Machines either Azure Native or connected to Azure Arc. As PowerBI provides a rich set of visualisations and query tools, advanced scenarios such as Extended Support Updates Cost forecasting for SQL and Windows 2016 can help you manage your modernisation projects quickly, avoiding the costs or risks of Extended Security Updates for windows and SQL Server.
 
@@ -50,13 +50,13 @@ Here are some screenshots of the Arc Insights PBI Dashboards:
 
 ### How to install the Arc Insights PBI Dashboards
 
-1. Download the PowerBI Template file: <a href="/arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
+1. Download the PowerBI Template file: <a href="arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
 
-<img src="/artifacts/media/pbi_download_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+<img src="artifacts/media/pbi_download_screenshot.png" alt="Download" width="60%" />
 
 2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
 
-<img src="/artifacts/media/pbi_connecting_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+<img src="artifacts/media/pbi_connecting_screenshot.png" alt="Connecting" width="60%" />
 
 3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph" as shown below:
 
@@ -66,14 +66,14 @@ Here are some screenshots of the Arc Insights PBI Dashboards:
 6. Click "Connect" each time you are prompted
 7. Save your new PBI Dashboard
 
-<img src="/artifacts/media/pbi_save_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+<img src="artifacts/media/pbi_save_screenshot.png" alt="" width="60%" />
 
 
 ### Data Sources Used
 The Dashboard has the following data sources:
-1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries (KQL) are saved to: <a href="/artifacts/arg_queries/">Azure Resource Graph Queries</a>
+1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries (KQL) are saved to: <a href="artifacts/arg_queries/">Azure Resource Graph Queries</a>
 2. [Learn.microsoft.com](Learn.microsoft.com) - Used to gather latest SQL Patch information
-3. Reference CSVs - CSVs containing Azure SKUs and Product Lifecycle dates: <a href="/artifacts/reference/">Reference CSVs</a>
+3. Reference CSVs - CSVs containing Azure SKUs and Product Lifecycle dates: <a href="artifacts/reference/">Reference CSVs</a>
 
 ## Resources
 
@@ -85,4 +85,4 @@ For more information please review the following resources:
 
 
 ## Known Issues
-1. If there are no Arc or Azure resources (Servers, SQL Instances, SQL Databases) in your subscription, or the SQL server extension is missing, the Report may encounter errors
+1. If there are no Arc or Azure resources (Servers, SQL Instances, SQL Databases) in your subscription, or the SQL server extension is missing, the Report may encounter errors. Choose subscriptions with Arc connected resources or speak to your Microsoft Account team about getting your servers Arc connected.
