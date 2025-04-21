@@ -8,9 +8,15 @@ description: >
 
 ## Arc Insights PBI Dashboards Powered by Jumpstart
 
-This is a Jumpstart PowerBI dashboard used to demonstrate the insights available via Arc and Azure Resource Graph for your IT infrastructure. The dashboard covers a wide range of scenarios for servers connected to Arc or in Azure native, including Server Invenotry, SQL Instances on Virtual Machines, SQL Databases on Virtual Machines and Extended Security Update cost forecasting. 
+The Arc Insights PBI Dashboards provides users with single pane of glass insights and visualisations for your Virtual Machines, connected by Arc or within Azure. The dashboard covers a range of scenarios including Server Inventory, SQL Instances on Virtual Machines, SQL Databases on Virtual Machines and Extended Security Update cost forecasting. With the Arc Insights PBI Dashboards Powered by Jumpstart, you have a rich set of Dashboards about your Arc connected estate, availible in minutes, not weeks, which can then be customised to suit your individual requirements.
 
-The Arc Insights PBI Dashboards use the PowerBI connector for Azure Resource Graph, to connect the Dashboards to your Azure Subscription(s), visualising your IT infrastructure either in Azure Native or connected to Azure Arc. PowerBI Desktop provides a useful alternative to Azure Dashboards, as your IT Inventory and insights can be shared aross the business, without the need for users to be granted direct Portal access. In Additon, PowerBI provides more advanced query language and options for working with multiple datasets, that can be beautifully presented, as demonstrated by the ESU Forecasting dashboard. The ESU Forecasting dashboard uses a range of data sources in addition to data provided by Azure Resource Graph to provide an estimated future cost or risk of extended support, should your 2016 Arc connected Servers are not modernised before the mainstream end dates.
+Using PowerBI over Azure native dashbaords provides several benefits to users which include:
+
+1. PowerBI provides a platform to visualise and share your IT Infrastructure with users, without the need for Azure portal access.
+2. PowerBI has a rich program language allowing for more advanced queries and joining of datasets that sit outside Azure
+3. PowerBI has numerous visualisation options to build appealing and rich dashboards
+
+The Arc Insights PBI Dashboards use the PowerBI connector for Azure Resource Graph, which connects the Dashboards to your Azure Subscription(s), visualising all your Virtual Machines either Azure Native or connected to Azure Arc. As PowerBI provides a rich set of visualisations and query tools, advanced scenarios such as Extended Support Updates Cost forecasting for SQL and Windows 2016 can help you manage your modernisation projects quickly, avoiding the costs or risks of Extended Security Updates for windows and SQL Server.
 
 The Arc Insights PBI Dashboards contain:
 
@@ -45,7 +51,13 @@ Here are some screenshots of the Arc Insights PBI Dashboards:
 ### How to install the Arc Insights PBI Dashboards
 
 1. Download the PowerBI Template file: <a href="/arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
+
+<img src="/artifacts/media/pbi_download_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+
 2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
+
+<img src="/artifacts/media/pbi_connecting_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+
 3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph" as shown below:
 
 <img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
@@ -53,6 +65,9 @@ Here are some screenshots of the Arc Insights PBI Dashboards:
 5. Sign in with a login that has "Read" access to Azure Resource Graph for the subscription(s) you want the report to view
 6. Click "Connect" each time you are prompted
 7. Save your new PBI Dashboard
+
+<img src="/artifacts/media/pbi_save_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+
 
 ### Data Sources Used
 The Dashboard has the following data sources:
