@@ -15,7 +15,7 @@ The Dashboard contains:
 * **Server Inventory** - A detailed inventory of all servers, both Azure and Azure Arc-connected, providing a clear overview of server landscape
 * **SQL Inventory** - Information on SQL instances, including both Azure SQL and Azure Arc-enabled SQL servers, ensuring you have a complete view of your SQL VM environment
 * **Databases** - Insights into databases managed through Azure Arc, helping you track and manage your database assets effectively.
-* **ESU Forecast** - An estimate of future costs for Extended Security Updates (ESUs) for Windows Server 2016 and SQL Server 2016, based on current pricing. The report will highlight servers on-premises and 2016 as ESU cost and 2016 Servers in Azure as ESU avoided or savings. For detailed prices of ESUs see: https://azure.microsoft.com/en-us/pricing/details/azure-arc/core-control-plane/
+* **ESU Forecast** - An estimate of future costs for Extended Security Updates (ESUs) for Windows Server 2016 and SQL Server 2016, based on current pricing. For detailed prices of ESUs see: [Azure Arc pricing](https://azure.microsoft.com/en-us/pricing/details/azure-arc/core-control-plane/)
 
 ## Screenshots
 
@@ -40,18 +40,20 @@ This Jumpstart Drop was originally written by the following contributors:
 * Azure Subscription(s)
 * Azure Arc-enabled servers within your Azure subscription(s)
 * If you have SQL server VMs that are Arc-enabled, these will require the SQL Server Extension to be enabled
-* Azure Credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see: https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph
+* Azure Credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see: [Permissions in Azure Resource Graph](https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
 * Internet Connection
-* PowerBI Desktop. You can download this at: https://www.microsoft.com/en-us/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee
+* PowerBI Desktop. You can download this at: [Download PowerBI Desktop](https://www.microsoft.com/en-us/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee)
 
 ## Getting Started
 
 ### How to install the PowerBI report
 
-1. Download the PowerBI Template file: [PowerBI Dashboard v1](/azure_arc_dashboard_v1.pbix.pbit)
+1. Download the PowerBI Template file: [PowerBI Dashboard v1](/azure_arc_dashboard_v1.pbix)
 2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
 3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph"
-![Resourc Graph Connector](/artifacts/media/arg_connector_screenshot.png)
+
+![Azure Resource Graph Connector](/artifacts/media/arg_connector_screenshot.png)
+
 5. Sign in with a login that has Read Access to Azure Resource Graph for the subscription(s) you want the report to view
 6. Click "Connect" each time you are prompted
 7. Ignore any errors (see known Issues)
