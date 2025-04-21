@@ -48,11 +48,11 @@ This Jumpstart Drop was originally written by the following contributors:
 
 ### How to install the PowerBI report
 
-1. Download the PowerBI Template file: [PowerBI Dashboard v1](/azure_arc_dashboard_v1.pbix)
+1. Download the PowerBI Template file: <a href="/azure_arc_dashboard_v1.pbit">Jumpstart PBI Dashboard</a>
 2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
 3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph"
 
-![Azure Resource Graph Connector](/artifacts/media/arg_connector_screenshot.png)
+<img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="95%" />
 
 5. Sign in with a login that has Read Access to Azure Resource Graph for the subscription(s) you want the report to view
 6. Click "Connect" each time you are prompted
@@ -61,7 +61,7 @@ This Jumpstart Drop was originally written by the following contributors:
 
 ### Data Sources Used
 The Dashboard has the following data sources:
-1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries are saved to [Kusto QUeries](/artifacts/arg_queries/)
+1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries are saved to [Kusto Queries](/artifacts/arg_queries/)
 2. Learn.microsoft.com - Used to gather latest SQL Patch information
 3. Reference CSVs [See here](/artifacts/reference/) - CSVs containing Azure SKUs and Product Lifecycle dates
 
