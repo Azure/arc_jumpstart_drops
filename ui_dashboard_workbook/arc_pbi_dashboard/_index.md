@@ -54,7 +54,7 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 <img src="artifacts/media/pbi_download_screenshot.png" alt="Download" width="60%" />
 
-2. Open PowerBI Template File, upon first opening the Dasboard will attempt refresh
+2. Open the Power BI template File, upon first opening the dashboard will attempt refresh.
 
 <img src="artifacts/media/pbi_connecting_screenshot.png" alt="Connecting" width="60%" />
 
