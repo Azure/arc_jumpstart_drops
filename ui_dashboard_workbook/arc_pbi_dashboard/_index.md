@@ -39,12 +39,12 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 ## Prerequisites
 
-* Azure Subscription(s)
-* Azure Arc-enabled servers within your Azure subscription(s)
-* If you have SQL server VMs that are Arc-enabled, these will require the SQL Server Extension to be enabled
-* Azure Credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see: [Permissions in Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
-* Internet Connection
-* PowerBI Desktop. You can download this at: [Download PowerBI Desktop](https://www.microsoft.com/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee)
+* Azure subscription(s)
+* Arc-enabled servers within your Azure subscription(s)
+* If you have SQL Server VMs that are Arc-enabled, these will require the [SQL Server Extension](https://learn.microsoft.com/sql/sql-server/azure-arc/connect?view=sql-server-ver16&tabs=windows) to be enabled.
+* Azure credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see [Permissions in Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph).
+* Internet connectivity
+* [Microsoft Power BI Desktop](https://www.microsoft.com/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee)
 
 ## Getting Started
 
