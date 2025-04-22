@@ -27,7 +27,7 @@ The Arc Insights PBI dashboards contain:
 
 ## Screenshots
 
-Here are some screenshots of the Arc Insights PBI Dashboards:
+Here are some screenshots of the Arc Insights PBI dashboards:
 <p float="left">
   <img src="artifacts/media/server_inventory_screenshot.png" alt="Server Inventory" width="45%" />
   <img src="artifacts/media/sqlserver_inventory_screenshot.png" alt="SQL Server Inventory" width="45%" />
