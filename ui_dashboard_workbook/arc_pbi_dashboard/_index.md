@@ -62,9 +62,11 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 <img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
 
-5. Sign in with a login that has "Read" access to Azure Resource Graph for the subscription(s) you want the report to view
-6. Click "Connect" each time you are prompted
-7. Save your new PBI Dashboard
+5. Sign in with a login that has "Read" access to Azure Resource Graph for the subscription(s) you want the report to view.
+
+6. Click "Connect" each time you are prompted.
+
+7. Save your new Power BI dashboard.
 
 <img src="artifacts/media/pbi_save_screenshot.png" alt="" width="60%" />
 
