@@ -58,7 +58,7 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 <img src="artifacts/media/pbi_connecting_screenshot.png" alt="Connecting" width="60%" />
 
-3. During the refresh, PowerBI will prompt for credentials for "Azure Resource Graph" as shown below:
+3. During the refresh, Power BI will prompt for credentials for "Azure Resource Graph" as shown below:
 
 <img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
 
