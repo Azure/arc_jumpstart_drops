@@ -82,9 +82,10 @@ The Dashboard has the following data sources:
 For more information please review the following resources:
 
 * [Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
-* [Arc-Connected Servers](https://learn.microsoft.com/azure/azure-arc/servers/overview)
-* [PowerBI Connector](https://learn.microsoft.com/azure/governance/resource-graph/power-bi-connector-quickstart?tabs=power-bi-desktop#connect-azure-resource-graph-with-power-bi-connector)
+* [Arc-enabled servers](https://learn.microsoft.com/azure/azure-arc/servers/overview)
+* [Power BI Connector](https://learn.microsoft.com/azure/governance/resource-graph/power-bi-connector-quickstart?tabs=power-bi-desktop#connect-azure-resource-graph-with-power-bi-connector)
 
 
 ## Known Issues
-1. If there are no Arc or Azure resources (Servers, SQL Instances, SQL Databases) in your subscription, or the SQL server extension is missing, the Report may encounter errors. Choose subscriptions with Arc connected resources or speak to your Microsoft Account team about getting your servers Arc connected.
+
+If there are no Arc or Azure resources (Servers, SQL Instances, SQL Databases) in your subscription, or the SQL server extension is missing, the Report may encounter errors. Choose subscriptions with Arc connected resources or speak to your Microsoft Account team about getting your servers Arc connected.
