@@ -10,13 +10,13 @@ description: >
 
 The Arc Insights Power BI (PBI) dashboards provides users with a single pane of glass insights and visualizations for your servers, enabled by Arc or as Azure virtual machines. The dashboard covers a range of scenarios including Server Inventory, SQL Instances on Virtual Machines, SQL Databases on virtual machines and Extended Security Update (ESU) cost forecasting. With the Arc Insights PBI Dashboards Powered by Jumpstart, you have a **rich set of Dashboards about your Arc connected estate, available in minutes, not weeks**, which can then be customized to suit your individual requirements.
 
-Using PowerBI over Azure native dashbaords provides several benefits to users which include:
+Using Power BI over Azure out-of-the-box dashboards provides several benefits to users which include:
 
-1. PowerBI provides a platform to visualise and share your IT Infrastructure with users, without the need for Azure portal access
-2. PowerBI has a rich program language allowing for more advanced queries and joining of datasets that sit outside Azure
-3. PowerBI has numerous visualisation options to build feature rich dashboards
+1. Power BI provides a platform to visualize and share your IT Infrastructure with users, without the need for Azure portal access.
+2. Power BI has a rich programming language allowing for more advanced queries and joining of datasets that sit outside Azure.
+3. Power BI has numerous visualization options to build feature-rich dashboards.
 
-The Arc Insights Power BI Dashboards utilize the Power BI connector for Azure Resource Graph, which connects the dashboards to your Azure Subscription(s), visualizing all your servers, whether Azure native or connected to Azure Arc. Power BI offers a rich set of visualizations and query tools, enabling advanced scenarios such as **Extended Support Updates cost forecasting for SQL and Windows Server 2016. This insight helps you manage and prioritise your modernization projects effectively, helping to avoiding the costs and risks associated with Extended Security Updates**.
+The Arc Insights Power BI Dashboards utilize the Power BI connector for Azure Resource Graph, which connects the dashboards to your Azure subscription(s), visualizing all your servers, whether Azure virtual machine or enabled by Azure Arc. Power BI offers a rich set of visualizations and query tools, enabling advanced scenarios such as **Extended Support Updates cost forecasting for SQL and Windows Server 2016. This insight helps you manage and prioritize your modernization projects effectively, helping to avoid the costs and risks associated with Extended Security Updates**.
 
 The Arc Insights PBI Dashboards contain:
 
