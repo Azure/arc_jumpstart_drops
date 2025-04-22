@@ -8,7 +8,7 @@ description: >
 
 ## Arc Insights PBI Dashboards Powered by Jumpstart
 
-The Arc Insights PBI Dashboards provides users with single pane of glass insights and visualisations for your Virtual Machines, connected by Arc or within Azure. The dashboard covers a range of scenarios including Server Inventory, SQL Instances on Virtual Machines, SQL Databases on Virtual Machines and Extended Security Update cost forecasting. With the Arc Insights PBI Dashboards Powered by Jumpstart, you have a **rich set of Dashboards about your Arc connected estate, availible in minutes, not weeks**, which can then be customised to suit your individual requirements.
+The Arc Insights Power BI (PBI) dashboards provides users with a single pane of glass insights and visualizations for your servers, enabled by Arc or as Azure virtual machines. The dashboard covers a range of scenarios including Server Inventory, SQL Instances on Virtual Machines, SQL Databases on virtual machines and Extended Security Update (ESU) cost forecasting. With the Arc Insights PBI Dashboards Powered by Jumpstart, you have a **rich set of Dashboards about your Arc connected estate, available in minutes, not weeks**, which can then be customized to suit your individual requirements.
 
 Using PowerBI over Azure native dashbaords provides several benefits to users which include:
 
