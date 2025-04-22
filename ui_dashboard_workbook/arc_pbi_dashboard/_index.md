@@ -50,7 +50,7 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 ### How to install the Arc Insights PBI Dashboards
 
-1. Download the PowerBI Template file: <a href="arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
+1. Download the Power BI template file. <a href="arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
 
 <img src="artifacts/media/pbi_download_screenshot.png" alt="Download" width="60%" />
 
