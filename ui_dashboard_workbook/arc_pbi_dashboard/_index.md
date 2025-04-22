@@ -39,12 +39,12 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 ## Prerequisites
 
-* Azure subscription(s)
-* Arc-enabled servers within your Azure subscription(s)
+* Azure subscription(s).
+* Arc-enabled servers within your Azure subscription(s). The dashboards may encounter errors on refresh if subscriptions have no Arc connected resources.
 * If you have SQL Server VMs that are Arc-enabled, these will require the [SQL Server Extension](https://learn.microsoft.com/sql/sql-server/azure-arc/connect?view=sql-server-ver16&tabs=windows) to be enabled.
 * Azure credential with read access to Azure Resource Graph, to the Azure Subscription. To learn more about this see [Permissions in Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph).
-* Internet connectivity
-* [Microsoft Power BI Desktop](https://www.microsoft.com/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee)
+* Internet connectivity.
+* [Microsoft Power BI Desktop](https://www.microsoft.com/power-platform/products/power-bi/downloads?msockid=0c5db1779a21637012a6a5f29bea62ee).
 
 ## Getting Started
 
@@ -88,4 +88,3 @@ For more information please review the following resources:
 
 ## Known Issues
 
-If there are no Arc or Azure resources (Servers, SQL Instances, SQL Databases) in your subscription, or the SQL server extension is missing, the Report may encounter errors. Choose subscriptions with Arc connected resources or speak to your Microsoft Account team about getting your servers Arc connected.
