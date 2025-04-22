@@ -73,8 +73,8 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 ### Data Sources Used
 The Dashboard has the following data sources:
-1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Connected to Azure Arc. Kusto Queries (KQL) are saved to: <a href="artifacts/arg_queries/">Azure Resource Graph Queries</a>
-2. [Learn.microsoft.com](Learn.microsoft.com) - Used to gather latest SQL Patch information
+1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Arc-enabled. Kusto Query Language (KQL) queries are saved to: <a href="artifacts/arg_queries/">Azure Resource Graph Queries</a>
+2. [Learn.microsoft.com](https://learn.microsoft.com/) - Used to gather latest SQL Patch information
 3. Reference CSVs - CSVs containing Azure SKUs and Product Lifecycle dates: <a href="artifacts/reference/">Reference CSVs</a>
 
 ## Resources
