@@ -84,7 +84,3 @@ For more information please review the following resources:
 * [Azure Resource Graph](https://learn.microsoft.com/azure/governance/resource-graph/overview#permissions-in-azure-resource-graph)
 * [Arc-enabled servers](https://learn.microsoft.com/azure/azure-arc/servers/overview)
 * [Power BI Connector](https://learn.microsoft.com/azure/governance/resource-graph/power-bi-connector-quickstart?tabs=power-bi-desktop#connect-azure-resource-graph-with-power-bi-connector)
-
-
-## Known Issues
-
