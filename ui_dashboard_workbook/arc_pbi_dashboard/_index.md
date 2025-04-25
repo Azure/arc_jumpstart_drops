@@ -28,14 +28,22 @@ The Arc Insights PBI dashboards contain:
 ## Screenshots
 
 Here are some screenshots of the Arc Insights PBI dashboards:
-<p float="left">
-  <img src="artifacts/media/server_inventory_screenshot.png" alt="Server Inventory" width="45%" />
-  <img src="artifacts/media/sqlserver_inventory_screenshot.png" alt="SQL Server Inventory" width="45%" />
-</p>
-<p float="left">
-  <img src="artifacts/media/sqldatabase_inventory_screenshot.png" alt="SQL Database Inventory" width="45%" />
-  <img src="artifacts/media/esu_forecast_screenshot.png" alt="ESU Forecast" width="45%" />
-</p>
+
+Screenshot showing Server Inventory:
+
+![Server Inventory](./artifacts/media/server_inventory_screenshot.png)
+
+Screenshot showing SQL Server Inventory:
+
+![SQL Server Inventory](./artifacts/media/sqlserver_inventory_screenshot.png)
+
+Screenshot showing SQL Database Inventory:
+
+![SQL Database Inventory](./artifacts/media/sqldatabase_inventory_screenshot.png)
+
+Screenshot showing ESU Forecast:
+
+![ESU Forecast](./artifacts/media/esu_forecast_screenshot.png)
 
 ## Prerequisites
 
@@ -50,17 +58,17 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 ### How to install the Arc Insights PBI Dashboards
 
-1. Download the Power BI template file. <a href="arc_insights_dashboard_jumpstart.pbit">Arc Insights PBI Dashboard</a>
+1. Download the Power BI template file: [Arc Insights PBI Dashboard](https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard/arc_insights_dashboard_jumpstart.pbit)
 
-<img src="artifacts/media/pbi_download_screenshot.png" alt="Download" width="60%" />
+![Download](./artifacts/media/pbi_download_screenshot.png)
 
 2. Open the Power BI template File, upon first opening the dashboard will attempt refresh.
 
-<img src="artifacts/media/pbi_connecting_screenshot.png" alt="Connecting" width="60%" />
+![Connecting](./artifacts/media/pbi_connecting_screenshot.png)
 
 3. During the refresh, Power BI will prompt for credentials for "Azure Resource Graph" as shown below:
 
-<img src="artifacts/media/arg_connector_screenshot.png" alt="Azure Resource Graph Connector" width="60%" />
+![Azure Resource Graph Connector](./artifacts/media/arg_connector_screenshot.png)
 
 5. Sign in with a login that has "Read" access to Azure Resource Graph for the subscription(s) you want the report to view.
 
@@ -68,14 +76,14 @@ Here are some screenshots of the Arc Insights PBI dashboards:
 
 7. Save your new Power BI dashboard.
 
-<img src="artifacts/media/pbi_save_screenshot.png" alt="" width="60%" />
-
+![Power BI Save Screenshot](./artifacts/media/pbi_save_screenshot.png)
 
 ### Data Sources Used
+
 The Dashboard has the following data sources:
-1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Arc-enabled. Kusto Query Language (KQL) queries are saved to: <a href="artifacts/arg_queries/">Azure Resource Graph Queries</a>
+1. Azure Resource Graph - Used to gather Servers, SQL Server VM Instances and SQL VM Databases across Azure and Arc-enabled. Kusto Query Language (KQL) queries are saved to: [Azure Resource Graph Queries](https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard/artifacts/arg_queries)
 2. [Learn.microsoft.com](https://learn.microsoft.com/) - Used to gather latest SQL Patch information
-3. Reference CSVs - CSVs containing Azure SKUs and Product Lifecycle dates: <a href="artifacts/reference/">Reference CSVs</a>
+3. Reference CSVs - CSVs containing Azure SKUs and Product Lifecycle dates: [Reference CSVs](https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard/artifacts/reference)
 
 ## Resources
 
