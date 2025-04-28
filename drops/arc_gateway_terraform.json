@@ -1,7 +1,7 @@
 {
-  "Title": "Azure Arc Gateway with Terraform",
-  "Summary": "This Jumpstart Drop provides an example of deploying the Arc Gateway with Terraform.",
-  "Description": "This Jumpstart Drop for Azure Arc Gateway provides an example of deploying it with IaC in the form of Terraform. The related blog post showcases local deployment as well as via cloud-managed Terraform.",
+  "Title": "Azure Arc gateway with Terraform",
+  "Summary": "This Jumpstart Drop provides an example of deploying Azure Arc gateway with Terraform.",
+  "Description": "This Jumpstart Drop for Azure Arc gateway provides an example of deploying the service with IaC in the form of Terraform. The related blog post showcases local deployment as well as via cloud-managed Terraform.",
   "Cover": "",
   "Authors": [
     {
@@ -16,15 +16,15 @@
     "Terraform"
   ],
   "Products": [
-    "Arc-Enabled Servers",
+    "Arc-enabled Servers",
     "Azure Arc",
     "Azure Local"
   ],
-  "LastModified": "2025-04-27T15:21:30.123Z",
+  "LastModified": "2025-04-27T15:21:40.123Z",
   "CreatedDate": "2025-04-27T15:21:40.123Z",
   "Topics": [
+    "Arc-enabled Servers",    
     "Azure Arc",
-    "Azure Arc-enabled Servers",
     "IaC",
     "Security"
   ]
