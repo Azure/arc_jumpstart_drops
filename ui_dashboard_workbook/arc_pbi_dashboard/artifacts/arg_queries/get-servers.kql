@@ -1,0 +1,58 @@
+resources
+| where type == "microsoft.hybridcompute/machines" or type == "microsoft.compute/virtualmachines"
+| extend resourceLocation = location
+| extend ProvisioningState = properties.provisioningState
+| extend CloudType = case(
+    type == "microsoft.hybridcompute/machines", "On Prem",
+    type == "microsoft.compute/virtualmachines", "In Azure",
+    "Unknown"
+)
+| extend Status = case(
+    type == "microsoft.hybridcompute/machines", properties.status,
+    type == "microsoft.compute/virtualmachines", properties.extended.instanceView.powerState.displayStatus,
+    "Unknown"
+)
+| extend osType = tolower(case(
+    type == "microsoft.hybridcompute/machines", properties.osType,
+    type == "microsoft.compute/virtualmachines", properties.storageProfile.osDisk.osType,
+    "Unknown")
+)
+| extend osVersion = case(
+    type == "microsoft.hybridcompute/machines", properties.osVersion,
+    type == "microsoft.compute/virtualmachines", properties.extended.instanceView.osVersion,
+    "Unknown"
+)
+| extend AgentVersion = properties.agentVersion
+| extend osSKU = case(
+    type == "microsoft.hybridcompute/machines", properties.osSku,
+    type == "microsoft.compute/virtualmachines", properties.extended.instanceView.osName,
+    "Unknown"
+)
+| extend FQDN = properties.dnsFqdn
+| extend PhyicalLocation = tags.City
+| extend ESUState = properties.licenseProfile.esuProfile.esuKeyState
+| extend OSEddition = case(
+    type == "microsoft.hybridcompute/machines", properties.licenseProfile.esuProfile.serverType,
+    type == "microsoft.compute/virtualmachines", extract("([^ ]+)$", 1, tostring(properties.extended.instanceView.osName)),
+    "Unknown"
+)
+| extend LogicalCores = case(
+    type == "microsoft.hybridcompute/machines", iff(tolower(properties.detectedProperties.logicalCoreCount) == "unknown", "0",coalesce(tostring(properties.detectedProperties.logicalCoreCount), "0")),
+    type == "microsoft.compute/virtualmachines", iff(tolower(properties.hardwareProfile.vmSize) == "unknown", "0", coalesce(tostring(toint(extract(@"(\d+)", 1, tostring(properties.hardwareProfile.vmSize)))), "0")),
+    "0"
+)
+| extend AzureSKU = case(
+    type == "microsoft.compute/virtualmachines", properties.hardwareProfile.vmSize,
+    "Unknown"
+)
+| extend ArcMemGB = case(
+    type == "microsoft.hybridcompute/machines", iff(tolower(properties.detectedProperties.totalPhysicalMemoryInGigabytes) == "unknown", "0", coalesce(tostring(properties.detectedProperties.totalPhysicalMemoryInGigabytes), "0")),
+    "0"
+)
+| extend HasSQL = case(
+    type == "microsoft.hybridcompute/machines", properties.mssqlDiscovered,
+    "Unknown"
+)
+| project id, name, type, resourceLocation, CloudType, ProvisioningState, 
+Status, osType, AgentVersion, osVersion, osSKU, FQDN, PhyicalLocation,
+ESUState, OSEddition, LogicalCores, AzureSKU, ArcMemGB, HasSQL
