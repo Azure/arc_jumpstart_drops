@@ -16,14 +16,14 @@
     "Terraform"
   ],
   "Products": [
-    "Arc-enabled Servers",
+    "Arc-enabled servers",
     "Azure Arc",
     "Azure Local"
   ],
   "LastModified": "2025-04-27T15:21:40.123Z",
   "CreatedDate": "2025-04-27T15:21:40.123Z",
   "Topics": [
-    "Arc-enabled Servers",    
+    "Arc-enabled servers",    
     "Azure Arc",
     "IaC",
     "Security"
