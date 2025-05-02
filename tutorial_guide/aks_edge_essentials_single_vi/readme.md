@@ -2,7 +2,7 @@
 type: docs
 title: "Azure Video Indexer enabled by Arc on single node AKS Edge Essentials"
 linkTitle: "Azure Video Indexer enabled by Arc on single node AKS Edge Essentials"
-weight: 6
+weight: 1
 description: >
 ---
 
@@ -53,7 +53,7 @@ This scenario uses automation to configure the Video Indexer solution. The autom
 
 As mentioned, this deployment will leverage ARM templates. You will deploy a single template, responsible for creating all the Azure resources in a single resource group as well onboarding the created VM to Azure Arc.
 
-- Clone this Arc Jumpstart Drop
+- Download and uncompress this Arc Jumpstart Drop
 
 - Before deploying the ARM template, login to Azure using Azure CLI with the *`az login`* command.
 
