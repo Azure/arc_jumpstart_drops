@@ -20,10 +20,11 @@
     ".NET/C#"
   ],
   "Products": [
-    "Arc-enabled service",
-    "Azure Arc"
+    "Arc-enabled Server",
+    "Azure Arc",
+    "Windows"
   ],
-  "LastModified": "2025-04-30T18:25:43.511Z",
+  "LastModified": "2025-05-03T16:56:13.361Z",
   "CreatedDate": "2025-04-30T10:30:16.201Z",
   "Topics": []
 }
