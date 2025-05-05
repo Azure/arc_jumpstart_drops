@@ -1,0 +1,29 @@
+{
+  "Title": "Azure Arc Agent Toolkit",
+  "Summary": "GUI-based toolkit for system administrators who prefer visual interfaces over the CLI. This project wraps around the Azure Arc Connected Machine Agent and simplifies agent monitoring, config inspection, and version checks.",
+  "Description": "GUI-based toolkit for system administrators who prefer visual interfaces over the CLI. This project wraps around the Azure Arc Connected Machine Agent and simplifies agent monitoring, config inspection, and version checks.",
+  "Cover": "https://github.com/enderalci/AACMAToolkit/blob/master/AACMAToolkit.png",
+  "Authors": [
+    {
+      "Name": "Ender Alci",
+      "Link": "www.linkedin.com/in/ender-alci"
+    },
+    {
+      "Name": "Michael Morten Sonne",
+      "Link": "https://www.linkedin.com/in/michaelmsonne/"
+    }
+  ],
+  "Source": "https://github.com/enderalci/AACMAToolkit/tree/master",
+  "Type": "sample_app",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    ".NET/C#"
+  ],
+  "Products": [
+    "Arc-enabled service",
+    "Azure Arc"
+  ],
+  "LastModified": "2025-04-30T18:25:43.511Z",
+  "CreatedDate": "2025-04-30T10:30:16.201Z",
+  "Topics": []
+}
