@@ -75,33 +75,36 @@ export pid=`az k8s-extension list --cluster-name "${ARCNAME}" --resource-group "
 az role assignment create --assignee $pid --role "Storage Blob Data Owner" --scope "/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${STORAGEACCOUNT}"
 ```
 
-#### Configure ACSA for Edge Volumes 
-For this example, the components are separate and applied separately, however you can chose to combine them into a single yaml to reduce the number of config files you have to maintain. 
+#### Configure ACSA with an SFTP Front End
+For this example, all the necessary components were packaged in deployment.yaml; this includes the PVC creation, the Ingest Subvolume config, and the SFTP setup. You can make any necessary changes to deployment.yaml before running it. 
 
 ```bash
-kubectl apply -f pvc.yaml
-cat edgesubvoltemp.yaml | sed "s/STORAGEACCOUNT/$STORAGEACCOUNT/g" | sed "s/STORAGECONTAINER/$STORAGECONTAINER/g" > edgesubvol.yaml
-kubectl apply -f edgesubvol.yaml
+kubectl apply -f deployment.yaml
 ```
 
-#### Create the SFTP Front End
+#### Start writing files to your SFTP Server
+Let's create a sample file to push through to make sure our server setup is working.
 ```bash
-sudo snap install helm --classic
-helm repo add emberstack https://emberstack.github.io/helm-charts
-helm repo update
-helm upgrade --install sftp emberstack/sftp --values values.yaml
+echo "Hello World! I'm so glad my SFTP front end is working with ACSA!" > testfile1.txt
 ```
-Next we need to get the address of your SFTP server:
+
+Run the following command to get the IP address of your SFTP server, and note it for the next step:
 ```bash
 kubectl get service
 ```
-Note the CLUSTER-IP of the sftp server.
-sftp demo@10.43.4.7 
 
-#### Attach to example pod to use /mnt/acsa
+Next, we will run the SFTP command. For our example, the user and password are both 'demo,' but you will want to change those to be something meaningful and secure.
 ```bash
-example_pod=`kubectl get pod -o yaml | grep name | head -1 | awk -F ':' '{print $2}'`
-kubectl exec -it ${example_pod} -- bash
+sftp demo@IPADDRESS
 ```
 
-For help, visit [Azure Container Storage enabled by Azure Arc documentation (preview)](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/).
+You'll have to enter your password here.
+From here, you'll need to change directories to the location you specified, for us, it's /acsa/exampleSubDir.
+Then, we can put our file using:
+```bash
+put testfile1.txt
+```
+
+#### Confirm your file is uploaded
+Finally, we can go to the Azure Portal and check our specified storage account container in our specified storage account. Our testfile1.txt should be there.
+Note: Please keep in mind that we have set up this system with the default Ingest Policy, which waits 5 minutes after a file is written before it will upload it to the cloud. So if you don't see your file right away, just wait a few minutes. Policies can also be altered according to [these instructions](https://learn.microsoft.com/en-us/azure/azure-arc/container-storage/cloud-ingest-edge-volume-configuration?tabs=portal#optional-modify-the-ingestpolicy-from-the-default)
