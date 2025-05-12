@@ -95,6 +95,9 @@ sftp demo@IPADDRESS
 You'll have to enter your password here.
 
 **From here, you'll need to change directories to the location you specified. In this example, it's /acsa/exampleSubDir.**
+```bash
+cd /acsa/exampleSubDir
+```
 
 Then, we can put our file using:
 ```bash
