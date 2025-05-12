@@ -21,18 +21,9 @@ param networkSecurityGroupNameCloud string = 'js-nsg-prod'
 @description('Name of the Bastion Network Security Group')
 param bastionNetworkSecurityGroupName string = 'js-nsg-bastion'
 
-// @description('Azure Key Vault tenant ID')
-// param tenantId string = subscription().tenantId
-
-// @description('Azure Key Vault SKU')
-// param akvSku string = 'standard'
-
 @maxLength(5)
 @description('Random GUID')
 param namingGuid string
-
-@description('The name of the user assigned identity')
-param userAssignedIdentityName string = 'js-uai-sse'
 
 var addressPrefixCloud = '10.16.0.0/16'
 var subnetAddressPrefixK3s = '10.16.80.0/21'
@@ -41,7 +32,6 @@ var bastionSubnetName = 'AzureBastionSubnet'
 var bastionSubnetRef = '${cloudVirtualNetwork.id}/subnets/${bastionSubnetName}'
 var bastionName = 'js-bastion'
 var bastionPublicIpAddressName = '${bastionName}-pip'
-// var keyVaultName = 'js-kv-${namingGuid}'
 var monitorWorkspaceName = 'js-amw'
 
 var bastionSubnet = [
@@ -313,51 +303,7 @@ resource monitorWorkspace 'microsoft.monitor/accounts@2021-06-03-preview' = {
   location: location
 }
 
-// resource akv 'Microsoft.KeyVault/vaults@2023-02-01' = {
-//   name: keyVaultName
-//   location: location
-//   tags: resourceTags
-//   properties: {
-//     sku: {
-//       name: akvSku
-//       family: 'A'
-//     }
-//     enableRbacAuthorization: true
-//     enableSoftDelete: false
-//     tenantId: tenantId
-//   }
-// }
-
-// // Create User Assigned Identity
-// resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
-//   location: location
-//   name: userAssignedIdentityName
-// }
-
-// // Add role assignment for the UAI: Key Vault Reader
-// resource userAssignedIdentity_KVReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-//   name: guid(userAssignedIdentity.id, 'Microsoft.Authorization/roleAssignments', 'Key Vault Reader')
-//   scope: resourceGroup()
-//   properties: {
-//     principalId: userAssignedIdentity.properties.principalId
-//     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '21090545-7ca7-4776-b22c-e363652d74d2')
-//     principalType: 'ServicePrincipal'
-//   }
-// }
-
-// // Add role assignment for the UAI: Key Vault Secrets User
-// resource userAssignedIdentity_KVSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-//   name: guid(userAssignedIdentity.id, 'Microsoft.Authorization/roleAssignments', 'Key Vault Secrets User')
-//   scope: resourceGroup()
-//   properties: {
-//     principalId: userAssignedIdentity.properties.principalId
-//     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
-//     principalType: 'ServicePrincipal'
-//   }
-// }
-
 output vnetId string = cloudVirtualNetwork.id
 output k3sSubnetId string = cloudVirtualNetwork.properties.subnets[0].id
 output virtualNetworkNameCloud string = cloudVirtualNetwork.name
 output monitorWorkspaceId string = monitorWorkspace.id
-// output userAssignedIdentityName string = userAssignedIdentityName

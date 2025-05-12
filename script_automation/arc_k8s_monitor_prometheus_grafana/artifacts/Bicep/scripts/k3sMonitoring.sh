@@ -14,13 +14,6 @@ echo $location:$4 | awk '{print substr($1,2); }' >> vars.sh
 echo $templateBaseUrl:$5 | awk '{print substr($1,2); }' >> vars.sh
 echo $resourceGroup:$6| awk '{print substr($1,2); }' >> vars.sh
 echo $monitorWorkspaceId:$7| awk '{print substr($1,2); }' >> vars.sh
-# echo $kubernetesNamespace:$8 | awk '{print substr($1,2); }' >> vars.sh
-# echo $azureTenantId:$9 | awk '{print substr($1,2); }' >> vars.sh
-# echo $userAssignedIdentityName:${10} | awk '{print substr($1,2); }' >> vars.sh
-# echo $kubernetesNamespace:${11} | awk '{print substr($1,2); }' >> vars.sh
-# echo $serviceAccountName:${12} | awk '{print substr($1,2); }' >> vars.sh
-# echo $federatedCredentialIdentityName:${13} | awk '{print substr($1,2); }' >> vars.sh
-# echo $certManagerVersion:${14} | awk '{print substr($1,2); }' >> vars.sh
 
 sed -i '2s/^/export adminUsername=/' vars.sh
 sed -i '3s/^/export subscriptionId=/' vars.sh
@@ -29,13 +22,6 @@ sed -i '5s/^/export location=/' vars.sh
 sed -i '6s/^/export templateBaseUrl=/' vars.sh
 sed -i '7s/^/export resourceGroup=/' vars.sh
 sed -i '8s/^/export monitorWorkspaceId=/' vars.sh
-# sed -i '9s/^/export kubernetesNamespace=/' vars.sh
-# sed -i '10s/^/export azureTenantId=/' vars.sh
-# sed -i '11s/^/export userAssignedIdentityName=/' vars.sh
-# sed -i '12s/^/export kubernetesNamespace=/' vars.sh
-# sed -i '13s/^/export serviceAccountName=/' vars.sh
-# sed -i '14s/^/export federatedCredentialIdentityName=/' vars.sh
-# sed -i '15s/^/export certManagerVersion=/' vars.sh
 
 export vmName=$3
 

@@ -48,7 +48,5 @@ module k3sDeployment 'modules/k3s.bicep' = {
     vmName : k3sArcDataClusterName
     namingGuid: namingGuid
     monitorWorkspaceId: mgmtArtifacts.outputs.monitorWorkspaceId
-    // keyVaultName: mgmtArtifacts.outputs.keyVaultName
-    // userAssignedIdentityName: mgmtArtifacts.outputs.userAssignedIdentityName
   }
 }

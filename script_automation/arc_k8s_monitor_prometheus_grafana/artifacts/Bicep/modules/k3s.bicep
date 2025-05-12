@@ -30,30 +30,6 @@ param templateBaseUrl string
 @description('Random GUID')
 param namingGuid string
 
-// @description('The name of the Key Vault')
-// param keyVaultName string
-
-// @description('The name of the Key Vault secret')
-// param keyVaultSecretName string = 'js-secret'
-
-// @description('Azure Key Vault tenant ID')
-// param tenantId string = subscription().tenantId
-
-// @description('The name of the user assigned identity')
-// param userAssignedIdentityName string
-
-// @description('The name of the Kubernetes namespace')
-// param kubernetesNamespace string = 'js-namespace'
-
-// @description('The name of the service account')
-// param serviceAccountName string = 'js-sa'
-
-// @description('The name of the federated credential identity')
-// param federatedCredentialIdentityName string = 'js-fci'
-
-// @description('Cert Manager version')
-// param certManagerVersion string = 'v1.16.2'
-
 @description('Azure Monitor workspace ID')
 param monitorWorkspaceId string
 
@@ -161,17 +137,6 @@ resource vmRoleAssignment_Owner 'Microsoft.Authorization/roleAssignments@2022-04
   }
 }
 
-// // Add role assignment for the VM: Key Vault Secrets Officer
-// resource vmRoleAssignment_KVSecretsOfficer 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-//   name: guid(vm.id, 'Microsoft.Authorization/roleAssignments', 'Key Vault Secrets Officer')
-//   scope: resourceGroup()
-//   properties: {
-//     principalId: vm.identity.principalId
-//     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7')
-//     principalType: 'ServicePrincipal'
-//   }
-// }
-
 resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = {
   parent: vm
   name: 'installscript_k3s'
@@ -191,6 +156,5 @@ resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-0
   }
   dependsOn: [
     vmRoleAssignment_Owner
-    // vmRoleAssignment_KVSecretsOfficer
   ]
 }
