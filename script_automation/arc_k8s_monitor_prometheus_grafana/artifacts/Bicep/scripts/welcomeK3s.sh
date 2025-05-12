@@ -2,6 +2,6 @@ tput setaf 1;echo "-------------------------------------------------------------
 echo ""
 tput setaf 6;echo "Welcome to Jumpstart Drops Rancher K3s Kubernetes cluster virtual machine!"
 echo ""
-tput setaf 6;echo "* To check the Rancher K3s deployment log, use the 'cat jumpstart_logs/k3sWithSSE-$(hostname).log' command."
+tput setaf 6;echo "* To check the Rancher K3s deployment log, use the 'cat jumpstart_logs/k3sMonitoring-$(hostname).log' command."
 echo ""
 tput setaf 1;echo "-----------------------------------------------------------------------------------------------------------------------------"

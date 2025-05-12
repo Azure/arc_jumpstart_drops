@@ -174,7 +174,7 @@ resource vmRoleAssignment_Owner 'Microsoft.Authorization/roleAssignments@2022-04
 
 resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = {
   parent: vm
-  name: 'installscript_k3sWithSSE'
+  name: 'installscript_k3s'
   location: azureLocation
   properties: {
     publisher: 'Microsoft.Azure.Extensions'
@@ -191,6 +191,6 @@ resource vmInstallscriptK3s 'Microsoft.Compute/virtualMachines/extensions@2022-0
   }
   dependsOn: [
     vmRoleAssignment_Owner
-    vmRoleAssignment_KVSecretsOfficer
+    // vmRoleAssignment_KVSecretsOfficer
   ]
 }

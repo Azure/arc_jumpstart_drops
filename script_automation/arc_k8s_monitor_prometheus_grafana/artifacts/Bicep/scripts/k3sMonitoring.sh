@@ -42,7 +42,7 @@ export vmName=$3
 # Save the original stdout and stderr
 exec 3>&1 4>&2
 
-exec >k3sWithSSE-${vmName}.log
+exec >k3sMonitoring-${vmName}.log
 exec 2>&1
 
 # Set k3 deployment variables
@@ -56,7 +56,7 @@ curl -v -o /etc/profile.d/welcomeK3s.sh ${templateBaseUrl}scripts/welcomeK3s.sh
 
 # Syncing this script log to 'jumpstart_logs' directory for ease of troubleshooting
 sudo -u $adminUsername mkdir -p /home/${adminUsername}/jumpstart_logs
-while sleep 1; do sudo -s rsync -a /var/lib/waagent/custom-script/download/0/k3sWithSSE-$vmName.log /home/${adminUsername}/jumpstart_logs/k3sWithSSE-$vmName.log; done &
+while sleep 1; do sudo -s rsync -a /var/lib/waagent/custom-script/download/0/k3sMonitoring-$vmName.log /home/${adminUsername}/jumpstart_logs/k3sMonitoring-$vmName.log; done &
 
 # Function to check if dpkg lock is in place
 check_dpkg_lock() {
