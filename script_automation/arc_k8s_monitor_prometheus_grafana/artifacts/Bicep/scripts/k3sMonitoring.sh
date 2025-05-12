@@ -160,7 +160,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername az connectedk8s connect --name $vmName --resource-group $resourceGroup --location $location --enable-oidc-issuer
+    sudo -u $adminUsername az connectedk8s connect --name $vmName --resource-group $resourceGroup --location $location
     if [ $? -eq 0 ]; then
         success=true
         break
