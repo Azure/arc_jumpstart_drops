@@ -200,4 +200,15 @@ if [ "$success" = false ]; then
     exit 1
 fi
 
+
+# Check if the ama-metrics-node DaemonSet is ready
+ready=$(kubectl get daemonset ama-metrics-node --namespace=kube-system -o jsonpath='{.status.numberReady}')
+desired=$(kubectl get daemonset ama-metrics-node --namespace=kube-system -o jsonpath='{.status.desiredNumberScheduled}')
+if [[ "$ready" == "$desired" && "$ready" != "" ]]; then
+    echo "ama-metrics-node DaemonSet is ready: $ready/$desired pods are running."
+else
+    echo "ama-metrics-node DaemonSet is NOT ready: $ready/$desired pods are running."
+    exit 1
+fi
+
 exit 0
