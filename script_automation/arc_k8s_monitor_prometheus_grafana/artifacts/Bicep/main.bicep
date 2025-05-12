@@ -26,7 +26,7 @@ param sshRSAPublicKey string
 @description('The name of the Azure Arc K3s cluster')
 param k3sArcDataClusterName string = 'js-k3s-${namingGuid}'
 
-var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/arc_jumpstart_drops/${githubBranch}/script_automation/arc_k8s_monitor_prometheus_grafana/'
+var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/arc_jumpstart_drops/${githubBranch}/script_automation/arc_k8s_monitor_prometheus_grafana/artifacts/Bicep/'
 
 module mgmtArtifacts 'modules/mgmtArtifacts.bicep' = {
   name: 'mgmtArtifacts'

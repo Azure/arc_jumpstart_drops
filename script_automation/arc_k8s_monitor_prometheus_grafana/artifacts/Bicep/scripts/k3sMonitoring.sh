@@ -189,6 +189,9 @@ echo ""
 echo "Enable monitoring for Kubernetes clusters"
 echo ""
 
+# Set the Azure CLI to allow preview extensions
+az config set extension.dynamic_install_allow_preview=true
+
 # Create the Azure Monitor Metrics extension
 max_retries=5
 retry_count=0
