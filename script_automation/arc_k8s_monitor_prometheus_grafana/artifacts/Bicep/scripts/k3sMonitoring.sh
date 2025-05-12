@@ -190,7 +190,7 @@ echo "Enable monitoring for Kubernetes clusters"
 echo ""
 
 # Set the Azure CLI to allow preview extensions
-az config set extension.dynamic_install_allow_preview=true
+az config set extension.dynamic_install_allow_preview=true 
 
 # Create the Azure Monitor Metrics extension
 max_retries=5
@@ -198,7 +198,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    az k8s-extension create --name azuremonitor-metrics --cluster-name $vmName --resource-group $resourceGroup --cluster-type connectedClusters --extension-type Microsoft.AzureMonitor.Containers.Metrics --configuration-settings azure-monitor-workspace-resource-id=$monitorWorkspaceId --verbose
+    sudo -u $adminUsername az k8s-extension create --name azuremonitor-metrics --cluster-name $vmName --resource-group $resourceGroup --cluster-type connectedClusters --extension-type Microsoft.AzureMonitor.Containers.Metrics --configuration-settings azure-monitor-workspace-resource-id=$monitorWorkspaceId --verbose
     if [ $? -eq 0 ]; then
         success=true
         break
