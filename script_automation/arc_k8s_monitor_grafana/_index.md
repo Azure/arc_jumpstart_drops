@@ -57,7 +57,7 @@ The automation performs the following steps:
 
 ### Run the automation
 
-Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/sse/script_automation/arc_k8s_monitor_prometheus_grafana/artifacts/Bicep/) and run the below command:
+Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/sse/script_automation/arc_k8s_monitor_grafana/artifacts/Bicep/) and run the below command:
 
 ```shell
 az login
