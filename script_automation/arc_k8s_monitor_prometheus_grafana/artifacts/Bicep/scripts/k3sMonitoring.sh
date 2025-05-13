@@ -184,7 +184,7 @@ retry_count=0
 success=false
 
 while [ $retry_count -lt $max_retries ]; do
-    sudo -u $adminUsername az k8s-extension create --name azuremonitor-metrics --cluster-name $vmName --resource-group $resourceGroup --cluster-type connectedClusters --extension-type Microsoft.AzureMonitor.Containers.Metrics --configuration-settings azure-monitor-workspace-resource-id=$monitorWorkspaceId1
+    sudo -u $adminUsername az k8s-extension create --name azuremonitor-metrics --cluster-name $vmName --resource-group $resourceGroup --cluster-type connectedClusters --extension-type Microsoft.AzureMonitor.Containers.Metrics --configuration-settings azure-monitor-workspace-resource-id=$monitorWorkspaceId
     if [ $? -eq 0 ]; then
         success=true
         break
