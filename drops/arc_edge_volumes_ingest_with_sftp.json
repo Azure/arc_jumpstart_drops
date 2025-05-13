@@ -1,5 +1,5 @@
 {
-    "Title": "Azure Container Storage enabled by Azure Arc SFTPIngest",
+    "Title": "Azure Container Storage enabled by Azure Arc SFTP",
     "Summary": "This example can be used to install Azure Container Storage enabled by Azure Arc to provide a ReadWriteMany Cloud Ingest Edge Volume on an Ubuntu system with K3s and an SFTP front end.",
     "Description": "This allows you all the functionality of the base product as well as being able to accept writes from SFTP clients. Cloud Ingest edge volumes will transfer files saved to the volume to cloud and purge the local copy, according to your ingest policy.",
     "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3s_single_sftp/acsaedgevolarch.png",
