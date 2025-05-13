@@ -2,14 +2,14 @@
 
 #### Enabling Monitoring for Arc-enabled K3s Cluster with Prometheus and Grafana
 
-This Jumpstart guide provides end-to-end automation to deploy a lightweight Kubernetes (K3s) cluster, onboard it to Azure Arc, and enable monitoring using Prometheus and Grafana. The automation script installs all required dependencies, sets up Prometheus for metrics collection, and deploys Grafana for visualization. A sample dashboard is included to help you monitor cluster health, resource usage, and workloads. This setup ensures you have comprehensive observability for your Kubernetes environment, whether running in the cloud or on-premises.
+This Jumpstart guide provides end-to-end automation to deploy a lightweight Kubernetes (K3s) cluster, onboard it to Azure Arc, and enable monitoring using Prometheus and Grafana with Azure Monitor Dashboards. The automation script installs all required dependencies, sets up configures Azure monitor extension for metrics collection, and Grafana for visualization. This setup ensures you have comprehensive observability for your Kubernetes environment, whether running in the cloud or on-premises.
 
-> **Note:** This Jumpstart guide demonstrates how to set up and use the Secret Store extension. For enhanced security, it is recommended to enable encryption of the Kubernetes secret store using [KMS](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) plugin.
+> **Note:** This Jumpstart guide demonstrates how to set up and use [Grafana](https://grafana.com/) with Azure Monitor Dashboards.
 
-> ⚠️ **Disclaimer:** Secret Store Extension is currently in public preview. For further details and updates on availability, please refer to the [Secret Store extension Documentation](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension).
+> ⚠️ **Disclaimer:** Grafana with Azure Monitor Dashboards is currently in public preview. For further details and updates on availability, please refer to the [Grafana with Azure Monitor Dashboards Documentation](https://TBD).
 
 ## Architecture
-![Secret Store Extension Architecture.](./artifacts/media/sseArcExtensionArch.png)
+![Grafana with Azure Monitor Dashboards Architecture.](./artifacts/media/sseArcExtensionArch.png)
 
 ## Prerequisites
 - Clone the Azure Arc Drops repository
@@ -22,14 +22,6 @@ This Jumpstart guide provides end-to-end automation to deploy a lightweight Kube
 
   ```shell
   az --version
-  ```
-
-- Register necessary Azure resource providers by running the following commands.
-
-  ```shell
-  az provider register --namespace Microsoft.Kubernetes --wait
-  az provider register --namespace Microsoft.KubernetesConfiguration --wait
-  az provider register --namespace Microsoft.ExtendedLocation --wait
   ```
 
 - [Generate a new SSH key pair](https://learn.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed) or use an existing one (Windows 10 and above now comes with a built-in ssh client). The SSH key is used to configure secure access to the Linux virtual machines that are used to run the Kubernetes clusters.
@@ -58,18 +50,14 @@ This Jumpstart guide provides end-to-end automation to deploy a lightweight Kube
 
 The automation performs the following steps:
 
-- Deploy the infrastructure and create an Azure Key Vault with a secret.
+- Deploy the base infrastructure and Azure Managed Prometheus (Azure Monitor Workspace).
 - Install the K3s cluster and onboard it as an Azure Arc-enabled Kubernetes cluster.
-- Create a managed identity with access to the secret.
-- Enable workload identity federation in the cluster.
-- Federate a local service account with the managed identity that has access to the secret.
-- Deploy the Azure Key Vault Secret Store Extension (SSE).
-- Create two custom resources to define the Azure Key Vault secret to pull and how to store the secret in the cluster.
-- Deploy an application pod that references the secret and prints the secret value in the logs.
+- Configure Azure Monitor Metrics extension on the connected Kubernetes cluster to send data to Azure Managed Prometheus.
+- Verifies the readiness of the Azure Monitor DaemonSet.
 
 ### Run the automation
 
-Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/sse/script_automation/arc_k8s_secret_store_extension/artifacts/Bicep/) and run the below command:
+Navigate to the [deployment folder](https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/sse/script_automation/arc_k8s_monitor_prometheus_grafana/artifacts/Bicep/) and run the below command:
 
 ```shell
 az login
@@ -79,50 +67,55 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 ### Verify the deployment
 
-- Once your deployment is complete, you can open the Azure portal and see the resources inside your resource group. You will be using the _js-k3s-*_ Azure virtual machine to review the secret store extension automation. You will need to remotely access _js-k3s-*_.
+- Once your deployment is complete, you can open the Azure portal and see the resources inside your resource group.
 
   ![Screenshot showing all deployed resources in the resource group](./artifacts/media/deployed_resources.png)
 
+#### Built-in Grafana dashboards
+
+- Browse to Azure Monitor and select _Dashboards with Grafana_.
+
+  ![Screenshot showing Grafana with Azure Monitor Dashboards](./artifacts/media/monitor_grafana.png)
+
+  - Select _Kubernetes | Compute Resources | Namespace (Workloads)_ dashaboard under _Azure Managed Prometheus_ built-in dashboards.
+
+  ![Screenshot showing Grafana dashboard 01](./artifacts/media/monitor_grafana_builtin_01.png)
+
+  - Review the Grafana dashboard. Make sure to select the _js-amw_ data source.
+
+  ![Screenshot showing Grafana dashboard 02](./artifacts/media/monitor_grafana_builtin_02.png)
+
+  - You can also select different namespaces to view the metrics.
+
+  ![Screenshot showing Grafana dashboard 03](./artifacts/media/monitor_grafana_builtin_03.png)
+
+#### Import Grafana dashboards
+
+  - Browse to Azure Monitor and select _Dashboards with Grafana_. Click on _New_ and select _Import_.
+
+  ![Screenshot showing Grafana dashboard import 01](./artifacts/media/monitor_grafana_import_01.png)
+
+  - Browse to the [Grafana dashboard gallery](https://grafana.com/grafana/dashboards/). Select a dashboard you want to import using a JSON file or Dashboard ID. Input the Dashboard ID. For example, you can use the Kubernetes cluster monitoring dashboard with ID _1860_. Click on _Load_.
+
+  ![Screenshot showing Grafana dashboard import 02](./artifacts/media/monitor_grafana_import_02.png)
+
+  - Provide the import details for dashboard title, subscription, resource group, location and prometheus data source (_js-amw_). Click on _Import_.
+
+  ![Screenshot showing Grafana dashboard import 03](./artifacts/media/monitor_grafana_import_03.png)
+
+  - Review the imported dashboard and make any necessary filter adjustments to select the data source (_js-amw_).
+
+  ![Screenshot showing Grafana dashboard import 04](./artifacts/media/monitor_grafana_import_04.png)
+
+### Troubleshooting
+
+- For any deployment error review custom script automation log file *jumpstart_logs/k3sMonitoring-** from _js-k3s-*_ virtual machine. You will need to remotely access _js-k3s-*_.
+
+  ![Screenshot showing ssh to the vm logs](./artifacts/media/monitor_grafana_troubleshooting.png)
+
    > **Note:** For enhanced security posture, SSH (22) ports aren't open by default. You will need to create a network security group (NSG) rule to allow network access to port 22, or use [Azure Bastion](https://learn.microsoft.com/azure/bastion/bastion-overview) access to connect to the VM.
 
-- SSH to the js-k3s virtual machine.
-  ```shell
-    ssh jumpstartuser@js-k3s-*
-  ```
-  ![Screenshot showing ssh to the vm](./artifacts/media/ssh.png)
-
-- SSE deployment contains a pod with two containers: the controller, which manages storing secrets in the cluster, and the provider, which manages access to, and pulling secrets from, the Azure Key Vault.
-  ```shell
-    kubectl --namespace azure-secret-store get pods
-  ```
-  ![Screenshot sync controller crds](./artifacts/media/sseController.png)
-
-- View the secret synchronized to the k3s cluster.
-  ```shell
-    kubectl get secrets --namespace js-namespace
-  ```
-  ![Screenshot showing k8s secrets](./artifacts/media/syncK8sSecrets.png)
-
-- Run below command to validate the synchronized secret values, stored in the Kubernetes secret store. You can also validate the value from the Key Vault deployed in the resource group.
-  ```shell
-    kubectl get secret js-secret-sync --namespace js-namespace -o jsonpath="{.data.js-secret}" | base64 -d
-  ```
-  ![Screenshot showing secret value](./artifacts/media/k8sSecrets.png)
-
-- We have deployed a sample application running a BusyBox container that continuously prints the value of the synchronized secret via the Secret Store Extension to the logs every 30 seconds. Check the deployed application logs to see the synced secret value.
-  ```shell
-    kubectl --namespace js-namespace logs js-app-secrets-sync
-  ```
-  ![Screenshot showing app logs](./artifacts/media/appLogs.png)
-
-- Run the describe command to get detailed status messages for each synchronization event. This can be used to diagnose connection or configuration errors, and to observe when the secret value changes.
-  ```shell
-    kubectl describe secretsync js-secret-sync --namespace js-namespace
-  ```
-  ![Screenshot showing synced secret status](./artifacts/media/syncK8sSecretsStatus.png)
 
 ### Resources
 
-See [Secret Store extension (preview)](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension) for the full instructions to set this up yourself.
-
-To troubleshoot Secret Store extension issues, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
+See [Grafana with Azure Monitor Dashboards (preview)](https://TBD) for the full instructions to set this up yourself.
