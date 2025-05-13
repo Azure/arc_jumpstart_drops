@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide provides a quick way to explore [KAITO](https://github.com/kaito-project/kaito) enabled by [Azure Arc](https://learn.microsoft.com/azure/aks/aksarc/deploy-ai-model?tabs=portal). The guide includes a optional Bicep template for setting up an Arc-enabled cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script. You can see a quick demo of the results of the script in [this video](https://www.youtube.com/watch?v=Kef9WFyCeQA).
+This guide provides a quick way to deploy an AI model using the Kubernetes AI Toolchain Operator, also known as [KAITO](https://github.com/kaito-project/kaito), on an [Arc-enabled Kubernetes cluster](https://learn.microsoft.com/azure/azure-arc/kubernetes/overview). The guide includes a optional Bicep template for setting up an Arc-enabled cluster with a GPU node by using AKS. You can also use your own Kubernetes cluster and GPU if desired with some modifications to the script. You can see a quick demo of the results of the script in [this video](https://www.youtube.com/watch?v=Kef9WFyCeQA).
 
 ## Prerequisites
 

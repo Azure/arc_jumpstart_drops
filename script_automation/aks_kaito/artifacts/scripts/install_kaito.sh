@@ -1,6 +1,6 @@
 #!/bin/bash
 export clusterName="JumpstartAKS"
-export resourceGroupName="Jumpstart-Kaito"
+export resourceGroupName="JumpstartKaito"
 export KAITO_WORKSPACE_VERSION=0.4.4
 export GPU_NODE_POOL_NAME="gpupool"
 export namespace="kaito-workspace"
@@ -81,6 +81,10 @@ kubectl run -it --rm --restart=Never curl --image=curlimages/curl -- curl -X POS
   -H "Content-Type: application/json" \
   -d "{\"model\": \"falcon-7b-instruct\",
     \"prompt\": \"$QUESTION\",
-    \"max_tokens\": 20,
+    \"max_tokens\": 100,
     \"temperature\": 0
   }"
+
+  export CLUSTERIP=$(kubectl get svc workspace -o jsonpath="{.spec.clusterIPs[0]}") 
+
+kubectl run -it --rm --restart=Never curl --image=curlimages/curl -- curl -X POST http://$CLUSTERIP/chat -H "accept: application/json" -H "Content-Type: application/json" -d "{\"prompt\":\"<sample_prompt>\"}"
