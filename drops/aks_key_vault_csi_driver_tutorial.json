@@ -1,5 +1,5 @@
 {
-  "Title": "Azure Key Vault Provider for Secrets Store CSI Driver in AKS",
+  "Title": "Secrets Store CSI Driver for Key Vault in AKS",
   "Summary": "This Jumpstart Drop shows how to use the Azure Key Vault provider for the Secrets Store CSI Driver in AKS to access secrets, keys, and certificates from Azure Key Vault as mounted files in pods.",
   "Description": "This Jumpstart Drop provides a guide on leveraging the Azure Key Vault provider for the Secrets Store CSI Driver within an Azure Kubernetes Service (AKS) cluster. This method enables you to retrieve secrets, keys, and certificates stored in Azure Key Vault and mount them as files directly into your pod's volumes. This eliminates the necessity for Azure-specific libraries within your applications to access these secrets. The drop focuses on using Workload ID for secure access. By enabling the Azure Key Vault provider add-on, creating managed identities and federated credentials, defining a SecretProviderClass, and deploying a sample pod, you'll learn how to seamlessly integrate Azure Key Vault with your AKS applications, simplifying secret management and enhancing security.",
   "Cover": "https://secrets-store-csi-driver.sigs.k8s.io/images/diagram.png",
