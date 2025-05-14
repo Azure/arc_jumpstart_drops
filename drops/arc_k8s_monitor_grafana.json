@@ -1,0 +1,31 @@
+{
+  "Title": "Use Azure Monitor dashboards with Grafana for K8s",
+  "Summary": "This Jumpstart Drop includes Bicep automation and guidance to use Grafana with Azure Monitor Dashboards for Arc-enabled K3s Cluster.",
+  "Description": "This Jumpstart guide provides end-to-end automation to deploy a lightweight Kubernetes (K3s) cluster, onboard it to Azure Arc, and use Grafana with Azure Monitor Dashboards to monitor resources in the Azure cloud and with Prometheus on an edge device.",
+  "Cover": "https://github.com/Azure/arc_jumpstart_drops/script_automation/arc_k8s_monitor_grafana/artifacts/media/monitor_grafana_arch.png",
+  "Authors": [
+    {
+      "Name": "Zaid Mohammad",
+      "Link": "https://www.linkedin.com/in/zaidmohd/"
+    }
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_k8s_monitor_grafana",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Bicep",
+    "Shell"
+  ],
+  "Products": [
+    "Azure Arc",
+    "Arc-enabled Kubernetes",
+    "Grafana"
+  ],
+  "LastModified": "2025-05-12T00:00:00.000Z",
+  "CreatedDate": "2025-05-12T00:00:00.000Z",
+  "Topics": [
+    "Kubernetes",
+    "K3s",
+    "Observability"
+  ]
+}
