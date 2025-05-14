@@ -1,15 +1,15 @@
 ## Overview
 
-#### Use Grafana with Azure Monitor Dashboards for Arc-enabled K3s Cluster
+#### Use Azure Monitor dashboards with Grafana for Arc-enabled K3s Cluster
 
-This Jumpstart guide provides end-to-end automation to deploy a lightweight Kubernetes (K3s) cluster, onboard it to Azure Arc, and use Grafana with Azure Monitor Dashboards to monitor resources in the Azure cloud and with Prometheus on an edge device. The automation script installs all required dependencies, sets up configures Azure monitor extension for metrics collection, and Grafana for visualization. This setup ensures you have comprehensive observability for your Kubernetes environment, whether running in the cloud or on-premises.
+This Jumpstart guide provides end-to-end automation to deploy a lightweight Kubernetes (K3s) cluster, onboard it to Azure Arc, and use Azure Monitor dashboards with Grafana to monitor resources in the Azure cloud and on an edge device. The automation script installs all required dependencies, sets up configures Azure monitor extension for metrics collection, and Grafana for visualization. This setup ensures you have comprehensive observability for your Kubernetes environment, whether running in the cloud or on-premises.
 
 > **Note:** This Jumpstart guide demonstrates how to set up and use [Grafana](https://grafana.com/) with Azure Monitor Dashboards.
 
-> ⚠️ **Disclaimer:** Grafana with Azure Monitor Dashboards is currently in public preview. For further details and updates on availability, please refer to the [Grafana with Azure Monitor Dashboards Documentation](https://TBD).
+> ⚠️ **Disclaimer:** Azure Monitor dashboards with Grafana is currently in public preview. For further details and updates on availability, please refer to the [Azure Monitor dashboards with Grafana Documentation](https://aka.ms/DashboardsWithGrafanaDocs).
 
 ## Architecture
-![Grafana with Azure Monitor Dashboards Architecture.](./artifacts/media/monitor_grafana_arch.png)
+![Azure Monitor dashboards with Grafana Architecture.](./artifacts/media/monitor_grafana_arch.png)
 
 ## Prerequisites
 - Clone the Azure Arc Drops repository
@@ -70,13 +70,13 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
   ![Screenshot showing all deployed resources in the resource group](./artifacts/media/deployed_resources.png)
 
-#### Built-in Grafana dashboards
+#### Dashboard templates
 
-- Grafana with Azure Monitor dashboard comes with built-in dashboards for monitoring your Kubernetes cluster out of the box. Browse to Azure Monitor and select _Dashboards with Grafana_.
+- Azure managed template dashboards are pre-provisioned and automatically updated dashboards for frequently used Azure resources and Azure Kubernetes Services. Browse to Azure Monitor and select _Dashboards with Grafana_.
 
-  ![Screenshot showing Grafana with Azure Monitor Dashboards](./artifacts/media/monitor_grafana.png)
+  ![Screenshot showing Azure Monitor dashboards with Grafana](./artifacts/media/monitor_grafana.png)
 
-- Select _Kubernetes | Compute Resources | Namespace (Workloads)_ dashboard under _Azure Managed Prometheus_ built-in dashboards.
+- Select _Kubernetes | Compute Resources | Namespace (Workloads)_ dashboard under _Azure Managed Prometheus_ dashboard template.
 
   ![Screenshot showing Grafana dashboard 01](./artifacts/media/monitor_grafana_builtin_01.png)
 
@@ -90,7 +90,7 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 #### Import Grafana dashboards
 
-- In addition to built-in dashboards, you can import Grafana dashboards. Browse to Azure Monitor and select _Dashboards with Grafana_. Click on _New_ and select _Import_.
+- In addition to dashboard templates, you can import Grafana dashboards. Browse to Azure Monitor and select _Dashboards with Grafana_. Click on _New_ and select _Import_.
 
   ![Screenshot showing Grafana dashboard import 01](./artifacts/media/monitor_grafana_import_01.png)
 
@@ -109,6 +109,6 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 ### Resources
 
-- See [Grafana with Azure Monitor Dashboards (preview)](https://TBD) for the full instructions to set this up yourself.
-- Enable monitoring for Azure Arc-enabled Kubernetes clusters using [Managed Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/kubernetes-monitoring-enable?tabs=cli#arc-enabled-cluster).
-- Enable monitoring for Azure Kubernetes clusters using [Managed Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/kubernetes-monitoring-enable?tabs=cli#aks-cluster).
+- See [Use Azure Monitor dashboards with Grafana](https://aka.ms/DashboardsWithGrafanaDocs) for the full instructions to set this up yourself.
+- Enable monitoring for Azure Arc-enabled Kubernetes clusters using [Managed Prometheus](https://learn.microsoft.com/azure/azure-monitor/containers/kubernetes-monitoring-enable?tabs=cli#arc-enabled-cluster).
+- Enable monitoring for Azure Kubernetes clusters using [Managed Prometheus](https://learn.microsoft.com/azure/azure-monitor/containers/kubernetes-monitoring-enable?tabs=cli#aks-cluster).
