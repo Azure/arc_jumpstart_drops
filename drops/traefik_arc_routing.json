@@ -1,5 +1,5 @@
 {
-    "Title": "Service auto-discovery and routing with Traefik on Arc-enabled Kubernetes using FluxCD and Terraform",
+    "Title": "Service auto-discovery and routing with Traefik",
     "Summary": "This Jumpstart Drop provides configurations for setting up routing rules in Traefik across multiple Arc-enabled Kubernetes clusters to expose sample Traefik Airlines applications.",
     "Description": "This Jumpstart Drop demonstrates how to configure routing capabilities in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for routing rules and service discovery. The drop showcases the deployment of multiple sample applications (employees, customers, flights, and tickets) using FluxCD GitOps approach with Terraform provider integration.",
     "Cover": "",
