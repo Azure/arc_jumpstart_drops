@@ -55,7 +55,7 @@ cd ./script_automation/aks_kaito
 chmod 700 ./artifacts/scripts/install_kaito.sh
 ./artifacts/scripts/install_kaito.sh
 ```
-![Screenshot of KAITO installed](./kaito_installed.png)
+![Screenshot of KAITO installed](./artifacts/media/kaito_installed.png)
 
 ### Step 4: Prompt the model
 
