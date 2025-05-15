@@ -16,16 +16,17 @@
       "Terraform"
     ],
     "Products": [
-      "Azure Arc",
       "Arc-enabled Kubernetes",
-      "Kubernetes",
-      "Terraform"
+      "Traefik",
+      "k3s"
     ],
     "LastModified": "2025-05-15T20:34:24.000Z",
     "CreatedDate": "2025-05-15T20:34:24.000Z",
     "Topics": [
+      "k3s",
+      "k3d",
+      "AKS",
       "Cluster Management",
-      "Infrastructure as Code",
-      "Azure Arc"
+      "Infrastructure as Code"
     ]
 }

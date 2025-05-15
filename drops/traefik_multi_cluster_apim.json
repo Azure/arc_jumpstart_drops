@@ -16,15 +16,27 @@
       "Terraform"
     ],
     "Products": [
-      "Azure Arc",
       "Arc-enabled Kubernetes",
       "Traefik",
-      "API Gateway",
-      "API Management",
-      "Kubernetes",
-      "Azure DevOps"
+      "API Gateway"
     ],
     "LastModified": "2025-05-15T15:55:31.511Z",
     "CreatedDate": "2025-05-15T15:55:31.511Z",
-    "Topics": []
-  }
+    "Topics": [
+      "Traefik",
+      "k3s",
+      "k3d",
+      "AKS",
+      "Routing",
+      "Service Discovery",
+      "Load Balancing",
+      "Terraform",
+      "API Gateway",
+      "API Management",
+      "Cluster Management",
+      "Infrastructure as Code",
+      "TLS/SSL",
+      "Certificate Management",
+      "Encryption"
+    ]
+} 

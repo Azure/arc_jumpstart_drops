@@ -16,10 +16,9 @@
       "Terraform"
     ],
     "Products": [
-      "Azure Arc",
       "Arc-enabled Kubernetes",
       "Traefik",
-      "FluxCD"
+      "API Gateway"
     ],
     "LastModified": "2025-05-15T20:34:24.000Z",
     "CreatedDate": "2025-05-15T20:34:24.000Z",
@@ -29,6 +28,10 @@
       "Service Discovery",
       "Load Balancing",
       "FluxCD",
-      "Terraform"
+      "Terraform",
+      "API Gateway",
+      "API Management",
+      "Cluster Management",
+      "Infrastructure as Code"
     ]
 }
