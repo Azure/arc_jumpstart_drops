@@ -1,5 +1,5 @@
 {
-    "Title": "Multi-cluster TLS management using Traefik on Arc-enabled Kubernetes",
+    "Title": "Multi-cluster TLS cert management using Traefik",
     "Summary": "This Jumpstart Drop provides configurations for setting up secure TLS/SSL in Traefik across multiple Arc-enabled Kubernetes clusters.",
     "Description": "This Jumpstart Drop demonstrates how to configure TLS/SSL security in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for certificate management, automatic TLS generation using Let's Encrypt ACME challenge, and secure communication between services.",
     "Cover": "",
