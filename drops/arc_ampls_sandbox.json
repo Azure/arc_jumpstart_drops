@@ -1,0 +1,30 @@
+{
+  "Title": "Azure Arc + AMPLS Sandbox (Private Environment)",
+  "Summary": "This Drop combines Azure Arc and AMPLS to provide a fully private sandbox for monitoring on-premises servers with Azure Monitor using a unified and secure approach.",
+  "Description": "This repository sets up a complete sandbox to explore Azure Arc combined with Azure Monitor Private Link Scope (AMPLS), demonstrating how to securely collect and analyze telemetry from on-premises servers using Azure Monitor—all in a network-isolated, private-by-design architecture.",
+  "Authors": [
+    {
+      "Name": "VACCARO Nicolas",
+      "Link": "https://www.linkedin.com/in/nicolasvac/"
+    }
+  ],
+ "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_ampls_sandbox",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "PowerShell",
+    "Terraform"
+  ],
+  "Products": [
+    "Azure Monitor",
+    "Azure Arc",
+    "Infrastructure"
+  ],
+  "LastModified": "2025-005-15T18:25:43.511Z",
+  "CreatedDate": "2025-05-15T10:30:16.201Z",
+  "Topics": [  "Private Link",
+  "Hybrid Monitoring",
+  "Azure Arc Servers",
+  "Infrastructure as Code",
+  "Security"]
+}
