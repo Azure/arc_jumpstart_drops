@@ -1,0 +1,26 @@
+{
+    "Title": "Monitor Arc Agent Logs",
+    "Summary": "This solution centralizes azcmagent.log files from Azure Arc-enabled servers into Log Analytics, enabling streamlined troubleshooting and deeper insights—eliminating the need to access logs on individual machines.",
+    "Description": "This drop introduces a streamlined approach to troubleshooting the Azure Arc Connected Machine Agent by centralizing azcmagent.log files from hybrid servers into a single Log Analytics Workspace. Instead of manually accessing logs on individual machines, users can now collect, transform, and analyze these logs centrally using Azure Monitor, Data Collection Rules, and custom tables. The guide walks through setting up the necessary Azure resources, configuring data collection, and applying KQL transformations to structure unstructured log data—enhancing observability and simplifying diagnostics across hybrid environments.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Tom Claes",
+        "Link": "https://www.linkedin.com/in/tomclaes-/"
+      }
+    ],
+    "Source": "https://github.com/claestom/azcmagent-logging-azuremonitor",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "KQL"
+    ],
+    "Products": [
+      "Azure Arc-enabled Servers",
+      "Azure Monitor",
+      "Azure Arc"
+    ],
+    "LastModified": "2025-05-13T21:47:29.894Z",
+    "CreatedDate": "2025-05-13T21:51:29.894Z",
+    "Topics": []
+  }
