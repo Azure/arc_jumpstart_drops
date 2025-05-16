@@ -1,0 +1,89 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: example-sftp
+  labels:
+    app: example-sftp
+  namespace: "default"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-sftp
+  template:
+    metadata:
+      labels:
+        app: example-sftp
+    spec:
+      containers:
+        - image: lscr.io/linuxserver/openssh-server:latest
+          name: openssh-server
+          ports:
+            - containerPort: 22
+              name: ssh
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: USER_NAME
+              value: "demo"
+            - name: USER_PASSWORD
+              value: "demo"
+            - name: PASSWORD_ACCESS
+              value: "true"
+          volumeMounts:
+            - name: acsa
+              mountPath: "/config/acsa"
+        - image: mcr.microsoft.com/cbl-mariner/base/core:2.0
+          name: mariner
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "dd if=/dev/urandom of=/tmp/demofile count=16 bs=1M && while true; do sleep 1; done"
+      volumes:
+        - name: acsa
+          persistentVolumeClaim:
+            claimName: acsa-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-sftp-service
+  namespace: default
+spec:
+  selector:
+    app: example-sftp
+  ports:
+    - protocol: TCP
+      port: 22
+      targetPort: 2222
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  ### Create a name for your PVC ###
+  name: acsa-pvc
+  ### Use a namespace that matched your intended consuming pod, or "default" ###
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      ### Determine the size of your PVC allocation ###
+      storage: 10Gi
+  storageClassName: cloud-backed-sc
+---
+apiVersion: "arccontainerstorage.azure.net/v1"
+kind: EdgeSubvolume
+metadata:
+  name: acsa-pvc # Needs to match line 67 above
+spec:
+  edgevolume: acsa-pvc # Needs to match line 67 above
+  path: exampleSubDir # Don't use a preceding slash.
+  auth:
+    authType: MANAGED_IDENTITY
+  storageaccountendpoint: "https://STORAGEACCOUNT.blob.core.windows.net/" # Replace with your blob storage account location
+  container: sftp # Associated container in your storage account, sftp here as an example
