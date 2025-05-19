@@ -1,0 +1,37 @@
+{
+    "Title": "Service auto-discovery and routing with Traefik",
+    "Summary": "This Jumpstart Drop provides configurations for setting up routing rules in Traefik across multiple Arc-enabled Kubernetes clusters to expose sample Traefik Airlines applications.",
+    "Description": "This Jumpstart Drop demonstrates how to configure routing capabilities in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for routing rules and service discovery. The drop showcases the deployment of multiple sample applications (employees, customers, flights, and tickets) using FluxCD GitOps approach with Terraform provider integration.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/3-routing",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "API Gateway"
+    ],
+    "LastModified": "2025-05-15T20:34:24.000Z",
+    "CreatedDate": "2025-05-15T20:34:24.000Z",
+    "Topics": [
+      "Routing",
+      "Traefik",
+      "Service Discovery",
+      "Load Balancing",
+      "FluxCD",
+      "Terraform",
+      "API Gateway",
+      "API Management",
+      "Cluster Management",
+      "Infrastructure as Code"
+    ]
+}

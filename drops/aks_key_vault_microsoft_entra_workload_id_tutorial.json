@@ -1,0 +1,37 @@
+{
+  "Title": "Microsoft Entra Workload ID with AKS",
+  "Summary": "This Jumpstart Drop shows how to use Microsoft Entra Workload ID with Azure Kubernetes Service (AKS) to securely access Azure resources like Key Vault from pods using managed identities.",
+  "Description": "This Jumpstart Drop provides a guide on implementing Microsoft Entra Workload ID within an Azure Kubernetes Service (AKS) cluster. Workload ID enables applications running in AKS to securely access Microsoft Entra protected resources, such as Azure Key Vault and Microsoft Graph, by assigning them managed identities. This drop explains how Workload ID leverages Kubernetes' Service Account Token Volume Projection and OIDC federation to provide pods with a Kubernetes identity that can be trusted by Microsoft Entra applications and user-defined managed identities. You'll learn how to create a managed identity, federate it with a Kubernetes service account, and then use the Azure Identity SDKs or MSAL within your application code to obtain Microsoft Entra access tokens, enabling secure and passwordless access to Azure services.",
+  "Cover": "https://raw.githubusercontent.com/paolosalvatori/aks-key-vault/main/jumpstart_drops/microsoft-entra-workload-id/artifacts/media/workload-id-model.png",
+  "Authors": [
+    {
+      "Name": "Paolo Salvatori",
+      "Link": "https://www.linkedin.com/in/paolo-salvatori/"
+    },
+    {
+      "Name": "Kiana Harris",
+      "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+    }
+  ],
+  "Source": "https://github.com/paolosalvatori/aks-key-vault/tree/main/jumpstart_drops/microsoft-entra-workload-id",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Bash",
+    "Shell",
+    "YAML"
+  ],
+  "Products": [
+    "Azure Kubernetes Service",
+    "Azure Key Vault",
+    "Microsoft Entra Workload ID"
+  ],
+  "LastModified": "2025-03-07T18:25:43.511Z",
+  "CreatedDate": "2025-03-06T10:30:16.201Z",
+  "Topics": [
+    "AKS",
+    "Kubernetes",
+    "Microsoft Entra Workload ID",
+    "Secrets"
+  ]
+}
