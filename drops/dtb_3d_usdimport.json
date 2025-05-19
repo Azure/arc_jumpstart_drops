@@ -1,0 +1,30 @@
+{
+    "Title": "3D USD Import and Export For Digital Twin Builder", 
+    "Summary": "3D USD Import and Export For Digital Twin Builder is a series of notebooks and functions to allow users of Digital Twin Builder to Import and Contextaulize 3D files in USD, as well as Export metadata from the twin into existing USD files.",
+    "Description": "This demo leverages the OpenUSD libraries to extract relevant 3D metadata from within a file, and allows users to contexualize 3D alongside traditional IT and OT Data. We aim to provide an intitial 'Getting Started' jumpstart point for users wishing to include 3D Files within their digital twin data estate",
+    "Authors": [
+        {
+            "Name": "Adam Lash",
+            "Link": "https://www.linkedin.com/in/adam-lash-9b337165"
+        },
+        {
+            "Name": "Vindhya Banda",
+            "Link": "https://www.linkedin.com/in/vindhya-banda"
+          }        
+    ],
+    "Source": "https://github.com/adamlash/usd-import-for-dtb",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "USD",
+        "Python"
+    ],
+    "Products": [
+        "Digital Twin Builder",
+        "Fabric",
+        "Nvidia Omniverse"
+    ],
+    "LastModified": "2025-05-10T13:54:39.000Z",
+    "CreatedDate": "2025-05-110T10:30:16.201Z",
+    "Topics": []
+}
