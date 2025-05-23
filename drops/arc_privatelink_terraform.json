@@ -1,0 +1,31 @@
+{
+  "Title": "Azure Arc with Private Link (Terraform)",
+  "Summary": "This Jumpstart Drop deploys a hybrid Azure Arc infrastructure with secure onboarding using Private Link, VNet-to-VNet VPN, Bastion for RDP, and DNS isolation via Terraform.",
+  "Description": "This Jumpstart Drop demonstrates how to deploy a complete hybrid Azure Arc scenario using Terraform. It simulates an on-premises environment connected to Azure via VNet-to-VNet VPN Gateway. A Windows Server VM is onboarded to Azure Arc through a Custom Script Extension, with traffic isolated using Private Link and Private DNS Zones. Azure Bastion provides secure RDP access. This Drop aligns with best practices from the Azure Arc Jumpstart project.",
+  "Authors": [
+    {
+      "Name": "Nicolas VACCARO",
+      "Link": "https://www.linkedin.com/in/nicolasvac/"
+    }
+  ],
+  "Source": "https://github.com/technicalandcloud/Azure_Arc_PrivateLink",
+  "Type": "terraform",
+  "Difficulty": "Intermediate",
+  "ProgrammingLanguage": [
+    "Terraform",
+    "PowerShell"
+  ],
+  "Products": [
+    "Azure Arc",
+    "Azure Bastion",
+    "Azure Private Link",
+    "Azure VPN Gateway"
+  ],
+  "LastModified": "2025-05-23T10:00:00.000Z",
+  "CreatedDate": "2025-05-23T09:00:00.000Z",
+  "Topics": [
+    "Hybrid Networking",
+    "Private Link",
+    "Azure Arc Jumpstart"
+  ]
+}
