@@ -1,0 +1,31 @@
+{
+  "Title": "OpenAPISpec with Traefik Developer Portal",
+  "Summary": "This Jumpstart Drop provides configurations for deploying APIs to Traefik Developer Portal and utilizing OpenAPI spec to generate API documentation.",
+  "Description": "This Jumpstart Drop provides configurations for deploying APIs to Traefik Developer Portal and utilizing OpenAPI spec to generate API documentation. It also demonstrates how to configure API Management authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Kubernetes clusters. As well as, leverage Entra ID to secure the Developer Portal.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Zaid Albirawi",
+      "Link": "https://www.linkedin.com/in/zalbiraw"
+    }
+  ],
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/7-developer-portal",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Terraform"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Traefik",
+    "Developer Portal"
+  ],
+  "LastModified": "2025-05-15T20:34:24.000Z",
+  "CreatedDate": "2025-05-15T20:34:24.000Z",
+  "Topics": [
+    "Traefik Management",
+    "Developer Portal",
+    "Terraform",
+    "Infrastructure as Code"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "Title": "Multi-cluster ACME TLS management using Traefik",
+  "Summary": "This Jumpstart Drop provides configurations for setting up secure TLS/SSL in Traefik across multiple Arc-enabled Kubernetes clusters.",
+  "Description": "This Jumpstart Drop demonstrates how to configure TLS/SSL security in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for certificate management, automatic TLS generation using Let's Encrypt ACME challenge, and secure communication between services.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Zaid Albirawi",
+      "Link": "https://www.linkedin.com/in/zalbiraw"
+    }
+  ],
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/4-acme-tls",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Terraform"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Traefik",
+    "API Gateway"
+  ],
+  "LastModified": "2025-05-27T00:00:00.000Z",
+  "CreatedDate": "2025-05-15T00:00:00.000Z",
+  "Topics": [
+    "Security",
+    "TLS/SSL",
+    "Certificate Management",
+    "Encryption",
+    "Traefik",
+    "Traefik Proxy",
+    "ACME",
+    "Terraform",
+    "API Gateway",
+    "API Management",
+    "Infrastructure as Code"
+  ]
+}

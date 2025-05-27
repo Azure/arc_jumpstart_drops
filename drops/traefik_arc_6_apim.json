@@ -1,0 +1,33 @@
+{
+  "Title": "API Management multi-cluster API security using Traefik",
+  "Summary": "This Jumpstart Drop provides configurations for implementing API Management security with Traefik and Microsoft Entra ID across multiple Kubernetes clusters.",
+  "Description": "This Jumpstart Drop demonstrates how to configure API Management authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Kubernetes clusters. It includes configurations for creating Microsoft Entra ID applications, and setting up user groups for role-based access control.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Zaid Albirawi",
+      "Link": "https://www.linkedin.com/in/zalbiraw"
+    }
+  ],
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/6-api-management",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Terraform"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Traefik",
+    "API Gateway"
+  ],
+  "LastModified": "2025-05-27T00:00:00.000Z",
+  "CreatedDate": "2025-05-27T00:00:00.000Z",
+  "Topics": [
+    "Security",
+    "Traefik Management",
+    "OAuth2.0",
+    "API Gateway",
+    "Terraform",
+    "Infrastructure as Code"
+  ]
+}
