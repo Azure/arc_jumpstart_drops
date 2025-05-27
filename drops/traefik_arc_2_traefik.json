@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/zalbiraw"
     }
   ],
-  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/2-traefik",
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/v2-updates/2-traefik",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
