@@ -1,7 +1,7 @@
 {
   "Title": "Oauth2.0 multi-cluster API security using Traefik",
-  "Summary": "This Jumpstart Drop provides configurations for implementing OAuth2.0 security with Traefik and Microsoft Entra ID across multiple Kubernetes clusters.",
-  "Description": "This Jumpstart Drop demonstrates how to configure OAuth2.0 authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Kubernetes clusters. It includes configurations for creating Microsoft Entra ID applications, setting up user groups for role-based access control, and securing applications with OAuth2.0 authentication flows.",
+  "Summary": "This Jumpstart Drop provides configurations for implementing OAuth2.0 security with Traefik and Microsoft Entra ID across multiple Arc-enabled Kubernetes clusters.",
+  "Description": "This Jumpstart Drop demonstrates how to configure OAuth2.0 authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Arc-enabled Kubernetes clusters. It includes configurations for creating Microsoft Entra ID applications, setting up user groups for role-based access control, and securing applications with OAuth2.0 authentication flows.",
   "Cover": "",
   "Authors": [
     {
@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/zalbiraw"
     }
   ],
-  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/v2-updates/5-oauth2",
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/5-oauth2",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
@@ -27,6 +27,7 @@
     "Traefik",
     "Traefik Gateway",
     "OAuth2.0",
+    "Microsoft Entra ID",
     "Terraform",
     "API Gateway",
     "Infrastructure as Code"

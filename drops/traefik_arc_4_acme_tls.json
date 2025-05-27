@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/zalbiraw"
     }
   ],
-  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/v2-updates/4-acme-tls",
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/4-acme-tls",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
@@ -31,8 +31,6 @@
     "Traefik Proxy",
     "ACME",
     "Terraform",
-    "API Gateway",
-    "API Management",
     "Infrastructure as Code"
   ]
 }
