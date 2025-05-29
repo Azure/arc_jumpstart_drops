@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/zalbiraw"
     }
   ],
-  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/7-developer-portal",
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/v2-updates/7-developer-portal",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
@@ -20,7 +20,7 @@
     "Traefik",
     "Developer Portal"
   ],
-  "LastModified": "2025-05-27T00:00:00.000Z",
+  "LastModified": "2025-05-29T00:00:00.000Z",
   "CreatedDate": "2025-05-27T00:00:00.000Z",
   "Topics": [
     "Security",

@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/zalbiraw"
     }
   ],
-  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/1-clusters",
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/v2-updates/1-clusters",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
@@ -20,7 +20,7 @@
     "Traefik",
     "k3s"
   ],
-  "LastModified": "2025-05-27T00:00:00.000Z",
+  "LastModified": "2025-05-29T00:00:00.000Z",
   "CreatedDate": "2025-05-15T00:00:00.000Z",
   "Topics": [
     "k3s",
