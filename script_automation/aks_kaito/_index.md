@@ -89,7 +89,7 @@ kubectl run -it --rm --restart=Never curl --image=curlimages/curl -- curl -X POS
 
 * **Deployment Failures**: If KAITO fails to deploy, inspect the pod logs using kubectl for more details on the errors.
 
-## Further learning
+## Further Learning & Resources
 
 * Check out the [KAITO](https://github.com/kaito-project/kaito) repository for more examples and use cases to try.
 * Learn about the [KAITO AKS extension](https://learn.microsoft.com/azure/aks/aks-extension-kaito)
