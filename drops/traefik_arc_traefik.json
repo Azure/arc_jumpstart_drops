@@ -1,5 +1,5 @@
 {
-  "Title": "Traefik Proxy deployment on Arc-enabled Kubernetes",
+  "Title": "Traefik Deployment on Arc-enabled Kubernetes",
   "Summary": "This Jumpstart Drop demonstrates how to deploy and configure Traefik as an ingress controller in Azure Arc-enabled Kubernetes clusters.",
   "Description": "This Jumpstart Drop provides Terraform and Kubernetes configurations for deploying Traefik as an ingress controller in Azure Arc-enabled Kubernetes environments. This drop focuses on setting up Traefik as a reliable ingress controller in multi-cluster Arc kubernetes environments.",
   "Cover": "",
