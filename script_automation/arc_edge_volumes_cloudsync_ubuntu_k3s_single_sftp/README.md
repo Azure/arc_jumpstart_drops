@@ -29,18 +29,18 @@ Use the following table to determine the values to be used in the export block b
 
 |Variable        | Required Parameter                                             | Example |
 |----------------|----------------------------------------------------------------|-----------------|
-|YOUR-REGION          | Azure Region you wish to deploy in                             | eastus          |
-|YOUR-RESOURCE-GROUP  | The Resource Group you created with the storage account in it  | myResourceGroup |
-|YOUR-SUBSCRIPTION    | The Azure Subscription ID you are using                        | nnnn-nnnnnnn-nnn|
-|YOUR-CLUSTER-NAME        | The name you would like your ARC cluster to be called in Azure | myArcClusterName|
-|YOUR-STORAGEACCOUNT  | The name of the storage account you created                    | myStorageAccount|
+|REGION          | Azure Region you wish to deploy in                             | eastus          |
+|RESOURCE_GROUP  | The Resource Group you created with the storage account in it  | myResourceGroup |
+|SUBSCRIPTION    | The Azure Subscription ID you are using                        | nnnn-nnnnnnn-nnn|
+|ARCNAME        | The name you would like your ARC cluster to be called in Azure | myArcClusterName|
+|STORAGEACCOUNT  | The name of the storage account you created                    | myStorageAccount|
 
 ```bash
-export YOUR-REGION="eastus"
-export YOUR-RESOURCE-GROUP="myResourceGroup"
-export YOUR-SUBSCRIPTION="your-subscription-id-here"
-export YOUR-CLUSTER-NAME="myArcClusterName"
-export YOUR-STORAGEACCOUNT="myStorageAccountName"
+export REGION="eastus"
+export RESOURCE_GROUP="myResourceGroup"
+export SUBSCRIPTION="your-subscription-id-here"
+export ARCNAME="myArcClusterName"
+export STORAGEACCOUNT="myStorageAccountName"
 ```
 
 ### Apply inotify.max_user_instance increase
@@ -55,26 +55,26 @@ sudo sysctl -p
 ### Arc Connect Kubernetes
 
 ```bash
-az connectedk8s connect -n ${YOUR-CLUSTER-NAME} -l ${YOUR-REGION} -g ${YOUR-RESOURCE-GROUP} --subscription ${YOUR-SUBSCRIPTION}
+az connectedk8s connect -n ${ARCNAME} -l ${REGION} -g ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION}
 ```
 
 ### Install package for certificate management
 
 ```bash
-az k8s-extension create --cluster-name "${YOUR-CLUSTER-NAME}" --name "${YOUR-CLUSTER-NAME}-certmgr" --resource-group "${YOUR-RESOURCE-GROUP}" --cluster-type connectedClusters --release-train preview --extension-type microsoft.iotoperations.platform --scope cluster --release-namespace cert-manager
+az k8s-extension create --cluster-name "${ARCNAME}" --name "${ARCNAME}-certmgr" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters --release-train preview --extension-type microsoft.iotoperations.platform --scope cluster --release-namespace cert-manager
 ```
 
 ### Install Azure Container Storage enabled by Azure Arc Extension with Config CRD creation
 
 ```bash
-az k8s-extension create --resource-group "${YOUR-RESOURCE-GROUP}" --cluster-name "${YOUR-CLUSTER-NAME}" --cluster-type connectedClusters --name "acsa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.containerstorage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
+az k8s-extension create --resource-group "${RESOURCE_GROUP}" --cluster-name "${ARCNAME}" --cluster-type connectedClusters --name "acsa-`mktemp -u XXXXXX`" --extension-type microsoft.arc.containerstorage --config feature.diskStorageClass="default,local-path" --config  edgeStorageConfiguration.create=true
 ```
 
 ### Assign role to storage account
 
 ```bash
-export pid=`az k8s-extension list --cluster-name "${YOUR-CLUSTER-NAME}" --resource-group "${YOUR-RESOURCE-GROUP}" --cluster-type connectedClusters | jq --arg extType "microsoft.arc.containerstorage" 'map(select(.extensionType == $extType)) | .[] | .identity.principalId' -r`
-az role assignment create --assignee $pid --role "Storage Blob Data Owner" --scope "/subscriptions/${YOUR-SUBSCRIPTION}/resourceGroups/${YOUR-RESOURCE-GROUP}/providers/Microsoft.Storage/storageAccounts/${YOUR-STORAGEACCOUNT}"
+export pid=`az k8s-extension list --cluster-name "${ARCNAME}" --resource-group "${RESOURCE_GROUP}" --cluster-type connectedClusters | jq --arg extType "microsoft.arc.containerstorage" 'map(select(.extensionType == $extType)) | .[] | .identity.principalId' -r`
+az role assignment create --assignee $pid --role "Storage Blob Data Owner" --scope "/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${STORAGEACCOUNT}"
 ```
 
 ### Configure ACSA with an SFTP Front End
