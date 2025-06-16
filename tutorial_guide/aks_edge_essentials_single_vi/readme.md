@@ -146,7 +146,7 @@ The [Video Indexer web portal](https://www.videoindexer.ai/) can be used with th
 
 - Open the [Video Indexer web portal](https://www.videoindexer.ai/) and follow the following steps:
 
-    <div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.7795753286147624; padding: 40px 0 40px 0;"><iframe src="https://app.supademo.com/embed/cmbzgxpqy005eyj0ju5oly2g3?embed_v=2" loading="lazy" title="New Demo" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.7795753286147624; padding: 40px 0 40px 0;"><iframe src="https://app.supademo.com/embed/cmbzgxpqy005eyj0ju5oly2g3?embed_v=2" loading="lazy" title="Azure AI Video Indexer (https://www.videoindexer.ai)" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ### Video Indexer Web API
 
