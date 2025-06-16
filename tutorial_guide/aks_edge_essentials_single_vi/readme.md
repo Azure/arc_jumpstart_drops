@@ -100,7 +100,9 @@ By design, port 3389 is not allowed on the network security group. Therefore, yo
 
 <div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.6260236578707916; padding: 40px 0 40px 0;"><iframe src="https://app.supademo.com/embed/cmbsdrchy013jyd0isyx1g3nv?embed_v=2" loading="lazy" title="How to Add Inbound Security Rule" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-    > **Note:** Some Azure environments may have additional [Azure Virtual Network Manager](https://azure.microsoft.com/products/virtual-network-manager) restrictions that prevent RDP access using port 3389. In these cases, you can change the port that RDP listens on by passing a port value to the rdpPort parameter in the Bicep plan parameters file.
+> **Note:** If the above tutorial is not rendering properly, please visit the URL directly [here](https://app.supademo.com/embed/cmbsdrchy013jyd0isyx1g3nv?embed_v=2).
+
+> **Note:** Some Azure environments may have additional [Azure Virtual Network Manager](https://azure.microsoft.com/products/virtual-network-manager) restrictions that prevent RDP access using port 3389. In these cases, you can change the port that RDP listens on by passing a port value to the rdpPort parameter in the Bicep plan parameters file.
 
 ### Connect using just-in-time access (JIT)
 
@@ -147,6 +149,8 @@ The [Video Indexer web portal](https://www.videoindexer.ai/) can be used with th
 - Open the [Video Indexer web portal](https://www.videoindexer.ai/) and follow the following steps:
 
     <div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.7795753286147624; padding: 40px 0 40px 0;"><iframe src="https://app.supademo.com/embed/cmbzgxpqy005eyj0ju5oly2g3?embed_v=2" loading="lazy" title="Azure AI Video Indexer (https://www.videoindexer.ai)" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+    > **Note:** If the above tutorial is not rendering properly, please visit the URL directly [here](https://app.supademo.com/embed/cmbzgxpqy005eyj0ju5oly2g3?embed_v=2).
 
 ### Video Indexer Web API
 
