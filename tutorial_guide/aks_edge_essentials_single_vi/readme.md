@@ -55,9 +55,9 @@ As mentioned, this deployment will leverage ARM templates. You will deploy a sin
 
 - Download and uncompress this Arc Jumpstart Drop
 
-- Before deploying the ARM template, login to Azure using Azure CLI with the *`az login`* command.
+- Before deploying the ARM template, login to Azure using Azure CLI with the `az login` command.
 
-- The deployment uses the Bicep parameters file. Before initiating the deployment, edit the [_main.parameters.json_](./bicep/main.parameters.json) file located in your local cloned repository folder. An example parameters file is located [here](./bicep/main.parameters.example.json).
+- The deployment uses the Bicep parameters file. Before initiating the deployment, edit the [_main.parameters.json_](./bicep/main.parameters.json) file located in your local cloned repository folder. An example parameters file is located [here](./bicep/temp.parameters.json).
 
   - _`windowsAdminUsername`_ - Username for the Windows Client VM.
   - _`windowsAdminPassword`_ - Password for the Windows Client VM.
@@ -98,15 +98,7 @@ Once the Bicep plan is deployed, you must connect to the _VM-Client_ Azure VM us
 
 By design, port 3389 is not allowed on the network security group. Therefore, you must create an NSG rule to allow inbound 3389.
 
-- Open the _NSG-Prod_ resource in Azure portal and click "Add" to add a new rule.
-
-  ![Screenshot showing NSG-Prod with blocked RDP](./Media/nsg_no_rdp.png)
-
-- Specify "My IP address" in the Source dropdown, then enter the desired destination port (3389 is default) and click Add.
-
-  ![Screenshot showing adding a new inbound security rule](./Media/nsg_add_rdp_rule.png)
-
-  ![Screenshot showing all NSG rules after opening RDP](./Media/nsg_rdp_rule.png)
+<div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.6260236578707916; padding: 40px 0 40px 0;"><iframe src="https://app.supademo.com/embed/cmbsdrchy013jyd0isyx1g3nv?embed_v=2" loading="lazy" title="How to Add Inbound Security Rule" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
     > **Note:** Some Azure environments may have additional [Azure Virtual Network Manager](https://azure.microsoft.com/products/virtual-network-manager) restrictions that prevent RDP access using port 3389. In these cases, you can change the port that RDP listens on by passing a port value to the rdpPort parameter in the Bicep plan parameters file.
 
@@ -152,57 +144,9 @@ The [Video Indexer web portal](https://www.videoindexer.ai/) can be used with th
 
   ![Screenshot showing access to web API info endpoint](./Media/portal_api_info.png)
 
-- Open the [Video Indexer web portal](https://www.videoindexer.ai/) and sign in with your AAD account.
+- Open the [Video Indexer web portal](https://www.videoindexer.ai/) and follow the following steps:
 
-  ![Screenshot showing login to VI portal](./Media/portal_login.png)
-
-- Switch to the Video Indexer extension by clicking the dropdown in the upper right corner where your account GUID is shown.
-
-  ![Screenshot showing switching to the Arc extension](./Media/portal_switch_account.png)
-
-- Select the extension from the left pane and then click the "Upload" button.
-
-  ![Screenshot showing selecting the extension](./Media/portal_upload_video.png)
-
-- You can upload your own video or you can use the one included on the Client VM located at "C:\Temp\video.mp4". Select the video you want to upload, set the video name and source language, then check the consent checkbox to agree to the terms and conditions.
-
-  > **Note:** You can upload up to 10 video files at a time.
-
-  ![Screenshot showing upload options](./Media/portal_upload_options1.png)
-
-- Click on "Advance settings" and then "Indexing". Here you can choose the set of AIs to use when indexing your video content. For this scenario we will choose the "Basic video + audio" preset.
-
-  ![Screenshot showing advanced settings preset](./Media/portal_click_adv_settings.png)
-
-  ![Screenshot showing indexing settings](./Media/portal_adv_settings.png)
-
-- Click on "Upload + index" to start the upload process. Once the upload process is finished, you may close the dialog box.
-
-  ![Screenshot showing upload progress](./Media/portal_video_uploading.png)
-
-- The uploaded video will be added to the Video library page, and a progress bar will appear to indicate the indexing process.
-
-  ![Screenshot showing indexing progress](./Media/portal_video_indexing.png)
-
-- After the indexing is done, you can view the insights by selecting the video. Go to the video page by clicking on the indexed video.
-
-  ![Screenshot showing video page](./Media/portal_video_page.png)
-
-- First, click on play video. The video will be streamed from the local location set at the extension installation.
-
-  ![Screenshot showing video playing](./Media/portal_play_video.png)
-
-- Click on "Timeline" to view the video transcription including the time stamps. Check that while the video is playing the correct transcript line is highlighted. The text can be translated to one of the supported languages: English (US), Spanish, German, French, Italian, Chinese (Simplified) and Arabic. Click on the dropdown on the top right of the page and select German.
-
-  ![Screenshot showing video language translation options](./Media/portal_language_select.png)
-
-- Now the transcript shown on the right of the page will display the translated transcript in the selected language.
-
-  ![Screenshot showing video transcript](./Media/portal_translated.png)
-
-- Turn on the captions by clicking on the text bubble icon on the bottom right side of the player and selecting one of the supported languages. Captions should start to show while the video is playing.
-
-  ![Screenshot showing captions](./Media/portal_captions.png)
+    <div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.7795753286147624; padding: 40px 0 40px 0;"><iframe src="https://app.supademo.com/embed/cmbzgxpqy005eyj0ju5oly2g3?embed_v=2" loading="lazy" title="New Demo" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ### Video Indexer Web API
 

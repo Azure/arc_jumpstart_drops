@@ -5,8 +5,16 @@
     "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/aks_edge_essentials_single_vi/arch_diagram.png",
     "Authors": [
         {
+            "Name": "Dale Kirby",
+            "Link": "https://www.linkedin.com/in/dale-kirby/"
+        },
+        {
             "Name": "Anthony Joint",
             "Link": "https://www.linkedin.com/in/anthonyjoint/"
+        },
+        {
+            "Name": "Kiana Harris",
+            "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
         }
     ],
     "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/aks_edge_essentials_single_vi",
