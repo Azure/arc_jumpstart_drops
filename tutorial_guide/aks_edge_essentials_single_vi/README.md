@@ -181,9 +181,11 @@ Now we will use the Web API to index a video by making API calls through the Pos
 
   ![Screenshot showing VI access token](./Media/generate_access_token.png)
 
-- Open the Postman client from the shortcut on the Client VM desktop, and then select "lightweight API client".
+- Open the Postman client from the shortcut on the Client VM desktop, select "Continue without an account", and then "Open Lightweight API Client".
 
-  ![Screenshot showing Video Streaming](./Media/open_postman.png)
+  ![Screenshot showing Postman Welcome Screen](./Media/open_postman.png)
+
+  ![Screenshot showing Postman Lightweight API Client selection](./Media/open_postman_lightweight_api.png)
 
 - Using Postman, make a GET request to the Web API info function. Enter *`https://192.168.0.4/info`* for the URI and click Send. You should get a JSON object back representing the extension info and public endpoint. Note the "accountId" field as you will need it in the next step.
 
