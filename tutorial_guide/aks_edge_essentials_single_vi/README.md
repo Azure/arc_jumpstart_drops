@@ -203,7 +203,7 @@ Now we will use the Web API to index a video by making API calls through the Pos
 
   ![Screenshot showing Upload Video step 2](./Media/upload_2.png)
 
-- Switch to the "Body" tab. In the Key/value table enter a new key with name "fileName" and then and select the "File" option from the dropdown under the Key column.
+- Switch to the "Body" tab. Select "form-data". In the Key/value table enter a new key with name "fileName" and then and select the "File" option from the dropdown under the Key column.
 
   ![Screenshot showing Upload Video step 3](./Media/upload_3.png)
 
