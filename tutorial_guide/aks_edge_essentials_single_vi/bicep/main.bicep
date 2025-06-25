@@ -17,7 +17,7 @@ param storageAccountName string
 param videoIndexerAccountName string = 'videoIndexer'
 
 @description('Target GitHub account')
-param githubAccount string = 'microsoft'
+param githubAccount string = 'Azure'
 
 @description('Target GitHub branch')
 param githubBranch string = 'main'
@@ -34,7 +34,7 @@ param subnetName string = 'Subnet-VM'
 @description('Override default RDP port using this parameter. Default is 3389. No changes will be made to the client VM.')
 param rdpPort string = '3389'
 
-var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/azure_arc/${githubBranch}/azure_arc_k8s_jumpstart/aks_hybrid/aks_edge_essentials_single_vi/'
+var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/arc_jumpstart_drops/${githubBranch}/tutorial_guide/aks_edge_essentials_single_vi/'
 
 module videoIndexer 'videoIndexer.bicep' = {
   name: 'videoIndexerDeployment'
