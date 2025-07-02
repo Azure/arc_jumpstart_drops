@@ -1,0 +1,26 @@
+{
+  "Title": "Nitesh ",
+  "Summary": "qwefrgthgghdfg",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "nitesh",
+      "Link": "https://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    ".NET / C#"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh_",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "overview.png",
+  "CreatedDate": "2025-07-02T10:58:11.220Z",
+  "LastModified": "2025-07-02T10:58:11.220Z"
+}
