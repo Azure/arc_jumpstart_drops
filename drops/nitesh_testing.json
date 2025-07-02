@@ -1,0 +1,26 @@
+{
+  "Title": "nitesh testing",
+  "Summary": "Lorem ipsum is a placeholder or dummy text used in typesetting and graphic design for previewing layouts. ",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "niteshsoni",
+      "Link": "https:://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh_testing",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "overview.png",
+  "CreatedDate": "2025-07-02T15:48:31.701Z",
+  "LastModified": "2025-07-02T15:48:31.701Z"
+}
