@@ -1,0 +1,26 @@
+{
+  "Title": "Nitesh testing 1",
+  "Summary": "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "NItesh",
+      "Link": "http://github.com/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh_testing_1",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "overview.png",
+  "CreatedDate": "2025-07-03T08:19:46.058Z",
+  "LastModified": "2025-07-03T08:19:46.058Z"
+}
