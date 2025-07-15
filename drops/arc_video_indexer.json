@@ -1,0 +1,44 @@
+{
+    "Title": "Azure Arc Video Indexer Example",
+    "Summary": "This Jumpstart Drop provides scenario bicep files to create an Azure Arc Kubernetes system with Video Indexer installed",
+    "Description": "This project provides example scenario bicep files to create an Azure Arc connected Kubernetes system with Video Indexer. See README.md for details on editing and executing this scenario.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/aks_edge_essentials_single_vi/arch_diagram.png",
+    "Authors": [
+        {
+            "Name": "Anthony Joint",
+            "Link": "https://www.linkedin.com/in/anthonyjoint/"
+        },
+        {
+            "Name": "Dale Kirby",
+            "Link": "https://www.linkedin.com/in/dale-kirby/"
+        },
+        {
+            "Name": "Kiana Harris",
+            "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+        }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/aks_edge_essentials_single_vi",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "Bash",
+        "YAML",
+        "JSON"
+    ],
+    "Products": [
+        "Arc-enabled Kubernetes",
+        "Video Indexer",
+        "Azure Container Storage enabled by Azure Arc"
+    ],
+    "LastModified": "2025-07-03T12:10:43.511Z",
+    "CreatedDate": "2025-07-03T12:10:43.511Z",
+    "Topics": [
+        "VI",
+        "AI",
+        "ACSA",
+        "ACS",
+        "Arc",
+        "Kubernetes",
+        "ArcK8s"
+    ]
+}
