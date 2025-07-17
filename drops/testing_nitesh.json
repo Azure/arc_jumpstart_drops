@@ -1,0 +1,26 @@
+{
+  "Title": "Testing Nitesh",
+  "Summary": "It is a long established fact that a reader will be distracted by the readable content of",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "nitesh",
+      "Link": "https://github.com/profile/nitesh"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/testing_nitesh",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "overview.png",
+  "CreatedDate": "2025-07-17T14:30:50.089Z",
+  "LastModified": "2025-07-17T14:30:50.089Z"
+}
