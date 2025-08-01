@@ -8,7 +8,7 @@ Test description
 
 ## Prerequsities
 
-- Test prereq1  
+- prereq1 
 
 
 
@@ -20,7 +20,7 @@ Test description
 - Test 
 
 ## Development Artifacts
-#### Test subheader
+#### Subheader 2
 Test description
 
 

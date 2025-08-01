@@ -17,7 +17,7 @@
     "Azure Arc"
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/test_title",
-  "Difficulty": "Beginner",
+  "Difficulty": "Medium",
   "Topics": [
     "AI",
     "K3s",
@@ -25,6 +25,6 @@
   ],
   "Description": "",
   "Cover": "Screenshot 2024-10-22 153553.png",
-  "CreatedDate": "2025-08-01T16:09:09.825Z",
-  "LastModified": "2025-08-01T16:09:09.825Z"
+  "CreatedDate": "2025-08-01T16:11:34.355Z",
+  "LastModified": "2025-08-01T16:11:34.355Z"
 }
