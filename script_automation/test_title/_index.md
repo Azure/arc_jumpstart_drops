@@ -8,23 +8,23 @@ Test description
 
 ## Prerequsities
 
-- prereq1 
+- Test prereq1 
 
 
 
       
 
 ## Getting Started
-#### Test subheader
+#### Subheader 1
 Test description
 - Test 
 
 ## Development Artifacts
-#### Subheader 2
+#### Test sub2
 Test description
 
 
-![artifact selected]("./img/Screenshot 2024-10-22 153553.png")
+![artifact selected]("./img/JS Bundle.png")
 
 ## Resource
 #### Test description
