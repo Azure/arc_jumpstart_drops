@@ -1,21 +1,21 @@
 
 ## Overview
 
-![cover selected]("./img/Jumpstart Badges.png")
+![cover selected]("./img/Screenshot 2024-10-22 153553.png")
 
 ### Drop Details
 Test description
 
 ## Prerequsities
 
-- Test prereq 
+- Test prereq1  
 
 
 
       
 
 ## Getting Started
-#### Test sub-header
+#### Test subheader
 Test description
 - Test 
 
@@ -28,4 +28,4 @@ Test description
 
 ## Resource
 #### Test description
-- Test description
+- Test 
