@@ -1,18 +1,19 @@
 {
-  "Title": "NItesh",
-  "Summary": "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is th",
+  "Title": "nitesh",
+  "Summary": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
   "Type": "ui_dashboard_workbook",
   "Authors": [
     {
-      "Name": "NItesh",
-      "Link": "https://github.com/profile"
+      "Name": "Nitesh",
+      "Link": "https://nsajd.com/profile"
     }
   ],
   "ProgrammingLanguage": [
-    "Bicep"
+    "Ansible",
+    ".NET / C#"
   ],
   "Products": [
-    "Azure SQL Edge"
+    "Arc-enabled Kubernetes"
   ],
   "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh",
   "Difficulty": "Beginner",
@@ -20,7 +21,7 @@
     "AI"
   ],
   "Description": "",
-  "Cover": "574e3369-1aa8-4056-a136-2c8339f58be5.png",
-  "CreatedDate": "2025-07-24T14:11:25.927Z",
-  "LastModified": "2025-07-24T14:11:25.927Z"
+  "Cover": "IMG_3384.jpeg",
+  "CreatedDate": "2025-08-10T16:56:35.508Z",
+  "LastModified": "2025-08-10T16:56:35.508Z"
 }
