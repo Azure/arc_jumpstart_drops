@@ -13,7 +13,7 @@
             "Link": "https://github.com/bindsi"
         }
     ],
-    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-iac-terraform",
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-iac-terraform/blob/main",
     "Type": "script_automation",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
