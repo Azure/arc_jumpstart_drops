@@ -1,0 +1,30 @@
+{
+  "Title": "Test ",
+  "Summary": "Test ",
+  "Type": "script_automation",
+  "Authors": [
+    {
+      "Name": "Test ",
+      "Link": "https://aka.ms/arcjumpstart"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Bash",
+    "Bicep"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Azure Arc"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/test_",
+  "Difficulty": "Medium",
+  "Topics": [
+    "Kubernetes",
+    "AI",
+    "K3s"
+  ],
+  "Description": "",
+  "Cover": "JS Bundle.png",
+  "CreatedDate": "2025-08-11T15:13:07.011Z",
+  "LastModified": "2025-08-11T15:13:07.011Z"
+}
