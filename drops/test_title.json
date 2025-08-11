@@ -1,0 +1,29 @@
+{
+  "Title": "Test title",
+  "Summary": "test ",
+  "Type": "script_automation",
+  "Authors": [
+    {
+      "Name": "Kiana Harris",
+      "Link": "https://aka.ms/arcjumpstart"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Bash"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Azure Arc"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/test_title",
+  "Difficulty": "Medium",
+  "Topics": [
+    "Kubernetes",
+    "AI",
+    "K3s"
+  ],
+  "Description": "",
+  "Cover": "Screenshot 2024-10-22 153553.png",
+  "CreatedDate": "2025-08-11T15:11:34.035Z",
+  "LastModified": "2025-08-11T15:11:34.035Z"
+}
