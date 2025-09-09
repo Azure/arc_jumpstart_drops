@@ -16,7 +16,7 @@
     "Arc-enabled Kubernetes",
     "Azure Arc"
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/test_",
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/test_/script_automation/test_",
   "Difficulty": "Medium",
   "Topics": [
     "Kubernetes",
