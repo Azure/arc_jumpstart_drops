@@ -1,7 +1,7 @@
 
 ## Overview
 
-![cover selected]("./img/JSBundle.png")
+![cover selected](./img/JSBundle.png)
 
 ### Drop Details
 Test 
@@ -24,7 +24,7 @@ Test
 Test 
 
 
-![artifact selected]("./img/Screenshot.png")
+![artifact selected](./img/Screenshot.png)
 
 ## Resource
 #### Test 
