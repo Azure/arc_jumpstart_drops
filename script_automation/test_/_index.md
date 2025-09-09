@@ -1,7 +1,7 @@
 
 ## Overview
 
-![cover selected]("./img/JS Bundle.png")
+![cover selected]("./img/JSBundle.png")
 
 ### Drop Details
 Test 
@@ -24,7 +24,7 @@ Test
 Test 
 
 
-![artifact selected]("./img/Screenshot 2024-10-22 153553.png")
+![artifact selected]("./img/Screenshot.png")
 
 ## Resource
 #### Test 
