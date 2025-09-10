@@ -41,15 +41,53 @@ The application includes a demonstration video for testing. The video loops cont
 
 - Configure kubectl with authenticated access to your Azure Arc-enabled Kubernetes cluster. Ensure your kubeconfig context is set to the target cluster and you have sufficient permissions to deploy applications and create namespaces.
 
+## Configuration
+
+### Proxy Configuration Example
+
+For environments requiring proxy configuration, create a values file or use inline parameters:
+
+```yaml
+# custom-values.yaml
+httpProxy: "http://proxy.com:8080"
+httpsProxy: "http://proxy.com:8080"
+noProxy: "127.0.0.1"
+```
+
 ## Getting Started
 
 ### Run deployment
 
 Navigate to the [deployment folder](https://github.com/Azure/arc_jumpstart_drops/main/drops/sample_app/image_based_video_search/) and run:
 
+**Basic deployment:**
 ```powershell
 .\image_based_video_search_deploy.ps1
 ```
+
+**Deployment with proxy configuration:**
+```powershell
+.\image_based_video_search_deploy.ps1 -SetValues @(
+    "httpProxy=http://proxy.com:8080",
+    "httpsProxy=http://proxy.com:8080",
+    "noProxy=localhost\,127.0.0.1"
+)
+```
+
+> **Note**: When using values that contain commas (like `noProxy`), you must escape them with backslashes (`\,`) to prevent Helm parsing errors.
+
+**Deployment with custom values file:**
+```powershell
+.\image_based_video_search_deploy.ps1 -ValuesFile "custom-values.yaml"
+```
+
+**Available parameters:**
+- `-ChartVersion`: Specify chart version (default: 1.0.1)
+- `-Namespace`: Target namespace (default: ibvs)
+- `-ReleaseName`: Helm release name (default: ibvs)
+- `-SetValues`: Array of custom Helm values in "key=value" format
+- `-ValuesFile`: Path to custom Helm values file
+- `-DryRun`: Perform validation without actual deployment
 
 
 ### Verify the deployment

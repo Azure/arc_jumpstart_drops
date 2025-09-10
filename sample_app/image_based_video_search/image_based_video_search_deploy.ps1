@@ -23,11 +23,20 @@
 .PARAMETER DryRun
     Perform a dry run without actually installing
 
+.PARAMETER SetValues
+    Array of Helm set values in format "key=value" (e.g., @("httpProxy=http://proxy.com:8080", "httpsProxy=http://proxy.com:8080"))
+
+.PARAMETER ValuesFile
+    Path to a Helm values file for configuration
+
 .EXAMPLE
     .\image_based_video_search_deploy.ps1
     
 .EXAMPLE
     .\image_based_video_search_deploy.ps1 -ChartVersion "1.0.2" -Namespace "ibvs-prod"
+
+.EXAMPLE
+    .\image_based_video_search_deploy.ps1 -SetValues @("httpProxy=http://proxy.com:8080", "httpsProxy=http://proxy.com:8080", "noProxy=localhost,127.0.0.1")
 #>
 
 [CmdletBinding()]
@@ -45,7 +54,13 @@ param(
     [switch]$CreateNamespace = $true,
     
     [Parameter(Mandatory = $false)]
-    [switch]$DryRun
+    [switch]$DryRun,
+
+    [Parameter(Mandatory = $false)]
+    [string[]]$SetValues = @(),
+
+    [Parameter(Mandatory = $false)]
+    [string]$ValuesFile
 )
 
 # Configuration
@@ -129,17 +144,15 @@ function Invoke-HelmInstall {
         [string]$ReleaseName,
         [string]$Namespace,
         [bool]$CreateNamespace,
-        [bool]$DryRun
+        [bool]$DryRun,
+        [string[]]$SetValues,
+        [string]$ValuesFile
     )
     
     Write-Log "Installing Helm chart..." -Level "Info"
     
     try {
-        $installArgs = @(
-            "helm install $ReleaseName"
-            "image-based-video-search-$ChartVersion.tgz"
-            "-n $Namespace"
-        )
+        $installArgs = @("helm", "install", $ReleaseName, "image-based-video-search-$ChartVersion.tgz", "-n", $Namespace)
         
         if ($CreateNamespace) {
             $installArgs += "--create-namespace"
@@ -150,10 +163,32 @@ function Invoke-HelmInstall {
             Write-Log "Performing dry run..." -Level "Warning"
         }
         
+        # Add custom values via --set parameters
+        if ($SetValues.Count -gt 0) {
+            foreach ($setValue in $SetValues) {
+                if (-not [string]::IsNullOrWhiteSpace($setValue)) {
+                    $installArgs += "--set"
+                    $installArgs += $setValue
+                    Write-Log "Adding custom value: $setValue" -Level "Info"
+                }
+            }
+        }
+
+        # Add values file if specified
+        if (-not [string]::IsNullOrWhiteSpace($ValuesFile)) {
+            if (Test-Path $ValuesFile) {
+                $installArgs += "--values"
+                $installArgs += $ValuesFile
+                Write-Log "Using values file: $ValuesFile" -Level "Info"
+            } else {
+                throw "Values file not found: $ValuesFile"
+            }
+        }
+
         $installCommand = $installArgs -join " "
         Write-Log "Executing: $installCommand" -Level "Info"
         
-        Invoke-Expression $installCommand
+        & helm @($installArgs[1..($installArgs.Length-1)])
         
         if ($LASTEXITCODE -eq 0) {
             if ($DryRun) {
@@ -181,7 +216,7 @@ function Main {
         
         Test-Prerequisites
         Invoke-HelmPull -Registry $ChartRegistry -Version $ChartVersion
-        Invoke-HelmInstall -ReleaseName $ReleaseName -Namespace $Namespace -CreateNamespace $CreateNamespace -DryRun $DryRun
+        Invoke-HelmInstall -ReleaseName $ReleaseName -Namespace $Namespace -CreateNamespace $CreateNamespace -DryRun $DryRun -SetValues $SetValues -ValuesFile $ValuesFile
         
         if (-not $DryRun) {
             Write-Log "Deployment completed successfully!" -Level "Success"
