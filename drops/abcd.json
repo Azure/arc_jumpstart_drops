@@ -1,0 +1,26 @@
+{
+  "Title": "abcd",
+  "Summary": "safdgfhjgfhfdghfhrtghsadfg",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "abcd",
+      "Link": "https://githhuc.com/abcd"
+    }
+  ],
+  "ProgrammingLanguage": [
+    ".NET / C#"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/abcd",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "K3s"
+  ],
+  "Description": "",
+  "Cover": "Screenshot 2025-05-05 140127.png",
+  "CreatedDate": "2025-09-11T11:20:21.323Z",
+  "LastModified": "2025-09-11T11:20:21.323Z"
+}
