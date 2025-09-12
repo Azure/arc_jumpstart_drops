@@ -1,6 +1,6 @@
-## Overview
+# Getting Started with Edge RAG enabled by Azure Arc
 
-#### Getting Started with Edge RAG enabled by Azure Arc
+## Introduction
 
 This Jumpstart Drop shows how to create an Azure Kubernetes Service (AKS) cluster to deploy Edge RAG enabled by Azure Arc. In the real world you would deploy this at the edge or on-premise, but we'll use Azure to deploy the Kubernetes cluster.
 
@@ -31,6 +31,8 @@ The automation performs the following steps:
 - Deploys an AKS cluster that meets the basic requirements for an Edge RAG cluster
 - Creates an Azure Storage account and NFS share
 - Configures the virtual networking such that the AKS cluster can reach the NFS share
+
+## Deployment
 
 ### Run the automation
 
