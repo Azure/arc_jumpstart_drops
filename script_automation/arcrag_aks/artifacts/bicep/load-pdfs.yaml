@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pdf-downloader
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: downloader
+          image: ubuntu:22.04
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              set -euo pipefail
+              log() { echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ") [pdf-downloader] $*"; }
+
+              retry() {
+                local -r -i max_attempts=${1:-5}; shift
+                local -i b=${1:-2}; shift
+                local -i attempt=1
+                until "$@"; do
+                  if (( attempt >= max_attempts )); then
+                    log "ERROR: Command failed after $attempt attempts: $*"
+                    return 1
+                  fi
+                  log "Command failed, attempt $attempt/$max_attempts. Retrying in $b seconds..."
+                  sleep $b
+                  attempt=$(( attempt + 1 ))
+                  b=$(( b * 2 ))
+                done
+              }
+
+              log "Installing packages"
+              retry 5 2 apt-get update -y
+              retry 5 2 apt-get install -y nfs-common curl
+
+              mkdir -p /mnt/nfs
+
+              log "Mounting NFS share"
+              retry 6 2 mount -t nfs nfsjsseyvn56lkgi4g.file.core.windows.net:/nfsjsseyvn56lkgi4g/nfs-share /mnt/nfs -o vers=4,minorversion=1
+
+              download_file() {
+                local url="$1"; shift
+                local out="$1"; shift
+                log "Downloading $url to $out"
+                retry 5 2 curl -fSL "$url" -o "$out"
+              }
+
+              # Download files with retries
+              download_file "https://raw.githubusercontent.com/Azure-Samples/azure-search-sample-data/refs/heads/main/health-plan/PerksPlus.pdf" /mnt/nfs/PerksPlus.pdf || log "Warning: PerksPlus.pdf download failed"
+              download_file "https://raw.githubusercontent.com/Azure-Samples/azure-search-sample-data/refs/heads/main/health-plan/Northwind_Standard_Benefits_Details.pdf" /mnt/nfs/Northwind_Standard_Benefits_Details.pdf || log "Warning: Northwind_Standard_Benefits_Details.pdf download failed"

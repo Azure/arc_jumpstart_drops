@@ -1,0 +1,27 @@
+{
+    "Title": "Edge RAG enabled by Azure Arc",
+    "Summary": "This Jumpstart Drop provides a quick way to deploy Edge RAG on an AKS Cluster",
+    "Description": "Edge RAG enabled by Azure Arc allows for generative AI to be used at the edge.  This Jumpstart provides automation to show how to enable this on an Azure Kubernetes Service (AKS) cluster to be able to quickly experiment with Edge RAG.",
+     "Authors": [
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads"
+      }
+    ],
+    "Cover": "",
+    "LastModified": "2025-09-12T18:00:00.000Z",
+    "CreatedDate": "2025-09-12T18:00:00.000Z",
+    "Topics": [],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arcrag_aks",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Bicep"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Azure OpenAI",
+      "Edge RAG"
+    ]
+  }
