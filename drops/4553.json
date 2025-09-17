@@ -1,0 +1,26 @@
+{
+  "Title": "4553",
+  "Summary": "34525545435<script>alert()</script>",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "3455",
+      "Link": "http://169.254.169.254/medata"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Python"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/4553",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "无标题.png",
+  "CreatedDate": "2025-09-17T02:35:57.712Z",
+  "LastModified": "2025-09-17T02:35:57.712Z"
+}
