@@ -13,6 +13,10 @@ This repository contains a PowerShell Runbook that automates the activation of t
 
 This improves security posture and ensures consistent configuration across hybrid environments.
 
+> **Note**  
+> This document and script were created based on the official Microsoft guidance:  
+> [Configure least privilege for Azure Arc–enabled SQL Server](https://learn.microsoft.com/en-us/sql/sql-server/azure-arc/configure-least-privilege?view=sql-server-ver17).
+
 ## Getting Started
 
 The script is designed to run in an **Azure Automation Account** with **Managed Identity** enabled. It queries all subscriptions accessible to the identity, identifies eligible machines, and enables the LeastPrivilege flag.
