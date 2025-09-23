@@ -1,0 +1,32 @@
+{
+  "Title": "Azure Arc with AMPLS & Private Link",
+  "Summary": "This Jumpstart Drop deploys a secure hybrid infrastructure using Azure Arc and Azure Monitor Private Link Scopes (AMPLS), with Terraform.",
+  "Description": "This Jumpstart Drop showcases how to integrate Azure Arc-enabled servers with Azure Monitor using AMPLS and Private Link for secure traffic flow. It simulates an on-premises environment connected to Azure through a VNet-to-VNet VPN Gateway. A Windows Server VM is onboarded to Azure Arc using a Custom Script Extension. Log and metrics traffic is routed privately through AMPLS with Private DNS Zones, and ingested into a Log Analytics workspace. Azure Bastion provides secure remote desktop access. The deployment is fully automated using Terraform and aligns with Azure Arc Jumpstart best practices.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Nicolas VACCARO",
+      "Link": "https://www.linkedin.com/in/nicolasvac/"
+    }
+  ],
+  "Source": "https://github.com/technicalandcloud/Azure_Arc_PrivateLink_AMPLS",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Terraform",
+    "PowerShell"
+  ],
+  "Products": [
+    "Azure Arc",
+    "Azure Monitor",
+    "Azure Private Link"
+  ],
+  "LastModified": "2025-07-04T10:00:00.000Z",
+  "CreatedDate": "2025-07-04T09:00:00.000Z",
+  "Topics": [
+    "Azure Arc",
+    "AMPLS",
+    "Private Link",
+    "Monitoring"
+  ]
+}

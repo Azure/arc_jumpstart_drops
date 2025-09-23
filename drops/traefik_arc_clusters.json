@@ -1,0 +1,34 @@
+{
+  "Title": "Deploy multiple Arc k8s clusters with Terraform",
+  "Summary": "This Jumpstart Drop provides Terraform-based infrastructure as code for the set up of AKS, k3d, EKS, and GKE Kubernetes clusters and their connection to Azure Arc.",
+  "Description": "This Jumpstart Drop demonstrates how to create and configure AKS, k3d, EKS, and GKE Kubernetes clusters and to connect them to Azure Arc using Terraform. This module uses the relavent modules and prividers to create the clusters and connect them to Azure Arc.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Zaid Albirawi",
+      "Link": "https://www.linkedin.com/in/zalbiraw"
+    }
+  ],
+  "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/1-clusters",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Terraform"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes",
+    "Traefik",
+    "k3s"
+  ],
+  "LastModified": "2025-05-29T00:00:00.000Z",
+  "CreatedDate": "2025-05-15T00:00:00.000Z",
+  "Topics": [
+    "k3s",
+    "k3d",
+    "AKS",
+    "EKS",
+    "GKE",
+    "Cluster Management",
+    "Infrastructure as Code"
+  ]
+}

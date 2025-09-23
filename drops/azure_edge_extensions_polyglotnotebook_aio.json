@@ -13,7 +13,7 @@
             "Link": "https://github.com/bindsi"
         }
     ],
-    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-polyglotnotebook-aio",
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-polyglotnotebook-aio/blob/main",
     "Type": "sample_app",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
