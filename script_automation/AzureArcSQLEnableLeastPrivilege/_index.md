@@ -1,12 +1,3 @@
----
-type: docs
-title: "Azure Arc SQL LeastPrivilege Activation"
-linkTitle: "Azure Arc SQL LeastPrivilege Activation"
-weight: 1
-description: >
-  Runbook to enable the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Resource Graph and Azure CLI.
----
-
 ## Overview
 
 This repository contains a PowerShell Runbook that automates the activation of the **LeastPrivilege FeatureFlag** on Azure Arc SQL-enabled machines. It uses Azure Resource Graph to identify machines where the flag is missing or disabled and applies the change using Azure CLI.
