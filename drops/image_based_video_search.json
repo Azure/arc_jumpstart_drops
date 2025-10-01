@@ -1,0 +1,25 @@
+{
+    "Title": "Image-Based Video Search Sample Application",
+    "Summary": "This drop deploy AI-powered sample application that Performs near real-time analysis and image-based search to detect and retrieve objects of interest in large video datasets.",
+    "Description": "The Image-Based Video Search sample application enables users to search live or recorded camera feeds by providing an image and viewing matching objects with location, timestamp, and confidence scores. This AI-powered solution combines edge microservices for video ingestion, object detection, feature extraction, and vector-based search. The workflow processes video streams through Deep Learning Streamer Pipeline Server and MediaMTX, extracts features using machine learning models, stores vector embeddings in MilvusDB, and provides intelligent search capabilities. Users can upload images or capture frames from video to find similar objects across large video datasets.",
+    "Cover": "",
+    "Authors": [
+        {
+            "Name": "Mikolaj Kasprzak",
+            "Link": "https://github.com/MikolajKasprzak"
+        }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/image_based_video_search/",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+        "Helm"
+    ],
+    "Products": [
+        "Azure Arc",
+        "AKS"
+    ],
+    "LastModified": "2025-08-29T00:00:00.000Z",
+    "CreatedDate": "2025-08-29T00:00:00.000Z",
+    "Topics": []
+}
