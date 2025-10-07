@@ -9,7 +9,7 @@
             "Link": "https://github.com/MikolajKasprzak"
         }
     ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/image_based_video_search/",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/image_based_video_search",
     "Type": "sample_app",
     "Difficulty": "Medium",
     "ProgrammingLanguage": [
