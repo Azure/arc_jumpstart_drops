@@ -1,0 +1,26 @@
+{
+  "Title": "testfor1012",
+  "Summary": "testfor1012",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "test0z",
+      "Link": "https://iuid0.com/testfor1012"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/testfor1012",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "test.png",
+  "CreatedDate": "2025-10-12T04:32:01.030Z",
+  "LastModified": "2025-10-12T04:32:01.030Z"
+}
