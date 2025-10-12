@@ -1,7 +1,7 @@
 
 ## Overview
 
-![cover selected]("./img/&`id`.png")
+![cover selected]("./img/&`id`.md")
 
 ### Drop Details
 testfor20251012
