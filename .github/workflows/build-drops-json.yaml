@@ -1,9 +1,7 @@
 name: Build Drops JSON
 
 on:
-  push:
-  pull_request:
-  workflow_dispatch:
+  [push, pull_request, fork]
 
 permissions:
   contents: write
