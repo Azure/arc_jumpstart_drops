@@ -1078,6 +1078,11 @@
         "description": "Technologies and concepts related to Observability."
       },
       {
+        "name": "Pew pew",
+        "aliases": [],
+        "description": "Technologies and concepts related to Pew pew."
+      },
+      {
         "name": "Private Link",
         "aliases": [],
         "description": "Technologies and concepts related to Private Link."
