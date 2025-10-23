@@ -149,7 +149,7 @@ jobs:
             ]
           },
           {
-            name: "Topics",
+            name: "Topics", 
             type: "Topics",
             description: "Tags related to technology topics.",
             tags: Array.from(topics).sort().map(topic => ({
