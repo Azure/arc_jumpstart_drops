@@ -2100,6 +2100,33 @@
     "Topics": []
   },
   {
+    "Title": "nitesh",
+    "Summary": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
+    "Type": "ui_dashboard_workbook",
+    "Authors": [
+      {
+        "Name": "Nitesh",
+        "Link": "https://nsajd.com/profile"
+      }
+    ],
+    "ProgrammingLanguage": [
+      "Ansible",
+      ".NET / C#"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes"
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh",
+    "Difficulty": "Beginner",
+    "Topics": [
+      "AI"
+    ],
+    "Description": "",
+    "Cover": "IMG_3384.jpeg",
+    "CreatedDate": "2025-08-10T16:56:35.508Z",
+    "LastModified": "2025-08-10T16:56:35.508Z"
+  },
+  {
     "Title": "NVIDIA Omniverse Azure Operations Twin",
     "Summary": "Learn how Microsoft and NVIDIA empower developers create advanced 3D workflows that integrate IoT data with physics-based visualizations.",
     "Description": "Learn how Microsoft and NVIDIA empower developers create advanced 3D workflows that integrate IoT data with physics-based visualizations. The Fabric platform supports data management, while Omniverse and OpenUSD offer collaboration, simulation, and rendering capabilities. These tools help operations teams innovate and optimize for sustainability, safety, and efficiency. This project shares sample code and content for building an Operations Twin using OpenUSD and an integration between NVIDIA Omniverse and Azure Services: Azure IoT Operations, Microsoft Fabric, Microsoft Power BI, and NVIDIA Omniverse Kit App Streaming on Azure Kubernetes using A10 NVIDIA GPU.",
