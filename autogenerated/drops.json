@@ -1,0 +1,2582 @@
+﻿[
+  {
+    "Title": "Unofficial Azure Adaptive Cloud Lab Kit x Arc Jumpstart pew pew ",
+    "Summary": "The Azure Adaptive Cloud Lab Kit x Arc Jumpstart is a physical NUC device which allows you to explore various kinds of Azure Adaptive Cloud solutions for hybrid cloud and edge computing, using technologies such as Azure Arc, Azure Stack HCI, and IoT.",
+    "Description": "The Unofficial Azure Adaptive Cloud Lab Kit x Arc Jumpstart allows you to explore various kinds of Azure Adaptive Cloud solutions for hybrid cloud and edge computing, using technologies such as Azure Arc, Azure Stack HCI, and Azure IoT. It provides a physical NUC device running Windows Server 2025 with a virtualization environment specially designed to work with home labs and edge scenarios. It also provides automated zero-to-hero scenarios for Azure Arc and Azure IoT using the Arc Jumpstart.",
+    "Cover": "https://www.thomasmaurer.ch/wp-content/uploads/2024/07/Azure-Adaptive-Cloud-Lab-Kit-x-Arc-Jumpstart.jpg",
+    "Authors": [
+      {
+        "Name": "Thomas Maurer",
+        "Link": "https://www.linkedin.com/in/thomasmaurer2"
+      }
+    ],
+    "Source": "https://github.com/thomasmaurer/AdaptiveCloudLabKit",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Windows Server",
+      "AKS"
+    ],
+    "LastModified": "2024-07-25T13:54:39.000Z",
+    "CreatedDate": "2024-07-25T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure IoT Operations/K3s with Edge AI",
+    "Summary": "This Jumpstart Drop provides a bicep/azd accelerator for fast deployment of Azure IoT Operations/K3s, empowering AI at the Edge with support for Gen AI or Custom Model deployments.",
+    "Description": "Edge AI plays a vital role in extending AI and ML capabilities by implementing AI and Natural Language Processing (NLP) directly in edge environments. This accelerator offers a foundational setup for Azure IoT Operations, Arc-enabled Kubernetes, Azure OpenAI, and Azure ML, allowing you to integrate custom models into an Azure IoT Operations/K3s environment while also bringing Generative AI closer to the edge.",
+    "Cover": "https://github.com/Azure-Samples/edge-aio-in-a-box/blob/main/readme_assets/cover.png",
+    "Authors": [
+      {
+        "Name": "AndrÃ©s Padilla",
+        "Link": "https://www.linkedin.com/in/andrespadillaandrade"
+      },
+      {
+        "Name": "Victor Santana",
+        "Link": "https://www.linkedin.com/in/victorwelascosantana/"
+      },
+      {
+        "Name": "Remco Ploeg",
+        "Link": "https://www.linkedin.com/in/remcoploeg/"
+      },
+      {
+        "Name": "Georgina Siggins",
+        "Link": "https://www.linkedin.com/in/georgina-siggins/"
+      },
+      {
+        "Name": "Alex Morales",
+        "Link": "https://www.linkedin.com/in/alex-morales-45145417/"
+      },
+      {
+        "Name": "Neeraj Jhaveri",
+        "Link": "https://www.linkedin.com/in/neerajjhaveri/"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/edge-aio-in-a-box",
+    "Type": "script_automation",
+    "Difficulty": "Advanced",
+    "ProgrammingLanguage": [
+      "Bicep",
+      "Shell",
+      "PowerShell",
+      "Python"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "K3s",
+      "Azure OpenAI"
+    ],
+    "LastModified": "2024-10-16T15:41:45.000Z",
+    "CreatedDate": "2024-10-16T15:41:45.000Z",
+    "Topics": [
+      "ai",
+      "rag",
+      "edge-ai",
+      "k3s",
+      "industrial-iot",
+      "slms",
+      "azure-openai",
+      "generative-ai",
+      "azure-iot-operations",
+      "custom-models",
+      "azure-ml-extension"
+    ]
+  },
+  {
+    "Title": "Connecting IIoT Gateway to Azure IoT Operations",
+    "Summary": "This Jumpstart Drop is a tutorial on how to securely connect an IIoT Gateway to the AIO instance and publish MQTT messages from an MCU device.",
+    "Description": "This Jumpstart Drop provides details regarding how to install and configure the IIoT Gateway, bridge to the AIO broker over mTLS, and finally provided a sample Zephyr app (in C) to publsih MQTT messages.",
+    "Cover": "https://github.com/rickijen/azureiotoperations-elastel-zephyr/blob/main/artifacts/media/Elastel-HiveMQ.png",
+    "Authors": [
+      {
+        "Name": "Rick Jen",
+        "Link": "https://www.linkedin.com/in/rickijen/"
+      },
+      {
+        "Name": "Harry Huang",
+        "Link": "https://www.linkedin.com/in/harry-huang-profile/"
+      }
+    ],
+    "Source": "https://github.com/rickijen/azureiotoperations-elastel-zephyr",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C"
+    ],
+    "Products": [
+      "Azure IoT Operations"
+    ],
+    "LastModified": "2025-02-07T18:12:00.000Z",
+    "CreatedDate": "2025-02-07T18:12:00.000Z",
+    "Topics": [
+      "Azure IoT Operations",
+      "IIoT Gateway",
+      "IoT",
+      "MCU devices",
+      "MQTT",
+      "Zephyr"
+    ]
+  },
+  {
+    "Title": "Azure IoT Operations (AIO) using GitHub Codespaces - Quickstart Bash Scripts",
+    "Summary": "A set of Bash scripts to quickly set up Azure IoT Operations in GitHub Codespaces using K3s. These scripts automate the setup process for faster deployment, scenario re-runs, and seamless learning progression.",
+    "Description": "This project provides a set of bash scripts to quickly set up and start Azure IoT Operations in Github Codespaces. These scripts are designed to automate the setup process, making it easier and faster to get started with Azure IoT Operations, or re-run scenarios and quickly move onto the next learning steps.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Dan Benitah",
+        "Link": "https://www.linkedin.com/in/danbenitah"
+      }
+    ],
+    "Source": "https://github.com/danuw/aio-quickstart-bash-scripts",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Kubernetes",
+      "GitHub Codespaces"
+    ],
+    "LastModified": "2024-09-06T15:41:45.000Z",
+    "CreatedDate": "2024-06-06T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Secrets Store CSI Driver for Key Vault in AKS",
+    "Summary": "This Jumpstart Drop shows how to use the Azure Key Vault provider for the Secrets Store CSI Driver in AKS to access secrets, keys, and certificates from Azure Key Vault as mounted files in pods.",
+    "Description": "This Jumpstart Drop provides a guide on leveraging the Azure Key Vault provider for the Secrets Store CSI Driver within an Azure Kubernetes Service (AKS) cluster. This method enables you to retrieve secrets, keys, and certificates stored in Azure Key Vault and mount them as files directly into your pod\u0027s volumes. This eliminates the necessity for Azure-specific libraries within your applications to access these secrets. The drop focuses on using Workload ID for secure access. By enabling the Azure Key Vault provider add-on, creating managed identities and federated credentials, defining a SecretProviderClass, and deploying a sample pod, you\u0027ll learn how to seamlessly integrate Azure Key Vault with your AKS applications, simplifying secret management and enhancing security.",
+    "Cover": "https://secrets-store-csi-driver.sigs.k8s.io/images/diagram.png",
+    "Authors": [
+      {
+        "Name": "Paolo Salvatori",
+        "Link": "https://www.linkedin.com/in/paolo-salvatori/"
+      },
+      {
+        "Name": "Kiana Harris",
+        "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+      }
+    ],
+    "Source": "https://github.com/paolosalvatori/aks-key-vault/tree/main/jumpstart_drops/key-vault-csi-driver",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Shell",
+      "YAML"
+    ],
+    "Products": [
+      "Azure Kubernetes Service",
+      "Azure Key Vault",
+      "Secrets Store CSI Driver"
+    ],
+    "LastModified": "2025-03-07T18:25:43.511Z",
+    "CreatedDate": "2025-03-06T10:30:16.201Z",
+    "Topics": [
+      "AKS",
+      "Kubernetes",
+      "Secrets Store CSI Driver",
+      "Secrets"
+    ]
+  },
+  {
+    "Title": "Dapr Secret Store for Key Vault",
+    "Summary": "This Jumpstart Drop shows how to use Dapr Secret Store for Key Vault to retrieve secrets from Azure Key Vault. Dapr supports Azure Key Vault integration with managed identities and other third-party secret stores.",
+    "Description": "Dapr (Distributed Application Runtime) is a versatile and event-driven runtime that simplifies the development of resilient, stateless, and stateful applications for both cloud and edge environments. It embraces the diversity of programming languages and developer frameworks, providing a seamless experience regardless of your preferences. Dapr encapsulates the best practices for building microservices into a set of open and independent APIs known as building blocks. These building blocks enable developers to build portable applications using their preferred language and framework. They are completely independent from each other, allowing flexibility and freedom of choice.Dapr offers a built-in secrets building block that makes it easier for developers to consume application secrets from a secret store such as Azure Key Vault, AWS Secret Manager, Google Key Management, and HashiCorp Vault.",
+    "Cover": "https://raw.githubusercontent.com/paolosalvatori/aks-key-vault/main/jumpstart_drops/dapr-secret-store/artifacts/media/secrets-overview-azure-aks-keyvault.png",
+    "Authors": [
+      {
+        "Name": "Paolo Salvatori",
+        "Link": "https://www.linkedin.com/in/paolo-salvatori/"
+      },
+      {
+        "Name": "Kiana Harris",
+        "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+      }
+    ],
+    "Source": "https://github.com/paolosalvatori/aks-key-vault/tree/main/jumpstart_drops/dapr-secret-store",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Shell",
+      "YAML"
+    ],
+    "Products": [
+      "Azure Kubernetes Service",
+      "Azure Key Vault",
+      "Dapr"
+    ],
+    "LastModified": "2025-03-07T18:25:43.511Z",
+    "CreatedDate": "2025-03-06T10:30:16.201Z",
+    "Topics": [
+      "AKS",
+      "Kubernetes",
+      "Dapr",
+      "Secrets"
+    ]
+  },
+  {
+    "Title": "External Secrets Operator with Azure Key Vault",
+    "Summary": "This Jumpstart Drop shows how to manage Azure Key Vault secrets in Kubernetes using the External Secrets Operator. It leverages Microsoft Entra Workload ID for secure sync as native Kubernetes secrets.",
+    "Description": "This Jumpstart Drop provides a guide to using the External Secrets Operator with Azure Key Vault. The External Secrets Operator, a Kubernetes operator, enables the management of secrets in external stores like Azure Key Vault. This drop details the configuration of the operator to use Microsoft Entra Workload ID for secure authentication to Azure Key Vault. This setup allows for the automatic synchronization of secrets, keys, and certificates from Azure Key Vault into Kubernetes secrets, making them easily accessible to applications running in the cluster. The steps include installing the External Secrets Operator, setting up managed identities and federated credentials, configuring the SecretStore custom resource, and creating ExternalSecret objects to define which secrets to retrieve from Azure Key Vault. This method offers a streamlined and Kubernetes-native approach to managing secrets stored in Azure Key Vault.",
+    "Cover": "https://raw.githubusercontent.com/paolosalvatori/aks-key-vault/main/jumpstart_drops/external-secrets-operator/artifacts/media/eso-az-kv-azure-kv.png",
+    "Authors": [
+      {
+        "Name": "Paolo Salvatori",
+        "Link": "https://www.linkedin.com/in/paolo-salvatori/"
+      },
+      {
+        "Name": "Kiana Harris",
+        "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+      }
+    ],
+    "Source": "https://github.com/paolosalvatori/aks-key-vault/tree/main/jumpstart_drops/external-secrets-operator",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Shell",
+      "YAML"
+    ],
+    "Products": [
+      "Azure Kubernetes Service",
+      "Azure Key Vault",
+      "External Secrets Operator"
+    ],
+    "LastModified": "2025-03-07T18:25:43.511Z",
+    "CreatedDate": "2025-03-06T10:30:16.201Z",
+    "Topics": [
+      "AKS",
+      "Kubernetes",
+      "External Secrets Operator",
+      "Secrets"
+    ]
+  },
+  {
+    "Title": "Microsoft Entra Workload ID with AKS",
+    "Summary": "This Jumpstart Drop shows how to use Microsoft Entra Workload ID with Azure Kubernetes Service (AKS) to securely access Azure resources like Key Vault from pods using managed identities.",
+    "Description": "This Jumpstart Drop provides a guide on implementing Microsoft Entra Workload ID within an Azure Kubernetes Service (AKS) cluster. Workload ID enables applications running in AKS to securely access Microsoft Entra protected resources, such as Azure Key Vault and Microsoft Graph, by assigning them managed identities. This drop explains how Workload ID leverages Kubernetes\u0027 Service Account Token Volume Projection and OIDC federation to provide pods with a Kubernetes identity that can be trusted by Microsoft Entra applications and user-defined managed identities. You\u0027ll learn how to create a managed identity, federate it with a Kubernetes service account, and then use the Azure Identity SDKs or MSAL within your application code to obtain Microsoft Entra access tokens, enabling secure and passwordless access to Azure services.",
+    "Cover": "https://raw.githubusercontent.com/paolosalvatori/aks-key-vault/main/jumpstart_drops/microsoft-entra-workload-id/artifacts/media/workload-id-model.png",
+    "Authors": [
+      {
+        "Name": "Paolo Salvatori",
+        "Link": "https://www.linkedin.com/in/paolo-salvatori/"
+      },
+      {
+        "Name": "Kiana Harris",
+        "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+      }
+    ],
+    "Source": "https://github.com/paolosalvatori/aks-key-vault/tree/main/jumpstart_drops/microsoft-entra-workload-id",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Shell",
+      "YAML"
+    ],
+    "Products": [
+      "Azure Kubernetes Service",
+      "Azure Key Vault",
+      "Microsoft Entra Workload ID"
+    ],
+    "LastModified": "2025-03-07T18:25:43.511Z",
+    "CreatedDate": "2025-03-06T10:30:16.201Z",
+    "Topics": [
+      "AKS",
+      "Kubernetes",
+      "Microsoft Entra Workload ID",
+      "Secrets"
+    ]
+  },
+  {
+    "Title": "Azure Arc Windows Server Management License Activation",
+    "Summary": "This Jumpstart Drop provides a PowerShell script automates the process of checking and enabling Windows Server licenses for Azure Arc-enabled machines.",
+    "Description": "This Jumpstart Drop provides a PowerShell script automates the process of checking and enabling Windows Server management capabilities for Azure Arc-enabled machines.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Mustafa Kaya",
+        "Link": "https://www.linkedin.com/in/mustafakaya"
+      }
+    ],
+    "Source": "https://github.com/mustafakaya/azure-arc-tools",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2025-02-11T07:30:43.511Z",
+    "CreatedDate": "2025-02-08T07:20:16.201Z",
+    "Topics": [
+      "Arc-enabled servers",
+      "Licensing",
+      "Windows Server"
+    ]
+  },
+  {
+    "Title": "Kubernetes AI Toolchain Operator (KAITO) \u0026 AKS Arc",
+    "Summary": "This Jumpstart Drop provides a quick way to explore KAITO enabled by Azure Arc with an AKS cluster with GPU.",
+    "Description": "The Kubernetes AI Toolchain Operator (KAITO) is a powerful tool that simplifies the deployment and management of AI workloads on Kubernetes. This Jumpstart Drop provides a quick way to explore KAITO enabled by Azure Arc with an AKS cluster with GPU. The deployment includes a Bicep template for creating the AKS cluster and a Bash script for deploying KAITO and its dependencies.",
+    "Authors": [
+      {
+        "Name": "Dale Kirby",
+        "Link": "https://www.linkedin.com/in/dale-kirby"
+      }
+    ],
+    "Cover": "",
+    "LastModified": "2025-05-14T18:25:43.511Z",
+    "CreatedDate": "2025-05-14T18:25:43.511Z",
+    "Topics": [],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/aks_kaito",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Bicep"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Azure OpenAI",
+      "KAITO"
+    ]
+  },
+  {
+    "Title": "Edge RAG enabled by Azure Arc",
+    "Summary": "This Jumpstart Drop provides a quick way to deploy Edge RAG on an AKS Cluster",
+    "Description": "Edge RAG enabled by Azure Arc allows for generative AI to be used at the edge.  This Jumpstart provides automation to show how to enable this on an Azure Kubernetes Service (AKS) cluster to be able to quickly experiment with Edge RAG.",
+    "Authors": [
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads"
+      }
+    ],
+    "Cover": "",
+    "LastModified": "2025-09-12T18:00:00.000Z",
+    "CreatedDate": "2025-09-12T18:00:00.000Z",
+    "Topics": [],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arcrag_aks",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Bicep"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Azure OpenAI",
+      "Edge RAG"
+    ]
+  },
+  {
+    "Title": "Azure Stack HCI - IaC Template Examples",
+    "Summary": "This Jumpstart Drop provides examples of Infrastructure as Code (IaC) templates for Deploying Azure Local.",
+    "Description": "This Jumpstart Drop provides example of Infrastructure as Code (IaC) templates for Deploying Azure Local. The templates are written in ARM and Bicep and can be used to deploy Azure Local clusters in Azure in a scalable manner.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/blob/main/workbooks/arc_management_full/images/cover.jpg",
+    "Authors": [
+      {
+        "Name": "Michael Godfrey",
+        "Link": "https://www.linkedin.com/in/migodfre"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_ashci_iac",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "JSON"
+    ],
+    "Products": [
+      "Azure Local",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-05-16T19:43:52.000Z",
+    "CreatedDate": "2024-04-28T18:25:43.511Z",
+    "Topics": [
+      "Azure Stack HCI",
+      "IaC",
+      "ARM",
+      "Bicep",
+      "Azure"
+    ]
+  },
+  {
+    "Title": "Create an Azure Container Storage enabled by Azure Arc Edge Volumes with CloudSync",
+    "Summary": "This Jumpstart Drop provides Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume with CloudSync instance on an install on Ubuntu with K3s.",
+    "Description": "This project provides example Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume with CloudSync backed by your storage account. Files placed in the volume will be copied to the specified blob account and purged providing a bottomless ingest location. See README.md for details on editing and executing these Kubernetes files.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3_single/esaEdgeVolumes.png",
+    "Authors": [
+      {
+        "Name": "Anthony Joint",
+        "Link": "https://www.linkedin.com/in/anthonyjoint/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3_single",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "YAML",
+      "JSON"
+    ],
+    "Products": [
+      "K3s",
+      "Arc-enabled Kubernetes",
+      "Azure Container Storage enabled by Azure Arc"
+    ],
+    "LastModified": "2024-08-08T12:10:43.511Z",
+    "CreatedDate": "2024-08-08T12:10:43.511Z",
+    "Topics": [
+      "ACSA",
+      "ACS",
+      "Arc",
+      "Kubernetes",
+      "ArcK8s"
+    ]
+  },
+  {
+    "Title": "Azure Container Storage enabled by Azure Arc SFTP",
+    "Summary": "This example can be used to install Azure Container Storage enabled by Azure Arc to provide a ReadWriteMany Cloud Ingest Edge Volume on an Ubuntu system with K3s and an SFTP front end.",
+    "Description": "This allows you all the functionality of the base product as well as being able to accept writes from SFTP clients. Cloud Ingest edge volumes will transfer files saved to the volume to cloud and purge the local copy, according to your ingest policy.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3s_single_sftp/acsaedgevolarch.png",
+    "Authors": [
+      {
+        "Name": "Steven Pepin",
+        "Link": "https://www.linkedin.com/in/steven-pepin/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_cloudsync_ubuntu_k3s_single_sftp",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "YAML",
+      "JSON"
+    ],
+    "Products": [
+      "K3s",
+      "Arc-enabled Kubernetes",
+      "Azure Container Storage enabled by Azure Arc"
+    ],
+    "LastModified": "2025-05-13T10:30:16.201Z",
+    "CreatedDate": "2025-05-12T18:25:43.511Z",
+    "Topics": [
+      "ACSA",
+      "ACS",
+      "Arc",
+      "Kubernetes",
+      "ArcK8s",
+      "SFTP"
+    ]
+  },
+  {
+    "Title": "Create an Azure Container Storage enabled by Azure Arc Edge Volumes Local FS instance",
+    "Summary": "This Jumpstart Drop provides Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume Local Filesystem instance on an install on Ubuntu with K3s.",
+    "Description": "This project provides example Kubernetes files to create an Azure Container Storage enabled by Azure Arc Edge Volume Local Filesystem. See README.md for details on editing and executing these Kubernetes files.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_local_ubuntu_k3_single/esaEdgeVolumes.png",
+    "Authors": [
+      {
+        "Name": "Anthony Joint",
+        "Link": "https://www.linkedin.com/in/anthonyjoint/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_edge_volumes_local_ubuntu_k3_single",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "YAML",
+      "JSON"
+    ],
+    "Products": [
+      "K3s",
+      "Arc-enabled Kubernetes",
+      "Azure Container Storage enabled by Azure Arc"
+    ],
+    "LastModified": "2024-08-08T12:10:43.511Z",
+    "CreatedDate": "2024-08-08T12:10:43.511Z",
+    "Topics": [
+      "ACSA",
+      "ACS",
+      "Arc",
+      "Kubernetes",
+      "ArcK8s"
+    ]
+  },
+  {
+    "Title": "Azure Arc Connectivity Check",
+    "Summary": "This Jumpstart Drop provides a script that validates the connectivity and status of Azure endpoints, ensuring proper Azure Arc functionality.",
+    "Description": "This Drop includes a PowerShell script to test connectivity and DNS resolution for Azure Arc endpoints. It checks static/dynamic endpoints, validates azcmagent.exe execution, and generates a log to diagnose connectivity issues in hybrid environments.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Fabio R V Costa",
+        "Link": "https://www.linkedin.com/in/fabiotreze/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_endpoint_check",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-Enabled Servers"
+    ],
+    "LastModified": "2025-03-29T01:58:27.000Z",
+    "CreatedDate": "2025-03-29T01:58:27.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc gateway with Terraform",
+    "Summary": "This Jumpstart Drop provides an example of deploying Azure Arc gateway with Terraform.",
+    "Description": "This Jumpstart Drop for Azure Arc gateway provides an example of deploying the service with IaC in the form of Terraform. The related blog post showcases local deployment as well as via cloud-managed Terraform.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Erik Grina Raassum",
+        "Link": "https://www.linkedin.com/in/erikgraa"
+      }
+    ],
+    "Source": "https://github.com/erikgraa/azure-arc-gateway-terraform",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled servers",
+      "Azure Arc",
+      "Azure Local"
+    ],
+    "LastModified": "2025-04-27T15:21:40.123Z",
+    "CreatedDate": "2025-04-27T15:21:40.123Z",
+    "Topics": [
+      "Arc-enabled servers",
+      "Azure Arc",
+      "IaC",
+      "Security"
+    ]
+  },
+  {
+    "Title": "Azure Arc Infrastructure as Code Automation",
+    "Summary": "This Jumpstart Drop provides a single view for scaling Arc resources through cloud driven deployment method by using Infrastructure as Code DevOps process.",
+    "Description": "This Jumpstart Drop provides an automation workflow to accelerate customers adopting Infrastructure as Code as their DevOps process to provision and manage their infrastructure at scale.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Wen Xu",
+        "Link": "https://www.linkedin.com/in/wen-xu-91a474a1/"
+      }
+    ],
+    "Source": "https://github.com/Azure/Edge-infrastructure-quickstart-template/tree/main",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "HCL",
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled Kubernetes",
+      "Azure Local"
+    ],
+    "LastModified": "2024-09-13T04:00:33.000Z",
+    "CreatedDate": "2024-03-25T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Use Azure Monitor dashboards with Grafana for K8s",
+    "Summary": "This Jumpstart Drop includes Bicep automation and guidance to use Grafana with Azure Monitor Dashboards for Arc-enabled K3s Cluster.",
+    "Description": "This Jumpstart guide provides end-to-end automation to deploy a lightweight Kubernetes (K3s) cluster, onboard it to Azure Arc, and use Grafana with Azure Monitor Dashboards to monitor resources in the Azure cloud and with Prometheus on an edge device.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/script_automation/arc_k8s_monitor_grafana/artifacts/media/monitor_grafana_arch.png",
+    "Authors": [
+      {
+        "Name": "Zaid Mohammad",
+        "Link": "https://www.linkedin.com/in/zaidmohd/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_k8s_monitor_grafana",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bicep",
+      "Shell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled Kubernetes",
+      "Grafana"
+    ],
+    "LastModified": "2025-05-12T00:00:00.000Z",
+    "CreatedDate": "2025-05-12T00:00:00.000Z",
+    "Topics": [
+      "Kubernetes",
+      "K3s",
+      "Observability"
+    ]
+  },
+  {
+    "Title": "Using Secret Store extension to fetch secrets in Azure Arc-enabled Kubernetes cluster",
+    "Summary": "This Jumpstart Drop includes Bicep automation for deploying an Azure Arc-enabled K3s cluster with the Secret Store extension.",
+    "Description": "This Jumpstart Drop includes automation to setup a K3s cluster, connects it to Azure Arc, and configures the Secret Store Extension to sync secrets from Azure Key Vault to Kubernetes. It handles installing dependencies and deploying a sample app that uses the synced secret.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/script_automation/arc_k8s_secret_store_extension/artifacts/media/sseArcExtensionArch.png",
+    "Authors": [
+      {
+        "Name": "Zaid Mohammad",
+        "Link": "https://www.linkedin.com/in/zaidmohd/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_k8s_secret_store_extension",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bicep",
+      "Shell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled Kubernetes",
+      "Azure Key Vault"
+    ],
+    "LastModified": "2025-02-03T00:00:00.000Z",
+    "CreatedDate": "2025-02-03T00:00:00.000Z",
+    "Topics": [
+      "Kubernetes",
+      "K3s",
+      "Security"
+    ]
+  },
+  {
+    "Title": "Azure Arc Management Workbook",
+    "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring and reporting on Arc resources.",
+    "Description": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring and reporting on Arc resources. Using Azure\u0027s management and operations tools in hybrid, multi-cloud and edge deployments provides the consistency needed to manage each environment through a common set of governance and operations management practices. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Laura NicolÃ¡s",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_management_full",
+    "Type": "ui_dashboard_workbook",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "JSON"
+    ],
+    "Products": [
+      "Azure Monitor",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-05-16T12:22:36.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Using the Multicloud Connector Enabled by Azure Arc",
+    "Summary": "This Jumpstart Drop describes how to use the Multicloud connector enabled by Azure Arc to onboard EC2 instances to Azure Arc, view an inventory of AWS resources in Azure, and run Azure Resource Graph queries to view resources across clouds.",
+    "Description": "This Jumpstart Drop describes how to use the Multicloud connector enabled by Azure Arc to onboard EC2 instances to Azure Arc, view an inventory of AWS resources in Azure, and run Azure Resource Graph queries to view resources across clouds.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/arc_multicloud_connector",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "CloudFormation"
+    ],
+    "Products": [
+      "Arc-enabled servers",
+      "AWS EC2",
+      "Multicloud connector"
+    ],
+    "LastModified": "2024-09-18T00:00:00.000Z",
+    "CreatedDate": "2024-09-06T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc-enabled servers OS Performance Workbook",
+    "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance.",
+    "Description": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Alejandro SÃ¡nchez",
+        "Link": "www.linkedin.com/in/asgsanchezgomez"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_os_performance",
+    "Type": "ui_dashboard_workbook",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "JSON"
+    ],
+    "Products": [
+      "Azure Monitor",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-05-16T12:22:36.000Z",
+    "CreatedDate": "2024-04-01T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc with Private Link (Terraform)",
+    "Summary": "This Jumpstart Drop deploys a hybrid Azure Arc infrastructure with secure onboarding using Private Link, VNet-to-VNet VPN, Bastion for RDP, and DNS isolation via Terraform.",
+    "Description": "This Jumpstart Drop demonstrates how to deploy a complete hybrid Azure Arc scenario using Terraform. It simulates an on-premises environment connected to Azure via VNet-to-VNet VPN Gateway. A Windows Server VM is onboarded to Azure Arc through a Custom Script Extension, with traffic isolated using Private Link and Private DNS Zones. Azure Bastion provides secure RDP access. This Drop aligns with best practices from the Azure Arc Jumpstart project.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Nicolas VACCARO",
+        "Link": "https://www.linkedin.com/in/nicolasvac/"
+      }
+    ],
+    "Source": "https://github.com/technicalandcloud/Azure_Arc_PrivateLink",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform",
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure Private Link",
+      "Azure VPN Gateway"
+    ],
+    "LastModified": "2025-05-23T10:00:00.000Z",
+    "CreatedDate": "2025-05-23T09:00:00.000Z",
+    "Topics": [
+      "Hybrid Networking",
+      "Private Link",
+      "Azure Arc Jumpstart"
+    ]
+  },
+  {
+    "Title": "Deploy an Ubuntu 22.04 server with Vagrant",
+    "Summary": "This Jumpstart Drop provides a guide to creating an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to create an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat/"
+      },
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_ubuntu_server_vagrant_connect_azure_arc",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "Bash"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled servers",
+      "Vagrant"
+    ],
+    "LastModified": "2024-07-08T19:23:47.000Z",
+    "CreatedDate": "2024-07-08T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc onboarding using Ansible playbooks",
+    "Summary": "This Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
+    "Description": "This Jumpstart Drop will guide you on how to programatically perform tasks with on your Extended Security Updates licenses at scale.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Laura Nicolas",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      },
+      {
+        "Name": "Dale Kirby",
+        "Link": "https://www.linkedin.com/in/dale-kirby/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_server_onboard_ansible_playbook",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Ansible",
+      "YAML"
+    ],
+    "Products": [
+      "Ansible",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-05-16T12:22:36.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Certificate-Based Onboarding for Azure Arc-Enabled Servers",
+    "Summary": "Azure Arc version 1.41 introduces certificate-based authentication for connecting and disconnecting servers, replacing the old method of using passwords. This new feature makes managing servers easier and more secure.",
+    "Description": "In this article, I will explain how to set up and use certificates for Azure Arc-enabled servers. You will learn how to create a certificate using Active Directory Certificate Services, export the certificate, and use it for onboarding servers to Azure Arc. Additionally, I will cover common issues you might face and suggest ways to improve the process. By the end of this guide, you will be able to use certificates to securely manage and onboard your servers to Azure Arc.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Pratheep Sinnathurai",
+        "Link": "https://www.linkedin.com/in/psinnathurai/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/arc_server_onboard_certificates",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Arc-enabled servers",
+      "Azure Monitor",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-07-05T09:40:09.000Z",
+    "CreatedDate": "2024-06-20T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "How to Use the Key Vault Extension to Acquire Certificates on Arc-Enabled Windows Servers",
+    "Summary": "This Jumpstart Drop provides guidance on how to use Azure Key Vault extension with Windows Arc-enabled servers to manage certificate distribution and lifecycle management.",
+    "Description": "Managing certificates in a hybrid cloud environment can be complex, but Azure Arc-enabled servers simplify this process. By using the Azure Key Vault extension, you can securely acquire and manage certificates. Hereâ€™s a quick step-by-step guide:",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "George Markou",
+        "Link": "https://www.linkedin.com/in/george-markou-06111617/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/arc_server_windows_keyvault_extension",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-09-23T00:00:00.000Z",
+    "CreatedDate": "2024-09-23T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc SQL Tags Inheritance",
+    "Summary": "This Jumpstart Drop provides a script that validates tag inheritance from Azure Arc VMs to SQL Instances, ensuring consistency and better resource management.",
+    "Description": "Ensure Azure Arc SQL Instances inherit tags from the associated Azure Arc VM, addressing the default behavior where SQL Instances do not replicate tags. This improves resource management and consistency in the Azure environment.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Fabio R V Costa",
+        "Link": "https://www.linkedin.com/in/fabiotreze/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_sql_tags_inheritance",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-Enabled Servers",
+      "SQL Server"
+    ],
+    "LastModified": "2025-03-28T12:00:00.000Z",
+    "CreatedDate": "2025-03-28T12:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc Video Indexer Example",
+    "Summary": "This Jumpstart Drop provides scenario bicep files to create an Azure Arc Kubernetes system with Video Indexer installed",
+    "Description": "This project provides example scenario bicep files to create an Azure Arc connected Kubernetes system with Video Indexer. See README.md for details on editing and executing this scenario.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/aks_edge_essentials_single_vi/arch_diagram.png",
+    "Authors": [
+      {
+        "Name": "Anthony Joint",
+        "Link": "https://www.linkedin.com/in/anthonyjoint/"
+      },
+      {
+        "Name": "Dale Kirby",
+        "Link": "https://www.linkedin.com/in/dale-kirby/"
+      },
+      {
+        "Name": "Kiana Harris",
+        "Link": "https://www.linkedin.com/in/kiana-harris-825b4b168/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/aks_edge_essentials_single_vi",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "YAML",
+      "JSON"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Video Indexer",
+      "Azure Container Storage enabled by Azure Arc"
+    ],
+    "LastModified": "2025-07-03T12:10:43.511Z",
+    "CreatedDate": "2025-07-03T12:10:43.511Z",
+    "Topics": [
+      "VI",
+      "AI",
+      "ACSA",
+      "ACS",
+      "Arc",
+      "Kubernetes",
+      "ArcK8s"
+    ]
+  },
+  {
+    "Title": "Azure Arc Windows Extended Security Updates (ESU) Dashboard",
+    "Summary": "This dashboard gives an overview of Azure Arc-enabled servers and provides a quick glance overview of your environment, especially around the status of your Windows Extended Security Updates (ESU) Arc-enabled servers.",
+    "Description": "The dashboard provides a comprehensive view of Azure Arc-enabled Windows and Linux servers, showcasing the installed Arc agent count, operating system distribution, agent version details, detected SQL instances, Windows ESU status, and the allowance and status of Azure Arc extensions.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Sarah Lean",
+        "Link": "https://www.linkedin.com/in/sazlean"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_windows_esu",
+    "Type": "ui_dashboard_workbook",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "JSON"
+    ],
+    "Products": [
+      "Azure Monitor",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-07-10T18:25:43.511Z",
+    "CreatedDate": "2024-07-09T10:30:16.201Z",
+    "Topics": [
+      "Azure Arc",
+      "Azure Arc-enabled Servers",
+      "Azure Monitor",
+      "Dashboard",
+      "Windows Extended Security Updates (ESU)"
+    ]
+  },
+  {
+    "Title": "Azure Video Indexer - Classify objects in a video with GPT4o",
+    "Summary": "A no-code sample for automating the classification of objects in a video using Azure Video Indexer and GPT4o.",
+    "Description": "In this LogicApp flow sample, you will learn how to add aditional details on the cars detected in an indexed video, the sample leverage Video Indexer\u0027s BYO capability and detected objects in additon to Azure OpenAI.",
+    "Cover": "https://www.youtube.com/watch?v=yMqJufR9Rfs",
+    "Authors": [
+      {
+        "Name": "Shemer Steinlauf",
+        "Link": "https://www.linkedin.com/in/shemers"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-video-indexer-samples/tree/master/LogicApp-Samples",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "JSON"
+    ],
+    "Products": [
+      "Azure Video Indexer",
+      "Azure Logic Apps",
+      "Azure OpenAI"
+    ],
+    "LastModified": "2024-07-03T17:08:49.000Z",
+    "CreatedDate": "2024-06-24T12:48:16.000Z",
+    "Topics": [
+      "AI",
+      "GPT4o",
+      "VisionAI",
+      "VideoIndexer",
+      "LogicApps"
+    ]
+  },
+  {
+    "Title": " Azure Quick Review Tutorial",
+    "Summary": "This Jumpstart Drop provides a tutorial on how to use the Azure Quick Review tool to assess your Azure environment.",
+    "Description": "This Jumpstart Drop provides a tutorial on how to use the Azure Quick Review tool to assess your Azure environment. The Azure Quick Review tool is a free, open-source tool that helps you assess your Azure environment and identify areas for improvement. The tool provides a comprehensive report that includes recommendations for best practices, security, and cost optimization.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Carlos Mendible",
+        "Link": "https://linkedin.com/in/carlosmendible"
+      }
+    ],
+    "Source": "https://github.com/Azure/azqr/tree/main/jumpstart_drops/azqr-tutorial",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "Powershell"
+    ],
+    "Products": [
+      "Azure Kubernetes Service",
+      "Azure Cosmos DB",
+      "Azure Firewall"
+    ],
+    "LastModified": "2025-02-25T14:27:00.000Z",
+    "CreatedDate": "2025-02-25T14:27:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc SQL LeastPrivilege Activation",
+    "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
+    "Description": "This Drop includes a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines. It uses managed identity, validates dependencies, installs the arcdata extension, queries Resource Graph, and applies the flag using Azure CLI.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Fabio R V Costa",
+        "Link": "https://www.linkedin.com/in/fabiotreze/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/AzureArcSQLEnableLeastPrivilege",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-Enabled Servers"
+    ],
+    "LastModified": "2025-09-18T22:45:00.000Z",
+    "CreatedDate": "2025-09-18T22:45:00.000Z",
+    "Topics": [
+      "Hybrid Management",
+      "Security",
+      "Automation",
+      "FeatureFlags",
+      "Azure Resource Graph"
+    ]
+  },
+  {
+    "Title": "Azure Arc Agent Toolkit",
+    "Summary": "GUI-based toolkit for system administrators who prefer visual interfaces over the CLI. This project wraps around the Azure Arc Connected Machine Agent and simplifies agent monitoring, config inspection, and version checks.",
+    "Description": "GUI-based toolkit for system administrators who prefer visual interfaces over the CLI. This project wraps around the Azure Arc Connected Machine Agent and simplifies agent monitoring, config inspection, and version checks.",
+    "Cover": "https://github.com/enderalci/AACMAToolkit/blob/master/AACMAToolkit.png",
+    "Authors": [
+      {
+        "Name": "Ender Alci",
+        "Link": "www.linkedin.com/in/ender-alci"
+      },
+      {
+        "Name": "Michael Morten Sonne",
+        "Link": "https://www.linkedin.com/in/michaelmsonne/"
+      }
+    ],
+    "Source": "https://github.com/enderalci/AACMAToolkit/tree/master",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      ".NET/C#"
+    ],
+    "Products": [
+      "Arc-enabled Server",
+      "Azure Arc",
+      "Windows"
+    ],
+    "LastModified": "2025-05-03T16:56:13.361Z",
+    "CreatedDate": "2025-04-30T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Arc with AMPLS \u0026 Private Link",
+    "Summary": "This Jumpstart Drop deploys a secure hybrid infrastructure using Azure Arc and Azure Monitor Private Link Scopes (AMPLS), with Terraform.",
+    "Description": "This Jumpstart Drop showcases how to integrate Azure Arc-enabled servers with Azure Monitor using AMPLS and Private Link for secure traffic flow. It simulates an on-premises environment connected to Azure through a VNet-to-VNet VPN Gateway. A Windows Server VM is onboarded to Azure Arc using a Custom Script Extension. Log and metrics traffic is routed privately through AMPLS with Private DNS Zones, and ingested into a Log Analytics workspace. Azure Bastion provides secure remote desktop access. The deployment is fully automated using Terraform and aligns with Azure Arc Jumpstart best practices.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Nicolas VACCARO",
+        "Link": "https://www.linkedin.com/in/nicolasvac/"
+      }
+    ],
+    "Source": "https://github.com/technicalandcloud/Azure_Arc_PrivateLink_AMPLS",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform",
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure Monitor",
+      "Azure Private Link"
+    ],
+    "LastModified": "2025-07-04T10:00:00.000Z",
+    "CreatedDate": "2025-07-04T09:00:00.000Z",
+    "Topics": [
+      "Azure Arc",
+      "AMPLS",
+      "Private Link",
+      "Monitoring"
+    ]
+  },
+  {
+    "Title": "Arc Insights PBI Dashboards Powered by Jumpstart",
+    "Summary": "This Jumpstart Drop provides a sample PowerBI dashboard, to demonstrate the inventory and insights available across both Arc-connected and Azure native Virtual Machines.",
+    "Description": "Microsoft Power BI is a powerful tool that can be connected to Azure Resource Graph to in order to query the inventory of Arc-enabled servers and Azure virtual machines, providing users a flexible alternative for visualization, as an alternative for the default dashboards offered within the Azure portal. These Jumpstart-powered Power BI dashboards provide a single pane of glass and include an inventory of Azure virtual machines, SQL Server Instances on virtual machines, SQL databases on virtual machines, and Extended Security Update (ESU) cost forecasting. The deployment includes a single-click deployment of a Power BI template which can be downloaded and connected to your Azure subscriptions through the built-in Azure Resource Graph connector.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Mark Jones",
+        "Link": "https://www.linkedin.com/in/joneslmark"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard",
+    "Type": "ui_dashboard_workbook",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "Kusto",
+      "DAX",
+      "M-Query"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Microsoft PowerBI"
+    ],
+    "LastModified": "2025-04-21T18:25:43.511Z",
+    "CreatedDate": "2025-04-21T18:25:43.511Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AIO Data Historian",
+    "Summary": "InfluxDB-based Data Historian, deployed and managed by Azure IoT Operations.",
+    "Description": "Data Historian for Azure IoT Operations (AIO). Telegraf, InfluxDB, and Grafana (TIG stack) Infrastructure as Code (IaC, Terraform) utilizing Azure IoT Data Processor and Azure IoT MQ (MQTT Broker).",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Allen Greaves",
+        "Link": "https://github.com/agreaves-ms"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-datahistorian",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "InfluxDB"
+    ],
+    "LastModified": "2024-08-14T18:53:13.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AIO - Inner Developer Loop",
+    "Summary": "This setup demonstrates an inner developer loop for Azure IoT Operations (AIO) using K3d, Dapr, and .NET. It leverages Visual Studio Code, Dev Container, and Kubernetes Tools for local setup and remote debugging of workloads.",
+    "Description": "This sample contains the setup of an inner developer loop to work with Azure IoT Operations (AIO) and custom application using Dapr and .NET. The repo is using a configuration with Visual Studio Code, Dev Container and VS Code Kubernetes Tools to allow local developer environment configuration and remote debugging of workloads. The sample workload is using .NET, though the same debugging experience can be achieved with other languages.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Katrien De Graeve",
+        "Link": "https://github.com/katriendg"
+      },
+      {
+        "Name": "Marcel Bindseil",
+        "Link": "https://github.com/bindsi"
+      },
+      {
+        "Name": "Allen Greaves",
+        "Link": "https://github.com/agreaves-ms"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-dapr-net-devcontainer-k3d",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "C#",
+      "Dockerfile",
+      "Shell"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "Dapr"
+    ],
+    "LastModified": "2024-08-21T06:28:09.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AIO Data Processor Jumpstart",
+    "Summary": "This Jumpstart Drop offers a sample implementation of Azure IoT Operations Data Processor pipelines for industrial scenarios. It enables you to aggregate, enrich, normalize, and filter data using tag enhancements.",
+    "Description": "This repository provides a comprehensive sample implementation of Azure IoT Operations Data Processor pipelines for industrial related scenarios using tag enhancements. The Azure IoT Operations Data Processor is a component of Azure IoT Operations (AIO) designed to handle the complexity and diversity of industrial data. It achieves this by offering data pipelines that enable you to aggregate, enrich, normalize, and filter data from your devices.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Emmeline Hoops",
+        "Link": "https://github.com/chaosdinosaur"
+      },
+      {
+        "Name": "Maho Pacheco",
+        "Link": "https://github.com/mahomedalid"
+      },
+      {
+        "Name": "Olha Konstantinova",
+        "Link": "https://github.com/olhakonst17"
+      },
+      {
+        "Name": "Yani Ariunbold",
+        "Link": "https://github.com/yanichka99"
+      },
+      {
+        "Name": "Renato Marciano",
+        "Link": "https://github.com/renato-marciano"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-dp-jumpstart",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Jupyter Notebook",
+      "Shell",
+      "Bicep"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-08-14T18:43:55.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AIO Environments",
+    "Summary": "This Jumpstart Drop sets up the infrastructure to create VHDX images and VMs for Azure IoT Operations on Arc-enabled servers. This enables you to install instrumentation tools and collect memory dumps for applications and core components.",
+    "Description": "This repository sets up the infrastructure to create VHDX images and VMs for Azure IoT Operations on Arc-enabled servers. This infrastructure enables you to install instrumentation tools and collect memory dumps for applications and core components.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Marcel Bindseil",
+        "Link": "https://github.com/bindsi"
+      },
+      {
+        "Name": "Vy Ta",
+        "Link": "https://github.com/vyta"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-environments",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bicep",
+      "Shell",
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-09-12T11:26:25.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AIO IaC Terraform",
+    "Summary": "Infrastructure as Code (IaC) Terraform for Azure IoT Operations (AIO) components. This Jumpstart Drop includes initial infrastructure setup through Terraform, Self-Signed certificate generation, OPC PLC Simulator connected to the AIO OPC UA Broker.",
+    "Description": "Infrastructure as Code (IaC) Terraform for Azure IoT Operations (AIO) components. Includes initial infrastructure setup through Terraform, Self-Signed certificate generation, OPC PLC Simulator connected to the AIO OPC UA Broker.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Allen Greaves",
+        "Link": "https://github.com/agreaves-ms"
+      },
+      {
+        "Name": "Marcel Bindseil",
+        "Link": "https://github.com/bindsi"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-iac-terraform/blob/main",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform",
+      "Shell"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "Terraform"
+    ],
+    "LastModified": "2024-08-14T18:46:28.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AIO Observability GitOps",
+    "Summary": "This Jumpstart Drop sets up Azure IoT Operations with OpenTelemetry and local observability visualization using Flux GitOps. It uses a Visual Studio Code dev container and K3D cluster for local monitoring of Azure IoT Operations components.",
+    "Description": "In this sample, a Visual Studio Code dev container is used as the developer sandbox to leverage a local K3D cluster, initialize Azure resources and install a baseline set of Azure IoT Operations\u0027 components. The objective is to illustrate how to setup observability to be able to locally visualize health of the cluster and Azure IoT Operations\u0027 components. This repository is particularly useful for those interested in edge-based visualization. Please check formal Azure IoT Operations documentation if you are looking for a default observability setup and wish to analyze observability data using Azure Monitor",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Magda Baran",
+        "Link": "https://github.com/MagdaPaj"
+      },
+      {
+        "Name": "Katrien De Graeve",
+        "Link": "https://github.com/katriendg"
+      },
+      {
+        "Name": "Marcel Bindseil",
+        "Link": "https://github.com/bindsi"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aio-observability-gitops",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Shell",
+      "Bicep",
+      "Dockerfile"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "Prometheus"
+    ],
+    "LastModified": "2024-08-09T14:13:02.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions AKS EE Proxy Certs",
+    "Summary": "This Jumpstart Drop contains PowerShell script that demonstrates how to provision AKS Edge Essentials (AKS EE) single node Linux K3s cluster with configuration of a proxy requiring TLS termination.",
+    "Description": "This Jumpstart Drop contains PowerShell script that demonstrates how to provision AKS Edge Essentials (AKS EE) single node Linux K3s cluster with configuration of a proxy requiring TLS termination.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Hassaan Ahmed",
+        "Link": "https://github.com/syedhassaanahmed"
+      },
+      {
+        "Name": "Katrien De Graeve",
+        "Link": "https://github.com/katriendg"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-aksee-proxy-certs",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "AKS Edge Essentials"
+    ],
+    "LastModified": "2024-04-18T00:00:00.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Edge Extensions - Azure IoT Operations ISA-95 Layered Network Management and MQ Setup",
+    "Summary": "This Jumpstart Drop provides a solution to build an ISA-95 network model on top of Azure IoT Operations utilizing Azure IoT Layered Network Management and Azure IoT MQ.",
+    "Description": "This repository defines two levels of an ISA-95 network model and enables MQTT bridging between the layers for bidirectional communication. This sample also showcases how to implement a KafkaConnector to retrieve data from a cloud-based Kafka Broker.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Nebrass Lamouchi",
+        "Link": "https://github.com/nebrass"
+      },
+      {
+        "Name": "Marcel Bindseil",
+        "Link": "https://github.com/bindsi"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-lnm-mq-isa95",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "YAML"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure IoT MQ",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-08-13T13:09:59.000Z",
+    "CreatedDate": "2024-07-04T00:00:00.000Z",
+    "Topics": [
+      "ISA-95",
+      "Purdue Model",
+      "MQTT Bridge",
+      "KafkaConnector"
+    ]
+  },
+  {
+    "Title": "Azure IoT Operations through Polyglot Notebooks",
+    "Summary": "This Jumpstart Drop contains a set of Polyglot Notebooks that demonstrate how to use Azure IoT Operations using Codespaces.",
+    "Description": "This Jumpstart Drop contains a set of Polyglot Notebooks that demonstrate how to use Azure IoT Operations using Codespaces.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Emmeline Hoops",
+        "Link": "https://github.com/chaosdinosaur"
+      },
+      {
+        "Name": "Marcel Bindseil",
+        "Link": "https://github.com/bindsi"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-polyglotnotebook-aio/blob/main",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Jupyter Notebook",
+      "Go",
+      "Dockerfile",
+      "Shell"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-04-18T00:00:00.000Z",
+    "CreatedDate": "2024-04-18T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Retrieval-Augmented Generation on Edge with Azure Arc \u0026 Azure IoT Operations",
+    "Summary": "This Jumpstart Drop provides a Retrieval-Augmented Generation (RAG) on edge pattern that facilitates text searches within files utilizing a local vectorDB and an edge LLM. It follows Pub/Sub messaging pattern with Azure IoT Operations MQTT broker.",
+    "Description": "RAG on Edge is a tool to perform text searches within files using a vector-based approach, and generate a readable response based on the search result with Large/Small Language Model. The solution is independent from cloud services, and can be deployed to the edge device. The messaging system follows a pub/sub pattern, ensuring adaptability to diverse edge computing scenarios.",
+    "Cover": "https://www.youtube.com/watch?v=rb7-xRnFuPY",
+    "Authors": [
+      {
+        "Name": "Cheng Chen",
+        "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-retrieval-augmented-generation",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Python",
+      "Shell"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "Kubernetes"
+    ],
+    "LastModified": "2024-08-21T07:55:30.000Z",
+    "CreatedDate": "2024-07-08T00:00:00.000Z",
+    "Topics": [
+      "SLM",
+      "RAG",
+      "LLM",
+      "AI",
+      "Edge"
+    ]
+  },
+  {
+    "Title": "Multi-Modal Retrieval-Augmented Generation on Edge",
+    "Summary": "This Jumpstart Drop provides a multi-modal (image + text) RAG on edge pattern that facilitates multi-modal searches within files, utilizing a multi-modal vector search engine, Marqo, and a multi-modal Large Language Model, LLaVa.",
+    "Description": "Multimodal RAG on Edge is a tool to perform multi-modal searches, which allows image, text, or combination of both as the input query, within files using a multi-modal vector search engine, Marqo, and to generate a readable response based on the search result with LLAVA. The tool can help on machine troubleshooting on-site and more use cases. In this sample, we demonstrate how to use the tool as industry copilot to help people on construction site quickly troubleshoot the excavators. During the construction operation, when the excavators is broken, it is usually time-consuming for the staff on site to find the solution from the technical manual and the past troubleshooting logs or contact technical specialist for help. The edge multi-modal RAG tool serves as the industry copilot helping the operator staff to quickly fix the problems. The solution is independent from cloud services, and can be deployed to the edge machine.",
+    "Cover": "https://www.youtube.com/watch?v=_1syJchZwcM",
+    "Authors": [
+      {
+        "Name": "Cheng Chen",
+        "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extensions-retrieval-augmented-generation-multimodel",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Python"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "Marqo"
+    ],
+    "LastModified": "2024-08-08T06:47:04.000Z",
+    "CreatedDate": "2024-07-08T00:00:00.000Z",
+    "Topics": [
+      "RAG",
+      "LLM",
+      "Edge",
+      "AI",
+      "Multi-Modal"
+    ]
+  },
+  {
+    "Title": "Overview of MQTT topics per EventGrid namespace client",
+    "Summary": "This Jumpstart Drop shows how to combine all Azure EventGrid namespace clients, client groups, topic spaces, and permission bindings, listing all topics with their permissions for each MQTT broker client.",
+    "Description": "Demonstrator and library for reading all Azure EventGrid namespace clients, client groups, topic spaces, and permission bindings. These are combined to list all topics with their permissions for each MQTT broker client. You can use this library in your own applications.",
+    "Cover": "https://github.com/sandervandevelde/MqttBrokerGraphApp/blob/main/images/client-topics-01.png",
+    "Authors": [
+      {
+        "Name": "Sander van de Velde",
+        "Link": "https://www.linkedin.com/in/sandervandevelde"
+      }
+    ],
+    "Source": "https://github.com/sandervandevelde/MqttBrokerGraphApp",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C#/.NET"
+    ],
+    "Products": [
+      "Azure EventGrid Namespace"
+    ],
+    "LastModified": "2024-05-22T21:06:14.000Z",
+    "CreatedDate": "2024-05-22T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": ".NET nanoFramework app with Azure EventGrid Namespace MQTT support",
+    "Summary": "This Jumpstart Drop shows how to configure and deploy a .NET nanoFramework app running on an ESP32 as a client for Azure EventGrid Namespace MQTT support. The device is secured with certificates and supports sending/receiving MQTT messages and LWT.",
+    "Description": "Demonstrator for a .NET nanoFramework application running on an ESP32 as a client for Azure EventGrid Namespace MQTT support.",
+    "Cover": "https://github.com/sandervandevelde/Nanoframework-Cloud-MQTT-Broker-support/blob/main/assets/dotnet-nanoframework-flow.png",
+    "Authors": [
+      {
+        "Name": "Sander van de Velde",
+        "Link": "https://www.linkedin.com/in/sandervandevelde"
+      }
+    ],
+    "Source": "https://github.com/sandervandevelde/Nanoframework-Cloud-MQTT-Broker-support",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C#/.NET"
+    ],
+    "Products": [
+      "Azure EventGrid Namespace"
+    ],
+    "LastModified": "2024-05-28T19:24:06.000Z",
+    "CreatedDate": "2024-05-22T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Visualize Azure EventGrid MQTT messages on all incoming topics",
+    "Summary": "This Jumpstart Drop shows how to visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to \u0027#\u0027.",
+    "Description": "This explorer tool can visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to \u0027#\u0027.",
+    "Cover": "https://github.com/sandervandevelde/MqttAuditApp/blob/main/assets/explorer-mainform.png",
+    "Authors": [
+      {
+        "Name": "Sander van de Velde",
+        "Link": "https://www.linkedin.com/in/sandervandevelde"
+      }
+    ],
+    "Source": "https://github.com/sandervandevelde/MqttAuditApp",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C#/.NET"
+    ],
+    "Products": [
+      "Azure EventGrid Namespace"
+    ],
+    "LastModified": "2024-05-28T16:43:36.000Z",
+    "CreatedDate": "2024-05-22T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Azure Local Endpoints Codified",
+    "Summary": "This Jumpstart Drop for Azure Local includes a PowerShell script and GitHub workflow to retrieve all of the outbound URL endpoints required for each Azure region. The output is codified in JSON format to aid in automation purposes.",
+    "Description": "This Jumpstart Drop for Azure Local includes a PowerShell script and GitHub workflow to retrieve all of the outbound URL endpoints required for each Azure region. The output is codified in JSON format to aid in automation purposes.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Erik Grina Raassum",
+        "Link": "https://www.linkedin.com/in/erikgraa"
+      }
+    ],
+    "Source": "https://github.com/erikgraa/azure-local-endpoints",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "JSON",
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure Local"
+    ],
+    "LastModified": "2025-02-22T21:23:43.511Z",
+    "CreatedDate": "2025-02-22T21:23:43.511Z",
+    "Topics": [
+      "Azure Local",
+      "IaC"
+    ]
+  },
+  {
+    "Title": "Azure Local Releases Tool",
+    "Summary": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
+    "Description": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Erik Grina Raassum",
+        "Link": "https://www.linkedin.com/in/erikgraa"
+      }
+    ],
+    "Source": "https://github.com/erikgraa/azure-local-releases",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "JSON",
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure Local"
+    ],
+    "LastModified": "2025-03-05T22:30:00.511Z",
+    "CreatedDate": "2025-03-05T22:30:00.511Z",
+    "Topics": [
+      "Azure Local",
+      "IaC"
+    ]
+  },
+  {
+    "Title": "\"Cerebral\": An AI-Driven Assistant for Industrial Efficiency",
+    "Summary": "This Jumpstart Drop provides an intelligent assistant for real-time troubleshooting and data analysis in hybrid and edge environments, offering a unified platform for consistent management and issue resolution.",
+    "Description": "This Jumpstart Drop introduces Cerebral, an intelligent assistant designed to enhance operational efficiency by providing real-time troubleshooting and data analysis capabilities. Built to support hybrid, multi-cloud, and edge deployments, Cerebral ensures consistent and reliable management across diverse environments. By leveraging Azure\u0027s advanced AI and edge computing tools, this solution delivers a unified platform where users can interact using natural language to monitor, query, and resolve issues. The integration with Azure Monitor and other Azure services allows Cerebral to act as a powerful, flexible canvas for data analysis and visualization, offering an interactive and cohesive experience directly within the Azure portal.",
+    "Cover": "https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/sample_app/cerebral_genai/resources/images/architecture.png",
+    "Authors": [
+      {
+        "Name": "Armando Blanco",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      },
+      {
+        "Name": "Cheng Chen",
+        "Link": "https://www.linkedin.com/in/cheng-chen-a8496850"
+      },
+      {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/cerebral_genai/",
+    "Type": "sample_app",
+    "Difficulty": "Advanced",
+    "ProgrammingLanguage": [
+      "Paython",
+      "Bash"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure OpenAI",
+      "Azure IoT Operations"
+    ],
+    "LastModified": "2024-08-16T10:25:43.511Z",
+    "CreatedDate": "2024-08-19T11:25:43.511Z",
+    "Topics": [
+      "SLM",
+      "LLM",
+      "Genertative AI",
+      "Industrial IoT"
+    ]
+  },
+  {
+    "Title": "Connect a Kubernetes cluster to Azure Arc",
+    "Summary": "This Jumpstart Drop provides a guide to onboarding an existing Kubernetes cluster to Azure Arc using the Azure CLI.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to onboard an existing Kubernetes cluster to Azure Arc.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat/"
+      },
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/connect_an_existing_kubernetes_cluster_to_azure_arc",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "Bash"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled Kubernetes"
+    ],
+    "LastModified": "2024-07-09T00:00:00.00Z",
+    "CreatedDate": "2024-07-09T00:00:00.00Z",
+    "Topics": [
+      "Kubernetes"
+    ]
+  },
+  {
+    "Title": "Deploy Akri on an Azure Arc-enabled Kubernetes cluster with an IP mock camera",
+    "Summary": "The following Jumpstart Drop will guide you on how to deploy Akri as Kubernetes resource interface that exposes an IP mock camera in an Azure Arc-enabled Kubernetes cluster.",
+    "Description": "The following Jumpstart Drop will guide you on how to deploy Akri as Kubernetes resource interface that exposes an IP mock camera in an Azure Arc-enabled Kubernetes cluster. Akri is an open source project for a Kubernetes resource interface that lets you expose heterogenous leaf devices as resources in a Kubernetes cluster. It currently supports OPC UA, ONVIF, and udev protocols, but you can also implement custom protocol handlers provided by the template. In this scenario, Akri is used for handling the dynamic appearance and disappearance of an ONVIF mock camera as the Discovery Handler.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Laura Nicolas",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      },
+      {
+        "Name": "Francisco Cabrera Lieutier",
+        "Link": "https://www.linkedin.com/in/franciscocabreralieutier/"
+      },
+      {
+        "Name": "Yu Jin Kim",
+        "Link": "https://www.linkedin.com/in/yu-jin-kim/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/deploy_akri_and_mock_camera/",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Rustc",
+      "JSON"
+    ],
+    "Products": [
+      "Akri",
+      "Arc-enabled Kubernetes",
+      "AKS Edge Essentials"
+    ],
+    "LastModified": "2024-06-27T19:37:21.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Deploy the Azure Monitor Agent to an Azure Arc-enabled Server",
+    "Summary": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Linux Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show typical performance counters and Syslog being collected.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Linux Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show typical performance counters and Syslog being collected.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_ama_to_linux_arc_server",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "Bash"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-07-26T00:00:00.00Z",
+    "CreatedDate": "2024-07-26T00:00:00.00Z",
+    "Topics": [
+      "Monitoring"
+    ]
+  },
+  {
+    "Title": "Deploy the Azure Monitor Agent to a Windows Azure Arc-enabled Server",
+    "Summary": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Windows Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show performance counters and Windows Event Logs being collected.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to deploy the Azure Monitor Agent to a Windows Arc-enabled server. It creates a Log Analytics Workspace and Data Collection rule to show typical performance counters and Windows Event Logs being collected.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_ama_to_windows_arc_server",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "Bash"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled servers",
+      "Windows"
+    ],
+    "LastModified": "2024-07-26T00:00:00.00Z",
+    "CreatedDate": "2024-07-26T00:00:00.00Z",
+    "Topics": [
+      "Monitoring"
+    ]
+  },
+  {
+    "Title": "Deploy a Kubernetes cluster using MicroK8s using a Windows VM",
+    "Summary": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using Microk8s on Windows and connecting it to Azure Arc using the Azure CLI.",
+    "Description": "This Jumpstart Drop provides a step-by-step guide to creating a Kubernetes cluster using MicroK8s on Windows and connecting it to Azure Arc using the Azure CLI.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Lior Kamrat",
+        "Link": "https://www.linkedin.com/in/liorkamrat/"
+      },
+      {
+        "Name": "Mike Rhoads",
+        "Link": "https://www.linkedin.com/in/mike-rhoads/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/deploy_local_kubernetes_cluster_using_microk8s",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "Bash"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-enabled Kubernetes",
+      "MicroK8s"
+    ],
+    "LastModified": "2024-07-09T16:55:28.000Z",
+    "CreatedDate": "2024-07-09T00:00:00.00Z",
+    "Topics": [
+      "Kubernetes",
+      "MicroK8s"
+    ]
+  },
+  {
+    "Title": "3D USD Import and Export For Digital Twin Builder",
+    "Summary": "3D USD Import and Export For Digital Twin Builder is a series of notebooks and functions to allow users of Digital Twin Builder to Import and Contextaulize 3D files in USD, as well as Export metadata from the twin into existing USD files.",
+    "Description": "This demo leverages the OpenUSD libraries to extract relevant 3D metadata from within a file, and allows users to contexualize 3D alongside traditional IT and OT Data. We aim to provide an intitial \u0027Getting Started\u0027 jumpstart point for users wishing to include 3D Files within their digital twin data estate",
+    "Authors": [
+      {
+        "Name": "Adam Lash",
+        "Link": "https://www.linkedin.com/in/adam-lash-9b337165"
+      },
+      {
+        "Name": "Vindhya Banda",
+        "Link": "https://www.linkedin.com/in/vindhya-banda"
+      }
+    ],
+    "Source": "https://github.com/adamlash/usd-import-for-dtb",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "USD",
+      "Python"
+    ],
+    "Products": [
+      "Digital Twin Builder",
+      "Fabric",
+      "Nvidia Omniverse"
+    ],
+    "LastModified": "2025-05-10T13:54:39.000Z",
+    "CreatedDate": "2025-05-11T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Manage Extended Security Updates (ESU) licenses at scale",
+    "Summary": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script.",
+    "Description": "This Jumpstart Drop consists of a script that will allow you to: create ESU licenses for Azure Arc-enabled servers at scale and Assign ESU licenses for Azure Arc-enabled servers",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "RaÃºl Carboneras",
+        "Link": "https://www.linkedin.com/in/ra%C3%BAl-carboneras-37609350/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/esu_licenses",
+    "Type": "script_automation",
+    "Difficulty": "Advanced",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "CSV"
+    ],
+    "Products": [
+      "ESU Licenses",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-05-16T11:56:27.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Graph User Photo Sync Automation",
+    "Summary": "Script automating user photo updates in Microsoft Entra ID (Azure AD) using Microsoft Graph API.",
+    "Description": "It retrieves all users first, stores them in an ordered hash table, finds matching photos in a local directory (such as an Azure Arc-enabled server), and updates their profile photosâ€”without requiring the Microsoft.Graph PowerShell module.",
+    "Cover": "https://images.squarespace-cdn.com/content/661c4130c6c2c45436f6bf0a/1742684735876-OOD9SUL1HMGDL56YD96I/AzureAutomation.jpg",
+    "Authors": [
+      {
+        "Name": "Hailey Phillips",
+        "Link": "https://www.linkedin.com/in/hailey-phillips-b1744882"
+      }
+    ],
+    "Source": "https://github.com/AllwaysHyPe/graph-automation",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Microsoft Graph",
+      "Entra ID"
+    ],
+    "LastModified": "2025-03-26T20:41:39.000Z",
+    "CreatedDate": "2025-03-26T20:41:39.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Image-Based Video Search Sample Application",
+    "Summary": "This drop deploy AI-powered sample application that Performs near real-time analysis and image-based search to detect and retrieve objects of interest in large video datasets.",
+    "Description": "The Image-Based Video Search sample application enables users to search live or recorded camera feeds by providing an image and viewing matching objects with location, timestamp, and confidence scores. This AI-powered solution combines edge microservices for video ingestion, object detection, feature extraction, and vector-based search. The workflow processes video streams through Deep Learning Streamer Pipeline Server and MediaMTX, extracts features using machine learning models, stores vector embeddings in MilvusDB, and provides intelligent search capabilities. Users can upload images or capture frames from video to find similar objects across large video datasets.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Mikolaj Kasprzak",
+        "Link": "https://github.com/MikolajKasprzak"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/image_based_video_search",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Helm"
+    ],
+    "Products": [
+      "Azure Arc",
+      "AKS"
+    ],
+    "LastModified": "2025-08-29T00:00:00.000Z",
+    "CreatedDate": "2025-08-29T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Integrating Litmus Edge with Azure IoT Operations",
+    "Summary": "This Jumpstart Drop explains how to integrate Litmus Edge with Azure IoT Operations, covering the deployment of Litmus Edge on Arc-enabled Kubernetes and configuring it to send data to Azure IoT Operations for monitoring.",
+    "Description": "This Jumpstart Drop provides a guide to integrate Litmus Edge with Azure IoT Operations. It describes how to deploy Litmus Edge on an Azure Arc-enabled Kubernetes cluster, configure the Litmus Edge agent to send data to the MQTT broker of Azure IoT Operations, and monitor the data in Azure IoT Operations.",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tutorial_guide/integrate_litmusedge_azureiotoperations/media/Azure_IoT_Operations_with_LitmusEdge_overview_architecture.png",
+    "Authors": [
+      {
+        "Name": "Juergen Mayrbaeurl",
+        "Link": "https://www.linkedin.com/in/juergenmayrbaeurl/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/integrate_litmusedge_azureiotoperations",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "Other"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure IoT Operations",
+      "Litmus Edge"
+    ],
+    "LastModified": "2025-02-12T19:18:43.511Z",
+    "CreatedDate": "2025-02-12T16:18:43.511Z",
+    "Topics": [
+      "Kubernetes"
+    ]
+  },
+  {
+    "Title": "LoRaWANÂ® with Azure IoT operations",
+    "Summary": "This Jumpstart Drop implements a solution that takes data from LoRaWANÂ® based system and devices and then pushes it to the cloud using Azure IoT Operations.",
+    "Description": "Implementing a solution that takes data from LoRaWANÂ® based system and then pushes it to Azure IoT Operations. This is done using a custom broker that understands LoRaWANÂ® communication data and talks to Azure IoT operations using MQTT and port forwarding using a broker listener.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Muhammad Nabeel",
+        "Link": "https://github.com/nabeelmsft"
+      }
+    ],
+    "Source": "https://github.com/nabeelmsft/arc_jumpstart_drops/tree/main/sample_app/lorawan_aio",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Python",
+      "YAML"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Azure IoT Opeartions",
+      "LoRaWAN"
+    ],
+    "LastModified": "2024-07-25T13:54:39.000Z",
+    "CreatedDate": "2024-07-25T10:30:16.201Z",
+    "Topics": [
+      "AIO",
+      "LoRa",
+      "LoRaWAN",
+      "IoT",
+      "MQTT"
+    ]
+  },
+  {
+    "Title": "MEC/Edge app solution accelerator with AIO",
+    "Summary": "This Jumpstart Drop provides a solution for implementing and deploying a live video analytics application at the edge with guidance on how to implement a light microservices and event-driven pub/sub application for the edge.",
+    "Description": "This comprehensive example application provides a solution for implementing and deploying a live video analytics application at the edge with guidance on how to implement a light microservices and event-driven pub/sub application for the edge.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Cesar De la Torre",
+        "Link": "https://www.linkedin.com/in/cesar-de-la-torre-b31b512"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/mec_app_accelerator",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C#/.NET",
+      "Python",
+      "PowerShell",
+      "Bash"
+    ],
+    "Products": [
+      "AKS Edge Essentials",
+      "Azure IoT Operations",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-06-10T18:04:25.000Z",
+    "CreatedDate": "2024-05-29T00:00:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Connecting PLC using Modbus and Dapr to Azure IoT Operations",
+    "Summary": "This Jumpstart Drop provides a tutorial on how to connect a MODBUS PLC (Programmable Logic Controller) to an edge device running Azure IoT Operations (AIO), leveraging the Dapr Runtime and AIO\u0027s MQTT broker.",
+    "Description": "This Jumpstart Drop provides an example of a complete application that allows the connection of a PLC (Programmable Logic Controller) device, widely used by the industry to control and monitor machines, to Azure IoT Operations through an application written in C# .NET 9 that makes use of the Modbus.NET library to communicate with the PLC through a USB serial connection, and then forward the state of the registers that monitor the logic gates, to the Azure IoT Operations MQTT broker with the help of the Dapr runtime and its integration in the pubsub standard.",
+    "Cover": "https://github.com/waltercoan/reactor2025-azureiotoperations-modbus-dapr/blob/main/diagramas/clp-edgedevice.png",
+    "Authors": [
+      {
+        "Name": "Walter Silvestre Coan",
+        "Link": "https://www.linkedin.com/in/waltercoan/"
+      }
+    ],
+    "Source": "https://github.com/waltercoan/reactor2025-azureiotoperations-modbus-dapr",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "C#"
+    ],
+    "Products": [
+      "Azure IoT Operations"
+    ],
+    "LastModified": "2025-01-20T18:12:00.000Z",
+    "CreatedDate": "2025-01-20T18:12:00.000Z",
+    "Topics": []
+  },
+  {
+    "Title": "Monitor Arc Agent Logs",
+    "Summary": "This solution centralizes azcmagent.log files from Azure Arc-enabled servers into Log Analytics, enabling streamlined troubleshooting and deeper insightsâ€”eliminating the need to access logs on individual machines.",
+    "Description": "This drop introduces a streamlined approach to troubleshooting the Azure Arc Connected Machine Agent by centralizing azcmagent.log files from hybrid servers into a single Log Analytics Workspace. Instead of manually accessing logs on individual machines, users can now collect, transform, and analyze these logs centrally using Azure Monitor, Data Collection Rules, and custom tables. The guide walks through setting up the necessary Azure resources, configuring data collection, and applying KQL transformations to structure unstructured log dataâ€”enhancing observability and simplifying diagnostics across hybrid environments.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Tom Claes",
+        "Link": "https://www.linkedin.com/in/tomclaes-/"
+      }
+    ],
+    "Source": "https://github.com/claestom/azcmagent-logging-azuremonitor",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "KQL"
+    ],
+    "Products": [
+      "Azure Arc-enabled Servers",
+      "Azure Monitor",
+      "Azure Arc"
+    ],
+    "LastModified": "2025-05-13T21:47:29.894Z",
+    "CreatedDate": "2025-05-13T21:51:29.894Z",
+    "Topics": []
+  },
+  {
+    "Title": "NVIDIA Omniverse Azure Operations Twin",
+    "Summary": "Learn how Microsoft and NVIDIA empower developers create advanced 3D workflows that integrate IoT data with physics-based visualizations.",
+    "Description": "Learn how Microsoft and NVIDIA empower developers create advanced 3D workflows that integrate IoT data with physics-based visualizations. The Fabric platform supports data management, while Omniverse and OpenUSD offer collaboration, simulation, and rendering capabilities. These tools help operations teams innovate and optimize for sustainability, safety, and efficiency. This project shares sample code and content for building an Operations Twin using OpenUSD and an integration between NVIDIA Omniverse and Azure Services: Azure IoT Operations, Microsoft Fabric, Microsoft Power BI, and NVIDIA Omniverse Kit App Streaming on Azure Kubernetes using A10 NVIDIA GPU.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Drew Dudek",
+        "Link": "https://www.linkedin.com/in/drewdudek/"
+      },
+      {
+        "Name": "Aaron Weissbart",
+        "Link": "https://github.com/aweissbart"
+      },
+      {
+        "Name": "Raj Nemani",
+        "Link": "https://www.linkedin.com/in/rajnemani/"
+      },
+      {
+        "Name": "Rajesh Vasireddy",
+        "Link": "https://www.linkedin.com/in/rajesh-vasireddy-73551217/"
+      }
+    ],
+    "Source": "https://github.com/microsoft/NVIDIA-Omniverse-Azure-Operations-Twin/blob/main",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "TypeScript",
+      "JSON",
+      "React",
+      "Python"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Arc-enabled Kubernetes",
+      "NVIDIA Omniverse Kit App Streaming"
+    ],
+    "LastModified": "2024-11-17T21:44:18Z",
+    "CreatedDate": "2024-11-17T21:44:18Z",
+    "Topics": [
+      "Azure Application Gateway",
+      "Azure API Management Service",
+      "Microsoft Fabric",
+      "Microsoft Fabric Real-Time Intelligence",
+      "Microsoft Power BI",
+      "Azure Blob Storage",
+      "Microsoft Entra ID"
+    ]
+  },
+  {
+    "Title": "Test Azure Arc-enabled servers on a Linux Azure VM",
+    "Summary": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script.",
+    "Description": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn\u0027t supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don\u0027t have an existing virtual machine, review the Jumpstart Scenario Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It\u0027s not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Laura Nicolas",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/blob/main/script_automation/azure_linux_vm_test",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Bash",
+      "JSON"
+    ],
+    "Products": [
+      "Azure VM",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-05-16T12:22:36.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Test Azure Arc-enabled servers on a Windows Azure VM",
+    "Summary": "The following Jumpstart Drop will guide you on how to project an existing Windows Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script.",
+    "Description": "The following Jumpstart Drop will guide you on how to project an existing Windows Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn\u0027t supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don\u0027t have an existing virtual machine, review the Jumpstart Scenario Deploy a Windows Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It\u0027s not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Laura Nicolas",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/azure_windows_vm_test",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell",
+      "JSON"
+    ],
+    "Products": [
+      "Azure VM",
+      "Azure Arc",
+      "Arc-enabled servers"
+    ],
+    "LastModified": "2024-06-27T19:37:21.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": []
+  },
+  {
+    "Title": "Simulate an ONVIF camera with RTSP",
+    "Summary": "This Jumpstart Drop provides a way to simulate an ONVIF camera and serve an RTSP feed with an MP4 file. It is particularly useful for testing and development purposes when you need to simulate a camera feed in a Docker/Kubernetes environment.",
+    "Description": "This project provides a set of tools and instructions for mocking an ONVIF-compliant IP camera and passing an RTSP stream to simulate a live video stream. It can be run as a Docker container or built locally. Users can also mount a volume or folder with the container to simulate the RTSP camera with the mounted video file.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Francisco Cabrera Lieutier",
+        "Link": "https://www.linkedin.com/in/franciscocabreralieutier/"
+      },
+      {
+        "Name": "Laura Nicolas",
+        "Link": "https://www.linkedin.com/in/lauranicolasd"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/onvif_camera_mock",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Python",
+      "C++"
+    ],
+    "Products": [
+      "Docker"
+    ],
+    "LastModified": "2024-05-16T13:54:39.000Z",
+    "CreatedDate": "2024-03-15T10:30:16.201Z",
+    "Topics": [
+      "ONVIF",
+      "MP4",
+      "RTSP"
+    ]
+  },
+  {
+    "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
+    "Summary": "\u0027Talk to Your Factory\u0027 leverages Industrial IoT, Edge, and Generative AI to streamline factory operations, enabling real-time, natural language communication with systems for quick issue identification, increased efficiency, and reduced downtime.",
+    "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
+    "Cover": "https://github.com/chriscrcodes/smart-factory/blob/main/artifacts/media/factory-assistant-ui.png",
+    "Authors": [
+      {
+        "Name": "Christophe CrÃ©mon",
+        "Link": "https://github.com/chriscrcodes"
+      }
+    ],
+    "Source": "https://github.com/chriscrcodes/smart-factory/tree/main",
+    "Type": "sample_app",
+    "Difficulty": "Advanced",
+    "ProgrammingLanguage": [
+      "Python",
+      "Bash"
+    ],
+    "Products": [
+      "Azure IoT Operations",
+      "Azure Arc",
+      "Azure OpenAI"
+    ],
+    "LastModified": "2024-09-30T16:00:00.000Z",
+    "CreatedDate": "2024-09-06T16:38:00.000Z",
+    "Topics": [
+      "python",
+      "cloud-computing",
+      "microsoft-azure",
+      "edge-computing",
+      "industrial-iot",
+      "streamlit",
+      "azure-openai",
+      "generative-ai",
+      "medallion-architecture",
+      "semantic-kernel",
+      "microsoft-fabric",
+      "azure-iot-operations"
+    ]
+  },
+  {
+    "Title": "Multi-cluster API Management using Traefik",
+    "Summary": "This Jumpstart Drop provides configurations for implementing API Management with Traefik and Microsoft Entra ID across multiple Arc-enabled Kubernetes clusters.",
+    "Description": "This Jumpstart Drop demonstrates how to configure API Management authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Arc-enabled Kubernetes clusters. It includes configurations for creating Microsoft Entra ID applications, and setting up user groups for role-based access control.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/6-api-management",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "API Gateway"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-27T00:00:00.000Z",
+    "Topics": [
+      "Security",
+      "Traefik Management",
+      "OAuth2.0",
+      "API Gateway",
+      "Terraform",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "Title": "Deploy multiple Arc k8s clusters with Terraform",
+    "Summary": "This Jumpstart Drop provides Terraform-based infrastructure as code for the set up of AKS, k3d, EKS, and GKE Kubernetes clusters and their connection to Azure Arc.",
+    "Description": "This Jumpstart Drop demonstrates how to create and configure AKS, k3d, EKS, and GKE Kubernetes clusters and to connect them to Azure Arc using Terraform. This module uses the relavent modules and prividers to create the clusters and connect them to Azure Arc.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/1-clusters",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "k3s"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-15T00:00:00.000Z",
+    "Topics": [
+      "k3s",
+      "k3d",
+      "AKS",
+      "EKS",
+      "GKE",
+      "Cluster Management",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "Title": "OpenAPISpec with Traefik Developer Portal",
+    "Summary": "This Jumpstart Drop provides configurations for deploying APIs to Traefik Developer Portal and utilizing OpenAPI spec to generate API documentation.",
+    "Description": "This Jumpstart Drop provides configurations for deploying APIs to Traefik Developer Portal and utilizing OpenAPI spec to generate API documentation. It also demonstrates how to configure API Management authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Kubernetes clusters. As well as, leverage Entra ID to secure the Developer Portal.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/7-developer-portal",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "Developer Portal"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-27T00:00:00.000Z",
+    "Topics": [
+      "Security",
+      "Traefik Hub Management",
+      "Traefik Developer Portal",
+      "OAuth2.0",
+      "API Gateway",
+      "API Management",
+      "Developer Portal",
+      "Terraform",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "Title": "Oauth2.0 multi-cluster API security using Traefik",
+    "Summary": "This Jumpstart Drop provides configurations for implementing OAuth2.0 security with Traefik and Microsoft Entra ID across multiple Arc-enabled Kubernetes clusters.",
+    "Description": "This Jumpstart Drop demonstrates how to configure OAuth2.0 authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Arc-enabled Kubernetes clusters. It includes configurations for creating Microsoft Entra ID applications, setting up user groups for role-based access control, and securing applications with OAuth2.0 authentication flows.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/5-oauth2",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "API Gateway"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-27T00:00:00.000Z",
+    "Topics": [
+      "Security",
+      "Traefik",
+      "Traefik Gateway",
+      "OAuth2.0",
+      "Microsoft Entra ID",
+      "Terraform",
+      "API Gateway",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "Title": "Service auto-discovery and routing with Traefik",
+    "Summary": "This Jumpstart Drop provides configurations for setting up routing rules in Traefik across multiple Arc-enabled Kubernetes clusters to expose sample Traefik Airlines applications.",
+    "Description": "This Jumpstart Drop demonstrates how to configure routing capabilities in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for routing rules and service discovery. The drop showcases the deployment of multiple sample applications (employees, customers, flights, and tickets) using FluxCD GitOps approach with Terraform provider integration.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/3-routing",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "API Gateway"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-15T00:00:00.000Z",
+    "Topics": [
+      "Routing",
+      "Traefik",
+      "Traefik Proxy",
+      "Service Discovery",
+      "Load Balancing",
+      "FluxCD",
+      "Terraform",
+      "Cluster Management",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "Title": "Multi-cluster TLS cert management using Traefik",
+    "Summary": "This Jumpstart Drop provides configurations for setting up secure TLS/SSL in Traefik across multiple Arc-enabled Kubernetes clusters.",
+    "Description": "This Jumpstart Drop demonstrates how to configure TLS/SSL security in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for certificate management, automatic TLS generation using Let\u0027s Encrypt ACME challenge, and secure communication between services.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/4-acme-tls",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "API Gateway"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-15T00:00:00.000Z",
+    "Topics": [
+      "Security",
+      "TLS/SSL",
+      "Certificate Management",
+      "Encryption",
+      "Traefik",
+      "Traefik Proxy",
+      "ACME",
+      "Terraform",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "Title": "Traefik Deployment on Arc-enabled Kubernetes",
+    "Summary": "This Jumpstart Drop demonstrates how to deploy and configure Traefik as an ingress controller in Azure Arc-enabled Kubernetes clusters.",
+    "Description": "This Jumpstart Drop provides Terraform and Kubernetes configurations for deploying Traefik as an ingress controller in Azure Arc-enabled Kubernetes environments. This drop focuses on setting up Traefik as a reliable ingress controller in multi-cluster Arc kubernetes environments.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Zaid Albirawi",
+        "Link": "https://www.linkedin.com/in/zalbiraw"
+      }
+    ],
+    "Source": "https://github.com/traefik-workshops/traefik-azure-arc-jumpstart-drops/tree/main/2-traefik",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes",
+      "Traefik",
+      "Ingress Controller"
+    ],
+    "LastModified": "2025-05-29T00:00:00.000Z",
+    "CreatedDate": "2025-05-15T00:00:00.000Z",
+    "Topics": [
+      "Kubernetes Ingress",
+      "Ingress Controller",
+      "Traefik",
+      "Traefik Proxy",
+      "Kubernetes"
+    ]
+  },
+  {
+    "Title": "Vector Data Deployment to Multiple Edge Vector DBs",
+    "Summary": "This Jumpstart Drop provides a vector data deployment pattern with Azure Arc \u0026 Azure Container Storage enabled by Azure Arc via deploying the centralized vector data from cloud to synchronize edge vector DBs across multiple edge machines.",
+    "Description": "This Jumpstart Drop provides a vector data deployment pattern that hosting a vector DB in the cloud as a central hub for RAG indexing, and deploying vector data to synchronize edge vector DBs across multiple edge machines for your edge RAG application. This approach ensures that RAG-on-Edge systems operate efficiently with up-to-date vector data content. It also offers an efficient method to restore vector DB data on edge machines in case of data loss.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Cheng Chen",
+        "Link": "https://www.linkedin.com/in/cheng-chen-a8496850/"
+      }
+    ],
+    "Source": "https://github.com/Azure-Samples/azure-edge-extension-vector-data-deployment/tree/main",
+    "Type": "sample_app",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Python",
+      "Shell"
+    ],
+    "Products": [
+      "Azure Container Storage enabled by Azure Arc",
+      "Azure IoT Operations",
+      "Azure Arc"
+    ],
+    "LastModified": "2024-07-08T00:00:00.000Z",
+    "CreatedDate": "2024-07-08T00:00:00.000Z",
+    "Topics": [
+      "Vector DB",
+      "Data Deployment",
+      "AI",
+      "Edge",
+      "RAG"
+    ]
+  },
+  {
+    "Title": "Windows 11 IoT Enterprise RAM Reduction Guide",
+    "Summary": "This Jumpstart Drop provides instructions on how to minimize the RAM usage of Windows 11 IoT Enterprise systems.",
+    "Description": "This repository offers a practical solution for optimizing Windows 11 IoT Enterprise by reducing its RAM usage. It includes a configure_services_final.bat batch file that utilizes the Windows sysprep package to streamline system services. By disabling non-essential services, commonly referred to as \u0027bloat\u0027, this guide helps achieve a significantly lower RAM footprint, thus enhancing the performance and reliability of IoT devices.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Lakshit Dabas",
+        "Link": "https://www.github.com/ldabas-msft"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/win11_iot_ram_reduction",
+    "Type": "script_automation",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [
+      "Batch",
+      "PowerShell"
+    ],
+    "Products": [
+      "Windows 11 IoT Enterprise"
+    ],
+    "LastModified": "2024-05-20T12:56:14.000Z",
+    "CreatedDate": "2024-05-07T00:00:00.000Z",
+    "Topics": [
+      "RAM optimization",
+      "IoT",
+      "Windows Configuration"
+    ]
+  }
+]
