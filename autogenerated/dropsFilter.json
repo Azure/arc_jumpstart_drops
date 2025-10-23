@@ -1,0 +1,1679 @@
+[
+  {
+    "name": "Products",
+    "type": "Products",
+    "description": "Tags related to Azure products like Azure Arc and Azure Local.",
+    "tags": [
+      {
+        "name": "AKS",
+        "aliases": [
+          "AKS"
+        ],
+        "description": "AKS related content and solutions."
+      },
+      {
+        "name": "AKS Edge Essentials",
+        "aliases": [
+          "AKS Edge Essentials"
+        ],
+        "description": "AKS Edge Essentials related content and solutions."
+      },
+      {
+        "name": "API Gateway",
+        "aliases": [
+          "API Gateway"
+        ],
+        "description": "API Gateway related content and solutions."
+      },
+      {
+        "name": "AWS EC2",
+        "aliases": [
+          "AWS EC2"
+        ],
+        "description": "AWS EC2 related content and solutions."
+      },
+      {
+        "name": "Akri",
+        "aliases": [
+          "Akri"
+        ],
+        "description": "Akri related content and solutions."
+      },
+      {
+        "name": "Ansible",
+        "aliases": [
+          "Ansible"
+        ],
+        "description": "Ansible related content and solutions."
+      },
+      {
+        "name": "Arc-Enabled Servers",
+        "aliases": [
+          "Arc-Enabled Servers"
+        ],
+        "description": "Arc-Enabled Servers related content and solutions."
+      },
+      {
+        "name": "Arc-enabled Kubernetes",
+        "aliases": [
+          "Arc-enabled Kubernetes"
+        ],
+        "description": "Arc-enabled Kubernetes related content and solutions."
+      },
+      {
+        "name": "Arc-enabled Server",
+        "aliases": [
+          "Arc-enabled Server"
+        ],
+        "description": "Arc-enabled Server related content and solutions."
+      },
+      {
+        "name": "Arc-enabled servers",
+        "aliases": [
+          "Arc-enabled servers"
+        ],
+        "description": "Arc-enabled servers related content and solutions."
+      },
+      {
+        "name": "Azure Arc",
+        "aliases": [
+          "Azure Arc"
+        ],
+        "description": "Azure Arc related content and solutions."
+      },
+      {
+        "name": "Azure Arc-enabled Servers",
+        "aliases": [
+          "Azure Arc-enabled Servers"
+        ],
+        "description": "Azure Arc-enabled Servers related content and solutions."
+      },
+      {
+        "name": "Azure Container Storage enabled by Azure Arc",
+        "aliases": [
+          "Azure Container Storage enabled by Azure Arc"
+        ],
+        "description": "Azure Container Storage enabled by Azure Arc related content and solutions."
+      },
+      {
+        "name": "Azure Cosmos DB",
+        "aliases": [
+          "Azure Cosmos DB"
+        ],
+        "description": "Azure Cosmos DB related content and solutions."
+      },
+      {
+        "name": "Azure EventGrid Namespace",
+        "aliases": [
+          "Azure EventGrid Namespace"
+        ],
+        "description": "Azure EventGrid Namespace related content and solutions."
+      },
+      {
+        "name": "Azure Firewall",
+        "aliases": [
+          "Azure Firewall"
+        ],
+        "description": "Azure Firewall related content and solutions."
+      },
+      {
+        "name": "Azure IoT MQ",
+        "aliases": [
+          "Azure IoT MQ"
+        ],
+        "description": "Azure IoT MQ related content and solutions."
+      },
+      {
+        "name": "Azure IoT Opeartions",
+        "aliases": [
+          "Azure IoT Opeartions"
+        ],
+        "description": "Azure IoT Opeartions related content and solutions."
+      },
+      {
+        "name": "Azure IoT Operations",
+        "aliases": [
+          "Azure IoT Operations"
+        ],
+        "description": "Azure IoT Operations related content and solutions."
+      },
+      {
+        "name": "Azure Key Vault",
+        "aliases": [
+          "Azure Key Vault"
+        ],
+        "description": "Azure Key Vault related content and solutions."
+      },
+      {
+        "name": "Azure Kubernetes Service",
+        "aliases": [
+          "Azure Kubernetes Service"
+        ],
+        "description": "Azure Kubernetes Service related content and solutions."
+      },
+      {
+        "name": "Azure Local",
+        "aliases": [
+          "Azure Local"
+        ],
+        "description": "Azure Local related content and solutions."
+      },
+      {
+        "name": "Azure Logic Apps",
+        "aliases": [
+          "Azure Logic Apps"
+        ],
+        "description": "Azure Logic Apps related content and solutions."
+      },
+      {
+        "name": "Azure Monitor",
+        "aliases": [
+          "Azure Monitor"
+        ],
+        "description": "Azure Monitor related content and solutions."
+      },
+      {
+        "name": "Azure OpenAI",
+        "aliases": [
+          "Azure OpenAI"
+        ],
+        "description": "Azure OpenAI related content and solutions."
+      },
+      {
+        "name": "Azure Private Link",
+        "aliases": [
+          "Azure Private Link"
+        ],
+        "description": "Azure Private Link related content and solutions."
+      },
+      {
+        "name": "Azure VM",
+        "aliases": [
+          "Azure VM"
+        ],
+        "description": "Azure VM related content and solutions."
+      },
+      {
+        "name": "Azure VPN Gateway",
+        "aliases": [
+          "Azure VPN Gateway"
+        ],
+        "description": "Azure VPN Gateway related content and solutions."
+      },
+      {
+        "name": "Azure Video Indexer",
+        "aliases": [
+          "Azure Video Indexer"
+        ],
+        "description": "Azure Video Indexer related content and solutions."
+      },
+      {
+        "name": "Dapr",
+        "aliases": [
+          "Dapr"
+        ],
+        "description": "Dapr related content and solutions."
+      },
+      {
+        "name": "Developer Portal",
+        "aliases": [
+          "Developer Portal"
+        ],
+        "description": "Developer Portal related content and solutions."
+      },
+      {
+        "name": "Digital Twin Builder",
+        "aliases": [
+          "Digital Twin Builder"
+        ],
+        "description": "Digital Twin Builder related content and solutions."
+      },
+      {
+        "name": "Docker",
+        "aliases": [
+          "Docker"
+        ],
+        "description": "Docker related content and solutions."
+      },
+      {
+        "name": "ESU Licenses",
+        "aliases": [
+          "ESU Licenses"
+        ],
+        "description": "ESU Licenses related content and solutions."
+      },
+      {
+        "name": "Edge RAG",
+        "aliases": [
+          "Edge RAG"
+        ],
+        "description": "Edge RAG related content and solutions."
+      },
+      {
+        "name": "Entra ID",
+        "aliases": [
+          "Entra ID"
+        ],
+        "description": "Entra ID related content and solutions."
+      },
+      {
+        "name": "External Secrets Operator",
+        "aliases": [
+          "External Secrets Operator"
+        ],
+        "description": "External Secrets Operator related content and solutions."
+      },
+      {
+        "name": "Fabric",
+        "aliases": [
+          "Fabric"
+        ],
+        "description": "Fabric related content and solutions."
+      },
+      {
+        "name": "GitHub Codespaces",
+        "aliases": [
+          "GitHub Codespaces"
+        ],
+        "description": "GitHub Codespaces related content and solutions."
+      },
+      {
+        "name": "Grafana",
+        "aliases": [
+          "Grafana"
+        ],
+        "description": "Grafana related content and solutions."
+      },
+      {
+        "name": "InfluxDB",
+        "aliases": [
+          "InfluxDB"
+        ],
+        "description": "InfluxDB related content and solutions."
+      },
+      {
+        "name": "Ingress Controller",
+        "aliases": [
+          "Ingress Controller"
+        ],
+        "description": "Ingress Controller related content and solutions."
+      },
+      {
+        "name": "K3s",
+        "aliases": [
+          "K3s"
+        ],
+        "description": "K3s related content and solutions."
+      },
+      {
+        "name": "KAITO",
+        "aliases": [
+          "KAITO"
+        ],
+        "description": "KAITO related content and solutions."
+      },
+      {
+        "name": "Kubernetes",
+        "aliases": [
+          "Kubernetes"
+        ],
+        "description": "Kubernetes related content and solutions."
+      },
+      {
+        "name": "Litmus Edge",
+        "aliases": [
+          "Litmus Edge"
+        ],
+        "description": "Litmus Edge related content and solutions."
+      },
+      {
+        "name": "LoRaWAN",
+        "aliases": [
+          "LoRaWAN"
+        ],
+        "description": "LoRaWAN related content and solutions."
+      },
+      {
+        "name": "Marqo",
+        "aliases": [
+          "Marqo"
+        ],
+        "description": "Marqo related content and solutions."
+      },
+      {
+        "name": "MicroK8s",
+        "aliases": [
+          "MicroK8s"
+        ],
+        "description": "MicroK8s related content and solutions."
+      },
+      {
+        "name": "Microsoft Entra Workload ID",
+        "aliases": [
+          "Microsoft Entra Workload ID"
+        ],
+        "description": "Microsoft Entra Workload ID related content and solutions."
+      },
+      {
+        "name": "Microsoft Graph",
+        "aliases": [
+          "Microsoft Graph"
+        ],
+        "description": "Microsoft Graph related content and solutions."
+      },
+      {
+        "name": "Microsoft PowerBI",
+        "aliases": [
+          "Microsoft PowerBI"
+        ],
+        "description": "Microsoft PowerBI related content and solutions."
+      },
+      {
+        "name": "Multicloud connector",
+        "aliases": [
+          "Multicloud connector"
+        ],
+        "description": "Multicloud connector related content and solutions."
+      },
+      {
+        "name": "NVIDIA Omniverse Kit App Streaming",
+        "aliases": [
+          "NVIDIA Omniverse Kit App Streaming"
+        ],
+        "description": "NVIDIA Omniverse Kit App Streaming related content and solutions."
+      },
+      {
+        "name": "Nvidia Omniverse",
+        "aliases": [
+          "Nvidia Omniverse"
+        ],
+        "description": "Nvidia Omniverse related content and solutions."
+      },
+      {
+        "name": "Prometheus",
+        "aliases": [
+          "Prometheus"
+        ],
+        "description": "Prometheus related content and solutions."
+      },
+      {
+        "name": "SQL Server",
+        "aliases": [
+          "SQL Server"
+        ],
+        "description": "SQL Server related content and solutions."
+      },
+      {
+        "name": "Secrets Store CSI Driver",
+        "aliases": [
+          "Secrets Store CSI Driver"
+        ],
+        "description": "Secrets Store CSI Driver related content and solutions."
+      },
+      {
+        "name": "Terraform",
+        "aliases": [
+          "Terraform"
+        ],
+        "description": "Terraform related content and solutions."
+      },
+      {
+        "name": "Traefik",
+        "aliases": [
+          "Traefik"
+        ],
+        "description": "Traefik related content and solutions."
+      },
+      {
+        "name": "Vagrant",
+        "aliases": [
+          "Vagrant"
+        ],
+        "description": "Vagrant related content and solutions."
+      },
+      {
+        "name": "Video Indexer",
+        "aliases": [
+          "Video Indexer"
+        ],
+        "description": "Video Indexer related content and solutions."
+      },
+      {
+        "name": "Windows",
+        "aliases": [
+          "Windows"
+        ],
+        "description": "Windows related content and solutions."
+      },
+      {
+        "name": "Windows 11 IoT Enterprise",
+        "aliases": [
+          "Windows 11 IoT Enterprise"
+        ],
+        "description": "Windows 11 IoT Enterprise related content and solutions."
+      },
+      {
+        "name": "Windows Server",
+        "aliases": [
+          "Windows Server"
+        ],
+        "description": "Windows Server related content and solutions."
+      },
+      {
+        "name": "k3s",
+        "aliases": [
+          "k3s"
+        ],
+        "description": "k3s related content and solutions."
+      }
+    ]
+  },
+  {
+    "name": "Language",
+    "type": "ProgrammingLanguage",
+    "description": "Tags related to programming languages like PowerShell, .Net, Python, and Java.",
+    "tags": [
+      {
+        "name": ".NET/C#",
+        "aliases": [
+          ".NET/C#"
+        ],
+        "description": "Content related to .NET/C# programming language."
+      },
+      {
+        "name": "Ansible",
+        "aliases": [
+          "Ansible"
+        ],
+        "description": "Content related to Ansible programming language."
+      },
+      {
+        "name": "Bash",
+        "aliases": [
+          "Bash"
+        ],
+        "description": "Content related to Bash programming language."
+      },
+      {
+        "name": "Batch",
+        "aliases": [
+          "Batch"
+        ],
+        "description": "Content related to Batch programming language."
+      },
+      {
+        "name": "Bicep",
+        "aliases": [
+          "Bicep"
+        ],
+        "description": "Content related to Bicep programming language."
+      },
+      {
+        "name": "C",
+        "aliases": [
+          "C"
+        ],
+        "description": "Content related to C programming language."
+      },
+      {
+        "name": "C#",
+        "aliases": [
+          "C#"
+        ],
+        "description": "Content related to C# programming language."
+      },
+      {
+        "name": "C#/.NET",
+        "aliases": [
+          "C#/.NET"
+        ],
+        "description": "Content related to C#/.NET programming language."
+      },
+      {
+        "name": "C++",
+        "aliases": [
+          "C++"
+        ],
+        "description": "Content related to C++ programming language."
+      },
+      {
+        "name": "CSV",
+        "aliases": [
+          "CSV"
+        ],
+        "description": "Content related to CSV programming language."
+      },
+      {
+        "name": "CloudFormation",
+        "aliases": [
+          "CloudFormation"
+        ],
+        "description": "Content related to CloudFormation programming language."
+      },
+      {
+        "name": "DAX",
+        "aliases": [
+          "DAX"
+        ],
+        "description": "Content related to DAX programming language."
+      },
+      {
+        "name": "Dockerfile",
+        "aliases": [
+          "Dockerfile"
+        ],
+        "description": "Content related to Dockerfile programming language."
+      },
+      {
+        "name": "Go",
+        "aliases": [
+          "Go"
+        ],
+        "description": "Content related to Go programming language."
+      },
+      {
+        "name": "HCL",
+        "aliases": [
+          "HCL"
+        ],
+        "description": "Content related to HCL programming language."
+      },
+      {
+        "name": "Helm",
+        "aliases": [
+          "Helm"
+        ],
+        "description": "Content related to Helm programming language."
+      },
+      {
+        "name": "JSON",
+        "aliases": [
+          "JSON"
+        ],
+        "description": "Content related to JSON programming language."
+      },
+      {
+        "name": "Jupyter Notebook",
+        "aliases": [
+          "Jupyter Notebook"
+        ],
+        "description": "Content related to Jupyter Notebook programming language."
+      },
+      {
+        "name": "KQL",
+        "aliases": [
+          "KQL"
+        ],
+        "description": "Content related to KQL programming language."
+      },
+      {
+        "name": "Kusto",
+        "aliases": [
+          "Kusto"
+        ],
+        "description": "Content related to Kusto programming language."
+      },
+      {
+        "name": "M-Query",
+        "aliases": [
+          "M-Query"
+        ],
+        "description": "Content related to M-Query programming language."
+      },
+      {
+        "name": "Other",
+        "aliases": [
+          "Other"
+        ],
+        "description": "Content related to Other programming language."
+      },
+      {
+        "name": "Paython",
+        "aliases": [
+          "Paython"
+        ],
+        "description": "Content related to Paython programming language."
+      },
+      {
+        "name": "PowerShell",
+        "aliases": [
+          "PowerShell"
+        ],
+        "description": "Content related to PowerShell programming language."
+      },
+      {
+        "name": "Powershell",
+        "aliases": [
+          "Powershell"
+        ],
+        "description": "Content related to Powershell programming language."
+      },
+      {
+        "name": "Python",
+        "aliases": [
+          "Python"
+        ],
+        "description": "Content related to Python programming language."
+      },
+      {
+        "name": "React",
+        "aliases": [
+          "React"
+        ],
+        "description": "Content related to React programming language."
+      },
+      {
+        "name": "Rustc",
+        "aliases": [
+          "Rustc"
+        ],
+        "description": "Content related to Rustc programming language."
+      },
+      {
+        "name": "Shell",
+        "aliases": [
+          "Shell"
+        ],
+        "description": "Content related to Shell programming language."
+      },
+      {
+        "name": "Terraform",
+        "aliases": [
+          "Terraform"
+        ],
+        "description": "Content related to Terraform programming language."
+      },
+      {
+        "name": "TypeScript",
+        "aliases": [
+          "TypeScript"
+        ],
+        "description": "Content related to TypeScript programming language."
+      },
+      {
+        "name": "USD",
+        "aliases": [
+          "USD"
+        ],
+        "description": "Content related to USD programming language."
+      },
+      {
+        "name": "YAML",
+        "aliases": [
+          "YAML"
+        ],
+        "description": "Content related to YAML programming language."
+      }
+    ]
+  },
+  {
+    "name": "Difficulty",
+    "type": "Difficulty",
+    "description": "Tags related to difficulty levels.",
+    "tags": [
+      {
+        "name": "Advanced",
+        "aliases": [
+          "Advanced"
+        ],
+        "description": "Advanced-level content."
+      },
+      {
+        "name": "Beginner",
+        "aliases": [
+          "Beginner"
+        ],
+        "description": "Beginner-level content."
+      },
+      {
+        "name": "Medium",
+        "aliases": [
+          "Medium"
+        ],
+        "description": "Medium-level content."
+      }
+    ]
+  },
+  {
+    "name": "Last Updated",
+    "type": "LastUpdated",
+    "description": "Tags indicating when the content was last updated.",
+    "tags": [
+      {
+        "name": "< 6 months",
+        "aliases": [
+          "< 6 months"
+        ],
+        "description": "Updated within the last 6 months."
+      },
+      {
+        "name": "6 months - 12 months",
+        "aliases": [
+          "6 months - 12 months"
+        ],
+        "description": "Updated between 6 months and 12 months ago."
+      },
+      {
+        "name": "> 12 months",
+        "aliases": [
+          "> 12 months"
+        ],
+        "description": "Updated more than 12 months ago."
+      }
+    ]
+  },
+  {
+    "name": "Topics",
+    "type": "Topics",
+    "description": "Tags related to technology topics.",
+    "tags": [
+      {
+        "name": "ACME",
+        "aliases": [
+          "ACME"
+        ],
+        "description": "Technologies and concepts related to ACME."
+      },
+      {
+        "name": "ACS",
+        "aliases": [
+          "ACS"
+        ],
+        "description": "Technologies and concepts related to ACS."
+      },
+      {
+        "name": "ACSA",
+        "aliases": [
+          "ACSA"
+        ],
+        "description": "Technologies and concepts related to ACSA."
+      },
+      {
+        "name": "AI",
+        "aliases": [
+          "AI"
+        ],
+        "description": "Technologies and concepts related to AI."
+      },
+      {
+        "name": "AIO",
+        "aliases": [
+          "AIO"
+        ],
+        "description": "Technologies and concepts related to AIO."
+      },
+      {
+        "name": "AKS",
+        "aliases": [
+          "AKS"
+        ],
+        "description": "Technologies and concepts related to AKS."
+      },
+      {
+        "name": "AMPLS",
+        "aliases": [
+          "AMPLS"
+        ],
+        "description": "Technologies and concepts related to AMPLS."
+      },
+      {
+        "name": "API Gateway",
+        "aliases": [
+          "API Gateway"
+        ],
+        "description": "Technologies and concepts related to API Gateway."
+      },
+      {
+        "name": "API Management",
+        "aliases": [
+          "API Management"
+        ],
+        "description": "Technologies and concepts related to API Management."
+      },
+      {
+        "name": "ARM",
+        "aliases": [
+          "ARM"
+        ],
+        "description": "Technologies and concepts related to ARM."
+      },
+      {
+        "name": "Arc",
+        "aliases": [
+          "Arc"
+        ],
+        "description": "Technologies and concepts related to Arc."
+      },
+      {
+        "name": "Arc-enabled servers",
+        "aliases": [
+          "Arc-enabled servers"
+        ],
+        "description": "Technologies and concepts related to Arc-enabled servers."
+      },
+      {
+        "name": "ArcK8s",
+        "aliases": [
+          "ArcK8s"
+        ],
+        "description": "Technologies and concepts related to ArcK8s."
+      },
+      {
+        "name": "Automation",
+        "aliases": [
+          "Automation"
+        ],
+        "description": "Technologies and concepts related to Automation."
+      },
+      {
+        "name": "Azure",
+        "aliases": [
+          "Azure"
+        ],
+        "description": "Technologies and concepts related to Azure."
+      },
+      {
+        "name": "Azure API Management Service",
+        "aliases": [
+          "Azure API Management Service"
+        ],
+        "description": "Technologies and concepts related to Azure API Management Service."
+      },
+      {
+        "name": "Azure Application Gateway",
+        "aliases": [
+          "Azure Application Gateway"
+        ],
+        "description": "Technologies and concepts related to Azure Application Gateway."
+      },
+      {
+        "name": "Azure Arc",
+        "aliases": [
+          "Azure Arc"
+        ],
+        "description": "Technologies and concepts related to Azure Arc."
+      },
+      {
+        "name": "Azure Arc Jumpstart",
+        "aliases": [
+          "Azure Arc Jumpstart"
+        ],
+        "description": "Technologies and concepts related to Azure Arc Jumpstart."
+      },
+      {
+        "name": "Azure Arc-enabled Servers",
+        "aliases": [
+          "Azure Arc-enabled Servers"
+        ],
+        "description": "Technologies and concepts related to Azure Arc-enabled Servers."
+      },
+      {
+        "name": "Azure Blob Storage",
+        "aliases": [
+          "Azure Blob Storage"
+        ],
+        "description": "Technologies and concepts related to Azure Blob Storage."
+      },
+      {
+        "name": "Azure IoT Operations",
+        "aliases": [
+          "Azure IoT Operations"
+        ],
+        "description": "Technologies and concepts related to Azure IoT Operations."
+      },
+      {
+        "name": "Azure Local",
+        "aliases": [
+          "Azure Local"
+        ],
+        "description": "Technologies and concepts related to Azure Local."
+      },
+      {
+        "name": "Azure Monitor",
+        "aliases": [
+          "Azure Monitor"
+        ],
+        "description": "Technologies and concepts related to Azure Monitor."
+      },
+      {
+        "name": "Azure Resource Graph",
+        "aliases": [
+          "Azure Resource Graph"
+        ],
+        "description": "Technologies and concepts related to Azure Resource Graph."
+      },
+      {
+        "name": "Azure Stack HCI",
+        "aliases": [
+          "Azure Stack HCI"
+        ],
+        "description": "Technologies and concepts related to Azure Stack HCI."
+      },
+      {
+        "name": "Bicep",
+        "aliases": [
+          "Bicep"
+        ],
+        "description": "Technologies and concepts related to Bicep."
+      },
+      {
+        "name": "Certificate Management",
+        "aliases": [
+          "Certificate Management"
+        ],
+        "description": "Technologies and concepts related to Certificate Management."
+      },
+      {
+        "name": "Cluster Management",
+        "aliases": [
+          "Cluster Management"
+        ],
+        "description": "Technologies and concepts related to Cluster Management."
+      },
+      {
+        "name": "Dapr",
+        "aliases": [
+          "Dapr"
+        ],
+        "description": "Technologies and concepts related to Dapr."
+      },
+      {
+        "name": "Dashboard",
+        "aliases": [
+          "Dashboard"
+        ],
+        "description": "Technologies and concepts related to Dashboard."
+      },
+      {
+        "name": "Data Deployment",
+        "aliases": [
+          "Data Deployment"
+        ],
+        "description": "Technologies and concepts related to Data Deployment."
+      },
+      {
+        "name": "Developer Portal",
+        "aliases": [
+          "Developer Portal"
+        ],
+        "description": "Technologies and concepts related to Developer Portal."
+      },
+      {
+        "name": "EKS",
+        "aliases": [
+          "EKS"
+        ],
+        "description": "Technologies and concepts related to EKS."
+      },
+      {
+        "name": "Edge",
+        "aliases": [
+          "Edge"
+        ],
+        "description": "Technologies and concepts related to Edge."
+      },
+      {
+        "name": "Encryption",
+        "aliases": [
+          "Encryption"
+        ],
+        "description": "Technologies and concepts related to Encryption."
+      },
+      {
+        "name": "External Secrets Operator",
+        "aliases": [
+          "External Secrets Operator"
+        ],
+        "description": "Technologies and concepts related to External Secrets Operator."
+      },
+      {
+        "name": "FeatureFlags",
+        "aliases": [
+          "FeatureFlags"
+        ],
+        "description": "Technologies and concepts related to FeatureFlags."
+      },
+      {
+        "name": "FluxCD",
+        "aliases": [
+          "FluxCD"
+        ],
+        "description": "Technologies and concepts related to FluxCD."
+      },
+      {
+        "name": "GKE",
+        "aliases": [
+          "GKE"
+        ],
+        "description": "Technologies and concepts related to GKE."
+      },
+      {
+        "name": "GPT4o",
+        "aliases": [
+          "GPT4o"
+        ],
+        "description": "Technologies and concepts related to GPT4o."
+      },
+      {
+        "name": "Genertative AI",
+        "aliases": [
+          "Genertative AI"
+        ],
+        "description": "Technologies and concepts related to Genertative AI."
+      },
+      {
+        "name": "Hybrid Management",
+        "aliases": [
+          "Hybrid Management"
+        ],
+        "description": "Technologies and concepts related to Hybrid Management."
+      },
+      {
+        "name": "Hybrid Networking",
+        "aliases": [
+          "Hybrid Networking"
+        ],
+        "description": "Technologies and concepts related to Hybrid Networking."
+      },
+      {
+        "name": "IIoT Gateway",
+        "aliases": [
+          "IIoT Gateway"
+        ],
+        "description": "Technologies and concepts related to IIoT Gateway."
+      },
+      {
+        "name": "ISA-95",
+        "aliases": [
+          "ISA-95"
+        ],
+        "description": "Technologies and concepts related to ISA-95."
+      },
+      {
+        "name": "IaC",
+        "aliases": [
+          "IaC"
+        ],
+        "description": "Technologies and concepts related to IaC."
+      },
+      {
+        "name": "Industrial IoT",
+        "aliases": [
+          "Industrial IoT"
+        ],
+        "description": "Technologies and concepts related to Industrial IoT."
+      },
+      {
+        "name": "Infrastructure as Code",
+        "aliases": [
+          "Infrastructure as Code"
+        ],
+        "description": "Technologies and concepts related to Infrastructure as Code."
+      },
+      {
+        "name": "Ingress Controller",
+        "aliases": [
+          "Ingress Controller"
+        ],
+        "description": "Technologies and concepts related to Ingress Controller."
+      },
+      {
+        "name": "IoT",
+        "aliases": [
+          "IoT"
+        ],
+        "description": "Technologies and concepts related to IoT."
+      },
+      {
+        "name": "K3s",
+        "aliases": [
+          "K3s"
+        ],
+        "description": "Technologies and concepts related to K3s."
+      },
+      {
+        "name": "KafkaConnector",
+        "aliases": [
+          "KafkaConnector"
+        ],
+        "description": "Technologies and concepts related to KafkaConnector."
+      },
+      {
+        "name": "Kubernetes",
+        "aliases": [
+          "Kubernetes"
+        ],
+        "description": "Technologies and concepts related to Kubernetes."
+      },
+      {
+        "name": "Kubernetes Ingress",
+        "aliases": [
+          "Kubernetes Ingress"
+        ],
+        "description": "Technologies and concepts related to Kubernetes Ingress."
+      },
+      {
+        "name": "LLM",
+        "aliases": [
+          "LLM"
+        ],
+        "description": "Technologies and concepts related to LLM."
+      },
+      {
+        "name": "Licensing",
+        "aliases": [
+          "Licensing"
+        ],
+        "description": "Technologies and concepts related to Licensing."
+      },
+      {
+        "name": "LoRa",
+        "aliases": [
+          "LoRa"
+        ],
+        "description": "Technologies and concepts related to LoRa."
+      },
+      {
+        "name": "LoRaWAN",
+        "aliases": [
+          "LoRaWAN"
+        ],
+        "description": "Technologies and concepts related to LoRaWAN."
+      },
+      {
+        "name": "Load Balancing",
+        "aliases": [
+          "Load Balancing"
+        ],
+        "description": "Technologies and concepts related to Load Balancing."
+      },
+      {
+        "name": "LogicApps",
+        "aliases": [
+          "LogicApps"
+        ],
+        "description": "Technologies and concepts related to LogicApps."
+      },
+      {
+        "name": "MCU devices",
+        "aliases": [
+          "MCU devices"
+        ],
+        "description": "Technologies and concepts related to MCU devices."
+      },
+      {
+        "name": "MP4",
+        "aliases": [
+          "MP4"
+        ],
+        "description": "Technologies and concepts related to MP4."
+      },
+      {
+        "name": "MQTT",
+        "aliases": [
+          "MQTT"
+        ],
+        "description": "Technologies and concepts related to MQTT."
+      },
+      {
+        "name": "MQTT Bridge",
+        "aliases": [
+          "MQTT Bridge"
+        ],
+        "description": "Technologies and concepts related to MQTT Bridge."
+      },
+      {
+        "name": "MicroK8s",
+        "aliases": [
+          "MicroK8s"
+        ],
+        "description": "Technologies and concepts related to MicroK8s."
+      },
+      {
+        "name": "Microsoft Entra ID",
+        "aliases": [
+          "Microsoft Entra ID"
+        ],
+        "description": "Technologies and concepts related to Microsoft Entra ID."
+      },
+      {
+        "name": "Microsoft Entra Workload ID",
+        "aliases": [
+          "Microsoft Entra Workload ID"
+        ],
+        "description": "Technologies and concepts related to Microsoft Entra Workload ID."
+      },
+      {
+        "name": "Microsoft Fabric",
+        "aliases": [
+          "Microsoft Fabric"
+        ],
+        "description": "Technologies and concepts related to Microsoft Fabric."
+      },
+      {
+        "name": "Microsoft Fabric Real-Time Intelligence",
+        "aliases": [
+          "Microsoft Fabric Real-Time Intelligence"
+        ],
+        "description": "Technologies and concepts related to Microsoft Fabric Real-Time Intelligence."
+      },
+      {
+        "name": "Microsoft Power BI",
+        "aliases": [
+          "Microsoft Power BI"
+        ],
+        "description": "Technologies and concepts related to Microsoft Power BI."
+      },
+      {
+        "name": "Monitoring",
+        "aliases": [
+          "Monitoring"
+        ],
+        "description": "Technologies and concepts related to Monitoring."
+      },
+      {
+        "name": "Multi-Modal",
+        "aliases": [
+          "Multi-Modal"
+        ],
+        "description": "Technologies and concepts related to Multi-Modal."
+      },
+      {
+        "name": "OAuth2.0",
+        "aliases": [
+          "OAuth2.0"
+        ],
+        "description": "Technologies and concepts related to OAuth2.0."
+      },
+      {
+        "name": "ONVIF",
+        "aliases": [
+          "ONVIF"
+        ],
+        "description": "Technologies and concepts related to ONVIF."
+      },
+      {
+        "name": "Observability",
+        "aliases": [
+          "Observability"
+        ],
+        "description": "Technologies and concepts related to Observability."
+      },
+      {
+        "name": "Private Link",
+        "aliases": [
+          "Private Link"
+        ],
+        "description": "Technologies and concepts related to Private Link."
+      },
+      {
+        "name": "Purdue Model",
+        "aliases": [
+          "Purdue Model"
+        ],
+        "description": "Technologies and concepts related to Purdue Model."
+      },
+      {
+        "name": "RAG",
+        "aliases": [
+          "RAG"
+        ],
+        "description": "Technologies and concepts related to RAG."
+      },
+      {
+        "name": "RAM optimization",
+        "aliases": [
+          "RAM optimization"
+        ],
+        "description": "Technologies and concepts related to RAM optimization."
+      },
+      {
+        "name": "RTSP",
+        "aliases": [
+          "RTSP"
+        ],
+        "description": "Technologies and concepts related to RTSP."
+      },
+      {
+        "name": "Routing",
+        "aliases": [
+          "Routing"
+        ],
+        "description": "Technologies and concepts related to Routing."
+      },
+      {
+        "name": "SFTP",
+        "aliases": [
+          "SFTP"
+        ],
+        "description": "Technologies and concepts related to SFTP."
+      },
+      {
+        "name": "SLM",
+        "aliases": [
+          "SLM"
+        ],
+        "description": "Technologies and concepts related to SLM."
+      },
+      {
+        "name": "Secrets",
+        "aliases": [
+          "Secrets"
+        ],
+        "description": "Technologies and concepts related to Secrets."
+      },
+      {
+        "name": "Secrets Store CSI Driver",
+        "aliases": [
+          "Secrets Store CSI Driver"
+        ],
+        "description": "Technologies and concepts related to Secrets Store CSI Driver."
+      },
+      {
+        "name": "Security",
+        "aliases": [
+          "Security"
+        ],
+        "description": "Technologies and concepts related to Security."
+      },
+      {
+        "name": "Service Discovery",
+        "aliases": [
+          "Service Discovery"
+        ],
+        "description": "Technologies and concepts related to Service Discovery."
+      },
+      {
+        "name": "TLS/SSL",
+        "aliases": [
+          "TLS/SSL"
+        ],
+        "description": "Technologies and concepts related to TLS/SSL."
+      },
+      {
+        "name": "Terraform",
+        "aliases": [
+          "Terraform"
+        ],
+        "description": "Technologies and concepts related to Terraform."
+      },
+      {
+        "name": "Traefik",
+        "aliases": [
+          "Traefik"
+        ],
+        "description": "Technologies and concepts related to Traefik."
+      },
+      {
+        "name": "Traefik Developer Portal",
+        "aliases": [
+          "Traefik Developer Portal"
+        ],
+        "description": "Technologies and concepts related to Traefik Developer Portal."
+      },
+      {
+        "name": "Traefik Gateway",
+        "aliases": [
+          "Traefik Gateway"
+        ],
+        "description": "Technologies and concepts related to Traefik Gateway."
+      },
+      {
+        "name": "Traefik Hub Management",
+        "aliases": [
+          "Traefik Hub Management"
+        ],
+        "description": "Technologies and concepts related to Traefik Hub Management."
+      },
+      {
+        "name": "Traefik Management",
+        "aliases": [
+          "Traefik Management"
+        ],
+        "description": "Technologies and concepts related to Traefik Management."
+      },
+      {
+        "name": "Traefik Proxy",
+        "aliases": [
+          "Traefik Proxy"
+        ],
+        "description": "Technologies and concepts related to Traefik Proxy."
+      },
+      {
+        "name": "VI",
+        "aliases": [
+          "VI"
+        ],
+        "description": "Technologies and concepts related to VI."
+      },
+      {
+        "name": "Vector DB",
+        "aliases": [
+          "Vector DB"
+        ],
+        "description": "Technologies and concepts related to Vector DB."
+      },
+      {
+        "name": "VideoIndexer",
+        "aliases": [
+          "VideoIndexer"
+        ],
+        "description": "Technologies and concepts related to VideoIndexer."
+      },
+      {
+        "name": "VisionAI",
+        "aliases": [
+          "VisionAI"
+        ],
+        "description": "Technologies and concepts related to VisionAI."
+      },
+      {
+        "name": "Windows Configuration",
+        "aliases": [
+          "Windows Configuration"
+        ],
+        "description": "Technologies and concepts related to Windows Configuration."
+      },
+      {
+        "name": "Windows Extended Security Updates (ESU)",
+        "aliases": [
+          "Windows Extended Security Updates (ESU)"
+        ],
+        "description": "Technologies and concepts related to Windows Extended Security Updates (ESU)."
+      },
+      {
+        "name": "Windows Server",
+        "aliases": [
+          "Windows Server"
+        ],
+        "description": "Technologies and concepts related to Windows Server."
+      },
+      {
+        "name": "Zephyr",
+        "aliases": [
+          "Zephyr"
+        ],
+        "description": "Technologies and concepts related to Zephyr."
+      },
+      {
+        "name": "ai",
+        "aliases": [
+          "ai"
+        ],
+        "description": "Technologies and concepts related to ai."
+      },
+      {
+        "name": "azure-iot-operations",
+        "aliases": [
+          "azure-iot-operations"
+        ],
+        "description": "Technologies and concepts related to azure-iot-operations."
+      },
+      {
+        "name": "azure-ml-extension",
+        "aliases": [
+          "azure-ml-extension"
+        ],
+        "description": "Technologies and concepts related to azure-ml-extension."
+      },
+      {
+        "name": "azure-openai",
+        "aliases": [
+          "azure-openai"
+        ],
+        "description": "Technologies and concepts related to azure-openai."
+      },
+      {
+        "name": "cloud-computing",
+        "aliases": [
+          "cloud-computing"
+        ],
+        "description": "Technologies and concepts related to cloud-computing."
+      },
+      {
+        "name": "custom-models",
+        "aliases": [
+          "custom-models"
+        ],
+        "description": "Technologies and concepts related to custom-models."
+      },
+      {
+        "name": "edge-ai",
+        "aliases": [
+          "edge-ai"
+        ],
+        "description": "Technologies and concepts related to edge-ai."
+      },
+      {
+        "name": "edge-computing",
+        "aliases": [
+          "edge-computing"
+        ],
+        "description": "Technologies and concepts related to edge-computing."
+      },
+      {
+        "name": "generative-ai",
+        "aliases": [
+          "generative-ai"
+        ],
+        "description": "Technologies and concepts related to generative-ai."
+      },
+      {
+        "name": "industrial-iot",
+        "aliases": [
+          "industrial-iot"
+        ],
+        "description": "Technologies and concepts related to industrial-iot."
+      },
+      {
+        "name": "k3d",
+        "aliases": [
+          "k3d"
+        ],
+        "description": "Technologies and concepts related to k3d."
+      },
+      {
+        "name": "k3s",
+        "aliases": [
+          "k3s"
+        ],
+        "description": "Technologies and concepts related to k3s."
+      },
+      {
+        "name": "medallion-architecture",
+        "aliases": [
+          "medallion-architecture"
+        ],
+        "description": "Technologies and concepts related to medallion-architecture."
+      },
+      {
+        "name": "microsoft-azure",
+        "aliases": [
+          "microsoft-azure"
+        ],
+        "description": "Technologies and concepts related to microsoft-azure."
+      },
+      {
+        "name": "microsoft-fabric",
+        "aliases": [
+          "microsoft-fabric"
+        ],
+        "description": "Technologies and concepts related to microsoft-fabric."
+      },
+      {
+        "name": "python",
+        "aliases": [
+          "python"
+        ],
+        "description": "Technologies and concepts related to python."
+      },
+      {
+        "name": "rag",
+        "aliases": [
+          "rag"
+        ],
+        "description": "Technologies and concepts related to rag."
+      },
+      {
+        "name": "semantic-kernel",
+        "aliases": [
+          "semantic-kernel"
+        ],
+        "description": "Technologies and concepts related to semantic-kernel."
+      },
+      {
+        "name": "slms",
+        "aliases": [
+          "slms"
+        ],
+        "description": "Technologies and concepts related to slms."
+      },
+      {
+        "name": "streamlit",
+        "aliases": [
+          "streamlit"
+        ],
+        "description": "Technologies and concepts related to streamlit."
+      }
+    ]
+  },
+  {
+    "name": "Type",
+    "type": "Type",
+    "description": "Tags related to the type of drops.",
+    "tags": [
+      {
+        "name": "Sample App",
+        "value": "sample_app",
+        "aliases": [
+          "sample_app"
+        ],
+        "description": "Sample App content type."
+      },
+      {
+        "name": "Script/Automation",
+        "value": "script_automation",
+        "aliases": [
+          "script_automation"
+        ],
+        "description": "Script/Automation content type."
+      },
+      {
+        "name": "Tutorial/Guide",
+        "value": "tutorial_guide",
+        "aliases": [
+          "tutorial_guide"
+        ],
+        "description": "Tutorial/Guide content type."
+      },
+      {
+        "name": "UI/Dashboard/Workbook",
+        "value": "ui_dashboard_workbook",
+        "aliases": [
+          "ui_dashboard_workbook"
+        ],
+        "description": "UI/Dashboard/Workbook content type."
+      }
+    ]
+  }
+]
