@@ -474,6 +474,11 @@
     "description": "Tags related to programming languages like PowerShell, .Net, Python, and Java.",
     "tags": [
       {
+        "name": ".NET / C#",
+        "aliases": [],
+        "description": "Content related to .NET / C# programming language."
+      },
+      {
         "name": ".NET/C#",
         "aliases": [],
         "description": "Content related to .NET/C# programming language."
