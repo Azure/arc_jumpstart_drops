@@ -1,4 +1,35 @@
-﻿[
+[
+  {
+    "Title": "Azure Arc SQL LeastPrivilege Activation",
+    "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
+    "Description": "This Drop includes a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines. It uses managed identity, validates dependencies, installs the arcdata extension, queries Resource Graph, and applies the flag using Azure CLI.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Fabio R V Costa",
+        "Link": "https://www.linkedin.com/in/fabiotreze/"
+      }
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/AzureArcSQLEnableLeastPrivilege",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "PowerShell"
+    ],
+    "Products": [
+      "Azure Arc",
+      "Arc-Enabled Servers"
+    ],
+    "LastModified": "2025-09-18T22:45:00.000Z",
+    "CreatedDate": "2025-09-18T22:45:00.000Z",
+    "Topics": [
+      "Hybrid Management",
+      "Security",
+      "Automation",
+      "FeatureFlags",
+      "Azure Resource Graph"
+    ]
+  },
   {
     "Title": "Unofficial Azure Adaptive Cloud Lab Kit x Arc Jumpstart pew pew ",
     "Summary": "The Azure Adaptive Cloud Lab Kit x Arc Jumpstart is a physical NUC device which allows you to explore various kinds of Azure Adaptive Cloud solutions for hybrid cloud and edge computing, using technologies such as Azure Arc, Azure Stack HCI, and IoT.",
@@ -32,7 +63,7 @@
     "Cover": "https://github.com/Azure-Samples/edge-aio-in-a-box/blob/main/readme_assets/cover.png",
     "Authors": [
       {
-        "Name": "AndrÃ©s Padilla",
+        "Name": "Andrés Padilla",
         "Link": "https://www.linkedin.com/in/andrespadillaandrade"
       },
       {
@@ -150,7 +181,7 @@
   {
     "Title": "Secrets Store CSI Driver for Key Vault in AKS",
     "Summary": "This Jumpstart Drop shows how to use the Azure Key Vault provider for the Secrets Store CSI Driver in AKS to access secrets, keys, and certificates from Azure Key Vault as mounted files in pods.",
-    "Description": "This Jumpstart Drop provides a guide on leveraging the Azure Key Vault provider for the Secrets Store CSI Driver within an Azure Kubernetes Service (AKS) cluster. This method enables you to retrieve secrets, keys, and certificates stored in Azure Key Vault and mount them as files directly into your pod\u0027s volumes. This eliminates the necessity for Azure-specific libraries within your applications to access these secrets. The drop focuses on using Workload ID for secure access. By enabling the Azure Key Vault provider add-on, creating managed identities and federated credentials, defining a SecretProviderClass, and deploying a sample pod, you\u0027ll learn how to seamlessly integrate Azure Key Vault with your AKS applications, simplifying secret management and enhancing security.",
+    "Description": "This Jumpstart Drop provides a guide on leveraging the Azure Key Vault provider for the Secrets Store CSI Driver within an Azure Kubernetes Service (AKS) cluster. This method enables you to retrieve secrets, keys, and certificates stored in Azure Key Vault and mount them as files directly into your pod's volumes. This eliminates the necessity for Azure-specific libraries within your applications to access these secrets. The drop focuses on using Workload ID for secure access. By enabling the Azure Key Vault provider add-on, creating managed identities and federated credentials, defining a SecretProviderClass, and deploying a sample pod, you'll learn how to seamlessly integrate Azure Key Vault with your AKS applications, simplifying secret management and enhancing security.",
     "Cover": "https://secrets-store-csi-driver.sigs.k8s.io/images/diagram.png",
     "Authors": [
       {
@@ -261,7 +292,7 @@
   {
     "Title": "Microsoft Entra Workload ID with AKS",
     "Summary": "This Jumpstart Drop shows how to use Microsoft Entra Workload ID with Azure Kubernetes Service (AKS) to securely access Azure resources like Key Vault from pods using managed identities.",
-    "Description": "This Jumpstart Drop provides a guide on implementing Microsoft Entra Workload ID within an Azure Kubernetes Service (AKS) cluster. Workload ID enables applications running in AKS to securely access Microsoft Entra protected resources, such as Azure Key Vault and Microsoft Graph, by assigning them managed identities. This drop explains how Workload ID leverages Kubernetes\u0027 Service Account Token Volume Projection and OIDC federation to provide pods with a Kubernetes identity that can be trusted by Microsoft Entra applications and user-defined managed identities. You\u0027ll learn how to create a managed identity, federate it with a Kubernetes service account, and then use the Azure Identity SDKs or MSAL within your application code to obtain Microsoft Entra access tokens, enabling secure and passwordless access to Azure services.",
+    "Description": "This Jumpstart Drop provides a guide on implementing Microsoft Entra Workload ID within an Azure Kubernetes Service (AKS) cluster. Workload ID enables applications running in AKS to securely access Microsoft Entra protected resources, such as Azure Key Vault and Microsoft Graph, by assigning them managed identities. This drop explains how Workload ID leverages Kubernetes' Service Account Token Volume Projection and OIDC federation to provide pods with a Kubernetes identity that can be trusted by Microsoft Entra applications and user-defined managed identities. You'll learn how to create a managed identity, federate it with a Kubernetes service account, and then use the Azure Identity SDKs or MSAL within your application code to obtain Microsoft Entra access tokens, enabling secure and passwordless access to Azure services.",
     "Cover": "https://raw.githubusercontent.com/paolosalvatori/aks-key-vault/main/jumpstart_drops/microsoft-entra-workload-id/artifacts/media/workload-id-model.png",
     "Authors": [
       {
@@ -325,7 +356,7 @@
     ]
   },
   {
-    "Title": "Kubernetes AI Toolchain Operator (KAITO) \u0026 AKS Arc",
+    "Title": "Kubernetes AI Toolchain Operator (KAITO) & AKS Arc",
     "Summary": "This Jumpstart Drop provides a quick way to explore KAITO enabled by Azure Arc with an AKS cluster with GPU.",
     "Description": "The Kubernetes AI Toolchain Operator (KAITO) is a powerful tool that simplifies the deployment and management of AI workloads on Kubernetes. This Jumpstart Drop provides a quick way to explore KAITO enabled by Azure Arc with an AKS cluster with GPU. The deployment includes a Bicep template for creating the AKS cluster and a Bash script for deploying KAITO and its dependencies.",
     "Authors": [
@@ -660,12 +691,12 @@
   },
   {
     "Title": "Azure Arc Management Workbook",
-    "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring and reporting on Arc resources.",
-    "Description": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring and reporting on Arc resources. Using Azure\u0027s management and operations tools in hybrid, multi-cloud and edge deployments provides the consistency needed to manage each environment through a common set of governance and operations management practices. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
+    "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring and reporting on Arc resources.",
+    "Description": "This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring and reporting on Arc resources. Using Azure's management and operations tools in hybrid, multi-cloud and edge deployments provides the consistency needed to manage each environment through a common set of governance and operations management practices. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
     "Cover": "",
     "Authors": [
       {
-        "Name": "Laura NicolÃ¡s",
+        "Name": "Laura Nicolás",
         "Link": "https://www.linkedin.com/in/lauranicolasd"
       }
     ],
@@ -712,12 +743,12 @@
   },
   {
     "Title": "Azure Arc-enabled servers OS Performance Workbook",
-    "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance.",
-    "Description": "This Jumpstart Drop provides an Azure Monitor workbook that\u0027s intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
+    "Summary": "This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance.",
+    "Description": "This Jumpstart Drop provides an Azure Monitor workbook that's intended to provide a single pane of glass for monitoring Arc-enabled servers Operating System (OS) Performance. The Azure Monitor workbook acts as a flexible canvas for data analysis and visualization in the Azure portal, gathering information from several data sources and combining them into an integrated interactive experience.",
     "Cover": "",
     "Authors": [
       {
-        "Name": "Alejandro SÃ¡nchez",
+        "Name": "Alejandro Sánchez",
         "Link": "www.linkedin.com/in/asgsanchezgomez"
       }
     ],
@@ -857,7 +888,7 @@
   {
     "Title": "How to Use the Key Vault Extension to Acquire Certificates on Arc-Enabled Windows Servers",
     "Summary": "This Jumpstart Drop provides guidance on how to use Azure Key Vault extension with Windows Arc-enabled servers to manage certificate distribution and lifecycle management.",
-    "Description": "Managing certificates in a hybrid cloud environment can be complex, but Azure Arc-enabled servers simplify this process. By using the Azure Key Vault extension, you can securely acquire and manage certificates. Hereâ€™s a quick step-by-step guide:",
+    "Description": "Managing certificates in a hybrid cloud environment can be complex, but Azure Arc-enabled servers simplify this process. By using the Azure Key Vault extension, you can securely acquire and manage certificates. Here’s a quick step-by-step guide:",
     "Cover": "",
     "Authors": [
       {
@@ -984,7 +1015,7 @@
   {
     "Title": "Azure Video Indexer - Classify objects in a video with GPT4o",
     "Summary": "A no-code sample for automating the classification of objects in a video using Azure Video Indexer and GPT4o.",
-    "Description": "In this LogicApp flow sample, you will learn how to add aditional details on the cars detected in an indexed video, the sample leverage Video Indexer\u0027s BYO capability and detected objects in additon to Azure OpenAI.",
+    "Description": "In this LogicApp flow sample, you will learn how to add aditional details on the cars detected in an indexed video, the sample leverage Video Indexer's BYO capability and detected objects in additon to Azure OpenAI.",
     "Cover": "https://www.youtube.com/watch?v=yMqJufR9Rfs",
     "Authors": [
       {
@@ -1041,37 +1072,6 @@
     "Topics": []
   },
   {
-    "Title": "Azure Arc SQL LeastPrivilege Activation",
-    "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
-    "Description": "This Drop includes a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines. It uses managed identity, validates dependencies, installs the arcdata extension, queries Resource Graph, and applies the flag using Azure CLI.",
-    "Cover": "",
-    "Authors": [
-      {
-        "Name": "Fabio R V Costa",
-        "Link": "https://www.linkedin.com/in/fabiotreze/"
-      }
-    ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/AzureArcSQLEnableLeastPrivilege",
-    "Type": "script_automation",
-    "Difficulty": "Medium",
-    "ProgrammingLanguage": [
-      "PowerShell"
-    ],
-    "Products": [
-      "Azure Arc",
-      "Arc-Enabled Servers"
-    ],
-    "LastModified": "2025-09-18T22:45:00.000Z",
-    "CreatedDate": "2025-09-18T22:45:00.000Z",
-    "Topics": [
-      "Hybrid Management",
-      "Security",
-      "Automation",
-      "FeatureFlags",
-      "Azure Resource Graph"
-    ]
-  },
-  {
     "Title": "Azure Arc Agent Toolkit",
     "Summary": "GUI-based toolkit for system administrators who prefer visual interfaces over the CLI. This project wraps around the Azure Arc Connected Machine Agent and simplifies agent monitoring, config inspection, and version checks.",
     "Description": "GUI-based toolkit for system administrators who prefer visual interfaces over the CLI. This project wraps around the Azure Arc Connected Machine Agent and simplifies agent monitoring, config inspection, and version checks.",
@@ -1102,7 +1102,7 @@
     "Topics": []
   },
   {
-    "Title": "Azure Arc with AMPLS \u0026 Private Link",
+    "Title": "Azure Arc with AMPLS & Private Link",
     "Summary": "This Jumpstart Drop deploys a secure hybrid infrastructure using Azure Arc and Azure Monitor Private Link Scopes (AMPLS), with Terraform.",
     "Description": "This Jumpstart Drop showcases how to integrate Azure Arc-enabled servers with Azure Monitor using AMPLS and Private Link for secure traffic flow. It simulates an on-premises environment connected to Azure through a VNet-to-VNet VPN Gateway. A Windows Server VM is onboarded to Azure Arc using a Custom Script Extension. Log and metrics traffic is routed privately through AMPLS with Private DNS Zones, and ingested into a Log Analytics workspace. Azure Bastion provides secure remote desktop access. The deployment is fully automated using Terraform and aligns with Azure Arc Jumpstart best practices.",
     "Cover": "",
@@ -1331,7 +1331,7 @@
   {
     "Title": "Azure Edge Extensions AIO Observability GitOps",
     "Summary": "This Jumpstart Drop sets up Azure IoT Operations with OpenTelemetry and local observability visualization using Flux GitOps. It uses a Visual Studio Code dev container and K3D cluster for local monitoring of Azure IoT Operations components.",
-    "Description": "In this sample, a Visual Studio Code dev container is used as the developer sandbox to leverage a local K3D cluster, initialize Azure resources and install a baseline set of Azure IoT Operations\u0027 components. The objective is to illustrate how to setup observability to be able to locally visualize health of the cluster and Azure IoT Operations\u0027 components. This repository is particularly useful for those interested in edge-based visualization. Please check formal Azure IoT Operations documentation if you are looking for a default observability setup and wish to analyze observability data using Azure Monitor",
+    "Description": "In this sample, a Visual Studio Code dev container is used as the developer sandbox to leverage a local K3D cluster, initialize Azure resources and install a baseline set of Azure IoT Operations' components. The objective is to illustrate how to setup observability to be able to locally visualize health of the cluster and Azure IoT Operations' components. This repository is particularly useful for those interested in edge-based visualization. Please check formal Azure IoT Operations documentation if you are looking for a default observability setup and wish to analyze observability data using Azure Monitor",
     "Cover": "",
     "Authors": [
       {
@@ -1460,7 +1460,7 @@
     "Topics": []
   },
   {
-    "Title": "Retrieval-Augmented Generation on Edge with Azure Arc \u0026 Azure IoT Operations",
+    "Title": "Retrieval-Augmented Generation on Edge with Azure Arc & Azure IoT Operations",
     "Summary": "This Jumpstart Drop provides a Retrieval-Augmented Generation (RAG) on edge pattern that facilitates text searches within files utilizing a local vectorDB and an edge LLM. It follows Pub/Sub messaging pattern with Azure IoT Operations MQTT broker.",
     "Description": "RAG on Edge is a tool to perform text searches within files using a vector-based approach, and generate a readable response based on the search result with Large/Small Language Model. The solution is independent from cloud services, and can be deployed to the edge device. The messaging system follows a pub/sub pattern, ensuring adaptability to diverse edge computing scenarios.",
     "Cover": "https://www.youtube.com/watch?v=rb7-xRnFuPY",
@@ -1574,8 +1574,8 @@
   },
   {
     "Title": "Visualize Azure EventGrid MQTT messages on all incoming topics",
-    "Summary": "This Jumpstart Drop shows how to visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to \u0027#\u0027.",
-    "Description": "This explorer tool can visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to \u0027#\u0027.",
+    "Summary": "This Jumpstart Drop shows how to visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to '#'.",
+    "Description": "This explorer tool can visualize all incoming Azure EventGrid namespace MQTT broker messages on all topics. An audit client simply listens to '#'.",
     "Cover": "https://github.com/sandervandevelde/MqttAuditApp/blob/main/assets/explorer-mainform.png",
     "Authors": [
       {
@@ -1657,7 +1657,7 @@
   {
     "Title": "\"Cerebral\": An AI-Driven Assistant for Industrial Efficiency",
     "Summary": "This Jumpstart Drop provides an intelligent assistant for real-time troubleshooting and data analysis in hybrid and edge environments, offering a unified platform for consistent management and issue resolution.",
-    "Description": "This Jumpstart Drop introduces Cerebral, an intelligent assistant designed to enhance operational efficiency by providing real-time troubleshooting and data analysis capabilities. Built to support hybrid, multi-cloud, and edge deployments, Cerebral ensures consistent and reliable management across diverse environments. By leveraging Azure\u0027s advanced AI and edge computing tools, this solution delivers a unified platform where users can interact using natural language to monitor, query, and resolve issues. The integration with Azure Monitor and other Azure services allows Cerebral to act as a powerful, flexible canvas for data analysis and visualization, offering an interactive and cohesive experience directly within the Azure portal.",
+    "Description": "This Jumpstart Drop introduces Cerebral, an intelligent assistant designed to enhance operational efficiency by providing real-time troubleshooting and data analysis capabilities. Built to support hybrid, multi-cloud, and edge deployments, Cerebral ensures consistent and reliable management across diverse environments. By leveraging Azure's advanced AI and edge computing tools, this solution delivers a unified platform where users can interact using natural language to monitor, query, and resolve issues. The integration with Azure Monitor and other Azure services allows Cerebral to act as a powerful, flexible canvas for data analysis and visualization, offering an interactive and cohesive experience directly within the Azure portal.",
     "Cover": "https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/sample_app/cerebral_genai/resources/images/architecture.png",
     "Authors": [
       {
@@ -1853,7 +1853,7 @@
   {
     "Title": "3D USD Import and Export For Digital Twin Builder",
     "Summary": "3D USD Import and Export For Digital Twin Builder is a series of notebooks and functions to allow users of Digital Twin Builder to Import and Contextaulize 3D files in USD, as well as Export metadata from the twin into existing USD files.",
-    "Description": "This demo leverages the OpenUSD libraries to extract relevant 3D metadata from within a file, and allows users to contexualize 3D alongside traditional IT and OT Data. We aim to provide an intitial \u0027Getting Started\u0027 jumpstart point for users wishing to include 3D Files within their digital twin data estate",
+    "Description": "This demo leverages the OpenUSD libraries to extract relevant 3D metadata from within a file, and allows users to contexualize 3D alongside traditional IT and OT Data. We aim to provide an intitial 'Getting Started' jumpstart point for users wishing to include 3D Files within their digital twin data estate",
     "Authors": [
       {
         "Name": "Adam Lash",
@@ -1887,7 +1887,7 @@
     "Cover": "",
     "Authors": [
       {
-        "Name": "RaÃºl Carboneras",
+        "Name": "Raúl Carboneras",
         "Link": "https://www.linkedin.com/in/ra%C3%BAl-carboneras-37609350/"
       }
     ],
@@ -1910,7 +1910,7 @@
   {
     "Title": "Graph User Photo Sync Automation",
     "Summary": "Script automating user photo updates in Microsoft Entra ID (Azure AD) using Microsoft Graph API.",
-    "Description": "It retrieves all users first, stores them in an ordered hash table, finds matching photos in a local directory (such as an Azure Arc-enabled server), and updates their profile photosâ€”without requiring the Microsoft.Graph PowerShell module.",
+    "Description": "It retrieves all users first, stores them in an ordered hash table, finds matching photos in a local directory (such as an Azure Arc-enabled server), and updates their profile photos—without requiring the Microsoft.Graph PowerShell module.",
     "Cover": "https://images.squarespace-cdn.com/content/661c4130c6c2c45436f6bf0a/1742684735876-OOD9SUL1HMGDL56YD96I/AzureAutomation.jpg",
     "Authors": [
       {
@@ -1988,9 +1988,9 @@
     ]
   },
   {
-    "Title": "LoRaWANÂ® with Azure IoT operations",
-    "Summary": "This Jumpstart Drop implements a solution that takes data from LoRaWANÂ® based system and devices and then pushes it to the cloud using Azure IoT Operations.",
-    "Description": "Implementing a solution that takes data from LoRaWANÂ® based system and then pushes it to Azure IoT Operations. This is done using a custom broker that understands LoRaWANÂ® communication data and talks to Azure IoT operations using MQTT and port forwarding using a broker listener.",
+    "Title": "LoRaWAN® with Azure IoT operations",
+    "Summary": "This Jumpstart Drop implements a solution that takes data from LoRaWAN® based system and devices and then pushes it to the cloud using Azure IoT Operations.",
+    "Description": "Implementing a solution that takes data from LoRaWAN® based system and then pushes it to Azure IoT Operations. This is done using a custom broker that understands LoRaWAN® communication data and talks to Azure IoT operations using MQTT and port forwarding using a broker listener.",
     "Cover": "",
     "Authors": [
       {
@@ -2051,7 +2051,7 @@
   },
   {
     "Title": "Connecting PLC using Modbus and Dapr to Azure IoT Operations",
-    "Summary": "This Jumpstart Drop provides a tutorial on how to connect a MODBUS PLC (Programmable Logic Controller) to an edge device running Azure IoT Operations (AIO), leveraging the Dapr Runtime and AIO\u0027s MQTT broker.",
+    "Summary": "This Jumpstart Drop provides a tutorial on how to connect a MODBUS PLC (Programmable Logic Controller) to an edge device running Azure IoT Operations (AIO), leveraging the Dapr Runtime and AIO's MQTT broker.",
     "Description": "This Jumpstart Drop provides an example of a complete application that allows the connection of a PLC (Programmable Logic Controller) device, widely used by the industry to control and monitor machines, to Azure IoT Operations through an application written in C# .NET 9 that makes use of the Modbus.NET library to communicate with the PLC through a USB serial connection, and then forward the state of the registers that monitor the logic gates, to the Azure IoT Operations MQTT broker with the help of the Dapr runtime and its integration in the pubsub standard.",
     "Cover": "https://github.com/waltercoan/reactor2025-azureiotoperations-modbus-dapr/blob/main/diagramas/clp-edgedevice.png",
     "Authors": [
@@ -2075,8 +2075,8 @@
   },
   {
     "Title": "Monitor Arc Agent Logs",
-    "Summary": "This solution centralizes azcmagent.log files from Azure Arc-enabled servers into Log Analytics, enabling streamlined troubleshooting and deeper insightsâ€”eliminating the need to access logs on individual machines.",
-    "Description": "This drop introduces a streamlined approach to troubleshooting the Azure Arc Connected Machine Agent by centralizing azcmagent.log files from hybrid servers into a single Log Analytics Workspace. Instead of manually accessing logs on individual machines, users can now collect, transform, and analyze these logs centrally using Azure Monitor, Data Collection Rules, and custom tables. The guide walks through setting up the necessary Azure resources, configuring data collection, and applying KQL transformations to structure unstructured log dataâ€”enhancing observability and simplifying diagnostics across hybrid environments.",
+    "Summary": "This solution centralizes azcmagent.log files from Azure Arc-enabled servers into Log Analytics, enabling streamlined troubleshooting and deeper insights—eliminating the need to access logs on individual machines.",
+    "Description": "This drop introduces a streamlined approach to troubleshooting the Azure Arc Connected Machine Agent by centralizing azcmagent.log files from hybrid servers into a single Log Analytics Workspace. Instead of manually accessing logs on individual machines, users can now collect, transform, and analyze these logs centrally using Azure Monitor, Data Collection Rules, and custom tables. The guide walks through setting up the necessary Azure resources, configuring data collection, and applying KQL transformations to structure unstructured log data—enhancing observability and simplifying diagnostics across hybrid environments.",
     "Cover": "",
     "Authors": [
       {
@@ -2151,7 +2151,7 @@
   {
     "Title": "Test Azure Arc-enabled servers on a Linux Azure VM",
     "Summary": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script.",
-    "Description": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn\u0027t supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don\u0027t have an existing virtual machine, review the Jumpstart Scenario Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It\u0027s not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
+    "Description": "The following Jumpstart Drop will guide you on how to project an existing Linux Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn't supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don't have an existing virtual machine, review the Jumpstart Scenario Deploy a Linux Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It's not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
     "Cover": "",
     "Authors": [
       {
@@ -2178,7 +2178,7 @@
   {
     "Title": "Test Azure Arc-enabled servers on a Windows Azure VM",
     "Summary": "The following Jumpstart Drop will guide you on how to project an existing Windows Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script.",
-    "Description": "The following Jumpstart Drop will guide you on how to project an existing Windows Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn\u0027t supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don\u0027t have an existing virtual machine, review the Jumpstart Scenario Deploy a Windows Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It\u0027s not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
+    "Description": "The following Jumpstart Drop will guide you on how to project an existing Windows Azure VM as an Azure Arc-enabled server in an automated fashion using a Bash script. Note that onboarding an Azure VM as an Azure Arc-enabled server isn't supported and this automation is intended for demo and testing purposes only. This Jumpstart Drop provides the script to onboard an existing Azure VM, if you don't have an existing virtual machine, review the Jumpstart Scenario Deploy a Windows Azure Virtual Machine and connect it to Azure Arc using an ARM Template that will create it for you. It's not expected for an Azure VM to be projected as an Azure Arc-enabled server. The Jumpstart Drop is unsupported and should ONLY be used for demo and testing purposes.",
     "Cover": "",
     "Authors": [
       {
@@ -2237,12 +2237,12 @@
   },
   {
     "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
-    "Summary": "\u0027Talk to Your Factory\u0027 leverages Industrial IoT, Edge, and Generative AI to streamline factory operations, enabling real-time, natural language communication with systems for quick issue identification, increased efficiency, and reduced downtime.",
+    "Summary": "'Talk to Your Factory' leverages Industrial IoT, Edge, and Generative AI to streamline factory operations, enabling real-time, natural language communication with systems for quick issue identification, increased efficiency, and reduced downtime.",
     "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
     "Cover": "https://github.com/chriscrcodes/smart-factory/blob/main/artifacts/media/factory-assistant-ui.png",
     "Authors": [
       {
-        "Name": "Christophe CrÃ©mon",
+        "Name": "Christophe Crémon",
         "Link": "https://github.com/chriscrcodes"
       }
     ],
@@ -2452,7 +2452,7 @@
   {
     "Title": "Multi-cluster TLS cert management using Traefik",
     "Summary": "This Jumpstart Drop provides configurations for setting up secure TLS/SSL in Traefik across multiple Arc-enabled Kubernetes clusters.",
-    "Description": "This Jumpstart Drop demonstrates how to configure TLS/SSL security in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for certificate management, automatic TLS generation using Let\u0027s Encrypt ACME challenge, and secure communication between services.",
+    "Description": "This Jumpstart Drop demonstrates how to configure TLS/SSL security in Traefik across multiple Azure Arc-enabled Kubernetes clusters. It includes configurations for certificate management, automatic TLS generation using Let's Encrypt ACME challenge, and secure communication between services.",
     "Cover": "",
     "Authors": [
       {
@@ -2519,7 +2519,7 @@
   },
   {
     "Title": "Vector Data Deployment to Multiple Edge Vector DBs",
-    "Summary": "This Jumpstart Drop provides a vector data deployment pattern with Azure Arc \u0026 Azure Container Storage enabled by Azure Arc via deploying the centralized vector data from cloud to synchronize edge vector DBs across multiple edge machines.",
+    "Summary": "This Jumpstart Drop provides a vector data deployment pattern with Azure Arc & Azure Container Storage enabled by Azure Arc via deploying the centralized vector data from cloud to synchronize edge vector DBs across multiple edge machines.",
     "Description": "This Jumpstart Drop provides a vector data deployment pattern that hosting a vector DB in the cloud as a central hub for RAG indexing, and deploying vector data to synchronize edge vector DBs across multiple edge machines for your edge RAG application. This approach ensures that RAG-on-Edge systems operate efficiently with up-to-date vector data content. It also offers an efficient method to restore vector DB data on edge machines in case of data loss.",
     "Cover": "",
     "Authors": [
@@ -2553,7 +2553,7 @@
   {
     "Title": "Windows 11 IoT Enterprise RAM Reduction Guide",
     "Summary": "This Jumpstart Drop provides instructions on how to minimize the RAM usage of Windows 11 IoT Enterprise systems.",
-    "Description": "This repository offers a practical solution for optimizing Windows 11 IoT Enterprise by reducing its RAM usage. It includes a configure_services_final.bat batch file that utilizes the Windows sysprep package to streamline system services. By disabling non-essential services, commonly referred to as \u0027bloat\u0027, this guide helps achieve a significantly lower RAM footprint, thus enhancing the performance and reliability of IoT devices.",
+    "Description": "This repository offers a practical solution for optimizing Windows 11 IoT Enterprise by reducing its RAM usage. It includes a configure_services_final.bat batch file that utilizes the Windows sysprep package to streamline system services. By disabling non-essential services, commonly referred to as 'bloat', this guide helps achieve a significantly lower RAM footprint, thus enhancing the performance and reliability of IoT devices.",
     "Cover": "",
     "Authors": [
       {
