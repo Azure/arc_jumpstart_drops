@@ -1,6 +1,6 @@
 {
-  "Title": "Shirin Kaul test",
-  "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
+  "Title": "Shirin Kaul test 1234",
+  "Summary": "Shirin Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
   "Description": "This Drop includes a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines. It uses managed identity, validates dependencies, installs the arcdata extension, queries Resource Graph, and applies the flag using Azure CLI.",
   "Cover": "",
   "Authors": [
