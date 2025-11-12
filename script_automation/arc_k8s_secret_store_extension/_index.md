@@ -122,6 +122,6 @@ az deployment group create -g "<resource-group-name>" -f "main.bicep" -p "main.b
 
 ### Resources
 
-See [Secret Store extension (preview)](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension) for the full instructions to set this up yourself.
+See [Secret Store extension](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension) for the full instructions to set this up yourself.
 
 To troubleshoot Secret Store extension issues, visit [Secret Store extension troubleshooting](https://learn.microsoft.com/azure/azure-arc/kubernetes/secret-store-extension#troubleshooting)
