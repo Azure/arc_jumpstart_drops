@@ -19,9 +19,7 @@
     "Products": [
       "Azure Arc-enabled Servers",
       "Azure Arc-enabled SQL Servers",
-      "Software Assurance",
-      "Azure Workbooks",
-      "Azure Arc"
+      "Azure Workbooks"
     ],
     "LastModified": "2025-11-25T22:00:00.000Z",
     "CreatedDate": "2025-11-25T22:10:00.000Z",
