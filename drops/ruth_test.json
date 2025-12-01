@@ -1,0 +1,31 @@
+{
+  "Title": "Ruth Test",
+  "Summary": "The purpose of this Jumpstart Drop is to test the Drop creation flow.",
+  "Type": "template",
+  "Authors": [
+    {
+      "Name": "Ruth Chen",
+      "Link": "https://www.linkedin.com/in/ruthmchen/"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible",
+    "Bicep",
+    "Terraform"
+  ],
+  "Products": [
+    "Azure Arc",
+    "Arc-enabled Kubernetes",
+    "Arc-enabled Servers",
+    "Azure VM"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/template/ruth_test",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "image (4).jpeg",
+  "CreatedDate": "2025-12-01T20:42:08.509Z",
+  "LastModified": "2025-12-01T20:42:08.509Z"
+}
