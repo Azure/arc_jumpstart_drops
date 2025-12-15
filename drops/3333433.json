@@ -1,0 +1,26 @@
+{
+  "Title": "3333433",
+  "Summary": "3saf3333",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "3333333",
+      "Link": ""
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/3333333",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "1;ls.txt",
+  "CreatedDate": "2025-12-15T14:25:13.073Z",
+  "LastModified": "2025-12-15T14:25:13.073Z"
+}
