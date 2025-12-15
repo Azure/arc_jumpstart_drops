@@ -1,5 +1,31 @@
 [
   {
+    "Title": "3333333",
+    "Summary": "3saf3333",
+    "Type": "ui_dashboard_workbook",
+    "Authors": [
+      {
+        "Name": "3333333",
+        "Link": ""
+      }
+    ],
+    "ProgrammingLanguage": [
+      "Ansible"
+    ],
+    "Products": [
+      "Arc-enabled Kubernetes"
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/3333333",
+    "Difficulty": "Beginner",
+    "Topics": [
+      "AI"
+    ],
+    "Description": "",
+    "Cover": "1;1.png",
+    "CreatedDate": "2025-12-15T14:25:13.073Z",
+    "LastModified": "2025-12-15T14:25:13.073Z"
+  },
+  {
     "Title": "Azure Arc SQL LeastPrivilege Activation",
     "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
     "Description": "This Drop includes a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines. It uses managed identity, validates dependencies, installs the arcdata extension, queries Resource Graph, and applies the flag using Azure CLI.",
@@ -823,6 +849,33 @@
       "Private Link",
       "Azure Arc Jumpstart"
     ]
+  },
+  {
+    "Title": "Azure Arc Software Assurance Dashboard",
+    "Summary": "A comprehensive Azure Workbook for monitoring Software Assurance compliance across your hybrid infrastructure with Arc-enabled servers and SQL Server instances.",
+    "Description": "The purpose of this repository is to provide an Azure Workbook for monitoring Software Assurance compliance across your Azure Arc-enabled infrastructure. This workbook simplifies license management, enhances visibility into hybrid environments, and enables proactive compliance monitoring for both Windows Servers and SQL Server instances.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Tom Claes",
+        "Link": "https://www.linkedin.com/in/tomclaes-/"
+      }
+    ],
+    "Source": "https://github.com/claestom/azure-arc-sa-workbook",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "KQL",
+      "JSON"
+    ],
+    "Products": [
+      "Azure Arc-enabled Servers",
+      "Azure Arc-enabled SQL Servers",
+      "Azure Workbooks"
+    ],
+    "LastModified": "2025-11-25T22:00:00.000Z",
+    "CreatedDate": "2025-11-25T22:10:00.000Z",
+    "Topics": []
   },
   {
     "Title": "Deploy an Ubuntu 22.04 server with Vagrant",
