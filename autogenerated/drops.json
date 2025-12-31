@@ -825,6 +825,33 @@
     ]
   },
   {
+    "Title": "Azure Arc Software Assurance Dashboard",
+    "Summary": "A comprehensive Azure Workbook for monitoring Software Assurance compliance across your hybrid infrastructure with Arc-enabled servers and SQL Server instances.",
+    "Description": "The purpose of this repository is to provide an Azure Workbook for monitoring Software Assurance compliance across your Azure Arc-enabled infrastructure. This workbook simplifies license management, enhances visibility into hybrid environments, and enables proactive compliance monitoring for both Windows Servers and SQL Server instances.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Tom Claes",
+        "Link": "https://www.linkedin.com/in/tomclaes-/"
+      }
+    ],
+    "Source": "https://github.com/claestom/azure-arc-sa-workbook",
+    "Type": "tutorial_guide",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "KQL",
+      "JSON"
+    ],
+    "Products": [
+      "Azure Arc-enabled Servers",
+      "Azure Arc-enabled SQL Servers",
+      "Azure Workbooks"
+    ],
+    "LastModified": "2025-11-25T22:00:00.000Z",
+    "CreatedDate": "2025-11-25T22:10:00.000Z",
+    "Topics": []
+  },
+  {
     "Title": "Deploy an Ubuntu 22.04 server with Vagrant",
     "Summary": "This Jumpstart Drop provides a guide to creating an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
     "Description": "This Jumpstart Drop provides a step-by-step guide to create an Ubuntu 22.04 server with Vagrant and connecting it to Azure Arc.",
@@ -1678,6 +1705,37 @@
     "Topics": [
       "Azure Local",
       "IaC"
+    ]
+  },
+  {
+    "Title": "Building infrastructure on Azure Local with Azure Verified Modules for Terraform",
+    "Summary": "This Jumpstart Drop provides an example of building infrastructure and deploying workloads on Azure Local with Azure Verified Modules for Terraform.",
+    "Description": "This Jumpstart Drop for Azure Local provides an example of building infrastructure with IaC in the form of Terraform.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Erik Grina Raassum",
+        "Link": "https://www.linkedin.com/in/erikgraa"
+      }
+    ],
+    "Source": "https://github.com/erikgraa/azure-local-terraform-avm",
+    "Type": "script_automation",
+    "Difficulty": "Medium",
+    "ProgrammingLanguage": [
+      "Terraform"
+    ],
+    "Products": [
+      "Arc-enabled servers",
+      "Azure Arc",
+      "Azure Local"
+    ],
+    "LastModified": "2025-12-31T15:21:40.123Z",
+    "CreatedDate": "2025-12-31T15:21:40.123Z",
+    "Topics": [
+      "Arc-enabled servers",
+      "Azure Arc",
+      "IaC",
+      "Security"
     ]
   },
   {
