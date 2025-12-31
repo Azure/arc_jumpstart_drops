@@ -1,0 +1,31 @@
+{
+  "Title": "Building infrastructure on Azure Local with Azure Verified Modules for Terraform",
+  "Summary": "This Jumpstart Drop provides an example of building infrastructure and deploying workloads on Azure Local with Azure Verified Modules for Terraform.",
+  "Description": "This Jumpstart Drop for Azure Local provides an example of building infrastructure with IaC in the form of Terraform.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Erik Grina Raassum",
+      "Link": "https://www.linkedin.com/in/erikgraa"
+    }
+  ],
+  "Source": "https://github.com/erikgraa/azure-local-terraform-avm",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "Terraform"
+  ],
+  "Products": [
+    "Arc-enabled servers",
+    "Azure Arc",
+    "Azure Local"
+  ],
+  "LastModified": "2025-12-31T15:21:40.123Z",
+  "CreatedDate": "2025-12-31T15:21:40.123Z",
+  "Topics": [
+    "Arc-enabled servers",    
+    "Azure Arc",
+    "IaC",
+    "Security"
+  ]
+}
