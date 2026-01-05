@@ -1708,7 +1708,7 @@
     ]
   },
   {
-    "Title": "Building infrastructure on Azure Local with Azure Verified Modules for Terraform",
+    "Title": "Building infrastructure on Azure Local with Terraform",
     "Summary": "This Jumpstart Drop provides an example of building infrastructure and deploying workloads on Azure Local with Azure Verified Modules for Terraform.",
     "Description": "This Jumpstart Drop for Azure Local provides an example of building infrastructure with IaC in the form of Terraform.",
     "Cover": "",
