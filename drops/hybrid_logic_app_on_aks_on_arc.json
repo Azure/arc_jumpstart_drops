@@ -9,7 +9,7 @@
       "Link": "https://www.linkedin.com/in/divya-shree-divya-mv-69130380/"
     }
   ],
-  "Source": "https://github.com/ShreeDivyaMV/LogicApps_Jumpstart_Templates/tree/main/azure_hybrid_logicapps_jumpstart/logicapp_hybrid_aks/ARM",
+  "Source": "https://github.com/ShreeDivyaMV/LogicApps_Jumpstart_Templates/tree/main/azure_hybrid_logicapps_jumpstart/logicapp_hybrid_aks",
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
@@ -25,4 +25,5 @@
   "CreatedDate": "2025-12-15T10:30:16.201Z",
   "Topics": []
 }
+
 
