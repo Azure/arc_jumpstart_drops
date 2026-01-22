@@ -1,0 +1,29 @@
+{
+  "Title": "Hybrid deployment for Azure Logic Apps on AKS",
+  "Summary": "This Jumpstart Drop deploys Azure Logic Apps on a Hybrid environment hosted on Arc enabled AKS cluster with all the required components and prerequisites.",
+  "Description": "Azure Logic Apps offers a hybrid deployment model so that you can deploy and host Standard logic app workflows in on-premises, private cloud, or public cloud scenarios. This model gives you the capabilities to host integration solutions in partially connected environments when you need to use local processing, data storage, and network access. This Jumpstart drop helps to create a proof of concept of this deployment model on Azure AKS with all prerequisites.",
+  "Cover": "https://github.com/ShreeDivyaMV/azure_arc/blob/main/azure_hybrid_logicapps_jumpstart/logicapp_hybrid_aks/architecture-overview.png",
+  "Authors": [
+    {
+      "Name": "Divya(Shree Divya) M V",
+      "Link": "https://www.linkedin.com/in/divya-shree-divya-mv-69130380/"
+    }
+  ],
+  "Source": "https://github.com/ShreeDivyaMV/LogicApps_Jumpstart_Templates/tree/main/azure_hybrid_logicapps_jumpstart/logicapp_hybrid_aks",
+  "Type": "script_automation",
+  "Difficulty": "Medium",
+  "ProgrammingLanguage": [
+    "PowerShell",
+    "JSON"
+  ],
+  "Products": [
+    "Azure Logic Apps",
+    "Azure Kubernetes Service",
+    "Azure Arc"
+  ],
+  "LastModified": "2025-12-15T18:25:43.511Z",
+  "CreatedDate": "2025-12-15T10:30:16.201Z",
+  "Topics": []
+}
+
+
