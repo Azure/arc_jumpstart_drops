@@ -1,0 +1,26 @@
+{
+  "Title": "Arc Remote Run Command",
+  "Summary": "Remotely run OS-specific scripts across Arc-enabled Windows and Linux servers using Run Command. No SSH or WinRM are required.",
+  "Type": "script_automation",
+  "Authors": [
+    {
+      "Name": "Matthew Dowst",
+      "Link": "https://www.linkedin.com/in/mdowst"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "PowerShell"
+  ],
+  "Products": [
+    "Arc-enabled Servers"
+  ],
+  "Source": "",
+  "Difficulty": "Medium",
+  "Topics": [
+    "Servers"
+  ],
+  "Description": "",
+  "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_remote_run_command/img/Example_144828.png",
+  "CreatedDate": "2026-01-21T19:57:06.939Z",
+  "LastModified": "2026-01-21T19:57:06.939Z"
+}
