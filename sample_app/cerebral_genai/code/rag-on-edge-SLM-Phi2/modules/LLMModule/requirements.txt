@@ -9,7 +9,7 @@ dapr-ext-grpc==1.11.0
 
 pathlib==1.0.1 
 ruamel-yaml==0.17.16
-pillow==10.3.0
+pillow==12.1.1
 torch==2.2.0
 numpy~=1.24.4
 sentencepiece~=0.1.98
