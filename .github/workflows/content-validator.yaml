@@ -51,7 +51,7 @@ jobs:
           fi
           
           # Remove any potentially dangerous characters and validate path
-          clean_file=$(echo "$file" | sed 's/[;&|`$(){}[\]\\<>]//g' | tr -d '\r')
+          clean_file=$(echo &quot;$file&quot; | sed &#39;s/[];&amp;|`$(){}[\\&lt;&gt;]//g&#39; | tr -d &#39;\r&#39;)
           
           # Only process files that exist and have valid extensions (case-insensitive)
           if [ -f "$clean_file" ] && [[ "$clean_file" =~ \.(json|JSON|md|MD|yaml|yml|YAML|YML|txt|TXT)$ ]]; then
