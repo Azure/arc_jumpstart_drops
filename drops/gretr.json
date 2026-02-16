@@ -1,0 +1,26 @@
+{
+  "Title": "gretr",
+  "Summary": "dfgnhmjgrf",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "retre",
+      "Link": "https:/www.niteshsoni.com"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Azure Arc"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/gretr",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "image (17).png",
+  "CreatedDate": "2026-02-16T21:30:32.122Z",
+  "LastModified": "2026-02-16T21:30:32.122Z"
+}
