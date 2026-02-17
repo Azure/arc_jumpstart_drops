@@ -840,7 +840,7 @@
     "Products": [
       "Arc-enabled Servers"
     ],
-    "Source": "",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/script_automation/arc_remote_run_command",
     "Difficulty": "Medium",
     "Topics": [
       "Servers"
