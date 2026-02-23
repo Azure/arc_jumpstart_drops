@@ -1,0 +1,26 @@
+{
+  "Title": "nitesh test",
+  "Summary": "asfdgdsf",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "nitesh",
+      "Link": "https://www.githu.com"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Ansible"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/nitesh_test",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Screenshot 2026-02-24 011500.png",
+  "CreatedDate": "2026-02-23T19:52:38.545Z",
+  "LastModified": "2026-02-23T19:52:38.545Z"
+}
