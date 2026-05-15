@@ -58,11 +58,11 @@ Screenshot showing ESU Forecast:
 
 ### How to install the Arc Insights PBI Dashboards
 
-1. Download the Power BI template file: [Arc Insights PBI Dashboard](https://github.com/Azure/arc_jumpstart_drops/blob/main/ui_dashboard_workbook/arc_pbi_dashboard/arc_insights_dashboard_jumpstart.pbit)
+1. Download the Power BI template file: [Arc Insights PBI Dashboard](https://github.com/Azure/arc_jumpstart_drops/blob/main/ui_dashboard_workbook/arc_pbi_dashboard/arc_insights_dashboard_jumpstart_V2.pbit)
 
 ![Download](./artifacts/media/pbi_download_screenshot.png)
 
-2. Open the Power BI template File, upon first opening the dashboard will attempt refresh.
+2. Open the Power BI template File, upon first opening the dashboard will attempt refresh. If the file won't open, check the PBIT file properties to mark it as unblocked.
 
 ![Connecting](./artifacts/media/pbi_connecting_screenshot.png)
 
