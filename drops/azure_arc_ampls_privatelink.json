@@ -13,15 +13,14 @@
   "Type": "script_automation",
   "Difficulty": "Medium",
   "ProgrammingLanguage": [
-    "Terraform",
-    "PowerShell"
+    "Terraform"
   ],
   "Products": [
     "Azure Arc",
     "Azure Monitor",
     "Azure Private Link"
   ],
-  "LastModified": "2025-07-04T10:00:00.000Z",
+  "LastModified": "2026-03-06T10:00:00.000Z",
   "CreatedDate": "2025-07-04T09:00:00.000Z",
   "Topics": [
     "Azure Arc",

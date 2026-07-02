@@ -40,8 +40,30 @@ jobs:
         ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
       run: |
 
-        ## Get all the file paths that have changed and merged them into a single string
-        changed_files=$(echo "${ALL_CHANGED_FILES}" | tr '\n' ' ')
+        ## Sanitize and validate file paths to prevent command injection
+        sanitized_files=()
         
-        echo "Changed files: $changed_files"
-        node ./.github/content-validator/validator.js $changed_files
+        # Read each file path and validate it
+        while IFS= read -r file; do
+          # Skip empty lines
+          if [ -z "$file" ]; then
+            continue
+          fi
+          
+          # Whitelist: only allow characters valid in file paths (alphanumeric, dots, hyphens, underscores, slashes)
+          clean_file=$(printf '%s' "$file" | tr -cd 'a-zA-Z0-9_./-')
+          
+          # Only process files that exist and have valid extensions (case-insensitive)
+          if [ -f "$clean_file" ] && [[ "$clean_file" =~ \.(json|JSON|md|MD|yaml|yml|YAML|YML|txt|TXT)$ ]]; then
+            sanitized_files+=("$clean_file")
+          fi
+        done <<< "$ALL_CHANGED_FILES"
+        
+        echo "Sanitized changed files: ${sanitized_files[*]}"
+        
+        # Only proceed if we have valid files to process
+        if [ ${#sanitized_files[@]} -gt 0 ]; then
+          node ./.github/content-validator/validator.js "${sanitized_files[@]}"
+        else
+          echo "No valid files to validate"
+        fi

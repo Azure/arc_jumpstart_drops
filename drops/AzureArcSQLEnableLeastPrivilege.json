@@ -1,11 +1,11 @@
 {
   "Title": "Azure Arc SQL LeastPrivilege Activation",
-  "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.",
+  "Summary": "This Jumpstart Drop provides a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines using Azure Resource Graph and Azure CLI.", 
   "Description": "This Drop includes a PowerShell Runbook that enables the LeastPrivilege FeatureFlag on Azure Arc SQL-enabled machines. It uses managed identity, validates dependencies, installs the arcdata extension, queries Resource Graph, and applies the flag using Azure CLI.",
-  "Cover": "",
+  "Cover": "", 
   "Authors": [
     {
-      "Name": "Fabio R V Costa",
+      "Name": "Fabio R V Costa", 
       "Link": "https://www.linkedin.com/in/fabiotreze/"
     }
   ],
