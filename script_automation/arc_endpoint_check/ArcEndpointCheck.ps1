@@ -136,6 +136,26 @@ $script:Stats     = [ordered]@{ OK = 0; Fail = 0; Warn = 0 }
 $script:LogBuffer = [System.Collections.ArrayList]::new()
 $script:Results   = [System.Collections.ArrayList]::new()
 
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+function Test-IsValidProxyUri {
+    <#
+    .SYNOPSIS
+        Returns $true only when the input is a well-formed absolute http:// or
+        https:// URI. Rejects informational strings that azcmagent returns when
+        the proxy is not configured (e.g. "proxy.url has not been set").
+    #>
+    param([string]$Candidate)
+    if (-not $Candidate) { return $false }
+    $parsed = $null
+    return (
+        [System.Uri]::TryCreate($Candidate, [System.UriKind]::Absolute, [ref]$parsed) -and
+        $parsed.Scheme -in @('http', 'https')
+    )
+}
+
 function Add-Result {
     param(
         [Parameter(Mandatory)] [string]$Endpoint,
@@ -257,28 +277,32 @@ function Get-ProxyDiagnostics {
     # WinHTTP abaixo e apenas REPORTADO, nunca aplicado automaticamente.
     # Ref: https://learn.microsoft.com/azure/azure-arc/servers/manage-agent-proxy-settings
 
-    # 1) Parametro -ProxyUrl
+    # 1) Parametro -ProxyUrl (validado como URI absoluta http/https)
     if ($ProxyUrl) {
-        Write-Log "Proxy via parametro: $ProxyUrl" Info -NoCount
-        $script:EffectiveProxy = $ProxyUrl
+        if (Test-IsValidProxyUri -Candidate $ProxyUrl) {
+            Write-Log "Proxy via parametro: $ProxyUrl" Info -NoCount
+            $script:EffectiveProxy = $ProxyUrl
+        }
+        else {
+            Write-Log "Proxy via parametro INVALIDO (esperado http:// ou https://): $ProxyUrl" Warn
+        }
     }
 
     # WinHTTP (apenas informativo — o agente ignora o proxy system-wide)
-    #    Nota: o parse do 'netsh' abaixo depende de Windows em INGLES. Em SO
-    #    localizado (ex.: pt-BR) o regex pode nao casar e reportar 'Direct'
-    #    mesmo havendo proxy configurado no WinHTTP.
+    # Regex bilingue: EN "Proxy Server(s)" / pt-BR "Servidor(es) Proxy"
     try {
         $winhttp = netsh winhttp show proxy 2>$null
         $winhttpText = ($winhttp | Out-String).Trim()
-        if ($winhttpText -match 'Proxy Server\(s\)\s*:\s*(.+)') {
-            $winhttpProxy = $Matches[1].Trim()
+        if ($winhttpText -match 'Proxy Server\(s\)\s*:\s*(.+)|Servidor\(es\) Proxy\s*:\s*(.+)') {
+            $winhttpProxy = ($Matches[1], $Matches[2] | Where-Object { $_ } | Select-Object -First 1).Trim()
             Write-Log "WinHTTP Proxy: $winhttpProxy (informativo — o agente ignora o proxy system-wide)" Info -NoCount
         }
         else {
             Write-Log 'WinHTTP Proxy: Direct (sem proxy)' Info -NoCount
         }
-        if ($winhttpText -match 'Bypass List\s*:\s*(.+)') {
-            Write-Log "WinHTTP Bypass: $($Matches[1].Trim())" Info -NoCount
+        if ($winhttpText -match 'Bypass List\s*:\s*(.+)|Lista de bypass\s*:\s*(.+)') {
+            $bypassVal = ($Matches[1], $Matches[2] | Where-Object { $_ } | Select-Object -First 1).Trim()
+            Write-Log "WinHTTP Bypass: $bypassVal" Info -NoCount
         }
     }
     catch {
@@ -286,22 +310,35 @@ function Get-ProxyDiagnostics {
     }
 
     # 2) azcmagent config (proxy.url TEM PRECEDENCIA sobre HTTPS_PROXY)
+    #    IMPORTANTE: azcmagent retorna frases informativas quando o valor nao esta
+    #    configurado (ex.: "proxy.url has not been set"). Validamos com
+    #    Test-IsValidProxyUri para aceitar APENAS URIs http/https reais.
     $azcm = Get-AzcmagentPath
     if ($azcm) {
         try {
-            $proxyUrl = & $azcm config get proxy.url 2>$null
-            if ($proxyUrl -and $proxyUrl.Trim()) {
-                Write-Log "azcmagent proxy.url: $($proxyUrl.Trim())" Info -NoCount
+            $rawProxyUrl = & $azcm config get proxy.url 2>$null
+            $rawProxyUrlTrimmed = if ($rawProxyUrl) { ($rawProxyUrl | Out-String).Trim() } else { '' }
+
+            if (Test-IsValidProxyUri -Candidate $rawProxyUrlTrimmed) {
+                Write-Log "azcmagent proxy.url: $rawProxyUrlTrimmed" Info -NoCount
                 if (-not $script:EffectiveProxy) {
-                    $script:EffectiveProxy = $proxyUrl.Trim()
+                    $script:EffectiveProxy = $rawProxyUrlTrimmed
                 }
             }
             else {
-                Write-Log 'azcmagent proxy.url: (nao configurado)' Info -NoCount
+                # Mensagem informativa (ex.: "proxy.url has not been set")
+                if ($rawProxyUrlTrimmed) {
+                    Write-Log "azcmagent proxy.url: $rawProxyUrlTrimmed" Info -NoCount
+                }
+                else {
+                    Write-Log 'azcmagent proxy.url: (nao configurado)' Info -NoCount
+                }
             }
+
             $bypass = & $azcm config get proxy.bypass 2>$null
-            if ($bypass -and $bypass.Trim()) {
-                Write-Log "azcmagent proxy.bypass: $($bypass.Trim())" Info -NoCount
+            $bypassTrimmed = if ($bypass) { ($bypass | Out-String).Trim() } else { '' }
+            if ($bypassTrimmed) {
+                Write-Log "azcmagent proxy.bypass: $bypassTrimmed" Info -NoCount
             }
         }
         catch {
@@ -319,7 +356,12 @@ function Get-ProxyDiagnostics {
     if ($envProxy) {
         Write-Log "Env HTTPS_PROXY: $envProxy" Info -NoCount
         if (-not $script:EffectiveProxy) {
-            $script:EffectiveProxy = $envProxy
+            if (Test-IsValidProxyUri -Candidate $envProxy) {
+                $script:EffectiveProxy = $envProxy
+            }
+            else {
+                Write-Log "Env HTTPS_PROXY INVALIDO (esperado http:// ou https://): $envProxy" Warn
+            }
         }
     }
     else {
@@ -511,11 +553,12 @@ if ($IncludeMDE) {
 }
 
 # WAC endpoints (opcional via -IncludeWAC)
+# Nota: 'pas.windows.net' ja consta em $coreEndpoints e o $endpointGroupMap
+# preserva a precedencia Core, evitando duplicacao no sumario.
 $wacEndpoints = @()
 if ($IncludeWAC) {
     $wacEndpoints = @(
         "$Region.service.waconazure.com"
-        'pas.windows.net'
     )
 }
 
@@ -626,6 +669,8 @@ foreach ($ep in $allEndpoints) {
     $ep = $ep.Trim()
     if (-not $ep) { continue }
 
+    Write-Verbose "Testando: $ep"
+
     [void]$script:LogBuffer.Add('-' * 60)
     $group = if ($endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] } else { 'Dyn' }
     Add-Result -Endpoint $ep -Group $group
@@ -714,9 +759,12 @@ $azcmPath = Get-AzcmagentPath
 if ($azcmPath -and $script:EffectiveProxy) {
     try {
         $bypassRaw = & $azcmPath config get proxy.bypass 2>$null
-        if ($bypassRaw -and $bypassRaw.Trim()) {
-            $bypassClean = $bypassRaw.Trim().Trim('[', ']')
-            $proxyBypassCategories = $bypassClean -split ',' | ForEach-Object { $_.Trim() }
+        $bypassRawStr = if ($bypassRaw) { ($bypassRaw | Out-String).Trim() } else { '' }
+        if ($bypassRawStr) {
+            $bypassClean = $bypassRawStr.Trim('[', ']')
+            $proxyBypassCategories = $bypassClean -split ',' |
+                ForEach-Object { $_.Trim() } |
+                Where-Object { $_ }
         }
     }
     catch { }
@@ -748,7 +796,9 @@ $httpBypassedEndpoints = [System.Collections.ArrayList]::new()
 foreach ($cat in $proxyBypassCategories) {
     if ($bypassCategoryEndpoints.ContainsKey($cat)) {
         foreach ($bep in $bypassCategoryEndpoints[$cat]) {
-            [void]$httpBypassedEndpoints.Add($bep)
+            if ($httpBypassedEndpoints -notcontains $bep) {
+                [void]$httpBypassedEndpoints.Add($bep)
+            }
         }
     }
 }
@@ -766,6 +816,7 @@ foreach ($ep in $httpProbeEndpoints) {
 
     [void]$script:LogBuffer.Add('-' * 60)
     Add-Result -Endpoint $ep
+
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
     try {
         $resp = Invoke-WebRequestSafe -Uri "https://$ep" -TimeoutSec 10
@@ -776,7 +827,7 @@ foreach ($ep in $httpProbeEndpoints) {
         if ($existing4) { $existing4.HTTP = "OK ($($resp.StatusCode))" }
     }
     catch {
-        $sw.Stop()
+        if ($sw.IsRunning) { $sw.Stop() }
         $code = $null
         if ($_.Exception.Response) {
             try { $code = [int]$_.Exception.Response.StatusCode } catch { }
@@ -873,6 +924,9 @@ Write-Host ("Totais: OK={0}  Fail={1}  Warn={2}  Modo={3}  Regiao={4}" -f `
 if ($script:EffectiveProxy) {
     Write-Host "Proxy utilizado: $($script:EffectiveProxy)" -ForegroundColor DarkGray
 }
+else {
+    Write-Host 'Proxy utilizado: Direct (sem proxy)' -ForegroundColor DarkGray
+}
 
 # Append tabela ao arquivo de log
 $tableString = $tableObjects | Format-Table -AutoSize | Out-String
@@ -881,6 +935,12 @@ Add-Content -Path $LogFilePath -Value '=================== SUMARIO =============
 Add-Content -Path $LogFilePath -Value $tableString.TrimEnd()
 Add-Content -Path $LogFilePath -Value ("Totais: OK={0}  Fail={1}  Warn={2}  Modo={3}  Regiao={4}" -f `
         $script:Stats.OK, $script:Stats.Fail, $script:Stats.Warn, $Mode, $Region)
+if ($script:EffectiveProxy) {
+    Add-Content -Path $LogFilePath -Value "Proxy utilizado: $($script:EffectiveProxy)"
+}
+else {
+    Add-Content -Path $LogFilePath -Value 'Proxy utilizado: Direct (sem proxy)'
+}
 
 Write-Host "`nLog completo: $LogFilePath" -ForegroundColor Cyan
 exit ([int]($script:Stats.Fail -gt 0))
