@@ -26,6 +26,10 @@ script is required) and adds:
   reported but never applied automatically, matching the agent's behavior.
 - **Optional extension endpoint groups**: SQL Server enabled by Azure Arc, Azure Monitor
   Agent (AMA), Microsoft Defender for Endpoint (MDE), and Windows Admin Center (WAC).
+- **Dynamic endpoint allowlist**: in Public mode the script also queries the
+  `guestnotificationservice` allowlist for the region and validates those endpoints
+  (primary namespaces only). Failures here are treated as warnings and never affect the
+  exit code, since this list is auxiliary.
 - **IPv4-first DNS resolution** (Private Link uses A records), avoiding false "public"
   classification when public AAAA records coexist.
 - A machine-readable **exit code** (`0` = all checks OK, `1` = at least one failure).
@@ -86,3 +90,4 @@ private. Examples:
 
 # Full pre-onboarding validation of all extension endpoints
 .\ArcEndpointCheck.ps1 -Mode Private -CheckIncludeAll -Verbose -IncludeSQL -IncludeAMA -IncludeMDE -IncludeWAC
+```
