@@ -9,7 +9,7 @@ description: >
 
 ## Overview
 
-`ArcEndpointCheck.ps1` validates network connectivity between a Windows machine and the Azure endpoints required by the Azure Connected Machine agent (Azure Arc). It performs DNS resolution, TCP reachability, and HTTPS probe checks for both **public** and **Private Link** deployments, automatically detecting the deployment mode and honoring the agent's proxy configuration.
+`ArcEndpointCheck.ps1` validates network connectivity between a Windows machine and the Azure endpoints required by the Azure Connected Machine agent (Azure Arc). It performs DNS resolution, TCP reachability, and HTTPS probe checks for both **public** and **Private Link** deployments, automatically detecting the deployment mode and honoring the agent's proxy configuration. In **public** mode it also validates the region's dynamic endpoint allowlist retrieved from the Azure guest notification service; that list is auxiliary, so failures there are reported as warnings and never change the exit code.
 
 Use it before or after onboarding a server to Azure Arc to quickly confirm that every required endpoint is reachable and to pinpoint DNS, firewall, or proxy issues.
 
