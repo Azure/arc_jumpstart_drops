@@ -124,7 +124,7 @@ param(
 # Setup
 # ---------------------------------------------------------------------------
 $ErrorActionPreference = 'Stop'
-$ProgressPreference    = 'SilentlyContinue'   # acelera Invoke-WebRequest e Test-NetConnection
+$ProgressPreference    = 'SilentlyContinue'   # speeds up Invoke-WebRequest and Test-NetConnection
 
 $logDir = Split-Path -Path $LogFilePath -Parent
 if ($logDir -and -not (Test-Path $logDir)) {
@@ -252,53 +252,53 @@ function Invoke-WebRequestSafe {
         $params['ProxyUseDefaultCredentials'] = $true
     }
     elseif ($PSVersionTable.PSVersion.Major -ge 6) {
-        # PS 6+: espelha o agente, que IGNORA o proxy system-wide. Em PS 5.1 o
-        # mesmo efeito e obtido neutralizando o DefaultWebProxy do .NET no setup.
+        # PS 6+: mirror the agent, which IGNORES the system-wide proxy. On PS 5.1 the
+        # same effect is achieved by neutralizing .NET's DefaultWebProxy during setup.
         $params['NoProxy'] = $true
     }
     return Invoke-WebRequest @params
 }
 
 # ---------------------------------------------------------------------------
-# Detecao e exibicao de proxy
+# Proxy detection and display
 # ---------------------------------------------------------------------------
 $script:EffectiveProxy = $null
 
 function Get-ProxyDiagnostics {
-    Write-Log '=== DIAGNOSTICO DE PROXY ===' Info -NoCount
+    Write-Log '=== PROXY DIAGNOSTICS ===' Info -NoCount
     [void]$script:LogBuffer.Add('')
 
-    # Precedencia do proxy efetivo (usado nos testes HTTP deste script) — espelha
-    # o comportamento do Azure Connected Machine agent no Windows:
-    #   1) -ProxyUrl            (override explicito do operador)
-    #   2) azcmagent proxy.url  (config do agente — TEM PRECEDENCIA sobre env vars)
+    # Effective proxy precedence (used by this script's HTTP tests) — mirrors the
+    # behavior of the Azure Connected Machine agent on Windows:
+    #   1) -ProxyUrl            (explicit operator override)
+    #   2) azcmagent proxy.url  (agent config — TAKES PRECEDENCE over env vars)
     #   3) HTTPS_PROXY (env)    (system-wide)
-    # O agente IGNORA o proxy system-wide do Windows (WinHTTP/WinINET); por isso o
-    # WinHTTP abaixo e apenas REPORTADO, nunca aplicado automaticamente.
+    # The agent IGNORES the Windows system-wide proxy (WinHTTP/WinINET); that is why
+    # the WinHTTP value below is only REPORTED, never applied automatically.
     # Ref: https://learn.microsoft.com/azure/azure-arc/servers/manage-agent-proxy-settings
 
-    # 1) Parametro -ProxyUrl (validado como URI absoluta http/https)
+    # 1) -ProxyUrl parameter (validated as an absolute http/https URI)
     if ($ProxyUrl) {
         if (Test-IsValidProxyUri -Candidate $ProxyUrl) {
-            Write-Log "Proxy via parametro: $ProxyUrl" Info -NoCount
+            Write-Log "Proxy from parameter: $ProxyUrl" Info -NoCount
             $script:EffectiveProxy = $ProxyUrl
         }
         else {
-            Write-Log "Proxy via parametro INVALIDO (esperado http:// ou https://): $ProxyUrl" Warn
+            Write-Log "Proxy from parameter INVALID (expected http:// or https://): $ProxyUrl" Warn
         }
     }
 
-    # WinHTTP (apenas informativo — o agente ignora o proxy system-wide)
-    # Regex bilingue: EN "Proxy Server(s)" / pt-BR "Servidor(es) Proxy"
+    # WinHTTP (informational only — the agent ignores the system-wide proxy)
+    # Bilingual regex: EN "Proxy Server(s)" / pt-BR "Servidor(es) Proxy"
     try {
         $winhttp = netsh winhttp show proxy 2>$null
         $winhttpText = ($winhttp | Out-String).Trim()
         if ($winhttpText -match 'Proxy Server\(s\)\s*:\s*(.+)|Servidor\(es\) Proxy\s*:\s*(.+)') {
             $winhttpProxy = ($Matches[1], $Matches[2] | Where-Object { $_ } | Select-Object -First 1).Trim()
-            Write-Log "WinHTTP Proxy: $winhttpProxy (informativo — o agente ignora o proxy system-wide)" Info -NoCount
+            Write-Log "WinHTTP Proxy: $winhttpProxy (informational — the agent ignores the system-wide proxy)" Info -NoCount
         }
         else {
-            Write-Log 'WinHTTP Proxy: Direct (sem proxy)' Info -NoCount
+            Write-Log 'WinHTTP Proxy: Direct (no proxy)' Info -NoCount
         }
         if ($winhttpText -match 'Bypass List\s*:\s*(.+)|Lista de bypass\s*:\s*(.+)') {
             $bypassVal = ($Matches[1], $Matches[2] | Where-Object { $_ } | Select-Object -First 1).Trim()
@@ -306,13 +306,13 @@ function Get-ProxyDiagnostics {
         }
     }
     catch {
-        Write-Log "WinHTTP: nao foi possivel consultar ($($_.Exception.Message))" Warn
+        Write-Log "WinHTTP: unable to query ($($_.Exception.Message))" Warn
     }
 
-    # 2) azcmagent config (proxy.url TEM PRECEDENCIA sobre HTTPS_PROXY)
-    #    IMPORTANTE: azcmagent retorna frases informativas quando o valor nao esta
-    #    configurado (ex.: "proxy.url has not been set"). Validamos com
-    #    Test-IsValidProxyUri para aceitar APENAS URIs http/https reais.
+    # 2) azcmagent config (proxy.url TAKES PRECEDENCE over HTTPS_PROXY)
+    #    IMPORTANT: azcmagent returns informational phrases when the value is not
+    #    configured (e.g. "proxy.url has not been set"). We validate with
+    #    Test-IsValidProxyUri to accept ONLY real http/https URIs.
     $azcm = Get-AzcmagentPath
     if ($azcm) {
         try {
@@ -326,12 +326,12 @@ function Get-ProxyDiagnostics {
                 }
             }
             else {
-                # Mensagem informativa (ex.: "proxy.url has not been set")
+                # Informational message (e.g. "proxy.url has not been set")
                 if ($rawProxyUrlTrimmed) {
                     Write-Log "azcmagent proxy.url: $rawProxyUrlTrimmed" Info -NoCount
                 }
                 else {
-                    Write-Log 'azcmagent proxy.url: (nao configurado)' Info -NoCount
+                    Write-Log 'azcmagent proxy.url: (not configured)' Info -NoCount
                 }
             }
 
@@ -342,11 +342,11 @@ function Get-ProxyDiagnostics {
             }
         }
         catch {
-            Write-Log "azcmagent config: falha ao consultar ($($_.Exception.Message))" Warn
+            Write-Log "azcmagent config: failed to query ($($_.Exception.Message))" Warn
         }
     }
 
-    # 3) Environment variables (verifica Machine -> Process -> User)
+    # 3) Environment variables (checks Machine -> Process -> User)
     $envProxy = [Environment]::GetEnvironmentVariable('HTTPS_PROXY', 'Machine')
     if (-not $envProxy) { $envProxy = [Environment]::GetEnvironmentVariable('HTTPS_PROXY', 'Process') }
     if (-not $envProxy) { $envProxy = [Environment]::GetEnvironmentVariable('HTTPS_PROXY', 'User') }
@@ -360,29 +360,29 @@ function Get-ProxyDiagnostics {
                 $script:EffectiveProxy = $envProxy
             }
             else {
-                Write-Log "Env HTTPS_PROXY INVALIDO (esperado http:// ou https://): $envProxy" Warn
+                Write-Log "Env HTTPS_PROXY INVALID (expected http:// or https://): $envProxy" Warn
             }
         }
     }
     else {
-        Write-Log 'Env HTTPS_PROXY: (nao definido)' Info -NoCount
+        Write-Log 'Env HTTPS_PROXY: (not set)' Info -NoCount
     }
     if ($envNoProxy) {
         Write-Log "Env NO_PROXY: $envNoProxy" Info -NoCount
     }
 
     if ($script:EffectiveProxy) {
-        Write-Log "Proxy efetivo para testes HTTP: $($script:EffectiveProxy)" Info -NoCount
+        Write-Log "Effective proxy for HTTP tests: $($script:EffectiveProxy)" Info -NoCount
     }
     else {
-        Write-Log 'Proxy efetivo: Direct (sem proxy — testes HTTP vao direto, como o agente)' Info -NoCount
+        Write-Log 'Effective proxy: Direct (no proxy — HTTP tests go direct, like the agent)' Info -NoCount
     }
 
     [void]$script:LogBuffer.Add('')
 }
 
 # ---------------------------------------------------------------------------
-# Deteccao automatica Public vs Private
+# Automatic Public vs Private detection
 # ---------------------------------------------------------------------------
 function Get-AzcmagentPath {
     $candidate = Join-Path $env:ProgramFiles 'AzureConnectedMachineAgent\azcmagent.exe'
@@ -398,7 +398,7 @@ function Test-IsPrivateIp {
     }
     catch { return $false }
 
-    # RFC1918 + 100.64/10 (CGNAT, comum em redes corporativas)
+    # RFC1918 + 100.64/10 (CGNAT, common in corporate networks)
     return ($bytes[0] -eq 10) -or
            ($bytes[0] -eq 192 -and $bytes[1] -eq 168) -or
            ($bytes[0] -eq 172 -and $bytes[1] -ge 16 -and $bytes[1] -le 31) -or
@@ -406,7 +406,7 @@ function Test-IsPrivateIp {
 }
 
 function Resolve-ArcMode {
-    Write-Log 'Detectando modo Arc (Public/Private)...' Info -NoCount
+    Write-Log 'Detecting Arc mode (Public/Private)...' Info -NoCount
 
     # 1) Via azcmagent show -j
     $azcm = Get-AzcmagentPath
@@ -415,52 +415,52 @@ function Resolve-ArcMode {
             $json = & $azcm show -j 2>$null | ConvertFrom-Json
             $pls = $json.privateLinkScope
             if ($pls) {
-                Write-Log "azcmagent reporta privateLinkScope: $pls" Info -NoCount
+                Write-Log "azcmagent reports privateLinkScope: $pls" Info -NoCount
                 return 'Private'
             }
             else {
-                # NAO conclui Public aqui: cai para o heuristico DNS abaixo. O
-                # Private Link pode ser "via DNS" (Private DNS Zones) sem o agente
-                # expor o PLS localmente em 'azcmagent show -j'.
-                Write-Log 'azcmagent nao reporta privateLinkScope; confirmando via DNS...' Info -NoCount
+                # Do NOT conclude Public here: fall through to the DNS heuristic below.
+                # Private Link can be "DNS-based" (Private DNS Zones) without the agent
+                # exposing the PLS locally in 'azcmagent show -j'.
+                Write-Log 'azcmagent does not report privateLinkScope; confirming via DNS...' Info -NoCount
             }
         }
         catch {
-            Write-Log "Falha ao consultar azcmagent show -j: $($_.Exception.Message). Caindo para fallback DNS." Warn
+            Write-Log "Failed to query azcmagent show -j: $($_.Exception.Message). Falling back to DNS." Warn
         }
     }
     else {
-        Write-Log 'azcmagent.exe nao encontrado. Usando fallback DNS.' Warn
+        Write-Log 'azcmagent.exe not found. Using DNS fallback.' Warn
     }
 
-    # 2) Fallback: resolver gbl.his.arc.azure.com
+    # 2) Fallback: resolve gbl.his.arc.azure.com
     try {
         $dns = Resolve-DnsName -Name 'gbl.his.arc.azure.com' -Type A -ErrorAction Stop
         $ip  = ($dns | Where-Object IPAddress | Select-Object -First 1).IPAddress
         if (Test-IsPrivateIp -Ip $ip) {
-            Write-Log "gbl.his.arc.azure.com resolve para IP privado ($ip) -> Private Link" Info -NoCount
+            Write-Log "gbl.his.arc.azure.com resolves to a private IP ($ip) -> Private Link" Info -NoCount
             return 'Private'
         }
         else {
-            Write-Log "gbl.his.arc.azure.com resolve para IP publico ($ip) -> Public" Info -NoCount
+            Write-Log "gbl.his.arc.azure.com resolves to a public IP ($ip) -> Public" Info -NoCount
             return 'Public'
         }
     }
     catch {
-        Write-Log 'Nao foi possivel resolver gbl.his.arc.azure.com - assumindo Public.' Warn
+        Write-Log 'Could not resolve gbl.his.arc.azure.com - assuming Public.' Warn
         return 'Public'
     }
 }
 
 # ---------------------------------------------------------------------------
-# Detecao de modo e proxy
+# Mode and proxy detection
 # ---------------------------------------------------------------------------
 Get-ProxyDiagnostics
 
-# Alinhamento com o agente: o Azure Connected Machine agent IGNORA o proxy
-# system-wide do Windows (WinINET/WinHTTP). Se nenhum proxy efetivo foi
-# detectado, neutralizamos o DefaultWebProxy do .NET (PS 5.1) para que os
-# testes HTTP tambem vao direto. Em PS 6+ isso e feito via -NoProxy.
+# Alignment with the agent: the Azure Connected Machine agent IGNORES the Windows
+# system-wide proxy (WinINET/WinHTTP). If no effective proxy was detected, we
+# neutralize .NET's DefaultWebProxy (PS 5.1) so that the HTTP tests also go direct.
+# On PS 6+ this is done via -NoProxy.
 if (-not $script:EffectiveProxy -and $PSVersionTable.PSVersion.Major -lt 6) {
     try { [System.Net.WebRequest]::DefaultWebProxy = $null } catch { }
 }
@@ -468,19 +468,19 @@ if (-not $script:EffectiveProxy -and $PSVersionTable.PSVersion.Major -lt 6) {
 if ($Mode -eq 'Auto') {
     $Mode = Resolve-ArcMode
 }
-Write-Log "Modo selecionado: $Mode | Regiao: $Region" Info -NoCount
+Write-Log "Selected mode: $Mode | Region: $Region" Info -NoCount
 
-# Reset stats: fase de testes comeca aqui (detecao nao conta)
+# Reset stats: the test phase starts here (detection does not count)
 $script:Stats.OK   = 0
 $script:Stats.Fail = 0
 $script:Stats.Warn = 0
 
 # ---------------------------------------------------------------------------
-# Endpoints — organizados por grupo funcional
+# Endpoints — organized by functional group
 # ---------------------------------------------------------------------------
 
-# Endpoints que PODEM resolver para IP privado via Azure Private Link Scope.
-# Tudo que NAO esta nesta lista e sempre publico — nao gerar WARN em modo Private.
+# Endpoints that CAN resolve to a private IP via Azure Private Link Scope.
+# Everything NOT in this list is always public — do not raise a WARN in Private mode.
 $canBePrivateEndpoints = @(
     'gbl.his.arc.azure.com'
     'agentserviceapi.guestconfiguration.azure.com'
@@ -488,62 +488,62 @@ $canBePrivateEndpoints = @(
     'global.handler.control.monitor.azure.com'
 )
 
-# Core Arc (obrigatorios) — alinhado a network-requirements do Connected Machine agent.
+# Core Arc (required) — aligned with the Connected Machine agent network-requirements.
 # Doc: https://learn.microsoft.com/azure/azure-arc/servers/network-requirements
 $coreEndpoints = @(
-    # AAD / Identity (sempre; Public)
+    # AAD / Identity (always; Public)
     'login.windows.net'
     'login.microsoftonline.com'
     'pas.windows.net'
 
-    # ARM (conexao/desconexao; Public salvo Resource Management Private Link)
+    # ARM (connect/disconnect; Public unless Resource Management Private Link)
     'management.azure.com'
 
-    # Arc HIMDS (sempre; Private via PLS)
+    # Arc HIMDS (always; Private via PLS)
     'gbl.his.arc.azure.com'
 
-    # Guest Configuration / gestao de extensoes (sempre; Private via PLS)
+    # Guest Configuration / extension management (always; Private via PLS)
     'agentserviceapi.guestconfiguration.azure.com'
 
-    # Instalacao/atualizacao do agente (Public)
+    # Agent install/update (Public)
     'packages.microsoft.com'
     'download.microsoft.com'
 
-    # Telemetria (opcional; NAO usado em agentes 1.24+; Public)
+    # Telemetry (optional; NOT used on agents 1.24+; Public)
     'dc.services.visualstudio.com'
 )
 
-# SQL endpoints (opcional via -IncludeSQL) — Arc-enabled SQL Server.
-# Doc: network-requirements + sql/.../data-collection. Todos Public; TLS 1.2/1.3.
+# SQL endpoints (optional via -IncludeSQL) — Arc-enabled SQL Server.
+# Doc: network-requirements + sql/.../data-collection. All Public; TLS 1.2/1.3.
 $sqlEndpoints = @()
 if ($IncludeSQL) {
     $sqlEndpoints = @(
-        # Data processing service + telemetria (extensoes a partir de mar/2024)
+        # Data processing service + telemetry (extensions from Mar/2024 onward)
         "dataprocessingservice.$Region.arcdataservices.com"
         "telemetry.$Region.arcdataservices.com"
-        # Legado: usado por extensoes ate 13/fev/2024
+        # Legacy: used by extensions until Feb 13, 2024
         "san-af-$Region-prod.azurewebsites.net"
-        # Autenticacao Microsoft Entra do Arc SQL (Public). So necessario se usar
-        # Entra auth; NAO e endpoint core do agente. Reachable direto, mas pode ser
-        # bloqueado em proxy split-tunnel -> apenas DNS/TCP (sem HTTP probe).
+        # Arc SQL Microsoft Entra authentication (Public). Only needed when using
+        # Entra auth; NOT a core agent endpoint. Reachable directly, but may be
+        # blocked on a split-tunnel proxy -> DNS/TCP only (no HTTP probe).
         'graph.microsoft.com'
     )
 }
 
-# AMA endpoints (opcional via -IncludeAMA) — Azure Monitor Agent.
-# Doc: azure-monitor-agent-network-configuration. Endpoints <workspace-id>.ods e
-# <dce>.ingest.monitor exigem IDs especificos -> nao testaveis genericamente.
+# AMA endpoints (optional via -IncludeAMA) — Azure Monitor Agent.
+# Doc: azure-monitor-agent-network-configuration. The <workspace-id>.ods and
+# <dce>.ingest.monitor endpoints require specific IDs -> not generically testable.
 $amaEndpoints = @()
 if ($IncludeAMA) {
     $amaEndpoints = @(
         'global.handler.control.monitor.azure.com'   # control service
         'global.prod.microsoftmetrics.com'           # metrics service
-        "$Region.handler.control.monitor.azure.com"  # DCRs da regiao
-        "$Region.monitoring.azure.com"               # custom metrics (opcional)
+        "$Region.handler.control.monitor.azure.com"  # regional DCRs
+        "$Region.monitoring.azure.com"               # custom metrics (optional)
     )
 }
 
-# MDE endpoints (opcional via -IncludeMDE)
+# MDE endpoints (optional via -IncludeMDE)
 $mdeEndpoints = @()
 if ($IncludeMDE) {
     $mdeEndpoints = @(
@@ -552,9 +552,9 @@ if ($IncludeMDE) {
     )
 }
 
-# WAC endpoints (opcional via -IncludeWAC)
-# Nota: 'pas.windows.net' ja consta em $coreEndpoints e o $endpointGroupMap
-# preserva a precedencia Core, evitando duplicacao no sumario.
+# WAC endpoints (optional via -IncludeWAC)
+# Note: 'pas.windows.net' is already in $coreEndpoints and $endpointGroupMap
+# preserves Core precedence, avoiding duplication in the summary.
 $wacEndpoints = @()
 if ($IncludeWAC) {
     $wacEndpoints = @(
@@ -562,24 +562,24 @@ if ($IncludeWAC) {
     )
 }
 
-# Endpoints que respondem HTTP (validacao L7 — 200/400/401/403/404 = reachable).
-# NAO inclui graph.microsoft.com: e endpoint de Entra auth do Arc SQL (opcional) e
-# costuma ser bloqueado em proxy split-tunnel; o proprio teste oficial de
-# conectividade do Arc SQL valida apenas DPS + telemetria.
+# Endpoints that respond to HTTP (L7 validation — 200/400/401/403/404 = reachable).
+# Does NOT include graph.microsoft.com: it is the Arc SQL Entra auth endpoint (optional)
+# and is often blocked on a split-tunnel proxy; the official Arc SQL connectivity
+# test itself validates only DPS + telemetry.
 $httpProbeEndpoints = @(
     'login.windows.net'
     'login.microsoftonline.com'
     'management.azure.com'
 )
 if ($IncludeSQL) {
-    # Alinhado ao teste oficial do Arc SQL: DPS espera 200; telemetria espera 401
-    # (ambos tratados como reachable aqui).
+    # Aligned with the official Arc SQL test: DPS expects 200; telemetry expects 401
+    # (both treated as reachable here).
     $httpProbeEndpoints += "dataprocessingservice.$Region.arcdataservices.com"
     $httpProbeEndpoints += "telemetry.$Region.arcdataservices.com"
 }
 
-# Mapeia grupo por endpoint para o sumario. Core tem PRECEDENCIA: se um endpoint
-# aparece em mais de um grupo (ex.: pas.windows.net em Core e WAC), mantemos 'Core'.
+# Maps a group per endpoint for the summary. Core has PRECEDENCE: if an endpoint
+# appears in more than one group (e.g. pas.windows.net in Core and WAC), we keep 'Core'.
 $endpointGroupMap = @{}
 foreach ($ep in $coreEndpoints) { $endpointGroupMap[$ep] = 'Core' }
 foreach ($ep in $sqlEndpoints)  { if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'SQL' } }
@@ -587,20 +587,20 @@ foreach ($ep in $amaEndpoints)  { if (-not $endpointGroupMap.ContainsKey($ep)) {
 foreach ($ep in $mdeEndpoints)  { if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'MDE' } }
 foreach ($ep in $wacEndpoints)  { if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'WAC' } }
 
-# Dynamic allowlist (somente em modo publico; em PLS o trafego e via PE)
+# Dynamic allowlist (Public mode only; under PLS traffic goes via PE)
 $dynamicEndpoints = @()
 if ($Mode -eq 'Public') {
     try {
-        Write-Log 'Buscando endpoints dinamicos do guestnotificationservice...' Info -NoCount
+        Write-Log 'Fetching dynamic endpoints from guestnotificationservice...' Info -NoCount
         $uri  = "https://guestnotificationservice.azure.com/urls/allowlist?api-version=2020-01-01&location=$Region"
         $resp = Invoke-WebRequestSafe -Uri $uri
         $dynamicEndpoints = @($resp.Content | ConvertFrom-Json) | Where-Object { $_ }
         if ($dynamicEndpoints.Count -gt 0) {
             $totalGNS = $dynamicEndpoints.Count
 
-            # Filtrar: manter apenas endpoints primarios da regiao.
-            # Namespaces primarios contem '<N>p-' (ex: 1p-, 2p-), secundarios contem '<N>s-'.
-            # Extrair cluster IDs dos primarios e filtrar children por eles.
+            # Filter: keep only the region's primary endpoints.
+            # Primary namespaces contain '<N>p-' (e.g. 1p-, 2p-), secondary contain '<N>s-'.
+            # Extract cluster IDs from the primaries and filter children by them.
             $primaryClusterIds = [System.Collections.ArrayList]::new()
             foreach ($dep in $dynamicEndpoints) {
                 if ($dep -match '^azgn-.+\dp-.+?-(\w+)\.servicebus') {
@@ -612,7 +612,7 @@ if ($Mode -eq 'Public') {
                 $filteredGNS = [System.Collections.ArrayList]::new()
                 foreach ($dep in $dynamicEndpoints) {
                     if ($dep -match '^azgn-') {
-                        [void]$filteredGNS.Add($dep)   # sempre manter namespace-level
+                        [void]$filteredGNS.Add($dep)   # always keep namespace-level
                     }
                     else {
                         foreach ($cid in $primaryClusterIds) {
@@ -626,14 +626,14 @@ if ($Mode -eq 'Public') {
                 $skipped = $totalGNS - $filteredGNS.Count
                 $dynamicEndpoints = @($filteredGNS)
                 if ($skipped -gt 0) {
-                    Write-Log "Endpoints dinamicos obtidos: $totalGNS total, $($filteredGNS.Count) primarios ($skipped secundarios filtrados)" OK
+                    Write-Log "Dynamic endpoints obtained: $totalGNS total, $($filteredGNS.Count) primary ($skipped secondary filtered out)" OK
                 }
                 else {
-                    Write-Log "Endpoints dinamicos obtidos: $totalGNS endpoint(s)" OK
+                    Write-Log "Dynamic endpoints obtained: $totalGNS endpoint(s)" OK
                 }
             }
             else {
-                Write-Log "Endpoints dinamicos obtidos: $totalGNS endpoint(s)" OK
+                Write-Log "Dynamic endpoints obtained: $totalGNS endpoint(s)" OK
             }
 
             foreach ($dep in $dynamicEndpoints) {
@@ -642,14 +642,14 @@ if ($Mode -eq 'Public') {
         }
     }
     catch {
-        # Allowlist dinamica e AUXILIAR: sua indisponibilidade nao deve derrubar o
-        # exit code (WARN, nao FAIL). Comum ao forcar -Mode Public num host que, na
-        # pratica, roteia o GNS via Private Link / firewall.
-        Write-Log "Falha ao obter endpoints dinamicos (allowlist auxiliar): $($_.Exception.Message)" Warn
+        # The dynamic allowlist is AUXILIARY: its unavailability must not break the
+        # exit code (WARN, not FAIL). Common when forcing -Mode Public on a host that,
+        # in practice, routes GNS via Private Link / firewall.
+        Write-Log "Failed to obtain dynamic endpoints (auxiliary allowlist): $($_.Exception.Message)" Warn
     }
 }
 else {
-    Write-Log 'Modo Private: pulando consulta de allowlist publico.' Info -NoCount
+    Write-Log 'Private mode: skipping public allowlist query.' Info -NoCount
 }
 
 $allEndpoints = @(
@@ -659,23 +659,23 @@ $allEndpoints = @(
     Select-Object -Unique
 )
 
-Write-Log "Total de endpoints a testar: $($allEndpoints.Count)" Info -NoCount
+Write-Log "Total endpoints to test: $($allEndpoints.Count)" Info -NoCount
 [void]$script:LogBuffer.Add('')
 
 # ---------------------------------------------------------------------------
-# Testes: DNS + TCP/443 (validacao de coerencia com o modo detectado)
+# Tests: DNS + TCP/443 (consistency check against the detected mode)
 # ---------------------------------------------------------------------------
 foreach ($ep in $allEndpoints) {
     $ep = $ep.Trim()
     if (-not $ep) { continue }
 
-    Write-Verbose "Testando: $ep"
+    Write-Verbose "Testing: $ep"
 
     [void]$script:LogBuffer.Add('-' * 60)
     $group = if ($endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] } else { 'Dyn' }
     Add-Result -Endpoint $ep -Group $group
 
-    # DNS (com 1 retry em falha transitoria, ex.: SERVFAIL ao resolver muitos nomes)
+    # DNS (with 1 retry on a transient failure, e.g. SERVFAIL when resolving many names)
     $dns = $null
     $dnsErr = $null
     foreach ($attempt in 1..2) {
@@ -683,12 +683,12 @@ foreach ($ep in $allEndpoints) {
         catch { $dnsErr = $_; if ($attempt -lt 2) { Start-Sleep -Milliseconds 300 } }
     }
     if ($dnsErr) {
-        # Endpoints dinamicos (GNS) sao AUXILIARES: uma falha de DNS neles vira WARN
-        # (nao FAIL), pois um SERVFAIL transitorio ao resolver dezenas de nomes
-        # 'servicebus' nao deve derrubar o exit code. Demais grupos permanecem FAIL.
+        # Dynamic endpoints (GNS) are AUXILIARY: a DNS failure on them becomes WARN
+        # (not FAIL), because a transient SERVFAIL when resolving dozens of
+        # 'servicebus' names must not break the exit code. Other groups stay FAIL.
         $existingD = $script:Results | Where-Object { $_.Endpoint -eq $ep }
         if ($group -eq 'GNS') {
-            Write-Log "DNS WARN $ep - $($dnsErr.Exception.Message) (endpoint dinamico/auxiliar)" Warn
+            Write-Log "DNS WARN $ep - $($dnsErr.Exception.Message) (dynamic/auxiliary endpoint)" Warn
             if ($existingD) { $existingD.DNS = 'WARN' }
         }
         else {
@@ -698,10 +698,10 @@ foreach ($ep in $allEndpoints) {
         continue
     }
 
-    # Preferir IPv4 (registro A): o Azure Private Link e a maioria dos endpoints
-    # Arc sao resolvidos por A-record. Um AAAA (IPv6) publico pode coexistir com
-    # o A privado; se escolhido, causa classificacao PUBLIC incorreta e testes
-    # por um caminho IPv6 possivelmente inexistente/nao roteado.
+    # Prefer IPv4 (A record): Azure Private Link and most Arc endpoints are resolved
+    # by A record. A public AAAA (IPv6) may coexist with the private A; if chosen, it
+    # causes an incorrect PUBLIC classification and tests over a possibly
+    # nonexistent/unrouted IPv6 path.
     $rec = $dns | Where-Object { $_.Type -eq 'A' -and $_.IPAddress } | Select-Object -First 1
     if (-not $rec) { $rec = $dns | Where-Object IPAddress | Select-Object -First 1 }
     $ip   = $rec.IPAddress
@@ -711,9 +711,9 @@ foreach ($ep in $allEndpoints) {
     $existing = $script:Results | Where-Object { $_.Endpoint -eq $ep }
     if ($existing) { $existing.IP = $ip; $existing.Type = $kind }
 
-    # Alerta de mismatch DNS x modo
-    # Apenas endpoints em $canBePrivateEndpoints devem resolver para IP privado.
-    # Todos os outros (AAD, ARM, CDN, SQL, AMA, MDE, WAC, GNS) sao sempre publicos.
+    # DNS vs mode mismatch alert
+    # Only endpoints in $canBePrivateEndpoints should resolve to a private IP.
+    # All others (AAD, ARM, CDN, SQL, AMA, MDE, WAC, GNS) are always public.
     $canBePrivate = $canBePrivateEndpoints -contains $ep
     $mismatch = $false
     if ($Mode -eq 'Private' -and $kind -eq 'PUBLIC' -and $canBePrivate) {
@@ -723,7 +723,7 @@ foreach ($ep in $allEndpoints) {
         $mismatch = $true
     }
     if ($mismatch) {
-        Write-Log "DNS WARN $ep -> $ip [$kind] (esperado para modo $Mode era o oposto)" Warn
+        Write-Log "DNS WARN $ep -> $ip [$kind] (expected the opposite for $Mode mode)" Warn
         $existing2 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
         if ($existing2) { $existing2.DNS = 'WARN' }
     }
@@ -733,7 +733,7 @@ foreach ($ep in $allEndpoints) {
         if ($existing2) { $existing2.DNS = 'OK' }
     }
 
-    # TCP/443 (TcpClient com timeout — muito mais rapido que Test-NetConnection)
+    # TCP/443 (TcpClient with timeout — much faster than Test-NetConnection)
     $tcpSw = [System.Diagnostics.Stopwatch]::StartNew()
     $tcpOk = Test-TcpPort -ComputerName $ep -Port 443 -TimeoutMs 5000
     $tcpSw.Stop()
@@ -745,14 +745,14 @@ foreach ($ep in $allEndpoints) {
         if ($existing3) { $existing3.TCP = 'OK'; $existing3.Latency = "${latencyMs}ms" }
     }
     else {
-        Write-Log "TCP FAIL ${ep}:443 (timeout/recusado)" Fail
+        Write-Log "TCP FAIL ${ep}:443 (timeout/refused)" Fail
         if ($existing3) { $existing3.TCP = 'FAIL'; $existing3.Latency = 'timeout' }
     }
 }
 
 # ---------------------------------------------------------------------------
-# Testes HTTP (401/403/400 sao considerados sucesso: endpoint exige auth)
-# Detecta azcmagent proxy.bypass para pular HTTP tests em endpoints bypassados
+# HTTP tests (401/403/400 are treated as success: endpoint requires auth)
+# Detects azcmagent proxy.bypass to skip HTTP tests on bypassed endpoints
 # ---------------------------------------------------------------------------
 $proxyBypassCategories = @()
 $azcmPath = Get-AzcmagentPath
@@ -770,12 +770,12 @@ if ($azcmPath -and $script:EffectiveProxy) {
     catch { }
 }
 
-# Mapa de categorias de bypass -> endpoints afetados (conforme doc oficial:
+# Map of bypass categories -> affected endpoints (per the official doc:
 # https://learn.microsoft.com/azure/azure-arc/servers/manage-agent-proxy-settings).
-# IMPORTANTE: 'graph.microsoft.com' NAO e coberto por nenhum bypass — o agente
-# usa o proxy para ele; por isso ele NAO deve ser pulado nos testes HTTP.
-# 'ArcData' e valido a partir do agente 1.36; em versoes anteriores os endpoints
-# arcdataservices ficavam sob a categoria 'Arc'.
+# IMPORTANT: 'graph.microsoft.com' is NOT covered by any bypass — the agent
+# uses the proxy for it; therefore it must NOT be skipped in the HTTP tests.
+# 'ArcData' is valid from agent 1.36 onward; in earlier versions the
+# arcdataservices endpoints fell under the 'Arc' category.
 $bypassCategoryEndpoints = @{
     'AAD'     = @('login.windows.net', 'login.microsoftonline.com', 'pas.windows.net')
     'ARM'     = @('management.azure.com')
@@ -807,10 +807,10 @@ foreach ($ep in $httpProbeEndpoints) {
     $ep = $ep.Trim()
     if (-not $ep) { continue }
 
-    # Se o endpoint esta no bypass do azcmagent e usamos proxy, HTTP test via proxy daria falso positivo
+    # If the endpoint is in the azcmagent bypass and we use a proxy, an HTTP test via proxy would give a false positive
     if ($httpBypassedEndpoints -contains $ep) {
         Add-Result -Endpoint $ep -HTTP 'SKIP (bypass)'
-        Write-Log "HTTP SKIP $ep (azcmagent proxy.bypass cobre este endpoint — agente nao usa proxy)" Info -NoCount
+        Write-Log "HTTP SKIP $ep (azcmagent proxy.bypass covers this endpoint — agent does not use a proxy)" Info -NoCount
         continue
     }
 
@@ -822,7 +822,7 @@ foreach ($ep in $httpProbeEndpoints) {
         $resp = Invoke-WebRequestSafe -Uri "https://$ep" -TimeoutSec 10
         $sw.Stop()
         $elapsed = [math]::Round($sw.Elapsed.TotalSeconds, 2)
-        Write-Log "HTTP OK  $ep -> $($resp.StatusCode) em ${elapsed}s" OK
+        Write-Log "HTTP OK  $ep -> $($resp.StatusCode) in ${elapsed}s" OK
         $existing4 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
         if ($existing4) { $existing4.HTTP = "OK ($($resp.StatusCode))" }
     }
@@ -833,7 +833,7 @@ foreach ($ep in $httpProbeEndpoints) {
             try { $code = [int]$_.Exception.Response.StatusCode } catch { }
         }
         if ($code -in 400, 401, 403, 404) {
-            Write-Log "HTTP OK  $ep -> $code (esperado sem auth/sem root handler)" OK
+            Write-Log "HTTP OK  $ep -> $code (expected without auth/without root handler)" OK
             $existing4 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
             if ($existing4) { $existing4.HTTP = "OK ($code)" }
         }
@@ -858,10 +858,10 @@ $azcm = Get-AzcmagentPath
 if ($azcm) {
     $checkArgs = @('check', '--location', $Region, '--cloud', 'AzureCloud')
     if ($CheckIncludeAll) {
-        # Doc oficial: '--extensions' e '--include-all' sao ORTOGONAIS.
-        #   --extensions all -> endpoints de TODAS as extensoes (SQL, etc.)
-        #   --include-all    -> casos de uso ESTENDIDOS (ex.: Windows Server PAYG)
-        # Combinamos os dois para cobertura total.
+        # Official doc: '--extensions' and '--include-all' are ORTHOGONAL.
+        #   --extensions all -> endpoints for ALL extensions (SQL, etc.)
+        #   --include-all    -> EXTENDED use cases (e.g. Windows Server PAYG)
+        # We combine both for full coverage.
         $checkArgs += @('--extensions', 'all', '--include-all')
     }
     elseif ($IncludeSQL) {
@@ -869,42 +869,42 @@ if ($azcm) {
     }
     if ($Mode -eq 'Private') { $checkArgs += '--enable-pls-check' }
 
-    Write-Log "Executando: azcmagent $($checkArgs -join ' ')" Info -NoCount
-    Save-LogBuffer   # garante ordem: cabecalho antes do output do binario
+    Write-Log "Running: azcmagent $($checkArgs -join ' ')" Info -NoCount
+    Save-LogBuffer   # ensure ordering: header before the binary output
     try {
         $out = & $azcm @checkArgs 2>&1
         Add-Content -Path $LogFilePath -Value $out
         if ($LASTEXITCODE -eq 0) {
-            Write-Log 'azcmagent check concluido (exit 0).' OK
+            Write-Log 'azcmagent check completed (exit 0).' OK
         }
         else {
-            Write-Log "azcmagent check terminou com exit $LASTEXITCODE." Fail
+            Write-Log "azcmagent check finished with exit $LASTEXITCODE." Fail
         }
     }
     catch {
-        Write-Log "azcmagent check falhou: $($_.Exception.Message)" Fail
+        Write-Log "azcmagent check failed: $($_.Exception.Message)" Fail
     }
 }
 else {
-    Write-Log 'azcmagent.exe nao encontrado - pulando check.' Warn
+    Write-Log 'azcmagent.exe not found - skipping check.' Warn
 }
 
 # ---------------------------------------------------------------------------
-# Resumo
+# Summary
 # ---------------------------------------------------------------------------
 [void]$script:LogBuffer.Add('=' * 60)
-Write-Log ("Resumo: OK={0}  Fail={1}  Warn={2}  Modo={3}  Regiao={4}" -f `
+Write-Log ("Summary: OK={0}  Fail={1}  Warn={2}  Mode={3}  Region={4}" -f `
         $script:Stats.OK, $script:Stats.Fail, $script:Stats.Warn, $Mode, $Region) Info -NoCount
 Write-Log "Script finished at $(Get-Date -Format o)" Info -NoCount
 Save-LogBuffer
 
 # ---------------------------------------------------------------------------
-# Tabela de resultados (console + log)
+# Results table (console + log)
 # ---------------------------------------------------------------------------
 $tableObjects = $script:Results | ForEach-Object { [pscustomobject]$_ }
 
 Write-Host ''
-Write-Host '=================== SUMARIO ===================' -ForegroundColor Cyan
+Write-Host '=================== SUMMARY ===================' -ForegroundColor Cyan
 
 $rowFormat = "{0,-5} {1,-55} {2,-26} {3,-8} {4,-5} {5,-5} {6,-12} {7,-9}"
 Write-Host ($rowFormat -f 'Group', 'Endpoint', 'IP', 'Type', 'DNS', 'TCP', 'HTTP', 'Latency') -ForegroundColor Cyan
@@ -918,29 +918,29 @@ foreach ($r in $tableObjects) {
 }
 
 Write-Host ''
-Write-Host ("Totais: OK={0}  Fail={1}  Warn={2}  Modo={3}  Regiao={4}" -f `
+Write-Host ("Totals: OK={0}  Fail={1}  Warn={2}  Mode={3}  Region={4}" -f `
         $script:Stats.OK, $script:Stats.Fail, $script:Stats.Warn, $Mode, $Region) -ForegroundColor Cyan
 
 if ($script:EffectiveProxy) {
-    Write-Host "Proxy utilizado: $($script:EffectiveProxy)" -ForegroundColor DarkGray
+    Write-Host "Proxy used: $($script:EffectiveProxy)" -ForegroundColor DarkGray
 }
 else {
-    Write-Host 'Proxy utilizado: Direct (sem proxy)' -ForegroundColor DarkGray
+    Write-Host 'Proxy used: Direct (no proxy)' -ForegroundColor DarkGray
 }
 
-# Append tabela ao arquivo de log
+# Append table to the log file
 $tableString = $tableObjects | Format-Table -AutoSize | Out-String
 Add-Content -Path $LogFilePath -Value ''
-Add-Content -Path $LogFilePath -Value '=================== SUMARIO ==================='
+Add-Content -Path $LogFilePath -Value '=================== SUMMARY ==================='
 Add-Content -Path $LogFilePath -Value $tableString.TrimEnd()
-Add-Content -Path $LogFilePath -Value ("Totais: OK={0}  Fail={1}  Warn={2}  Modo={3}  Regiao={4}" -f `
+Add-Content -Path $LogFilePath -Value ("Totals: OK={0}  Fail={1}  Warn={2}  Mode={3}  Region={4}" -f `
         $script:Stats.OK, $script:Stats.Fail, $script:Stats.Warn, $Mode, $Region)
 if ($script:EffectiveProxy) {
-    Add-Content -Path $LogFilePath -Value "Proxy utilizado: $($script:EffectiveProxy)"
+    Add-Content -Path $LogFilePath -Value "Proxy used: $($script:EffectiveProxy)"
 }
 else {
-    Add-Content -Path $LogFilePath -Value 'Proxy utilizado: Direct (sem proxy)'
+    Add-Content -Path $LogFilePath -Value 'Proxy used: Direct (no proxy)'
 }
 
-Write-Host "`nLog completo: $LogFilePath" -ForegroundColor Cyan
+Write-Host "`nFull log: $LogFilePath" -ForegroundColor Cyan
 exit ([int]($script:Stats.Fail -gt 0))
