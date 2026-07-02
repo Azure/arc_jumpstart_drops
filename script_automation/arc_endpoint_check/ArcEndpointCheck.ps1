@@ -861,7 +861,7 @@ Write-Host ($rowFormat -f ('-' * 5), ('-' * 55), ('-' * 26), ('-' * 8), ('-' * 5
 
 foreach ($r in $tableObjects) {
     $hasFail = ($r.DNS -eq 'FAIL') -or ($r.TCP -eq 'FAIL') -or ($r.HTTP -like 'FAIL*')
-    $hasWarn = ($r.DNS -eq 'WARN')
+    $hasWarn = ($r.DNS -eq 'WARN')    
     $color   = if ($hasFail) { 'Red' } elseif ($hasWarn) { 'Yellow' } else { 'Green' }
     Write-Host ($rowFormat -f $r.Group, $r.Endpoint, $r.IP, $r.Type, $r.DNS, $r.TCP, $r.HTTP, $r.Latency) -ForegroundColor $color
 }
