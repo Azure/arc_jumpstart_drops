@@ -4,37 +4,85 @@ title: "Azure Arc Connectivity Check"
 linkTitle: "Azure Arc Connectivity Check"
 weight: 1
 description: >
+    Validate Azure Connected Machine agent connectivity and endpoints for public
+    or Private Link deployments, with automatic mode detection and proxy awareness.
 ---
 
-## Overview  
+## Overview
 
-This script was created to help identify connectivity issues with the Azure Arc Machine Agent and its endpoints. It tests the necessary URLs, validates Azure Arc functionality, and performs DNS resolution, network connectivity, and HTTP request checks, logging the results for review.
+This script helps identify connectivity issues with the Azure Connected Machine agent
+and its required endpoints. It validates the endpoint list from the official Azure Arc
+network requirements, performs **DNS resolution**, **TCP/443** reachability, and **HTTP**
+probes, runs `azcmagent check`, and logs everything for review.
+
+Compared to earlier versions, it is fully **parameter-driven** (no manual editing of the
+script is required) and adds:
+
+- **Automatic Public vs Private Link detection** (`azcmagent show` + DNS heuristic), with a
+  manual override (`-Mode`).
+- **Proxy awareness** that mirrors the Connected Machine agent precedence
+  (`azcmagent proxy.url` > `HTTPS_PROXY`) and honors `proxy.bypass` categories
+  (AAD, ARM, Arc, AMA, ArcData). The Windows system-wide proxy (WinHTTP/WinINET) is
+  reported but never applied automatically, matching the agent's behavior.
+- **Optional extension endpoint groups**: SQL Server enabled by Azure Arc, Azure Monitor
+  Agent (AMA), Microsoft Defender for Endpoint (MDE), and Windows Admin Center (WAC).
+- **IPv4-first DNS resolution** (Private Link uses A records), avoiding false "public"
+  classification when public AAAA records coexist.
+- A machine-readable **exit code** (`0` = all checks OK, `1` = at least one failure).
 
 ## Prerequisites
 
-- PowerShell
-- Network connectivity 
+- **Windows PowerShell 5.1 or later** (Windows only — the script uses `netsh`,
+  `Resolve-DnsName`, and `azcmagent.exe`).
+- Outbound network connectivity to the Azure Arc endpoints (directly or via proxy).
+- *(Optional)* The **Azure Connected Machine agent** (`azcmagent.exe`). It is only needed
+  for the final `azcmagent check`; DNS/TCP/HTTP tests run without it.
+- Run from an **elevated PowerShell** session for the most complete results.
 
 ## Getting Started
 
-Download the [ArcEndpointCheck.ps1](./ArcEndpointCheck.ps1) and follow these steps to set up and use the script:
+Download [ArcEndpointCheck.ps1](./ArcEndpointCheck.ps1) and run it on the server where the
+Azure Arc agent is (or will be) installed.
 
-1. **Define the Region**  
-   Set the region for your Azure Arc deployment. For example:  
-   `$region = "brazilsouth"`
+Unlike previous versions, **you no longer edit the script**. Everything is controlled by
+parameters:
 
-2. **Define the Log File Path**  
-   Specify the location where the log file will be saved. For example:  
-   `$logFilePath = "C:\temp\Arclogfile.txt"`
+| Parameter          | Description                                                                                          | Default                  |
+| ------------------ | ---------------------------------------------------------------------------------------------------- | ------------------------ |
+| `-Region`          | Azure region (e.g., `eastus2`, `brazilsouth`).                                                        | `eastus2`                |
+| `-Mode`            | `Auto`, `Public`, or `Private`. `Private` automatically adds `--enable-pls-check` to `azcmagent check`. | `Auto`                   |
+| `-ProxyUrl`        | Explicit HTTP/HTTPS proxy (e.g., `http://10.0.1.4:8443`). If omitted, auto-detects `azcmagent proxy.url` then `HTTPS_PROXY`. | *(auto-detect)*          |
+| `-LogFilePath`     | Path to the log file.                                                                                | `C:\temp\Arclogfile.txt` |
+| `-IncludeSQL`      | Adds Azure Arc-enabled SQL Server endpoints (`*.arcdataservices.com`, plus `graph.microsoft.com` for Microsoft Entra auth). | *(off)*                  |
+| `-IncludeAMA`      | Adds Azure Monitor Agent endpoints.                                                                  | *(off)*                  |
+| `-IncludeMDE`      | Adds Microsoft Defender for Endpoint endpoints.                                                      | *(off)*                  |
+| `-IncludeWAC`      | Adds Windows Admin Center endpoints.                                                                 | *(off)*                  |
+| `-CheckIncludeAll` | Runs `azcmagent check` with `--extensions all --include-all` (all extensions + extended use cases such as Windows Server pay-as-you-go). | *(off)*                  |
 
-3. **Choose Public or Private Deployment**  
-   Determine whether your Azure Arc instance will be public or private.  
-   If you're using a public deployment, make sure to remove the `--enable-pls-check` parameter from the script.
+> The public/private choice is handled automatically. In `Private` mode the script adds
+> `--enable-pls-check` for you — there is no longer any parameter to remove manually.
 
 ## Using the Script
 
-Execute the script on the server where the Azure Arc Agent will be installed. When running the script, keep in mind environmental factors such as firewall settings, proxy configuration, region, and whether the connection is public or private. Make the necessary adjustments in the script to account for these aspects. The script includes a check with `AzcmAgent.exe`, so ensure that the Azure Arc Agent is already installed on the server before running it.
+Run the script on the target server, keeping in mind environmental factors such as
+firewall rules, proxy configuration, region, and whether the connection is public or
+private. Examples:
 
-## Contributions
+```powershell
+# Auto-detect Public/Private, default region (eastus2)
+.\ArcEndpointCheck.ps1
 
-Contributions are welcome! Feel free to open an _issue_ or submit a _pull request_ to improve this repository.
+# Specific region + SQL and AMA endpoints
+.\ArcEndpointCheck.ps1 -Region brazilsouth -IncludeSQL -IncludeAMA
+
+# Force an explicit proxy for all HTTP tests
+.\ArcEndpointCheck.ps1 -Region eastus2 -ProxyUrl http://10.0.1.4:8443
+
+# Force Public mode (useful before the agent is installed)
+.\ArcEndpointCheck.ps1 -Mode Public
+
+# Force Private Link validation (adds --enable-pls-check) with a custom log path
+.\ArcEndpointCheck.ps1 -Mode Private -LogFilePath D:\logs\arc-pls.txt
+
+# Full pre-onboarding validation of all extension endpoints
+.\ArcEndpointCheck.ps1 -Mode Private -CheckIncludeAll -Verbose -IncludeSQL -IncludeAMA -IncludeMDE -IncludeWAC
