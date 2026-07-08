@@ -14,13 +14,37 @@
       - Private: Azure Private Link Scope (PLS)
       - Gateway: Azure Arc Gateway (reduces endpoints to ~7 FQDNs)
 
+    Diagnostic sequence (execution order):
+      1. System & Agent Context  - OS, agent version/status, mode, extensions
+      2. Proxy Chain             - Detects and displays ALL proxy sources:
+                                   - WinHTTP (OS/GPO)    → used by SCHANNEL (PKI/CRL/OCSP)
+                                   - azcmagent proxy.url → used by Arc Agent core
+                                   - HTTPS_PROXY env     → used by Extensions (.NET/Python)
+                                   - Upstream proxy      → used in Gateway chain
+                                   Precedence for tests: -ProxyUrl > azcmagent > HTTPS_PROXY > WinHTTP
+      3. TLS & Crypto            - SCHANNEL registry, .NET Framework, cipher suites,
+                                   TLS 1.2 handshake test, registry dump (actual vs recommended)
+      4. PKI/OCSP/CRL Bypass     - Validates which PKI endpoints are in proxy bypass:
+                                   - Bypassed → SCHANNEL connects DIRECT (test without proxy)
+                                   - Not bypassed → SCHANNEL uses WinHTTP proxy (test via proxy)
+                                   Detects "non-proxy request on proxy port" failures
+      5. Endpoint Discovery      - azcmagent check + DNS-based regional discovery
+      6. Connectivity Tests      - Test strategy per proxy scenario:
+                                   - TCP/443: Direct L3/L4 (never uses proxy — validates firewall)
+                                   - HTTP probe: Via effective proxy (validates app-layer path)
+                                   - Gateway tunneled: Skips TCP (traffic goes localhost:40343)
+                                   - PKI probe: Direct or via WinHTTP (per bypass list)
+                                   - SQL TLS probe: TLS 1.2 handshake to arcdataservices.com
+      7. Results & Issues        - Summary table, issues with fix recommendations
+
     Validates:
-      - Core Arc agent endpoints (HIMDS, GuestConfig, GNS, AAD, ARM)
+      - Core Arc agent endpoints (HIMDS, GuestConfig, GNS, AAD, ARM, MCR)
       - Regional endpoints discovered from 'azcmagent check'
+      - Extension endpoints: SQL, AMA, MDE, WAC, KV, HRW, UM, GA, Defender for SQL
       - PKI/OCSP/CRL proxy bypass (detects "non-proxy request on proxy port")
-      - TLS version (1.2+ required per Microsoft docs)
-      - Extension endpoints based on installed extensions (auto-detected)
-      - Arc Gateway URL when gateway mode is active
+      - TLS 1.2+ with required GCM cipher suites (agent 1.56+)
+      - Arc Gateway tunneled vs direct endpoint classification
+      - SQL Arc specific TLS 1.2 handshake to arcdataservices.com
 
     Run with ZERO parameters for full auto-detection:
       PS> .\arcendpointcheck.ps1
@@ -43,6 +67,10 @@
 .PARAMETER SkipExtensions
     Skips extension endpoint testing.
 
+.PARAMETER GatewayUrl
+    Arc Gateway URL for pre-onboarding (when agent is not installed).
+    Auto-detected from azcmagent if omitted.
+
 .PARAMETER CheckIncludeAll
     Makes 'azcmagent check' use '--extensions all --include-all'.
 
@@ -55,14 +83,26 @@
     Forces region and mode override.
 
 .EXAMPLE
+    PS> .\arcendpointcheck.ps1 -Region eastus2 -Mode Gateway -GatewayUrl https://mygateway.gw.arc.azure.com -ProxyUrl http://10.0.1.4:8443
+    Pre-onboarding Gateway: agent not installed but gateway URL is known.
+
+.EXAMPLE
     PS> .\arcendpointcheck.ps1 -Region eastus2 -Mode Private -ProxyUrl http://10.0.1.4:8443 -CheckIncludeAll
     Pre-onboarding: agent not installed. Specify region, mode, proxy, and test all extensions.
 
 .NOTES
-    Requires PowerShell 5.1+ on Windows.
-    Ref: https://learn.microsoft.com/azure/azure-arc/network-requirements-consolidated
-         https://learn.microsoft.com/azure/azure-arc/servers/arc-gateway
-         https://learn.microsoft.com/azure/azure-arc/azure-firewall-explicit-proxy
+    Requires PowerShell 5.1+ on Windows (Server 2012 R2+ with WMF 5.1, or Server 2016+ native).
+    Minimum OS: Windows Server 2012 R2 (with WMF 5.1 installed).
+    Does NOT require Administrator (recommended but not mandatory).
+
+    References:
+      - https://learn.microsoft.com/azure/azure-arc/network-requirements-consolidated
+      - https://learn.microsoft.com/azure/azure-arc/servers/arc-gateway
+      - https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues
+      - https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint
+      - https://learn.microsoft.com/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
+      - https://learn.microsoft.com/defender-endpoint/configure-proxy-internet
+      - https://learn.microsoft.com/entra/identity/hybrid/connect/reference-connect-tls-enforcement
 
 .LINK
     https://azurearcjumpstart.com
@@ -77,6 +117,8 @@ param(
 
     [string]$ProxyUrl,
 
+    [string]$GatewayUrl,
+
     [string]$LogFilePath = "C:\temp\ArcEndpointCheck_$($env:COMPUTERNAME).txt",
 
     [switch]$SkipPKI,
@@ -89,6 +131,27 @@ param(
 # =========================================================================
 $ErrorActionPreference = 'Stop'
 $ProgressPreference    = 'SilentlyContinue'
+$script:Version        = '2.0.0'
+$script:Updated        = '2026-07-08'
+
+# Enable TLS 1.2 for this session (required on systems without SchUseStrongCrypto)
+# 3072 = [Net.SecurityProtocolType]::Tls12
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072
+
+# --- Prerequisites Check ---
+$script:IsAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $script:IsAdmin) {
+    Write-Host '  [WARN] Not running as Administrator. Some checks may be limited.' -ForegroundColor Yellow
+    Write-Host '         Recommend: Right-click PowerShell > Run as Administrator' -ForegroundColor DarkYellow
+    Write-Host ''
+}
+
+# Verify Resolve-DnsName is available (DnsClient module, Server 2012+ / Win8+)
+if (-not (Get-Command 'Resolve-DnsName' -ErrorAction SilentlyContinue)) {
+    Write-Host '  [ERROR] Resolve-DnsName not available. Requires Windows Server 2012+ / Win8+.' -ForegroundColor Red
+    Write-Host '          This script cannot run on this OS.' -ForegroundColor Red
+    exit 1
+}
 
 $logDir = Split-Path -Path $LogFilePath -Parent
 if ($logDir -and -not (Test-Path $logDir)) {
@@ -155,7 +218,7 @@ function Add-Result {
     param(
         [string]$Endpoint, [string]$Group = 'Core', [string]$IP = '-',
         [string]$Type = '-', [string]$DNS = '-', [string]$TCP = '-',
-        [string]$HTTP = '-', [string]$Latency = '-'
+        [string]$HTTP = '-', [string]$Latency = '-', [string]$Path = '-'
     )
     $ex = $script:Results | Where-Object { $_.Endpoint -eq $Endpoint }
     if ($ex) {
@@ -165,11 +228,12 @@ function Add-Result {
         if ($TCP     -ne '-') { $ex.TCP     = $TCP }
         if ($HTTP    -ne '-') { $ex.HTTP    = $HTTP }
         if ($Latency -ne '-') { $ex.Latency = $Latency }
+        if ($Path    -ne '-') { $ex.Path    = $Path }
     }
     else {
         [void]$script:Results.Add([ordered]@{
             Endpoint = $Endpoint; Group = $Group; IP = $IP; Type = $Type
-            DNS = $DNS; TCP = $TCP; HTTP = $HTTP; Latency = $Latency
+            DNS = $DNS; TCP = $TCP; HTTP = $HTTP; Latency = $Latency; Path = $Path
         })
     }
 }
@@ -237,11 +301,37 @@ function Test-IsPrivateIp {
            ($b[0] -eq 100 -and $b[1] -ge 64 -and $b[1] -le 127)
 }
 
+function Test-IsGatewayTunneled {
+    param([string]$Endpoint)
+    if ($Mode -ne 'Gateway') { return $false }
+    foreach ($pattern in $script:GatewayTunneledPatterns) {
+        if ($pattern.StartsWith('*.')) {
+            $suffix = $pattern.Substring(1)  # e.g. '.his.arc.azure.com'
+            if ($Endpoint.EndsWith($suffix) -or $Endpoint -eq $pattern.Substring(2)) { return $true }
+        }
+        elseif ($Endpoint -eq $pattern) { return $true }
+    }
+    return $false
+}
+
 # =========================================================================
-# 1. AGENT DETECTION (region, mode, gateway, extensions)
+# PHASE 1: SYSTEM & AGENT CONTEXT
 # =========================================================================
 
 Write-Banner 'AZURE ARC ENDPOINT CHECK'
+Write-Host "  Version $($script:Version) ($($script:Updated))" -ForegroundColor DarkGray
+Write-Host ''
+Write-Host '  Diagnostic sequence:' -ForegroundColor DarkGray
+Write-Host '    1. System & Agent Context    (OS, agent version, mode, extensions)' -ForegroundColor DarkGray
+Write-Host '    2. Proxy Chain               (WinHTTP -> Agent -> Env -> Gateway)' -ForegroundColor DarkGray
+Write-Host '    3. TLS & Crypto              (SCHANNEL + .NET + ciphers + registry dump)' -ForegroundColor DarkGray
+Write-Host '    4. PKI/OCSP/CRL Bypass       (certificate validation path)' -ForegroundColor DarkGray
+Write-Host '    5. Endpoint Discovery        (azcmagent check + regional)' -ForegroundColor DarkGray
+Write-Host '    6. Connectivity Tests        (DNS + TCP + HTTP probes)' -ForegroundColor DarkGray
+Write-Host '    7. Results & Issues          (summary table)' -ForegroundColor DarkGray
+Write-Host ''
+
+Write-Section 'System & Agent'
 Write-Status 'Host' $env:COMPUTERNAME
 Write-Status 'Time' (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
 
@@ -251,6 +341,17 @@ $script:WinHttpBypass  = $null
 $script:AgentJson      = $null
 $script:GatewayUrl     = $null
 $script:InstalledExts  = @()
+$script:AgentVersion   = $null
+
+# Endpoints tunneled through Arc Gateway (per MS docs)
+# These go: Agent -> localhost:40343 (Arc Proxy) -> Enterprise Proxy -> Gateway -> Target
+# Direct TCP test to target is NOT meaningful for tunneled endpoints.
+$script:GatewayTunneledPatterns = @(
+    '*.his.arc.azure.com'
+    '*.guestconfiguration.azure.com'
+    'dc.services.visualstudio.com'
+    'guestnotificationservice.azure.com'
+)
 
 $azcm = Get-AzcmagentPath
 $script:PreOnboarding = (-not $azcm)
@@ -273,6 +374,7 @@ if ($script:PreOnboarding) {
 if ($azcm -and $script:AgentJson) {
     $agSt  = if ($script:AgentJson.PSObject.Properties['status']) { $script:AgentJson.status } else { $null }
     $agVer = if ($script:AgentJson.PSObject.Properties['agentVersion']) { $script:AgentJson.agentVersion } else { $null }
+    $script:AgentVersion = $agVer
     $agParts = @('Installed')
     if ($agSt)  { $agParts += $agSt }
     if ($agVer) { $agParts += "v$agVer" }
@@ -350,31 +452,67 @@ $modeColor = switch ($Mode) {
 }
 Write-Status 'Mode' $Mode $modeColor
 
+# Apply -GatewayUrl parameter override (pre-onboarding)
+if ($GatewayUrl -and -not $script:GatewayUrl) {
+    $script:GatewayUrl = $GatewayUrl
+    if ($Mode -eq 'Auto' -or $Mode -eq 'Public') { $Mode = 'Gateway' }
+}
+
 if ($script:GatewayUrl) {
     Write-Status 'Gateway' $script:GatewayUrl DarkYellow
 }
 
 # --- Installed Extensions (auto-detect) ---
+# Strategy: Read from plugin directory first (fast, non-disruptive).
+# Fallback to 'azcmagent extension list' only if directory not found.
+# Ref: https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-vm-extensions#general-troubleshooting
+# Path: C:\Packages\Plugins\<Publisher.ExtensionName>\<Version>\
 if (-not $SkipExtensions -and $azcm) {
-    try {
-        $extOut = & $azcm extension list 2>$null
-        if ($extOut) {
-            $extLines = $extOut | Out-String
-            if ($extLines -match 'WindowsAgent\.SqlServer|LinuxAgent\.SqlServer|SqlServer')       { $script:InstalledExts += 'SQL' }
-            if ($extLines -match 'AzureMonitor|AMA')                                              { $script:InstalledExts += 'AMA' }
-            if ($extLines -match 'MDE|DefenderForServers|AzureDefender')                           { $script:InstalledExts += 'MDE' }
-            if ($extLines -match 'AdminCenter')                                                   { $script:InstalledExts += 'WAC' }
-            if ($extLines -match 'KeyVault')                                                      { $script:InstalledExts += 'KV' }
-            if ($extLines -match 'HybridWorker|Automation')                                       { $script:InstalledExts += 'HRW' }
-            if ($extLines -match 'ChangeTracking')                                                { $script:InstalledExts += 'CT' }
-            if ($extLines -match 'GuestAttestation|WindowsAttestation|LinuxAttestation')           { $script:InstalledExts += 'GA' }
-            if ($extLines -match 'WindowsPatchExtension|LinuxPatchExtension|UpdateManagement')     { $script:InstalledExts += 'UM' }
-            if ($extLines -match 'CustomScript')                                                  { $script:InstalledExts += 'CS' }
-            if ($extLines -match 'DependencyAgent')                                               { $script:InstalledExts += 'DA' }
-            if ($extLines -match 'DefenderForSQL|AdvancedThreatProtection|MicrosoftDefenderForSQL') { $script:InstalledExts += 'DSQL' }
+    $pluginDir = Join-Path $env:SystemDrive 'Packages\Plugins'
+    $detected = $false
+
+    # --- Fast path: scan plugin directory names ---
+    if (Test-Path $pluginDir) {
+        $plugins = (Get-ChildItem -Path $pluginDir -Directory -ErrorAction SilentlyContinue).Name -join '|'
+        if ($plugins) {
+            $detected = $true
+            if ($plugins -match 'SqlServer|WindowsAgent\.SqlServer')                                          { $script:InstalledExts += 'SQL' }
+            if ($plugins -match 'AzureMonitor|AzureMonitorWindowsAgent')                                      { $script:InstalledExts += 'AMA' }
+            if ($plugins -match 'MDE|AzureDefenderForServers|AzureDefender')                                  { $script:InstalledExts += 'MDE' }
+            if ($plugins -match 'AdminCenter')                                                                { $script:InstalledExts += 'WAC' }
+            if ($plugins -match 'KeyVault')                                                                   { $script:InstalledExts += 'KV' }
+            if ($plugins -match 'HybridWorker|Automation')                                                    { $script:InstalledExts += 'HRW' }
+            if ($plugins -match 'ChangeTracking')                                                             { $script:InstalledExts += 'CT' }
+            if ($plugins -match 'GuestAttestation|WindowsAttestation')                                        { $script:InstalledExts += 'GA' }
+            if ($plugins -match 'WindowsPatchExtension|UpdateManagement')                                     { $script:InstalledExts += 'UM' }
+            if ($plugins -match 'CustomScript|RunCommand')                                                    { $script:InstalledExts += 'CS' }
+            if ($plugins -match 'DependencyAgent')                                                            { $script:InstalledExts += 'DA' }
+            if ($plugins -match 'DefenderForSQL|AdvancedThreatProtection|MicrosoftDefenderForSQL')              { $script:InstalledExts += 'DSQL' }
         }
     }
-    catch { }
+
+    # --- Fallback: azcmagent extension list (slower, stops Extension Service) ---
+    if (-not $detected) {
+        try {
+            $extOut = & $azcm extension list 2>$null
+            if ($extOut) {
+                $extLines = $extOut | Out-String
+                if ($extLines -match 'WindowsAgent\.SqlServer|SqlServer')                              { $script:InstalledExts += 'SQL' }
+                if ($extLines -match 'AzureMonitor|AMA')                                              { $script:InstalledExts += 'AMA' }
+                if ($extLines -match 'MDE|DefenderForServers|AzureDefender')                           { $script:InstalledExts += 'MDE' }
+                if ($extLines -match 'AdminCenter')                                                   { $script:InstalledExts += 'WAC' }
+                if ($extLines -match 'KeyVault')                                                      { $script:InstalledExts += 'KV' }
+                if ($extLines -match 'HybridWorker|Automation')                                       { $script:InstalledExts += 'HRW' }
+                if ($extLines -match 'ChangeTracking')                                                { $script:InstalledExts += 'CT' }
+                if ($extLines -match 'GuestAttestation|WindowsAttestation')                            { $script:InstalledExts += 'GA' }
+                if ($extLines -match 'WindowsPatchExtension|UpdateManagement')                         { $script:InstalledExts += 'UM' }
+                if ($extLines -match 'CustomScript|RunCommand')                                       { $script:InstalledExts += 'CS' }
+                if ($extLines -match 'DependencyAgent')                                               { $script:InstalledExts += 'DA' }
+                if ($extLines -match 'DefenderForSQL|AdvancedThreatProtection|MicrosoftDefenderForSQL') { $script:InstalledExts += 'DSQL' }
+            }
+        }
+        catch { }
+    }
 }
 
 if ($script:InstalledExts.Count -gt 0) {
@@ -395,10 +533,10 @@ else {
 }
 
 # =========================================================================
-# 2. PROXY DETECTION
+# PHASE 2: PROXY CHAIN (WinHTTP -> Agent -> Env -> Gateway)
 # =========================================================================
 
-Write-Section 'Proxy Configuration'
+Write-Section 'Proxy Chain (WinHTTP -> Agent -> HTTPS_PROXY -> Gateway)'
 
 # --- WinHTTP ---
 try {
@@ -482,6 +620,30 @@ if ($script:EffectiveProxy) {
     Write-Status 'Effective proxy' $script:EffectiveProxy Green
 }
 
+# --- Proxy flow explanation (shown when proxy is configured or PLS/Gateway active) ---
+if ($script:EffectiveProxy -or $script:WinHttpProxy -or $Mode -in 'Private', 'Gateway') {
+    Write-Host ''
+    Write-Host '  Traffic flow per component:' -ForegroundColor DarkGray
+    if ($Mode -eq 'Gateway') {
+        Write-Host '    Arc Agent (tunneled) : Agent -> localhost:40343 -> Upstream Proxy -> Gateway -> Target' -ForegroundColor DarkGray
+        Write-Host '    Arc Agent (direct)   : Agent -> Enterprise Proxy -> Target' -ForegroundColor DarkGray
+    }
+    elseif ($Mode -eq 'Private') {
+        Write-Host '    Arc Agent (PLS)      : Agent -> Private Endpoint (VNET) -> Target (private IP)' -ForegroundColor DarkGray
+        Write-Host '    Arc Agent (non-PLS)  : Agent -> Proxy (if set) -> Target (public IP)' -ForegroundColor DarkGray
+    }
+    else {
+        Write-Host '    Arc Agent            : Agent -> azcmagent proxy.url -> Target' -ForegroundColor DarkGray
+    }
+    Write-Host '    Extensions           : Extension -> HTTPS_PROXY -> Target' -ForegroundColor DarkGray
+    Write-Host '    SCHANNEL (PKI/CRL)   : OS -> WinHTTP proxy (unless endpoint in bypass) -> Target' -ForegroundColor DarkGray
+    Write-Host '    TCP test (this script): Direct to Target:443 (no proxy - validates L3/L4)' -ForegroundColor DarkGray
+    Write-Host '    HTTP test (this scrpt): Via effective proxy (validates L7 app-layer path)' -ForegroundColor DarkGray
+    if ($Mode -eq 'Private') {
+        Write-Host '    DNS (Private Link)   : PLS endpoints resolve to private IP (validated in DNS test)' -ForegroundColor DarkGray
+    }
+}
+
 # --- Gateway + proxy.bypass warning ---
 if ($Mode -eq 'Gateway' -and $agentBypass) {
     Add-Issue -Sev 'WARN' -Cat 'Gateway' `
@@ -497,10 +659,10 @@ if (-not $script:EffectiveProxy -and $PSVersionTable.PSVersion.Major -lt 6) {
 Log "Region=$Region Mode=$Mode Proxy=$($script:EffectiveProxy) Gateway=$($script:GatewayUrl)" Info -NoCount
 
 # =========================================================================
-# 3. TLS VERSION CHECK
+# PHASE 3: TLS & CRYPTO VALIDATION
 # =========================================================================
 
-Write-Section 'TLS Validation'
+Write-Section 'TLS & Crypto Validation'
 # Azure Arc requires TLS 1.2 or 1.3 ONLY.
 # Required cipher suites:
 #   TLS 1.3: TLS_AES_256_GCM_SHA384, TLS_AES_128_GCM_SHA256
@@ -543,9 +705,9 @@ try {
     # --- 2. Real TLS 1.2 Handshake Test ---
     $tlsHandshakeOk = $false
     $negotiatedProto = ''
+    $savedProto = [System.Net.ServicePointManager]::SecurityProtocol
     try {
         # Force .NET to use TLS 1.2 for this test
-        $savedProto = [System.Net.ServicePointManager]::SecurityProtocol
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
         $testReq = [System.Net.HttpWebRequest]::Create('https://login.microsoftonline.com')
         $testReq.Timeout = 10000
@@ -560,11 +722,12 @@ try {
         $testResp.Close()
         $tlsHandshakeOk = $true
         $negotiatedProto = 'TLS 1.2'
-        [System.Net.ServicePointManager]::SecurityProtocol = $savedProto
     }
     catch {
-        try { [System.Net.ServicePointManager]::SecurityProtocol = $savedProto } catch { }
         # If TLS 1.2 fails, the OS may not support it
+    }
+    finally {
+        [System.Net.ServicePointManager]::SecurityProtocol = $savedProto
     }
 
     # --- 3. Cipher Suite Check ---
@@ -594,12 +757,15 @@ try {
 
     # --- 4. .NET Strong Crypto ---
     $strongCrypto = $false
+    $sysDefaultTls = $false
     $regPath64 = 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319'
     $regPath32 = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319'
     foreach ($rp in @($regPath64, $regPath32)) {
         if (Test-Path $rp) {
             $sc = (Get-ItemProperty -Path $rp -Name 'SchUseStrongCrypto' -EA SilentlyContinue).SchUseStrongCrypto
             if ($sc -eq 1) { $strongCrypto = $true }
+            $sd = (Get-ItemProperty -Path $rp -Name 'SystemDefaultTlsVersions' -EA SilentlyContinue).SystemDefaultTlsVersions
+            if ($sd -eq 1) { $sysDefaultTls = $true }
         }
     }
 
@@ -637,12 +803,31 @@ try {
         Write-Status 'Cipher Suites' 'Required GCM suites present' Green
     }
 
-    # .NET StrongCrypto
-    if ($strongCrypto) {
-        Write-Status '.NET StrongCrypto' 'Enabled' Green
+    # .NET StrongCrypto + SystemDefaultTlsVersions
+    if ($strongCrypto -and $sysDefaultTls) {
+        Write-Status '.NET TLS Config' 'SchUseStrongCrypto=1, SystemDefaultTlsVersions=1' Green
+    }
+    elseif ($strongCrypto) {
+        Write-Status '.NET StrongCrypto' 'Enabled (SystemDefaultTlsVersions NOT set)' Yellow
+    }
+    elseif ($sysDefaultTls) {
+        Write-Status '.NET TLS Config' 'SystemDefaultTlsVersions=1 (SchUseStrongCrypto NOT set)' Yellow
     }
     else {
-        Write-Status '.NET StrongCrypto' 'NOT set (recommended for PS 5.1 / .NET apps)' Yellow
+        # On Server 2016+ (.NET 4.6+), TLS 1.2 is default even without these keys (INFO only)
+        # On Server 2012 R2, this is a blocking issue (WARN)
+        $netSev = if ($isModernOS -and $osVer.Major -ge 10) { 'INFO' } else { 'WARN' }
+        $netMsg = if ($netSev -eq 'INFO') {
+            '.NET TLS keys not set (OK on this OS - .NET 4.6+ defaults to TLS 1.2)'
+        } else {
+            '.NET Framework not configured for TLS 1.2 default. Extensions may fail with: "Could not create SSL/TLS secure channel"'
+        }
+        Write-Status '.NET TLS Config' 'Neither StrongCrypto nor SystemDefaultTlsVersions set' $(if ($netSev -eq 'INFO') { 'DarkGray' } else { 'Yellow' })
+        if ($netSev -eq 'WARN') {
+            Add-Issue -Sev 'WARN' -Cat 'TLS .NET' `
+                -Msg $netMsg `
+                -Fix 'Set SchUseStrongCrypto=1 and SystemDefaultTlsVersions=1 in HKLM:\SOFTWARE\[Wow6432Node\]Microsoft\.NETFramework\v4.0.30319'
+        }
     }
 
     # Server 2012 (non-R2) + SQL Arc warning
@@ -657,10 +842,93 @@ catch {
     Write-Status 'TLS' "Check error: $($_.Exception.Message)" Yellow
     $tlsOk = $true
 }
-Log "TLS check: OK=$tlsOk handshake=$tlsHandshakeOk ciphers=$cipherOk strongCrypto=$strongCrypto" $(if ($tlsOk) { 'OK' } else { 'Fail' })
+Log "TLS check: OK=$tlsOk handshake=$tlsHandshakeOk ciphers=$cipherOk strongCrypto=$strongCrypto sysDefaultTls=$sysDefaultTls" $(if ($tlsOk) { 'OK' } else { 'Fail' })
+
+# --- TLS Registry Dump (full diagnostic view) ---
+Write-Section 'TLS Registry Dump (Actual vs Recommended)'
+
+$tlsRegChecks = @(
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client'; Name = 'Enabled';           Recommended = 1; Scope = 'TLS Client'; UsedBy = 'Arc Agent, OCSP/CRL' }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client'; Name = 'DisabledByDefault';  Recommended = 0; Scope = 'TLS Client'; UsedBy = 'Arc Agent, OCSP/CRL' }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server'; Name = 'Enabled';           Recommended = 1; Scope = 'TLS Server'; UsedBy = 'WAC inbound, RDP' }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server'; Name = 'DisabledByDefault';  Recommended = 0; Scope = 'TLS Server'; UsedBy = 'WAC inbound, RDP' }
+    @{ Path = 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319';                                          Name = 'SchUseStrongCrypto'; Recommended = 1; Scope = '.NET x64'; UsedBy = 'PS 5.1, Extensions' }
+    @{ Path = 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319';                                          Name = 'SystemDefaultTlsVersions'; Recommended = 1; Scope = '.NET x64'; UsedBy = 'PS 5.1, Extensions' }
+    @{ Path = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319';                              Name = 'SchUseStrongCrypto'; Recommended = 1; Scope = '.NET x86'; UsedBy = '32-bit .NET apps' }
+    @{ Path = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319';                              Name = 'SystemDefaultTlsVersions'; Recommended = 1; Scope = '.NET x86'; UsedBy = '32-bit .NET apps' }
+)
+
+$rdFmt = "  {0,-6} | {1,-10} | {2,-24} | {3,-9} | {4,-5} | {5}"
+Write-Host ($rdFmt -f 'Status', 'Scope', 'Name', 'Value', 'Rec.', 'Used By') -ForegroundColor Cyan
+Write-Host ("  {0,-6}-+-{1,-10}-+-{2,-24}-+-{3,-9}-+-{4,-5}-+-{5}" -f ('-' * 6), ('-' * 10), ('-' * 24), ('-' * 9), ('-' * 5), ('-' * 22)) -ForegroundColor DarkGray
+
+$tlsRegIssues = 0
+foreach ($chk in $tlsRegChecks) {
+    $val = $null
+    $valStr = 'N/A'
+    if (Test-Path $chk.Path) {
+        $prop = Get-ItemProperty -Path $chk.Path -Name $chk.Name -ErrorAction SilentlyContinue
+        if ($null -ne $prop -and $null -ne $prop.($chk.Name)) {
+            $val = $prop.($chk.Name)
+            $valStr = "$val"
+        }
+        else {
+            $valStr = '(not set)'
+        }
+    }
+    else {
+        $valStr = '(key missing)'
+    }
+
+    # Determine status
+    $recStr = "$($chk.Recommended)"
+    if ($val -eq $chk.Recommended) {
+        $status = 'OK'
+        $color = 'Green'
+    }
+    elseif ($null -eq $val -and $chk.Scope -like 'TLS *') {
+        # SCHANNEL keys not set = OS default (TLS 1.2 enabled on 2012R2+ with KB, 2016+ native)
+        $status = 'DFLT'
+        $color = 'DarkYellow'
+    }
+    else {
+        $status = 'WARN'
+        $color = 'Yellow'
+        $tlsRegIssues++
+    }
+
+    # Shorten path for display
+    $shortPath = $chk.Path -replace 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL\\Protocols\\', '...\SCHANNEL\' `
+                            -replace 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\', '...\WOW6432Node\' `
+                            -replace 'HKLM:\\SOFTWARE\\Microsoft\\', '...\Microsoft\'
+
+    $usedBy = if ($chk.UsedBy) { $chk.UsedBy } else { '-' }
+    Write-Host ($rdFmt -f $status, $chk.Scope, $chk.Name, $valStr, $recStr, $usedBy) -ForegroundColor $color
+}
+
+if ($tlsRegIssues -gt 0) {
+    Write-Host ''
+    Write-Host "  $tlsRegIssues registry value(s) not matching recommendation." -ForegroundColor Yellow
+    Write-Host '  Ref: https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues' -ForegroundColor DarkCyan
+    Write-Host '  Ref: https://learn.microsoft.com/entra/identity/hybrid/connect/reference-connect-tls-enforcement' -ForegroundColor DarkCyan
+}
+else {
+    Write-Host ''
+    Write-Host '  All TLS registry values match Azure Arc recommendations.' -ForegroundColor Green
+}
+Write-Host ''
+Write-Host '  Legend: OK=value matches | DFLT=not set but OS default is correct (Server 2016+) | WARN=should be configured' -ForegroundColor DarkGray
+
+# Also log to file
+$tlsRegLog = $tlsRegChecks | ForEach-Object {
+    $v = $null
+    if (Test-Path $_.Path) { $v = (Get-ItemProperty -Path $_.Path -Name $_.Name -EA SilentlyContinue).($_.Name) }
+    "$($_.Scope) | $($_.Name) = $(if ($null -ne $v) { $v } else { 'N/A' }) (rec: $($_.Recommended))"
+}
+Log "TLS Registry: $($tlsRegLog -join ' ; ')" Info -NoCount
 
 # =========================================================================
-# 4. PKI/OCSP/CRL BYPASS VALIDATION
+# PHASE 4: PKI/OCSP/CRL BYPASS VALIDATION
 # =========================================================================
 
 $pkiEndpoints = @(
@@ -671,7 +939,7 @@ $pkiEndpoints = @(
     'crl4.digicert.com'           # CRL DigiCert alt
     'ocsp.digicert.com'           # OCSP DigiCert
     'ctldl.windowsupdate.com'     # Certificate Trust List
-    'www.microsoft.com'           # PKI AIA chain
+    'www.microsoft.com'           # PKI AIA chain + /pkiops/certs (ESU HTTP:80+HTTPS:443)
     'caissuers.microsoft.com'     # CA Issuers (AIA)
     'login.live.com'              # Live ID cert validation
 )
@@ -746,7 +1014,7 @@ if (-not $SkipPKI -and $script:WinHttpProxy) {
 }
 
 # =========================================================================
-# 5. ENDPOINT DEFINITIONS
+# PHASE 5: ENDPOINT DEFINITIONS
 # =========================================================================
 
 # Reset stats for test phase
@@ -763,18 +1031,27 @@ $canBePrivate = [System.Collections.ArrayList]@(
 )
 
 # --- Core endpoints (always tested) ---
+# Ref: https://learn.microsoft.com/azure/azure-arc/network-requirements-consolidated
 $coreEps = [System.Collections.ArrayList]@(
-    'login.windows.net'
-    'login.microsoftonline.com'
-    "$Region.login.microsoft.com"
-    'pas.windows.net'
-    'management.azure.com'
-    'gbl.his.arc.azure.com'
-    'agentserviceapi.guestconfiguration.azure.com'
-    'packages.microsoft.com'
-    'download.microsoft.com'
-    'dc.services.visualstudio.com'
+    'login.windows.net'                # AAD authentication
+    'login.microsoftonline.com'        # AAD authentication
+    "$Region.login.microsoft.com"      # AAD regional
+    'pas.windows.net'                  # AAD token (access packages)
+    'management.azure.com'             # ARM (Azure Resource Manager)
+    'gbl.his.arc.azure.com'            # Arc Hybrid Identity Service (global)
+    'agentserviceapi.guestconfiguration.azure.com'  # Guest Configuration (global)
+    'packages.microsoft.com'           # Agent/extension packages (Linux apt/yum)
+    'download.microsoft.com'           # Agent installer + extension downloads
+    'mcr.microsoft.com'                # Extension container images
 )
+
+# dc.services.visualstudio.com — not used in agent 1.24+ (replaced by ARM telemetry)
+$agVerParts = if ($script:AgentVersion) { $script:AgentVersion -split '\.' } else { @() }
+$agMajor = if ($agVerParts.Count -ge 1) { try { [int]$agVerParts[0] } catch { 0 } } else { 0 }
+$agMinor = if ($agVerParts.Count -ge 2) { try { [int]$agVerParts[1] } catch { 0 } } else { 0 }
+if ($script:PreOnboarding -or ($agMajor -lt 1) -or ($agMajor -eq 1 -and $agMinor -lt 24)) {
+    [void]$coreEps.Add('dc.services.visualstudio.com')
+}
 
 # GNS global (Public/Gateway modes)
 if ($Mode -in 'Public', 'Gateway') {
@@ -796,38 +1073,50 @@ if ($script:GatewayUrl) {
 # --- Extension endpoints (auto-detected) ---
 $extEps = @{}
 
-# SQL Server
+# SQL Server enabled by Azure Arc
+# Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint
+# Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/prerequisites
 if ($script:InstalledExts -contains 'SQL' -or $CheckIncludeAll) {
     $extEps['SQL'] = @(
-        "dataprocessingservice.$Region.arcdataservices.com"
-        "telemetry.$Region.arcdataservices.com"
-        "san-af-$Region-prod.azurewebsites.net"
-        'graph.microsoft.com'
+        "dataprocessingservice.$Region.arcdataservices.com"   # Data processing (telemetry upload)
+        "telemetry.$Region.arcdataservices.com"              # Telemetry collection
+        "san-af-$Region-prod.azurewebsites.net"             # SQL Assessment (legacy, may be deprecated)
+        'graph.microsoft.com'                               # AAD Graph for SQL auth
     )
 }
 
 # Defender for SQL (separate from MDE)
+# Ref: https://learn.microsoft.com/azure/defender-for-cloud/defender-for-sql-usage
 if ($script:InstalledExts -contains 'DSQL' -or $CheckIncludeAll) {
     if (-not $extEps.ContainsKey('SQL')) { $extEps['SQL'] = @() }
     $extEps['SQL'] += @("defender-for-databases.$Region.arcdataservices.com")
 }
 
 # AMA (Azure Monitor Agent) + Dependency Agent
+# Ref: https://learn.microsoft.com/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
 if ($script:InstalledExts -contains 'AMA' -or $script:InstalledExts -contains 'DA' -or $CheckIncludeAll) {
     $extEps['AMA'] = @(
-        'global.handler.control.monitor.azure.com'
-        'global.prod.microsoftmetrics.com'
-        "$Region.handler.control.monitor.azure.com"
-        "$Region.monitoring.azure.com"
+        'global.handler.control.monitor.azure.com'       # Agent control channel (global)
+        "$Region.handler.control.monitor.azure.com"      # Agent control channel (regional)
+        "$Region.monitoring.azure.com"                   # Metrics ingestion (DCR)
+        'global.prod.microsoftmetrics.com'               # Metrics publishing
     )
+    # NOTE: Log ingestion uses <dce-id>.<region>.ingest.monitor.azure.com
+    # which is customer-specific (Data Collection Endpoint). Not testable without DCE context.
 }
 
 # MDE (Microsoft Defender for Endpoint)
+# Ref: https://learn.microsoft.com/defender-endpoint/configure-proxy-internet
+# Ref: https://learn.microsoft.com/defender-endpoint/configure-environment#streamlined-connectivity
+# NOTE: MDE endpoints vary by tenant geo (US/EU/UK). Below are US defaults.
+#       If tenant is in EU/UK, these will differ. Agent geo is detected from onboarding blob.
 if ($script:InstalledExts -contains 'MDE' -or $CheckIncludeAll) {
     $extEps['MDE'] = @(
-        'unitedstates.x.cp.wd.microsoft.com'
-        'us-v20.events.data.microsoft.com'
-        'winatp-gw-cus3.microsoft.com'
+        'unitedstates.x.cp.wd.microsoft.com'   # Cyber data (US geo)
+        'us-v20.events.data.microsoft.com'     # EDR telemetry (US geo)
+        'winatp-gw-cus3.microsoft.com'         # Gateway (Central US)
+        'go.microsoft.com'                     # MDE update/CnC channel
+        '*.endpoint.security.microsoft.com'    # Unified MDE endpoint (streamlined)
     )
 }
 
@@ -842,10 +1131,12 @@ if ($script:InstalledExts -contains 'KV' -or $CheckIncludeAll) {
 }
 
 # Hybrid Runbook Worker
+# Ref: https://learn.microsoft.com/azure/automation/automation-hybrid-runbook-worker#network-planning
 if ($script:InstalledExts -contains 'HRW' -or $CheckIncludeAll) {
     $extEps['HRW'] = @(
-        '*.azure-automation.net'
-        '*.agentsvc.azure-automation.net'
+        '*.azure-automation.net'               # Automation account
+        '*.agentsvc.azure-automation.net'      # Agent service
+        '*.jrds.azure-automation.net'          # Job Runtime Data Service
     )
 }
 
@@ -859,6 +1150,18 @@ if ($script:InstalledExts -contains 'GA' -or $CheckIncludeAll) {
     $extEps['GA'] = @('*.attest.azure.net')
 }
 
+# --- Extension download infrastructure (wildcard, always needed if any extension) ---
+# Ref: https://learn.microsoft.com/azure/azure-arc/servers/network-requirements
+# These are wildcards — cannot be TCP-tested but must be in firewall allow list
+$extDownloadWildcards = @(
+    '*.blob.core.windows.net'              # Extension package download (Azure Storage)
+    '*.dl.delivery.mp.microsoft.com'       # Extension package download (CDN alt)
+    '*.data.mcr.microsoft.com'             # Container image layers (MCR)
+    '*.servicebus.windows.net'             # GNS notification channel (Public mode)
+    '*.ods.opinsights.azure.com'           # Log Analytics data ingestion (AMA/MMA)
+    '*.oms.opinsights.azure.com'           # Log Analytics management (AMA/MMA)
+)
+
 # -SkipExtensions overrides -CheckIncludeAll (user explicitly asked to skip)
 if ($SkipExtensions -and $extEps.Count -gt 0) {
     $extEps = @{}
@@ -866,7 +1169,7 @@ if ($SkipExtensions -and $extEps.Count -gt 0) {
 }
 
 # =========================================================================
-# 6. DISCOVER REGIONAL ENDPOINTS (azcmagent check)
+# PHASE 6: ENDPOINT DISCOVERY (azcmagent check)
 # =========================================================================
 # Regional Arc endpoints use unpredictable abbreviations (e.g. eus2, brs, ncus).
 # Instead of guessing, we parse 'azcmagent check' output to discover the actual
@@ -1006,6 +1309,10 @@ if (-not $SkipPKI) {
         if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'PKI' }
     }
 }
+# Extension download infrastructure wildcards
+foreach ($ep in $extDownloadWildcards) {
+    if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'DL' }
+}
 
 # --- Dynamic GNS allowlist (Public mode only) ---
 $dynamicEps = @()
@@ -1049,6 +1356,9 @@ foreach ($grp in $extEps.Keys) {
 $allTestable += $dynamicEps
 if (-not $SkipPKI) { $allTestable += $pkiEndpoints }
 
+# Add extension download wildcards (always needed)
+$allTestable += $extDownloadWildcards
+
 # Separate wildcards (informational, not testable) from concrete FQDNs
 $wildcardEps = @($allTestable | Where-Object { $_ -match '^\*\.' } | Select-Object -Unique)
 $allTestable = @($allTestable | Where-Object { $_ -notmatch '^\*\.' } | Where-Object { $_ } | Select-Object -Unique)
@@ -1058,6 +1368,10 @@ $httpProbeEps = @('login.windows.net', 'login.microsoftonline.com', 'management.
 if ($extEps.ContainsKey('SQL')) {
     $httpProbeEps += "dataprocessingservice.$Region.arcdataservices.com"
     $httpProbeEps += "telemetry.$Region.arcdataservices.com"
+}
+# Probe Gateway URL if configured
+if ($script:GatewayUrl) {
+    $httpProbeEps += $script:GatewayUrl
 }
 
 # --- Agent proxy.bypass => skip HTTP for bypassed endpoints ---
@@ -1092,10 +1406,28 @@ if ($azcm -and $script:EffectiveProxy) {
 }
 
 # =========================================================================
-# 7. ENDPOINT TESTS: DNS + TCP/443
+# PHASE 7: CONNECTIVITY TESTS (DNS + TCP + HTTP)
 # =========================================================================
 
-Write-Banner "TESTING $($allTestable.Count) ENDPOINTS"
+Write-Banner "PHASE 2: CONNECTIVITY TESTS ($($allTestable.Count) endpoints)"
+
+# Gateway mode: verify Arc Proxy is listening on localhost:40343
+if ($Mode -eq 'Gateway' -and -not $script:PreOnboarding) {
+    Write-Section 'Arc Gateway Proxy (localhost:40343)'
+    $gwProxyOk = Test-TcpPort -H '127.0.0.1' -P 40343 -T 3000
+    if ($gwProxyOk) {
+        Write-Status 'Arc Proxy' 'localhost:40343 reachable' Green
+        Log 'Arc Gateway Proxy localhost:40343 reachable' OK
+    }
+    else {
+        Write-Status 'Arc Proxy' 'localhost:40343 NOT reachable' Red
+        Log 'Arc Gateway Proxy localhost:40343 NOT reachable' Fail
+        Add-Issue -Sev 'CRITICAL' -Cat 'Gateway' `
+            -Msg 'Arc Gateway local proxy (localhost:40343) not responding. Tunneled endpoints will fail.' `
+            -Fix 'Verify Arc Gateway is properly configured: azcmagent config get proxy.url'
+    }
+    Write-Host ''
+}
 
 $pi = 0
 foreach ($ep in $allTestable) {
@@ -1104,7 +1436,8 @@ foreach ($ep in $allTestable) {
     $pi++
 
     $grp = if ($endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] } else { 'Core' }
-    Add-Result -Endpoint $ep -Group $grp
+    $epPath = if (Test-IsGatewayTunneled -Endpoint $ep) { 'Tunnel' } else { 'Direct' }
+    Add-Result -Endpoint $ep -Group $grp -Path $epPath
 
     $pct = [math]::Round(($pi / $allTestable.Count) * 100)
     $epShort = if ($ep.Length -gt 56) { $ep.Substring(0, 53) + '...' } else { $ep }
@@ -1159,28 +1492,43 @@ foreach ($ep in $allTestable) {
     }
 
     # --- TCP/443 ---
-    # Note: TCP tests L3/L4 reachability directly (not via proxy).
-    # In explicit proxy setups, this validates the network path through the firewall.
-    $sw = [System.Diagnostics.Stopwatch]::StartNew()
-    $ok = Test-TcpPort -H $ep -P 443 -T 5000
-    $sw.Stop()
-    $ms = [math]::Round($sw.Elapsed.TotalMilliseconds, 0)
-
-    $rr3 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-    if ($ok) {
-        Log "TCP OK ${ep}:443 (${ms}ms)" OK
-        if ($rr3) { $rr3.TCP = 'OK'; $rr3.Latency = "${ms}ms" }
+    # In Gateway mode, tunneled endpoints route through localhost:40343 (Arc Proxy)
+    # so direct TCP to the target IP is NOT expected to work.
+    $isTunneled = Test-IsGatewayTunneled -Endpoint $ep
+    if ($isTunneled) {
+        Log "TCP SKIP ${ep}:443 (tunneled via Gateway)" Info -NoCount
+        $rr3 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
+        if ($rr3) { $rr3.TCP = 'TUNNEL'; $rr3.Latency = 'n/a' }
     }
     else {
-        Log "TCP FAIL ${ep}:443" Fail
-        if ($rr3) { $rr3.TCP = 'FAIL'; $rr3.Latency = 'timeout' }
-        Add-Issue -Sev 'HIGH' -Cat 'TCP' -Msg "Cannot connect to ${ep}:443" -Fix 'Check firewall/proxy rules'
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+        $ok = Test-TcpPort -H $ep -P 443 -T 5000
+        $sw.Stop()
+        $ms = [math]::Round($sw.Elapsed.TotalMilliseconds, 0)
+
+        $rr3 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
+        if ($ok) {
+            Log "TCP OK ${ep}:443 (${ms}ms)" OK
+            if ($rr3) { $rr3.TCP = 'OK'; $rr3.Latency = "${ms}ms" }
+        }
+        else {
+            # In proxy scenarios, TCP fail may be expected (proxy handles L7)
+            if ($script:EffectiveProxy -and $grp -ne 'PKI') {
+                Log "TCP WARN ${ep}:443 (proxy may handle)" Warn
+                if ($rr3) { $rr3.TCP = 'WARN'; $rr3.Latency = 'proxy' }
+            }
+            else {
+                Log "TCP FAIL ${ep}:443" Fail
+                if ($rr3) { $rr3.TCP = 'FAIL'; $rr3.Latency = 'timeout' }
+                Add-Issue -Sev 'HIGH' -Cat 'TCP' -Msg "Cannot connect to ${ep}:443" -Fix 'Check firewall/proxy rules'
+            }
+        }
     }
 }
 Write-Host ''   # Clear progress line
 
 # =========================================================================
-# 8. HTTP TESTS + PKI PROBE
+# PHASE 7b: HTTP TESTS + PKI PROBE
 # =========================================================================
 
 foreach ($ep in $httpProbeEps) {
@@ -1201,8 +1549,9 @@ foreach ($ep in $httpProbeEps) {
         if ($_.Exception.Response) {
             try { $code = [int]$_.Exception.Response.StatusCode } catch { }
         }
-        if ($code -in 400, 401, 403, 404) {
-            Log "HTTP OK $ep -> $code" OK
+        # Any HTTP response (even 4xx/5xx) means network + TLS worked
+        if ($code -and $code -ge 100 -and $code -lt 600) {
+            Log "HTTP OK $ep -> $code (endpoint reachable)" OK
             Add-Result -Endpoint $ep -HTTP "OK($code)"
         }
         else {
@@ -1216,6 +1565,79 @@ foreach ($ep in $httpProbeEps) {
 # PKI HTTP probe — tests the REAL path SCHANNEL will use:
 #   If oneocsp.microsoft.com is in bypass → test DIRECT (no proxy)
 #   If NOT in bypass → test via WinHTTP proxy (likely fails on explicit proxy)
+
+# --- SQL Arc TLS 1.2 probe ---
+# Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint#check-tls-version-compatibility
+# arcdataservices.com REQUIRES TLS 1.2+ and GCM ciphers. Server 2012 (non-R2) will fail here.
+if ($extEps.ContainsKey('SQL')) {
+    $sqlTlsTarget = "dataprocessingservice.$Region.arcdataservices.com"
+    $sqlTlsOk = $false
+    $savedSqlProto = [Net.ServicePointManager]::SecurityProtocol
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $sqlReq = [System.Net.HttpWebRequest]::Create("https://$sqlTlsTarget")
+        $sqlReq.Timeout = 10000
+        $sqlReq.Method = 'HEAD'
+        if ($script:EffectiveProxy) {
+            $sqlReq.Proxy = [System.Net.WebProxy]::new($script:EffectiveProxy)
+            $sqlReq.Proxy.UseDefaultCredentials = $true
+        } elseif ($PSVersionTable.PSVersion.Major -lt 6) {
+            $sqlReq.Proxy = $null
+        }
+        $sqlResp = $sqlReq.GetResponse()
+        $sqlResp.Close()
+        $sqlTlsOk = $true
+    }
+    catch {
+        $sqlErr = $_.Exception.Message
+        # In PS 5.1, .GetResponse() wraps WebException in MethodInvocationException
+        $innerEx = if ($_.Exception.InnerException) { $_.Exception.InnerException } else { $_.Exception }
+        # If we got an HTTP response (4xx, 5xx), TLS handshake succeeded
+        if ($innerEx -is [System.Net.WebException]) {
+            $wex = [System.Net.WebException]$innerEx
+            if ($wex.Response) {
+                # Any HTTP response means TLS worked (endpoint just doesn't accept GET/HEAD)
+                $sqlTlsOk = $true
+            }
+            elseif ($wex.Status -eq [System.Net.WebExceptionStatus]::SecureChannelFailure -or
+                    $wex.Status -eq [System.Net.WebExceptionStatus]::TrustFailure) {
+                # Explicit TLS failure
+                $sqlTlsOk = $false
+            }
+            elseif ($wex.Status -eq [System.Net.WebExceptionStatus]::ConnectFailure -or
+                    $wex.Status -eq [System.Net.WebExceptionStatus]::Timeout) {
+                # Network issue, not TLS-specific
+                $sqlTlsOk = $false
+                $sqlErr = "Network: $($wex.Status) - $sqlErr"
+            }
+            else {
+                # Other WebException — connection was established (TLS likely OK)
+                # ReceiveFailure, ProtocolError without Response, etc.
+                $sqlTlsOk = $true
+            }
+        }
+        elseif ($_.Exception.Response -or ($innerEx -and $innerEx.Response)) {
+            # Got HTTP response through another exception wrapper
+            $sqlTlsOk = $true
+        }
+    }
+    finally {
+        [Net.ServicePointManager]::SecurityProtocol = $savedSqlProto
+    }
+
+    if ($sqlTlsOk) {
+        Log "SQL TLS probe OK: $sqlTlsTarget (TLS 1.2 handshake succeeded)" OK
+        Add-Result -Endpoint $sqlTlsTarget -HTTP 'OK(TLS)'
+    }
+    else {
+        Log "SQL TLS probe FAIL: $sqlTlsTarget - $sqlErr" Fail
+        Add-Result -Endpoint $sqlTlsTarget -HTTP 'FAIL(TLS)'
+        Add-Issue -Sev 'HIGH' -Cat 'SQL TLS' `
+            -Msg "TLS 1.2 handshake failed to $sqlTlsTarget. SQL Arc telemetry will not work." `
+            -Fix 'Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint#check-tls-version-compatibility'
+    }
+}
+
 if (-not $SkipPKI -and $script:WinHttpProxy) {
     $uncPkiNow = Test-PkiBypassCoverage
     $ocspBypassed = $uncPkiNow -notcontains 'oneocsp.microsoft.com'
@@ -1301,10 +1723,10 @@ elseif (-not $azcm) {
 Save-Log
 
 # =========================================================================
-# 9. RESULTS TABLE
+# PHASE 8: RESULTS
 # =========================================================================
 
-Write-Banner 'RESULTS'
+Write-Banner 'PHASE 3: RESULTS'
 
 $tbl = $script:Results | ForEach-Object { [pscustomobject]$_ }
 
@@ -1318,10 +1740,10 @@ $grps = $tbl | Group-Object Group | Sort-Object @{ Expression = {
 } }
 
 # Pipe-delimited table (azcmagent check style)
-$hf = "  {0,-5} | {1,-50} | {2,-16} | {3,-4} | {4,-9} | {5,-7}"
-Write-Host ($hf -f 'Group', 'Endpoint', 'IP', 'Type', 'Result', 'Latency') -ForegroundColor Cyan
-Write-Host ("  {0,-5}-+-{1,-50}-+-{2,-16}-+-{3,-4}-+-{4,-9}-+-{5,-7}" -f `
-    ('-' * 5), ('-' * 50), ('-' * 16), ('-' * 4), ('-' * 9), ('-' * 7)) -ForegroundColor DarkGray
+$hf = "  {0,-5} | {1,-46} | {2,-16} | {3,-4} | {4,-6} | {5,-9} | {6,-7}"
+Write-Host ($hf -f 'Group', 'Endpoint', 'IP', 'Type', 'Path', 'Result', 'Latency') -ForegroundColor Cyan
+Write-Host ("  {0,-5}-+-{1,-46}-+-{2,-16}-+-{3,-4}-+-{4,-6}-+-{5,-9}-+-{6,-7}" -f `
+    ('-' * 5), ('-' * 46), ('-' * 16), ('-' * 4), ('-' * 6), ('-' * 9), ('-' * 7)) -ForegroundColor DarkGray
 
 foreach ($g in $grps) {
     foreach ($r in $g.Group) {
@@ -1329,7 +1751,7 @@ foreach ($g in $grps) {
         $tcpOk  = $r.TCP  -notin @('FAIL', '-')
         $httpOk = ($r.HTTP -eq '-') -or ($r.HTTP -like 'OK*') -or ($r.HTTP -eq 'SKIP')
         $fail   = ($r.DNS -eq 'FAIL') -or ($r.TCP -eq 'FAIL') -or ($r.HTTP -like 'FAIL*')
-        $warn   = ($r.DNS -eq 'WARN') -or ($r.HTTP -like 'WARN*')
+        $warn   = ($r.DNS -eq 'WARN') -or ($r.TCP -eq 'WARN') -or ($r.HTTP -like 'WARN*')
 
         # Compose result column (mimics azcmagent: Reachable / Unreachable / Warning)
         if ($fail) {
@@ -1342,6 +1764,9 @@ foreach ($g in $grps) {
         elseif ($warn) {
             $result = 'Warning'
         }
+        elseif ($r.TCP -eq 'TUNNEL') {
+            $result = 'Tunneled'
+        }
         elseif ($r.HTTP -eq 'SKIP') {
             $result = 'Reachable*'
         }
@@ -1349,8 +1774,9 @@ foreach ($g in $grps) {
             $result = 'Reachable'
         }
 
-        $c = if ($fail) { 'Red' } elseif ($warn) { 'Yellow' } else { 'Green' }
-        Write-Host ($hf -f $r.Group, $r.Endpoint, $r.IP, $r.Type, $result, $r.Latency) -ForegroundColor $c
+        $c = if ($fail) { 'Red' } elseif ($warn) { 'Yellow' } elseif ($r.TCP -eq 'TUNNEL') { 'DarkYellow' } else { 'Green' }
+        $pathCol = if ($r.Path) { $r.Path } else { '-' }
+        Write-Host ($hf -f $r.Group, $r.Endpoint, $r.IP, $r.Type, $pathCol, $result, $r.Latency) -ForegroundColor $c
     }
 }
 
@@ -1367,7 +1793,7 @@ if ($wildcardEps.Count -gt 0) {
 }
 
 # =========================================================================
-# 10. ISSUES
+# PHASE 9: ISSUES
 # =========================================================================
 
 if ($script:Issues.Count -gt 0) {
@@ -1391,7 +1817,7 @@ if ($script:Issues.Count -gt 0) {
 }
 
 # =========================================================================
-# 11. FINAL SUMMARY
+# PHASE 10: FINAL SUMMARY
 # =========================================================================
 
 Write-Host ''
