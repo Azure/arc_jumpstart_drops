@@ -1,111 +1,61 @@
-#Requires -Version 5.1
-
 <#
 .SYNOPSIS
-    Validates Azure Arc connectivity, DNS, TCP, HTTP, TLS, proxy, PKI bypass,
-    and extension endpoints for Arc-enabled servers.
+    Validates Azure Arc connectivity, proxy behavior, agent local health, DNS, TCP, HTTP,
+    TLS, PKI bypass, and optional platform-specific metadata endpoints.
 
 .DESCRIPTION
-    Auto-detects EVERYTHING: region, connectivity mode (Public/Private/Gateway),
-    proxy configuration, installed extensions, and regional endpoints.
+    Refactored version of Arc endpoint validation with safer semantics for explicit proxy
+    environments and clearer platform separation.
 
-    Connectivity modes supported (per Microsoft docs):
-      - Public:  Direct internet or via forward proxy
-      - Private: Azure Private Link Scope (PLS)
-      - Gateway: Azure Arc Gateway (reduces endpoints to ~7 FQDNs)
+    In Private mode, this script distinguishes the Azure Arc private connectivity path from
+    Microsoft Entra ID and Azure Resource Manager control-plane traffic. Azure Arc Private
+    Link Scope does not carry ARM traffic by default, so a failed path to
+    management.azure.com can be reported as a non-blocking WARN when azcmagent shows no
+    critical Arc connectivity failures and Arc private-capable endpoints remain healthy.
 
-    Diagnostic sequence (execution order):
-      1. System & Agent Context  - OS, agent version/status, mode, extensions
-      2. Proxy Chain             - Detects and displays ALL proxy sources:
-                                   - WinHTTP (OS/GPO)    → used by SCHANNEL (PKI/CRL/OCSP)
-                                   - azcmagent proxy.url → used by Arc Agent core
-                                   - HTTPS_PROXY env     → used by Extensions (.NET/Python)
-                                   - Upstream proxy      → used in Gateway chain
-                                   Precedence for tests: -ProxyUrl > azcmagent > HTTPS_PROXY > WinHTTP
-      3. TLS & Crypto            - SCHANNEL registry, .NET Framework, cipher suites,
-                                   TLS 1.2 handshake test, registry dump (actual vs recommended)
-      4. PKI/OCSP/CRL Bypass     - Validates which PKI endpoints are in proxy bypass:
-                                   - Bypassed → SCHANNEL connects DIRECT (test without proxy)
-                                   - Not bypassed → SCHANNEL uses WinHTTP proxy (test via proxy)
-                                   Detects "non-proxy request on proxy port" failures
-      5. Endpoint Discovery      - azcmagent check + DNS-based regional discovery
-      6. Connectivity Tests      - Test strategy per proxy scenario:
-                                   - TCP/443: Direct L3/L4 (never uses proxy — validates firewall)
-                                   - HTTP probe: Via effective proxy (validates app-layer path)
-                                   - Gateway tunneled: Skips TCP (traffic goes localhost:40343)
-                                   - PKI probe: Direct or via WinHTTP (per bypass list)
-                                   - SQL TLS probe: TLS 1.2 handshake to arcdataservices.com
-      7. Results & Issues        - Summary table, issues with fix recommendations
-
-    Validates:
-      - Core Arc agent endpoints (HIMDS, GuestConfig, GNS, AAD, ARM, MCR)
-      - Regional endpoints discovered from 'azcmagent check'
-      - Extension endpoints: SQL, AMA, MDE, WAC, KV, HRW, UM, GA, Defender for SQL
-      - PKI/OCSP/CRL proxy bypass (detects "non-proxy request on proxy port")
-      - TLS 1.2+ with required GCM cipher suites (agent 1.56+)
-      - Arc Gateway tunneled vs direct endpoint classification
-      - SQL Arc specific TLS 1.2 handshake to arcdataservices.com
-
-    Run with ZERO parameters for full auto-detection:
-      PS> .\arcendpointcheck.ps1
+    Key improvements:
+      - Proxy-aware TCP result classification (avoids false FAIL for direct TCP in proxy mode)
+      - Agent local health section (services, version, config, last himds log lines)
+      - Optional platform checks for AzureLocal / AzureStackHub / AzureVM
+      - Reduced reliance on static endpoint assumptions when azcmagent is available
+      - More conservative TLS/cipher reporting
+      - Private-mode handling that separates Arc private-link health from ARM control-plane health
 
 .PARAMETER Region
-    Azure region. Auto-detected from azcmagent if omitted.
+    Azure region. Auto-detected from azcmagent when possible.
 
 .PARAMETER Mode
     Auto | Public | Private | Gateway. Default: Auto.
+
+.PARAMETER Platform
+    Auto | Arc | AzureLocal | AzureStackHub | AzureVM. Default: Auto.
 
 .PARAMETER ProxyUrl
     Override proxy URL. Auto-detected if omitted.
 
 .PARAMETER LogFilePath
-    Log file path. Default: C:\temp\Arclogfile.txt.
+    Log file path. Default: C:\temp\ArcEndpointCheck_<computer>.txt.
 
 .PARAMETER SkipPKI
-    Skips PKI/OCSP/CRL testing (not recommended).
+    Skips PKI/OCSP/CRL testing.
 
 .PARAMETER SkipExtensions
     Skips extension endpoint testing.
 
-.PARAMETER GatewayUrl
-    Arc Gateway URL for pre-onboarding (when agent is not installed).
-    Auto-detected from azcmagent if omitted.
-
 .PARAMETER CheckIncludeAll
-    Makes 'azcmagent check' use '--extensions all --include-all'.
+    Makes azcmagent check use '--extensions all --include-all'.
+
+.PARAMETER SkipAgentHealth
+    Skips local agent health inspection.
 
 .EXAMPLE
-    PS> .\arcendpointcheck.ps1
-    Full auto: detects region, mode, proxy, extensions. Zero parameters needed.
+    .\arc-endpoint-check-revised.ps1
 
 .EXAMPLE
-    PS> .\arcendpointcheck.ps1 -Region brazilsouth -Mode Private
-    Forces region and mode override.
+    .\arc-endpoint-check-revised.ps1 -Region brazilsouth -Mode Private
 
 .EXAMPLE
-    PS> .\arcendpointcheck.ps1 -Region eastus2 -Mode Gateway -GatewayUrl https://mygateway.gw.arc.azure.com -ProxyUrl http://10.0.1.4:8443
-    Pre-onboarding Gateway: agent not installed but gateway URL is known.
-
-.EXAMPLE
-    PS> .\arcendpointcheck.ps1 -Region eastus2 -Mode Private -ProxyUrl http://10.0.1.4:8443 -CheckIncludeAll
-    Pre-onboarding: agent not installed. Specify region, mode, proxy, and test all extensions.
-
-.NOTES
-    Requires PowerShell 5.1+ on Windows (Server 2012 R2+ with WMF 5.1, or Server 2016+ native).
-    Minimum OS: Windows Server 2012 R2 (with WMF 5.1 installed).
-    Does NOT require Administrator (recommended but not mandatory).
-
-    References:
-      - https://learn.microsoft.com/azure/azure-arc/network-requirements-consolidated
-      - https://learn.microsoft.com/azure/azure-arc/servers/arc-gateway
-      - https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues
-      - https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint
-      - https://learn.microsoft.com/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
-      - https://learn.microsoft.com/defender-endpoint/configure-proxy-internet
-      - https://learn.microsoft.com/entra/identity/hybrid/connect/reference-connect-tls-enforcement
-
-.LINK
-    https://azurearcjumpstart.com
+    .\arc-endpoint-check-revised.ps1 -Platform AzureLocal -Mode Gateway -ProxyUrl http://10.0.1.4:8443
 #>
 
 [CmdletBinding()]
@@ -115,43 +65,21 @@ param(
     [ValidateSet('Auto', 'Public', 'Private', 'Gateway')]
     [string]$Mode = 'Auto',
 
-    [string]$ProxyUrl,
+    [ValidateSet('Auto', 'Arc', 'AzureLocal', 'AzureStackHub', 'AzureVM')]
+    [string]$Platform = 'Auto',
 
-    [string]$GatewayUrl,
+    [string]$ProxyUrl,
 
     [string]$LogFilePath = "C:\temp\ArcEndpointCheck_$($env:COMPUTERNAME).txt",
 
     [switch]$SkipPKI,
     [switch]$SkipExtensions,
-    [switch]$CheckIncludeAll
+    [switch]$CheckIncludeAll,
+    [switch]$SkipAgentHealth
 )
 
-# =========================================================================
-# SETUP
-# =========================================================================
 $ErrorActionPreference = 'Stop'
-$ProgressPreference    = 'SilentlyContinue'
-$script:Version        = '2.0.0'
-$script:Updated        = '2026-07-08'
-
-# Enable TLS 1.2 for this session (required on systems without SchUseStrongCrypto)
-# 3072 = [Net.SecurityProtocolType]::Tls12
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072
-
-# --- Prerequisites Check ---
-$script:IsAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-if (-not $script:IsAdmin) {
-    Write-Host '  [WARN] Not running as Administrator. Some checks may be limited.' -ForegroundColor Yellow
-    Write-Host '         Recommend: Right-click PowerShell > Run as Administrator' -ForegroundColor DarkYellow
-    Write-Host ''
-}
-
-# Verify Resolve-DnsName is available (DnsClient module, Server 2012+ / Win8+)
-if (-not (Get-Command 'Resolve-DnsName' -ErrorAction SilentlyContinue)) {
-    Write-Host '  [ERROR] Resolve-DnsName not available. Requires Windows Server 2012+ / Win8+.' -ForegroundColor Red
-    Write-Host '          This script cannot run on this OS.' -ForegroundColor Red
-    exit 1
-}
+$ProgressPreference = 'SilentlyContinue'
 
 $logDir = Split-Path -Path $LogFilePath -Parent
 if ($logDir -and -not (Test-Path $logDir)) {
@@ -159,90 +87,71 @@ if ($logDir -and -not (Test-Path $logDir)) {
 }
 Set-Content -Path $LogFilePath -Value "ArcEndpointCheck started at $(Get-Date -Format o)" -Force
 
-$script:Stats   = [ordered]@{ OK = 0; Fail = 0; Warn = 0 }
-$script:Log      = [System.Collections.ArrayList]::new()
-$script:Results  = [System.Collections.ArrayList]::new()
-$script:Issues   = [System.Collections.ArrayList]::new()
-
-# =========================================================================
-# HELPERS
-# =========================================================================
+$script:Stats = [ordered]@{
+    DNSOK = 0; DNSWarn = 0; DNSFail = 0
+    TCPOK = 0; TCPWarn = 0; TCPFail = 0
+    HTTPOK = 0; HTTPWarn = 0; HTTPFail = 0
+}
+$script:Log = New-Object System.Collections.ArrayList
+$script:Results = New-Object System.Collections.ArrayList
+$script:Issues = New-Object System.Collections.ArrayList
+$script:InstalledExts = @()
+$script:AgentJson = $null
+$script:EffectiveProxy = $null
+$script:WinHttpProxy = $null
+$script:WinHttpBypass = $null
+$script:GatewayUrl = $null
+$script:AgentConfigDump = $null
+$script:ProxyMode = 'Direct'
+$script:EffectiveProxyReachable = $null
+$script:EffectiveProxyParseError = $null
+$script:AzcmagentCheckExit = $null
+$script:AzcmagentEndpointMeta = @{}
+$script:AzcmagentFailedEndpoints = New-Object System.Collections.ArrayList
+$script:AzcmagentChecksFailed = $null
+$script:AzcmagentCriticalFailures = $null
+$script:AzcmagentCoreHealthy = $null
+$script:AzcmagentPrivatePathHealthy = $false
+$script:PreOnboarding = $false
+$script:DeferredTlsIssue = $null
+$script:ScenarioSummary = @()
+$script:DisclaimerLines = @(
+    'Disclaimer: This script was updated with support from Azure SRE Agent.',
+    'Responsible AI documentation: Microsoft Responsible AI principles and approach: https://www.microsoft.com/en-us/ai/principles-and-approach',
+    'Responsible AI governance overview: Microsoft Artificial Intelligence overview / Responsible AI Standard: https://learn.microsoft.com/en-us/compliance/assurance/assurance-artificial-intelligence',
+    'Validation note: Results were tested and validated in 3 scenarios with direct user oversight, follow-up, and user-made changes during execution review.'
+)
+Add-Content -Path $LogFilePath -Value ''
+Add-Content -Path $LogFilePath -Value '=================== DISCLAIMER ==================='
+Add-Content -Path $LogFilePath -Value $script:DisclaimerLines
 
 function Write-Banner {
-    param([string]$T)
-    $w = 74
+    param([string]$Text)
+    $w = 82
     Write-Host ''
     Write-Host ('=' * $w) -ForegroundColor DarkCyan
-    Write-Host "  $T" -ForegroundColor Cyan
+    Write-Host "  $Text" -ForegroundColor Cyan
     Write-Host ('=' * $w) -ForegroundColor DarkCyan
 }
 
 function Write-Section {
-    param([string]$T)
+    param([string]$Text)
     Write-Host ''
-    Write-Host "  --- $T ---" -ForegroundColor DarkGray
+    Write-Host "  --- $Text ---" -ForegroundColor DarkGray
 }
 
 function Write-Status {
     param([string]$Label, [string]$Value, [string]$Color = 'White')
-    Write-Host ("  {0,-22} {1}" -f "${Label}:", $Value) -ForegroundColor $Color
-}
-
-function Test-IsValidProxyUri {
-    param([string]$C)
-    if (-not $C) { return $false }
-    $p = $null
-    return (
-        [System.Uri]::TryCreate($C, [System.UriKind]::Absolute, [ref]$p) -and
-        $p.Scheme -in @('http', 'https')
-    )
+    Write-Host ("  {0,-24} {1}" -f ("${Label}:"), $Value) -ForegroundColor $Color
 }
 
 function Log {
     param(
         [string]$Msg,
-        [ValidateSet('Info', 'OK', 'Fail', 'Warn')][string]$Lv = 'Info',
-        [switch]$NoCount
+        [ValidateSet('INFO', 'OK', 'WARN', 'FAIL')][string]$Level = 'INFO'
     )
-    $line = "[$(Get-Date -Format HH:mm:ss)] [$($Lv.ToUpper().PadRight(4))] $Msg"
+    $line = "[$(Get-Date -Format HH:mm:ss)] [$Level] $Msg"
     [void]$script:Log.Add($line)
-    Write-Verbose $line
-    if (-not $NoCount) {
-        if ($Lv -eq 'OK')   { $script:Stats.OK++ }
-        if ($Lv -eq 'Fail') { $script:Stats.Fail++ }
-        if ($Lv -eq 'Warn') { $script:Stats.Warn++ }
-    }
-}
-
-function Add-Result {
-    param(
-        [string]$Endpoint, [string]$Group = 'Core', [string]$IP = '-',
-        [string]$Type = '-', [string]$DNS = '-', [string]$TCP = '-',
-        [string]$HTTP = '-', [string]$Latency = '-', [string]$Path = '-'
-    )
-    $ex = $script:Results | Where-Object { $_.Endpoint -eq $Endpoint }
-    if ($ex) {
-        if ($IP      -ne '-') { $ex.IP      = $IP }
-        if ($Type    -ne '-') { $ex.Type    = $Type }
-        if ($DNS     -ne '-') { $ex.DNS     = $DNS }
-        if ($TCP     -ne '-') { $ex.TCP     = $TCP }
-        if ($HTTP    -ne '-') { $ex.HTTP    = $HTTP }
-        if ($Latency -ne '-') { $ex.Latency = $Latency }
-        if ($Path    -ne '-') { $ex.Path    = $Path }
-    }
-    else {
-        [void]$script:Results.Add([ordered]@{
-            Endpoint = $Endpoint; Group = $Group; IP = $IP; Type = $Type
-            DNS = $DNS; TCP = $TCP; HTTP = $HTTP; Latency = $Latency; Path = $Path
-        })
-    }
-}
-
-function Add-Issue {
-    param([string]$Sev, [string]$Cat, [string]$Msg, [string]$Fix = '')
-    [void]$script:Issues.Add([ordered]@{
-        Severity = $Sev; Category = $Cat; Message = $Msg; Fix = $Fix
-    })
 }
 
 function Save-Log {
@@ -252,143 +161,728 @@ function Save-Log {
     }
 }
 
-function Test-TcpPort {
-    param([string]$H, [int]$P = 443, [int]$T = 5000)
-    $c = [System.Net.Sockets.TcpClient]::new()
-    try {
-        $r = $c.BeginConnect($H, $P, $null, $null)
-        if ($r.AsyncWaitHandle.WaitOne($T, $false) -and $c.Connected) {
-            $c.EndConnect($r) | Out-Null
-            return $true
-        }
-        return $false
-    }
-    catch { return $false }
-    finally { $c.Close() }
+function Add-Issue {
+    param(
+        [ValidateSet('CRITICAL', 'HIGH', 'MEDIUM', 'WARN', 'INFO')][string]$Severity,
+        [string]$Category,
+        [string]$Message,
+        [string]$Fix = ''
+    )
+    [void]$script:Issues.Add([pscustomobject]@{
+        Severity = $Severity
+        Category = $Category
+        Message = $Message
+        Fix = $Fix
+    })
 }
 
-function Invoke-HttpSafe {
-    param([string]$Uri, [int]$Timeout = 10, [string]$UseProxy = '')
-    $p = @{
-        Uri = $Uri; Method = 'Get'; UseBasicParsing = $true
-        TimeoutSec = $Timeout; ErrorAction = 'Stop'
+function Convert-IssuesToNonBlockingWarnings {
+    foreach ($issue in $script:Issues) {
+        switch ($issue.Category) {
+            'Proxy' {
+                $issue.Severity = 'WARN'
+                if ($issue.Message -notmatch 'non-blocking' -and $issue.Message -notmatch 'Private/split-network mode') {
+                    $issue.Message = ($issue.Message.TrimEnd('.') + '. Treat this as a non-blocking proxy-path warning because azcmagent reported no critical Arc connectivity failures.')
+                }
+                if ($issue.Fix -and $issue.Fix -notmatch 'critical_failures=0' -and $issue.Fix -notmatch 'no critical Arc connectivity failures') {
+                    $issue.Fix = ($issue.Fix.TrimEnd('.') + '. Do not treat this alone as Arc core outage when azcmagent reports critical_failures=0.')
+                }
+            }
+        }
     }
-    $px = if ($UseProxy) { $UseProxy } else { $script:EffectiveProxy }
-    if ($px) {
-        $p['Proxy'] = $px
-        $p['ProxyUseDefaultCredentials'] = $true
+}
+
+function Add-Result {
+    param(
+        [string]$Endpoint,
+        [string]$Group = '',
+        [string]$IP = '-',
+        [string]$Type = '-',
+        [string]$DNS = '-',
+        [string]$TCP = '-',
+        [string]$HTTP = '-',
+        [string]$Latency = '-',
+        [string]$Notes = ''
+    )
+    $existing = $script:Results | Where-Object { $_.Endpoint -eq $Endpoint } | Select-Object -First 1
+    if ($existing) {
+        foreach ($k in 'Group','IP','Type','DNS','TCP','HTTP','Latency','Notes') {
+            $v = Get-Variable -Name $k -ValueOnly
+            if ($k -eq 'Group' -and [string]::IsNullOrWhiteSpace($v)) {
+                continue
+            }
+            if ($null -ne $v -and $v -ne '-' -and $v -ne '') {
+                $existing.$k = $v
+            }
+        }
     }
-    elseif ($PSVersionTable.PSVersion.Major -ge 6) {
-        $p['NoProxy'] = $true
+    else {
+        [void]$script:Results.Add([pscustomobject]@{
+            Endpoint = $Endpoint
+            Group = $(if ([string]::IsNullOrWhiteSpace($Group)) { 'Core' } else { $Group })
+            IP = $IP
+            Type = $Type
+            DNS = $DNS
+            TCP = $TCP
+            HTTP = $HTTP
+            Latency = $Latency
+            Notes = $Notes
+        })
     }
-    Invoke-WebRequest @p
+}
+
+function Test-IsValidProxyUri {
+    param([string]$Candidate)
+    if (-not $Candidate) { return $false }
+    $uri = $null
+    return [System.Uri]::TryCreate($Candidate, [System.UriKind]::Absolute, [ref]$uri) -and $uri.Scheme -in @('http', 'https')
 }
 
 function Get-AzcmagentPath {
-    $c = Join-Path $env:ProgramFiles 'AzureConnectedMachineAgent\azcmagent.exe'
-    if (Test-Path $c) { return $c }
+    $candidate = Join-Path $env:ProgramFiles 'AzureConnectedMachineAgent\azcmagent.exe'
+    if (Test-Path $candidate) { return $candidate }
     return $null
 }
 
 function Test-IsPrivateIp {
     param([string]$Ip)
     if (-not $Ip) { return $false }
-    try { $b = ([System.Net.IPAddress]::Parse($Ip)).GetAddressBytes() }
-    catch { return $false }
+    try {
+        $b = ([System.Net.IPAddress]::Parse($Ip)).GetAddressBytes()
+    }
+    catch {
+        return $false
+    }
     return ($b[0] -eq 10) -or
            ($b[0] -eq 192 -and $b[1] -eq 168) -or
            ($b[0] -eq 172 -and $b[1] -ge 16 -and $b[1] -le 31) -or
            ($b[0] -eq 100 -and $b[1] -ge 64 -and $b[1] -le 127)
 }
 
-function Test-IsGatewayTunneled {
-    param([string]$Endpoint)
-    if ($Mode -ne 'Gateway') { return $false }
-    foreach ($pattern in $script:GatewayTunneledPatterns) {
-        if ($pattern.StartsWith('*.')) {
-            $suffix = $pattern.Substring(1)  # e.g. '.his.arc.azure.com'
-            if ($Endpoint.EndsWith($suffix) -or $Endpoint -eq $pattern.Substring(2)) { return $true }
+function Get-OperatingSystemInfo {
+    try {
+        if (Get-Command -Name Get-CimInstance -ErrorAction SilentlyContinue) {
+            return Get-CimInstance Win32_OperatingSystem -ErrorAction Stop
         }
-        elseif ($Endpoint -eq $pattern) { return $true }
     }
+    catch { }
+
+    try {
+        return Get-WmiObject -Class Win32_OperatingSystem -ErrorAction Stop
+    }
+    catch {
+        return $null
+    }
+}
+
+function Invoke-HttpSafe {
+    param(
+        [string]$Uri,
+        [int]$TimeoutSec = 10,
+        [string]$UseProxy = '',
+        [switch]$NoProxy
+    )
+
+    $params = @{
+        Uri = $Uri
+        Method = 'Get'
+        UseBasicParsing = $true
+        TimeoutSec = $TimeoutSec
+        ErrorAction = 'Stop'
+    }
+
+    if ($NoProxy) {
+        if ($PSVersionTable.PSVersion.Major -ge 6) {
+            $params['NoProxy'] = $true
+        }
+        else {
+            $saved = [System.Net.WebRequest]::DefaultWebProxy
+            try {
+                [System.Net.WebRequest]::DefaultWebProxy = $null
+                return Invoke-WebRequest @params
+            }
+            finally {
+                [System.Net.WebRequest]::DefaultWebProxy = $saved
+            }
+        }
+    }
+    else {
+        $proxyToUse = if ($UseProxy) { $UseProxy } else { $script:EffectiveProxy }
+        if ($proxyToUse) {
+            $params['Proxy'] = $proxyToUse
+            $params['ProxyUseDefaultCredentials'] = $true
+        }
+        elseif ($PSVersionTable.PSVersion.Major -ge 6) {
+            $params['NoProxy'] = $true
+        }
+    }
+
+    return Invoke-WebRequest @params
+}
+
+function Test-TcpPort {
+    param(
+        [string]$HostName,
+        [int]$Port = 443,
+        [int]$TimeoutMs = 5000
+    )
+
+    $client = New-Object System.Net.Sockets.TcpClient
+    try {
+        $ar = $client.BeginConnect($HostName, $Port, $null, $null)
+        if ($ar.AsyncWaitHandle.WaitOne($TimeoutMs, $false) -and $client.Connected) {
+            $client.EndConnect($ar) | Out-Null
+            return $true
+        }
+        return $false
+    }
+    catch {
+        return $false
+    }
+    finally {
+        $client.Close()
+    }
+}
+
+function Resolve-Endpoint {
+    param([string]$Endpoint)
+    $resolved = $null
+    $err = $null
+    foreach ($attempt in 1..2) {
+        try {
+            if (Get-Command -Name Resolve-DnsName -ErrorAction SilentlyContinue) {
+                $resolved = Resolve-DnsName -Name $Endpoint -ErrorAction Stop
+            }
+            else {
+                $addresses = [System.Net.Dns]::GetHostAddresses($Endpoint) | Where-Object { $_.AddressFamily -eq [System.Net.Sockets.AddressFamily]::InterNetwork }
+                $resolved = @($addresses | ForEach-Object {
+                    [pscustomobject]@{
+                        Name = $Endpoint
+                        Type = 'A'
+                        IPAddress = $_.IPAddressToString
+                    }
+                })
+            }
+            $err = $null
+            break
+        }
+        catch {
+            $err = $_
+            Start-Sleep -Milliseconds 250
+        }
+    }
+    return [pscustomobject]@{
+        Result = $resolved
+        Error = $err
+    }
+}
+
+function Get-TlsCipherInventory {
+    $result = [pscustomobject]@{
+        Supported = $false
+        Names = @()
+        Error = $null
+    }
+
+    try {
+        if (-not (Get-Command -Name Get-TlsCipherSuite -ErrorAction SilentlyContinue)) {
+            $result.Error = 'Get-TlsCipherSuite is not available on this PowerShell/OS version.'
+            return $result
+        }
+
+        $cipherNames = @(Get-TlsCipherSuite -ErrorAction Stop | ForEach-Object { $_.Name } | Where-Object { $_ })
+        $result.Supported = $true
+        $result.Names = $cipherNames
+        return $result
+    }
+    catch {
+        $result.Error = $_.Exception.Message
+        return $result
+    }
+}
+
+function Test-AcceptableHttpCode {
+    param(
+        [string]$Endpoint,
+        [int]$Code
+    )
+
+    $patterns = @(
+        @{ Match = '^management\.azure\.com$'; Codes = @(200, 301, 302, 400, 401, 403) },
+        @{ Match = '^login\.windows\.net$'; Codes = @(200, 301, 302, 400, 401, 403, 404) },
+        @{ Match = '^login\.microsoftonline\.com$'; Codes = @(200, 301, 302, 400, 401, 403, 404) },
+        @{ Match = '^.+\.login\.microsoft\.com$'; Codes = @(200, 301, 302, 400, 401, 403, 404) },
+        @{ Match = '^dataprocessingservice\..+\.arcdataservices\.com$'; Codes = @(200, 301, 302, 400, 401, 403, 404) },
+        @{ Match = '^telemetry\..+\.arcdataservices\.com$'; Codes = @(200, 301, 302, 400, 401, 403, 404) },
+        @{ Match = '^oneocsp\.microsoft\.com$'; Codes = @(200, 301, 302, 400, 401, 403, 404, 405) }
+    )
+
+    foreach ($p in $patterns) {
+        if ($Endpoint -match $p.Match) {
+            return ($p.Codes -contains $Code)
+        }
+    }
+
+    return ($Code -ge 200 -and $Code -lt 500)
+}
+
+function Convert-AzcmagentUseCaseToGroup {
+    param([string]$UseCase)
+
+    $normalizedUseCase = if ([string]::IsNullOrEmpty($UseCase)) { '' } else { $UseCase.ToLowerInvariant() }
+    switch ($normalizedUseCase) {
+        'core' { return 'Core' }
+        'sql' { return 'SQL' }
+        'paygo' { return 'PAYGO' }
+        default {
+            if ($UseCase) { return $UseCase.ToUpperInvariant() }
+            return 'Core'
+        }
+    }
+}
+
+function Test-IsArcDataEndpoint {
+    param([string]$Endpoint)
+
+    if (-not $Endpoint) { return $false }
+    return $Endpoint -match '^(dataprocessingservice|telemetry|defender-for-databases)\..+\.arcdataservices\.com$'
+}
+
+function Test-IsOptionalDynamicEndpoint {
+    param(
+        [string]$Endpoint,
+        [string]$Group
+    )
+
+    if ($Group -eq 'GNS') {
+        return $true
+    }
+
     return $false
 }
 
-# =========================================================================
-# PHASE 1: SYSTEM & AGENT CONTEXT
-# =========================================================================
+function Test-IsOptionalEndpoint {
+    param(
+        [string]$Endpoint,
+        [string]$Group
+    )
 
-Write-Banner 'AZURE ARC ENDPOINT CHECK'
-Write-Host "  Version $($script:Version) ($($script:Updated))" -ForegroundColor DarkGray
-Write-Host ''
-Write-Host '  Diagnostic sequence:' -ForegroundColor DarkGray
-Write-Host '    1. System & Agent Context    (OS, agent version, mode, extensions)' -ForegroundColor DarkGray
-Write-Host '    2. Proxy Chain               (WinHTTP -> Agent -> Env -> Gateway)' -ForegroundColor DarkGray
-Write-Host '    3. TLS & Crypto              (SCHANNEL + .NET + ciphers + registry dump)' -ForegroundColor DarkGray
-Write-Host '    4. PKI/OCSP/CRL Bypass       (certificate validation path)' -ForegroundColor DarkGray
-Write-Host '    5. Endpoint Discovery        (azcmagent check + regional)' -ForegroundColor DarkGray
-Write-Host '    6. Connectivity Tests        (DNS + TCP + HTTP probes)' -ForegroundColor DarkGray
-Write-Host '    7. Results & Issues          (summary table)' -ForegroundColor DarkGray
-Write-Host ''
+    if ($Endpoint -eq 'dc.services.visualstudio.com') {
+        return $true
+    }
 
-Write-Section 'System & Agent'
+    if (Test-IsArcDataEndpoint -Endpoint $Endpoint) {
+        return $true
+    }
+
+    if (Test-IsOptionalDynamicEndpoint -Endpoint $Endpoint -Group $Group) {
+        return $true
+    }
+
+    if ($Group -eq 'Lifecycle') {
+        return (-not $script:PreOnboarding)
+    }
+
+    if ($Group -eq 'ControlPlane') {
+        if ($Mode -eq 'Private') {
+            return $false
+        }
+        return (-not $script:PreOnboarding)
+    }
+
+    return $Group -in @('SQL', 'AMA', 'MDE', 'WAC', 'KV', 'HRW', 'UM', 'GA', 'PAYGO', 'GNS')
+}
+
+function Test-IsLegacyTls12OnlyOs {
+    param($OsInfo)
+
+    if ($null -eq $OsInfo) { return $false }
+
+    $versionText = ''
+    if ($OsInfo.PSObject.Properties['Version']) {
+        $versionText = [string]$OsInfo.Version
+    }
+
+    if ($versionText -match '^6\.(2|3)') {
+        return $true
+    }
+
+    $caption = ''
+    if ($OsInfo.PSObject.Properties['Caption']) {
+        $caption = [string]$OsInfo.Caption
+    }
+
+    return ($caption -match 'Windows Server 2012')
+}
+
+function Test-IsArcDataTlsPathError {
+    param(
+        [string]$Endpoint,
+        [string]$ErrorText
+    )
+
+    if (-not (Test-IsArcDataEndpoint -Endpoint $Endpoint)) { return $false }
+    if (-not $ErrorText) { return $false }
+
+    return ($ErrorText -match 'SEC_E_ILLEGAL_MESSAGE|unexpected or badly formatted|0x80090326')
+}
+
+function Get-AgentBypassedEndpoints {
+    param(
+        [string]$AgentBypass,
+        [string]$Region
+    )
+
+    $bypassedEndpoints = New-Object System.Collections.ArrayList
+    if (-not $AgentBypass) { return $bypassedEndpoints }
+
+    $normalizedBypass = $AgentBypass.Trim()
+    $bypassTokens = @()
+    if ($normalizedBypass -match '^\s*\[') {
+        try {
+            $parsedBypass = $normalizedBypass | ConvertFrom-Json -ErrorAction Stop
+            $bypassTokens = @($parsedBypass | ForEach-Object { [string]$_ })
+        }
+        catch {
+            $bypassTokens = @($normalizedBypass -split ',')
+        }
+    }
+    else {
+        $bypassTokens = @($normalizedBypass -split ',')
+    }
+
+    $bypassTokens = @(
+        $bypassTokens |
+            ForEach-Object { [string]$_ } |
+            ForEach-Object { $_.Trim().Trim('"').Trim("'").Trim('[', ']') } |
+            Where-Object { $_ }
+    )
+
+    $bypassMap = @{
+        'AAD' = @('login.windows.net', 'login.microsoftonline.com', 'pas.windows.net')
+        'ARM' = @('management.azure.com')
+        'Arc' = @('*.his.arc.azure.com', '*.guestconfiguration.azure.com')
+        'ArcData' = @("dataprocessingservice.$Region.arcdataservices.com", "telemetry.$Region.arcdataservices.com")
+        'AMA' = @('global.handler.control.monitor.azure.com', "$Region.handler.control.monitor.azure.com")
+    }
+
+    foreach ($token in $bypassTokens) {
+        if ($bypassMap.ContainsKey($token)) {
+            foreach ($ep in $bypassMap[$token]) {
+                if ($bypassedEndpoints -notcontains $ep) { [void]$bypassedEndpoints.Add($ep) }
+            }
+        }
+    }
+
+    return $bypassedEndpoints
+}
+
+function Get-HttpStatus {
+    param(
+        [string]$Endpoint,
+        [switch]$ForceDirect,
+        [string]$ProxyOverride = ''
+    )
+
+    try {
+        $response = Invoke-HttpSafe -Uri "https://$Endpoint" -TimeoutSec 10 -UseProxy $ProxyOverride -NoProxy:$ForceDirect
+        return [pscustomobject]@{ Success = $true; StatusCode = [int]$response.StatusCode; Error = $null }
+    }
+    catch {
+        $statusCode = $null
+        if ($_.Exception.Response) {
+            try { $statusCode = [int]$_.Exception.Response.StatusCode } catch { }
+        }
+        if ($statusCode -and (Test-AcceptableHttpCode -Endpoint $Endpoint -Code $statusCode)) {
+            return [pscustomobject]@{ Success = $true; StatusCode = $statusCode; Error = $_.Exception.Message }
+        }
+        return [pscustomobject]@{ Success = $false; StatusCode = $statusCode; Error = $_.Exception.Message }
+    }
+}
+
+function Get-HttpFailureDiagnosis {
+    param(
+        [string]$Endpoint,
+        [string]$Group,
+        [string]$ErrorText,
+        [Nullable[int]]$StatusCode,
+        [bool]$UsingExplicitProxy,
+        [bool]$ForceDirect,
+        [bool]$CoreHealthyNoCritical
+    )
+
+    $messageText = if ($ErrorText) { $ErrorText } else { '' }
+    $proxyConfiguredButDown = $false
+    if ($UsingExplicitProxy -and $script:EffectiveProxy) {
+        try {
+            $proxyUri = [System.Uri]$script:EffectiveProxy
+            $proxyConfiguredButDown = -not (Test-TcpPort -HostName $proxyUri.Host -Port $proxyUri.Port -TimeoutMs 2500)
+        }
+        catch { }
+    }
+
+    $cause = 'insufficient evidence'
+    $notes = 'HTTP probe failed; evidence is insufficient to attribute the failure to a specific network control.'
+    $fix = 'Capture proxy/firewall logs for the failing timestamp and compare with a direct test from the same host if allowed.'
+    $category = if ($UsingExplicitProxy -and -not $ForceDirect) { 'ProxyPath' } else { 'HTTP' }
+
+    if ($proxyConfiguredButDown) {
+        $cause = 'proxy endpoint unreachable'
+        $notes = 'Configured proxy endpoint itself is not reachable from this host; do not attribute this probe failure to the destination endpoint yet.'
+        $fix = 'Validate routing, firewall, listener state, and service health for the configured proxy endpoint before reviewing destination-specific rules.'
+        $category = 'Proxy'
+    }
+    elseif ($StatusCode -eq 407 -or $messageText -match '407') {
+        $cause = 'proxy authentication required'
+        $notes = 'Proxy requested authentication for the HTTP probe.'
+        $fix = 'Validate proxy authentication policy and whether machine/default credentials are accepted for this traffic.'
+    }
+    elseif ($StatusCode -in @(502, 503, 504)) {
+        $cause = 'proxy upstream or app rule issue'
+        $notes = "Proxy returned HTTP $StatusCode while attempting to reach the destination; this usually points to upstream denial, app rule mismatch, or upstream unavailability."
+        $fix = 'Review proxy app rules, upstream connectivity, and destination allow policy for this endpoint.'
+    }
+    elseif ($messageText -match 'actively refused|refused it|connection refused|No connection could be made because the target machine actively refused it') {
+        if ($UsingExplicitProxy -and -not $ForceDirect) {
+            $cause = 'proxy refused connection'
+            $notes = 'The proxy path refused the TCP/CONNECT attempt before the destination flow completed.'
+            $fix = 'Validate the proxy listener, proxy service health, and any local firewall or route to the configured proxy.'
+            $category = 'Proxy'
+        }
+        else {
+            $cause = 'destination refused connection'
+            $notes = 'The remote side actively refused the connection.'
+            $fix = 'Validate destination listener expectations, intermediate filtering, and whether direct access is actually supported.'
+        }
+    }
+    elseif ($messageText -match 'timed out|operation has timed out|The operation timed out|A task was canceled|The request was aborted') {
+        $cause = 'timeout or routing issue'
+        $notes = 'The probe timed out before a valid HTTP response was returned; this commonly indicates routing blackhole, silent filtering, or overloaded middlebox behavior.'
+        $fix = 'Validate routing, NSG/firewall state, and whether a proxy or middlebox is silently dropping the flow.'
+    }
+    elseif ($messageText -match 'name could not be resolved|remote name could not be resolved|No such host is known') {
+        $cause = 'dns resolution issue'
+        $notes = 'The HTTP client could not resolve the target host name for this probe.'
+        $fix = 'Review local DNS resolution and any proxy DNS dependency for this endpoint.'
+    }
+    elseif ((Test-IsArcDataTlsPathError -Endpoint $Endpoint -ErrorText $messageText) -or $messageText -match 'SEC_E_ILLEGAL_MESSAGE|0x80090326|unexpected or badly formatted|The SSL connection could not be established|authentication or decryption has failed|Could not create SSL/TLS secure channel') {
+        $cause = 'tls inspection or handshake interference'
+        $notes = 'The probe failed during TLS negotiation; this often points to TLS inspection, protocol handling mismatch, or middlebox interference on the path.'
+        $fix = 'Review TLS inspection, certificate substitution, outbound SSL policy, and any middlebox handling on this path.'
+    }
+    elseif ($StatusCode -eq 403) {
+        $cause = 'application layer deny'
+        $notes = 'The path returned HTTP 403, which suggests the request reached an enforcing layer but was denied by policy.'
+        $fix = 'Review proxy app rules, destination ACLs, and any path-based or host-based access policy for this endpoint.'
+    }
+
+    return [pscustomobject]@{
+        Cause = $cause
+        Notes = $notes
+        Fix = $fix
+        Category = $category
+        ProxyConfiguredButDown = $proxyConfiguredButDown
+    }
+}
+
+function Get-AgentHealth {
+    param([string]$AzcmPath)
+
+    Write-Section 'Agent Local Health'
+
+    if (-not $AzcmPath) {
+        Write-Status 'Agent health' 'Skipped - azcmagent not installed' Yellow
+        return
+    }
+
+    try {
+        $version = (& $AzcmPath version 2>$null | Out-String).Trim()
+        if ($version) {
+            Write-Status 'azcmagent version' $version Green
+            Log "Agent version: $version" 'OK'
+        }
+    }
+    catch {
+        Write-Status 'azcmagent version' "Failed: $($_.Exception.Message)" Yellow
+        Log "Agent version read failed: $($_.Exception.Message)" 'WARN'
+    }
+
+    try {
+        $cfg = (& $AzcmPath config list 2>$null | Out-String).Trim()
+        if ($cfg) {
+            $script:AgentConfigDump = $cfg
+            Write-Status 'Config list' 'Captured to log file' DarkGray
+            Add-Content -Path $LogFilePath -Value ''
+            Add-Content -Path $LogFilePath -Value '=================== AGENT CONFIG ==================='
+            Add-Content -Path $LogFilePath -Value $cfg
+        }
+    }
+    catch {
+        Write-Status 'Config list' "Failed: $($_.Exception.Message)" Yellow
+    }
+
+    try {
+        $services = Get-Service himds, GCArcService, ExtensionService -ErrorAction SilentlyContinue
+        if ($services) {
+            foreach ($svc in $services) {
+                $color = if ($svc.Status -eq 'Running') { 'Green' } elseif ($svc.Status -eq 'Stopped') { 'Yellow' } else { 'DarkYellow' }
+                Write-Status ("svc/$($svc.Name)") ("$($svc.Status) | StartType=$($svc.StartType)") $color
+                if ($svc.Status -ne 'Running') {
+                    Add-Issue -Severity 'HIGH' -Category 'AgentService' -Message "Service $($svc.Name) is $($svc.Status)" -Fix 'Start or restart the service and re-run the check.'
+                }
+            }
+        }
+    }
+    catch {
+        Write-Status 'Services' "Failed: $($_.Exception.Message)" Yellow
+    }
+
+    $himdsLog = Join-Path $env:ProgramData 'AzureConnectedMachineAgent\Log\himds.log'
+    if (Test-Path $himdsLog) {
+        Write-Status 'himds.log' $himdsLog DarkGray
+        Add-Content -Path $LogFilePath -Value ''
+        Add-Content -Path $LogFilePath -Value '=================== HIMDS LOG TAIL ==================='
+        try {
+            Get-Content -Path $himdsLog -Tail 20 | Add-Content -Path $LogFilePath
+        }
+        catch {
+            Add-Content -Path $LogFilePath -Value "Could not read himds.log: $($_.Exception.Message)"
+        }
+    }
+}
+
+function Detect-Platform {
+    param()
+
+    if ($Platform -ne 'Auto') {
+        return $Platform
+    }
+
+    try {
+        $resp = Invoke-RestMethod -Uri 'http://169.254.169.253:80/metadata/attested/document?api-version=2018-10-01' -Headers @{ Metadata = 'true' } -TimeoutSec 3 -ErrorAction Stop
+        if ($resp) { return 'AzureLocal' }
+    }
+    catch { }
+
+    try {
+        $resp = Invoke-RestMethod -Uri 'http://169.254.169.254/metadata/instance?api-version=2021-02-01' -Headers @{ Metadata = 'true' } -TimeoutSec 3 -ErrorAction Stop
+        if ($resp) { return 'AzureVM' }
+    }
+    catch { }
+
+    return 'Arc'
+}
+
+function Run-PlatformChecks {
+    param([string]$DetectedPlatform)
+
+    Write-Section 'Platform Checks'
+    Write-Status 'Platform' $DetectedPlatform White
+
+    switch ($DetectedPlatform) {
+        'AzureLocal' {
+            try {
+                $att = Invoke-RestMethod -Uri 'http://169.254.169.253:80/metadata/attested/document?api-version=2018-10-01' -Headers @{ Metadata = 'true' } -TimeoutSec 5 -ErrorAction Stop
+                Write-Status 'Azure Local IMDS' 'Attestation endpoint reachable' Green
+                Log 'Azure Local attestation endpoint reachable' 'OK'
+            }
+            catch {
+                Write-Status 'Azure Local IMDS' "Failed: $($_.Exception.Message)" Yellow
+                Add-Issue -Severity 'WARN' -Category 'AzureLocal' -Message 'Azure Local attestation endpoint not reachable.' -Fix 'Validate Azure Local guest metadata routing if this machine is expected to run on Azure Local.'
+            }
+        }
+        'AzureStackHub' {
+            try {
+                $ws = Invoke-RestMethod -Uri 'http://168.63.129.16/?comp=versions' -Method Get -TimeoutSec 5 -ErrorAction Stop
+                if ($ws) {
+                    Write-Status 'WireServer' 'Reachable' Green
+                    Log 'WireServer reachable' 'OK'
+                }
+            }
+            catch {
+                Write-Status 'WireServer' "Failed: $($_.Exception.Message)" Yellow
+                Add-Issue -Severity 'WARN' -Category 'AzureStackHub' -Message 'WireServer not reachable from guest.' -Fix 'Validate host-agent / guest networking if this guest is expected to be on Azure Stack Hub.'
+            }
+        }
+        'AzureVM' {
+            try {
+                $imds = Invoke-RestMethod -Uri 'http://169.254.169.254/metadata/instance?api-version=2021-02-01' -Headers @{ Metadata = 'true' } -TimeoutSec 5 -ErrorAction Stop
+                if ($imds) {
+                    Write-Status 'IMDS' 'Reachable' Green
+                    Log 'Azure VM IMDS reachable' 'OK'
+                }
+            }
+            catch {
+                Write-Status 'IMDS' "Failed: $($_.Exception.Message)" Yellow
+                Add-Issue -Severity 'WARN' -Category 'AzureVM' -Message 'IMDS not reachable.' -Fix 'Validate guest routing and local metadata access if this is expected to be an Azure VM.'
+            }
+        }
+        default {
+            Write-Status 'Platform extras' 'No platform-specific metadata probe required' DarkGray
+        }
+    }
+}
+
+Write-Banner 'AZURE ARC ENDPOINT CHECK (REVISED)'
 Write-Status 'Host' $env:COMPUTERNAME
 Write-Status 'Time' (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
-
-$script:EffectiveProxy = $null
-$script:WinHttpProxy   = $null
-$script:WinHttpBypass  = $null
-$script:AgentJson      = $null
-$script:GatewayUrl     = $null
-$script:InstalledExts  = @()
-$script:AgentVersion   = $null
-
-# Endpoints tunneled through Arc Gateway (per MS docs)
-# These go: Agent -> localhost:40343 (Arc Proxy) -> Enterprise Proxy -> Gateway -> Target
-# Direct TCP test to target is NOT meaningful for tunneled endpoints.
-$script:GatewayTunneledPatterns = @(
-    '*.his.arc.azure.com'
-    '*.guestconfiguration.azure.com'
-    'dc.services.visualstudio.com'
-    'guestnotificationservice.azure.com'
-)
 
 $azcm = Get-AzcmagentPath
 $script:PreOnboarding = (-not $azcm)
 if ($azcm) {
-    try { $script:AgentJson = & $azcm show -j 2>$null | ConvertFrom-Json } catch { }
+    try {
+        $json = & $azcm show -j 2>$null | Out-String
+        if ($json) {
+            $script:AgentJson = $json | ConvertFrom-Json
+            Add-Content -Path $LogFilePath -Value ''
+            Add-Content -Path $LogFilePath -Value '=================== AGENT SHOW JSON ==================='
+            Add-Content -Path $LogFilePath -Value $json
+        }
+    }
+    catch {
+        Log "Could not parse azcmagent show -j: $($_.Exception.Message)" 'WARN'
+    }
 }
 
-# --- Pre-onboarding warning ---
-if ($script:PreOnboarding) {
-    Write-Host ''
-    Write-Host '  ** PRE-ONBOARDING MODE **' -ForegroundColor Yellow
-    Write-Host '  azcmagent not installed. Region, mode, and extensions' -ForegroundColor Yellow
-    Write-Host '  cannot be auto-detected. Use parameters to override:' -ForegroundColor Yellow
-    Write-Host '    -Region <region>  -Mode <Public|Private|Gateway>' -ForegroundColor DarkYellow
-    Write-Host '    -CheckIncludeAll  (tests ALL extension endpoints)' -ForegroundColor DarkYellow
-    Write-Host '    -ProxyUrl <url>   (if proxy is not yet in WinHTTP/env)' -ForegroundColor DarkYellow
-    Write-Host ''
+if (-not $script:PreOnboarding -and $script:AgentJson) {
+    $agentStatus = if ($script:AgentJson.PSObject.Properties['status']) { [string]$script:AgentJson.status } else { '' }
+    $agentResourceId = $null
+    foreach ($propName in @('resourceId', 'id')) {
+        if ($script:AgentJson.PSObject.Properties[$propName]) {
+            $candidateValue = [string]$script:AgentJson.$propName
+            if (-not [string]::IsNullOrWhiteSpace($candidateValue)) {
+                $agentResourceId = $candidateValue
+                break
+            }
+        }
+    }
+
+    $agentLooksOnboarded = (($agentStatus -in @('Connected', 'Disconnected')) -or -not [string]::IsNullOrWhiteSpace($agentResourceId))
+    $script:PreOnboarding = (-not $agentLooksOnboarded)
 }
 
 if ($azcm -and $script:AgentJson) {
-    $agSt  = if ($script:AgentJson.PSObject.Properties['status']) { $script:AgentJson.status } else { $null }
-    $agVer = if ($script:AgentJson.PSObject.Properties['agentVersion']) { $script:AgentJson.agentVersion } else { $null }
-    $script:AgentVersion = $agVer
-    $agParts = @('Installed')
-    if ($agSt)  { $agParts += $agSt }
-    if ($agVer) { $agParts += "v$agVer" }
-    $agColor = if ($agSt -eq 'Connected') { 'Green' } elseif ($agSt -eq 'Disconnected') { 'Red' } else { 'Yellow' }
-    Write-Status 'Agent' ($agParts -join ' | ') $agColor
+    $statusParts = @('Installed')
+    if ($script:AgentJson.status) { $statusParts += $script:AgentJson.status }
+    if ($script:AgentJson.agentVersion) { $statusParts += "v$($script:AgentJson.agentVersion)" }
+    Write-Status 'Agent' ($statusParts -join ' | ') $(if ($script:AgentJson.status -eq 'Connected') { 'Green' } elseif ($script:AgentJson.status -eq 'Disconnected') { 'Red' } else { 'Yellow' })
 }
 elseif ($azcm) {
-    Write-Status 'Agent' 'Installed (could not read status)' Yellow
+    Write-Status 'Agent' 'Installed (status unavailable)' Yellow
 }
 else {
-    Write-Status 'Agent' 'NOT INSTALLED (pre-onboarding)' Yellow
+    Write-Status 'Agent' 'NOT INSTALLED (pre-onboarding mode)' Yellow
 }
 
-# --- Region ---
+if (-not $SkipAgentHealth) {
+    Get-AgentHealth -AzcmPath $azcm
+}
+
+$detectedPlatform = Detect-Platform
+Write-Status 'Detected platform' $detectedPlatform DarkGray
+if ($Platform -eq 'Auto') { $Platform = $detectedPlatform }
+Write-Status 'Platform in use' $Platform White
+
 if (-not $Region) {
     if ($script:AgentJson -and $script:AgentJson.location) {
         $Region = $script:AgentJson.location
@@ -396,155 +890,56 @@ if (-not $Region) {
     }
     else {
         $Region = 'eastus2'
-        Write-Status 'Region' "$Region (default - use -Region to override)" Yellow
+        Write-Status 'Region' "$Region (default fallback)" Yellow
+        Add-Issue -Severity 'WARN' -Category 'Region' -Message 'Region could not be auto-detected; using eastus2 fallback.' -Fix 'Specify -Region explicitly for pre-onboarding or disconnected scenarios.'
     }
 }
 else {
     Write-Status 'Region' "$Region (specified)" White
 }
 
-# --- Mode ---
 if ($Mode -eq 'Auto') {
     if ($script:AgentJson) {
-        # Check for Gateway mode
-        $gwUrl    = if ($script:AgentJson.PSObject.Properties['gatewayUrl'])    { $script:AgentJson.gatewayUrl }
-                    elseif ($script:AgentJson.PSObject.Properties['gatewayurl']) { $script:AgentJson.gatewayurl }
-                    else { $null }
-        $connType = if ($script:AgentJson.PSObject.Properties['connectionType'])    { $script:AgentJson.connectionType }
-                    elseif ($script:AgentJson.PSObject.Properties['connectiontype']) { $script:AgentJson.connectiontype }
-                    else { $null }
-        $plsVal   = if ($script:AgentJson.PSObject.Properties['privateLinkScope'])    { $script:AgentJson.privateLinkScope }
-                    elseif ($script:AgentJson.PSObject.Properties['privatelinkscope']) { $script:AgentJson.privatelinkscope }
-                    else { $null }
+        $gwUrl = $null
+        if ($script:AgentJson.PSObject.Properties['gatewayUrl']) { $gwUrl = $script:AgentJson.gatewayUrl }
+        elseif ($script:AgentJson.PSObject.Properties['gatewayurl']) { $gwUrl = $script:AgentJson.gatewayurl }
 
-        if ($gwUrl -or $connType -eq 'gateway') {
+        $privateLinkScope = $null
+        if ($script:AgentJson.PSObject.Properties['privateLinkScope']) { $privateLinkScope = $script:AgentJson.privateLinkScope }
+        elseif ($script:AgentJson.PSObject.Properties['privatelinkscope']) { $privateLinkScope = $script:AgentJson.privatelinkscope }
+
+        if ($gwUrl) {
             $Mode = 'Gateway'
             $script:GatewayUrl = $gwUrl
         }
-        elseif ($plsVal) {
+        elseif ($privateLinkScope) {
             $Mode = 'Private'
         }
         else {
-            # DNS heuristic fallback
             try {
-                $dns = Resolve-DnsName -Name 'gbl.his.arc.azure.com' -Type A -ErrorAction Stop
-                $ip  = ($dns | Where-Object { $_.Type -eq 'A' -and $_.IPAddress } | Select-Object -First 1).IPAddress
+                $dnsLookup = Resolve-Endpoint -Endpoint 'gbl.his.arc.azure.com'
+                if ($dnsLookup.Error) { throw $dnsLookup.Error }
+                $ip = ($dnsLookup.Result | Where-Object { $_.Type -eq 'A' -and $_.IPAddress } | Select-Object -First 1).IPAddress
                 $Mode = if (Test-IsPrivateIp -Ip $ip) { 'Private' } else { 'Public' }
             }
-            catch { $Mode = 'Public' }
-        }
-    }
-    else {
-        # No agent — use DNS heuristic to detect Private Link
-        try {
-            $dns = Resolve-DnsName -Name 'gbl.his.arc.azure.com' -Type A -ErrorAction Stop
-            $ip  = ($dns | Where-Object { $_.Type -eq 'A' -and $_.IPAddress } | Select-Object -First 1).IPAddress
-            $Mode = if (Test-IsPrivateIp -Ip $ip) { 'Private' } else { 'Public' }
-        }
-        catch { $Mode = 'Public' }
-    }
-}
-
-$modeColor = switch ($Mode) {
-    'Private' { 'Magenta' }
-    'Gateway' { 'DarkYellow' }
-    default   { 'Green' }
-}
-Write-Status 'Mode' $Mode $modeColor
-
-# Apply -GatewayUrl parameter override (pre-onboarding)
-if ($GatewayUrl -and -not $script:GatewayUrl) {
-    $script:GatewayUrl = $GatewayUrl
-    if ($Mode -eq 'Auto' -or $Mode -eq 'Public') { $Mode = 'Gateway' }
-}
-
-if ($script:GatewayUrl) {
-    Write-Status 'Gateway' $script:GatewayUrl DarkYellow
-}
-
-# --- Installed Extensions (auto-detect) ---
-# Strategy: Read from plugin directory first (fast, non-disruptive).
-# Fallback to 'azcmagent extension list' only if directory not found.
-# Ref: https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-vm-extensions#general-troubleshooting
-# Path: C:\Packages\Plugins\<Publisher.ExtensionName>\<Version>\
-if (-not $SkipExtensions -and $azcm) {
-    $pluginDir = Join-Path $env:SystemDrive 'Packages\Plugins'
-    $detected = $false
-
-    # --- Fast path: scan plugin directory names ---
-    if (Test-Path $pluginDir) {
-        $plugins = (Get-ChildItem -Path $pluginDir -Directory -ErrorAction SilentlyContinue).Name -join '|'
-        if ($plugins) {
-            $detected = $true
-            if ($plugins -match 'SqlServer|WindowsAgent\.SqlServer')                                          { $script:InstalledExts += 'SQL' }
-            if ($plugins -match 'AzureMonitor|AzureMonitorWindowsAgent')                                      { $script:InstalledExts += 'AMA' }
-            if ($plugins -match 'MDE|AzureDefenderForServers|AzureDefender')                                  { $script:InstalledExts += 'MDE' }
-            if ($plugins -match 'AdminCenter')                                                                { $script:InstalledExts += 'WAC' }
-            if ($plugins -match 'KeyVault')                                                                   { $script:InstalledExts += 'KV' }
-            if ($plugins -match 'HybridWorker|Automation')                                                    { $script:InstalledExts += 'HRW' }
-            if ($plugins -match 'ChangeTracking')                                                             { $script:InstalledExts += 'CT' }
-            if ($plugins -match 'GuestAttestation|WindowsAttestation')                                        { $script:InstalledExts += 'GA' }
-            if ($plugins -match 'WindowsPatchExtension|UpdateManagement')                                     { $script:InstalledExts += 'UM' }
-            if ($plugins -match 'CustomScript|RunCommand')                                                    { $script:InstalledExts += 'CS' }
-            if ($plugins -match 'DependencyAgent')                                                            { $script:InstalledExts += 'DA' }
-            if ($plugins -match 'DefenderForSQL|AdvancedThreatProtection|MicrosoftDefenderForSQL')              { $script:InstalledExts += 'DSQL' }
-        }
-    }
-
-    # --- Fallback: azcmagent extension list (slower, stops Extension Service) ---
-    if (-not $detected) {
-        try {
-            $extOut = & $azcm extension list 2>$null
-            if ($extOut) {
-                $extLines = $extOut | Out-String
-                if ($extLines -match 'WindowsAgent\.SqlServer|SqlServer')                              { $script:InstalledExts += 'SQL' }
-                if ($extLines -match 'AzureMonitor|AMA')                                              { $script:InstalledExts += 'AMA' }
-                if ($extLines -match 'MDE|DefenderForServers|AzureDefender')                           { $script:InstalledExts += 'MDE' }
-                if ($extLines -match 'AdminCenter')                                                   { $script:InstalledExts += 'WAC' }
-                if ($extLines -match 'KeyVault')                                                      { $script:InstalledExts += 'KV' }
-                if ($extLines -match 'HybridWorker|Automation')                                       { $script:InstalledExts += 'HRW' }
-                if ($extLines -match 'ChangeTracking')                                                { $script:InstalledExts += 'CT' }
-                if ($extLines -match 'GuestAttestation|WindowsAttestation')                            { $script:InstalledExts += 'GA' }
-                if ($extLines -match 'WindowsPatchExtension|UpdateManagement')                         { $script:InstalledExts += 'UM' }
-                if ($extLines -match 'CustomScript|RunCommand')                                       { $script:InstalledExts += 'CS' }
-                if ($extLines -match 'DependencyAgent')                                               { $script:InstalledExts += 'DA' }
-                if ($extLines -match 'DefenderForSQL|AdvancedThreatProtection|MicrosoftDefenderForSQL') { $script:InstalledExts += 'DSQL' }
+            catch {
+                $Mode = 'Public'
             }
         }
-        catch { }
-    }
-}
-
-if ($script:InstalledExts.Count -gt 0) {
-    Write-Status 'Extensions' ($script:InstalledExts -join ', ') White
-}
-else {
-    if ($script:PreOnboarding) {
-        if ($CheckIncludeAll) {
-            Write-Status 'Extensions' '(all - pre-onboarding with -CheckIncludeAll)' DarkYellow
-        }
-        else {
-            Write-Status 'Extensions' '(none - use -CheckIncludeAll to test all)' Yellow
-        }
     }
     else {
-        Write-Status 'Extensions' '(none detected)' DarkGray
+        $Mode = 'Public'
     }
 }
+Write-Status 'Mode' $Mode $(switch ($Mode) { 'Private' { 'Magenta' } 'Gateway' { 'DarkYellow' } default { 'Green' } })
 
-# =========================================================================
-# PHASE 2: PROXY CHAIN (WinHTTP -> Agent -> Env -> Gateway)
-# =========================================================================
+Write-Section 'Proxy Configuration'
 
-Write-Section 'Proxy Chain (WinHTTP -> Agent -> HTTPS_PROXY -> Gateway)'
-
-# --- WinHTTP ---
 try {
     $wh = netsh winhttp show proxy 2>$null | Out-String
     if ($wh -match 'Proxy Server\(s\)\s*:\s*(.+)|Servidor\(es\) Proxy\s*:\s*(.+)') {
         $script:WinHttpProxy = ($Matches[1], $Matches[2] | Where-Object { $_ } | Select-Object -First 1).Trim()
     }
-    # Generic URL fallback for unrecognized locales (FR, DE, ES, JP, etc.)
     if (-not $script:WinHttpProxy -and $wh -notmatch 'Direct|direct|Direto|direto|Direkt' -and $wh -match '(https?://[^\s;]+)') {
         $script:WinHttpProxy = $Matches[1].Trim()
     }
@@ -554,28 +949,43 @@ try {
 }
 catch { }
 
-# --- Agent proxy ---
 $agentProxy = $null
+$agentRuntimeProxy = $null
+$agentUpstreamProxy = $null
 $agentBypass = $null
+$hasAgentBypass = $false
 if ($azcm) {
     try {
-        $raw = & $azcm config get proxy.url 2>$null | Out-String
-        $raw = $raw.Trim()
-        if (Test-IsValidProxyUri $raw) { $agentProxy = $raw }
+        $rawProxy = (& $azcm config get proxy.url 2>$null | Out-String).Trim()
+        if (Test-IsValidProxyUri $rawProxy) { $agentProxy = $rawProxy }
         $agentBypass = (& $azcm config get proxy.bypass 2>$null | Out-String).Trim()
+        if ($agentBypass -and $agentBypass -notmatch '^\[\s*\]$') {
+            $hasAgentBypass = $true
+        }
     }
     catch { }
 }
+if ($script:AgentJson) {
+    if ($script:AgentJson.PSObject.Properties['httpsProxy']) {
+        $runtimeProxyCandidate = [string]$script:AgentJson.httpsProxy
+        if (Test-IsValidProxyUri $runtimeProxyCandidate) { $agentRuntimeProxy = $runtimeProxyCandidate }
+    }
+    if ($script:AgentJson.PSObject.Properties['upstreamProxy']) {
+        $upstreamProxyCandidate = [string]$script:AgentJson.upstreamProxy
+        if (Test-IsValidProxyUri $upstreamProxyCandidate) { $agentUpstreamProxy = $upstreamProxyCandidate }
+    }
+}
 
-# --- Env vars ---
-$envProxy   = [Environment]::GetEnvironmentVariable('HTTPS_PROXY', 'Machine')
+$envProxy = [Environment]::GetEnvironmentVariable('HTTPS_PROXY', 'Machine')
 if (-not $envProxy) { $envProxy = [Environment]::GetEnvironmentVariable('HTTPS_PROXY', 'Process') }
 $envNoProxy = [Environment]::GetEnvironmentVariable('NO_PROXY', 'Machine')
 if (-not $envNoProxy) { $envNoProxy = [Environment]::GetEnvironmentVariable('NO_PROXY', 'Process') }
 
-# --- Effective proxy (precedence: -ProxyUrl > azcmagent > HTTPS_PROXY > WinHTTP) ---
 if ($ProxyUrl -and (Test-IsValidProxyUri $ProxyUrl)) {
     $script:EffectiveProxy = $ProxyUrl
+}
+elseif ($agentRuntimeProxy) {
+    $script:EffectiveProxy = $agentRuntimeProxy
 }
 elseif ($agentProxy) {
     $script:EffectiveProxy = $agentProxy
@@ -583,725 +993,539 @@ elseif ($agentProxy) {
 elseif ($envProxy -and (Test-IsValidProxyUri $envProxy)) {
     $script:EffectiveProxy = $envProxy
 }
-elseif ($script:PreOnboarding -and $script:WinHttpProxy -and (Test-IsValidProxyUri "http://$($script:WinHttpProxy)")) {
-    # Pre-onboarding: no agent proxy, fallback to WinHTTP if configured
-    $whUri = if ($script:WinHttpProxy -match '^https?://') { $script:WinHttpProxy } else { "http://$($script:WinHttpProxy)" }
-    if (Test-IsValidProxyUri $whUri) { $script:EffectiveProxy = $whUri }
-}
 
-# --- Upstream proxy (Gateway mode) ---
-$upstreamProxy = $null
-if ($script:AgentJson) {
-    $upstreamProxy = if ($script:AgentJson.PSObject.Properties['upstreamProxy']) { $script:AgentJson.upstreamProxy }
-                     elseif ($script:AgentJson.PSObject.Properties['upstreamproxy']) { $script:AgentJson.upstreamproxy }
-                     else { $null }
-}
+$script:ProxyMode = if ($script:EffectiveProxy) { 'ExplicitProxy' } else { 'Direct' }
 
-# --- Display (pipe-delimited like azcmagent check) ---
 $pFmt = "  {0,-18} | {1,-35} | {2,-22}"
 Write-Host ($pFmt -f 'Source', 'Proxy', 'Used By') -ForegroundColor Cyan
 Write-Host ("  {0,-18}-+-{1,-35}-+-{2,-22}" -f ('-' * 18), ('-' * 35), ('-' * 22)) -ForegroundColor DarkGray
+foreach ($row in @(
+    @('WinHTTP (OS)', $(if ($script:WinHttpProxy) { $script:WinHttpProxy } else { 'Direct' }), 'SCHANNEL/OCSP/CRL'),
+    @('azcmagent rt', $(if ($agentRuntimeProxy) { $agentRuntimeProxy } else { '(not set)' }), 'Arc runtime path'),
+    @('azcmagent cfg', $(if ($agentProxy) { $agentProxy } else { '(not set)' }), 'Configured upstream'),
+    @('upstreamProxy', $(if ($agentUpstreamProxy) { $agentUpstreamProxy } else { '(not set)' }), 'Gateway upstream'),
+    @('HTTPS_PROXY', $(if ($envProxy) { $envProxy } else { '(not set)' }), 'Extensions')
+)) {
+    $color = if ($row[1] -match 'Direct|not set') { 'DarkGray' } else { 'White' }
+    Write-Host ($pFmt -f $row[0], $row[1], $row[2]) -ForegroundColor $color
+}
+Write-Status 'Effective proxy' $(if ($script:EffectiveProxy) { $script:EffectiveProxy } else { 'Direct' }) $(if ($script:EffectiveProxy) { 'Green' } else { 'DarkGray' })
+Write-Status 'Proxy mode' $script:ProxyMode $(if ($script:ProxyMode -eq 'ExplicitProxy') { 'Green' } else { 'DarkGray' })
 
-$agentProxyLabel = if ($script:PreOnboarding) { 'N/A (not installed)' } elseif ($agentProxy) { $agentProxy } else { '(not set)' }
-$rows = @(
-    , @('WinHTTP (OS)',  $(if ($script:WinHttpProxy) { $script:WinHttpProxy } else { 'Direct' }),  'SCHANNEL/OCSP/CRL')
-    , @('azcmagent',    $agentProxyLabel,                                                          'Arc Agent')
-    , @('HTTPS_PROXY',  $(if ($envProxy) { $envProxy } else { '(not set)' }),                       'Extensions')
-)
-if ($upstreamProxy) {
-    $rows += , @('Upstream Proxy', $upstreamProxy, 'Gateway chain')
+if ($Mode -eq 'Gateway' -and $hasAgentBypass) {
+    Write-Status 'Gateway bypass' 'Configured categories present, but Arc Gateway does not support proxy bypass' Yellow
+    Add-Issue -Severity 'INFO' -Category 'Gateway' -Message 'proxy.bypass is configured, but Azure Arc Gateway does not support proxy bypass. Treat bypass settings as non-effective for the Arc agent path in gateway mode.' -Fix 'Validate the gateway path without relying on proxy bypass semantics.'
 }
-foreach ($r in $rows) {
-    $c = if ($r[1] -match 'not set|Direct|N/A') { 'DarkGray' } else { 'White' }
-    Write-Host ($pFmt -f $r[0], $r[1], $r[2]) -ForegroundColor $c
-}
+
 if ($script:EffectiveProxy) {
-    Write-Host ''
-    Write-Status 'Effective proxy' $script:EffectiveProxy Green
-}
-
-# --- Proxy flow explanation (shown when proxy is configured or PLS/Gateway active) ---
-if ($script:EffectiveProxy -or $script:WinHttpProxy -or $Mode -in 'Private', 'Gateway') {
-    Write-Host ''
-    Write-Host '  Traffic flow per component:' -ForegroundColor DarkGray
-    if ($Mode -eq 'Gateway') {
-        Write-Host '    Arc Agent (tunneled) : Agent -> localhost:40343 -> Upstream Proxy -> Gateway -> Target' -ForegroundColor DarkGray
-        Write-Host '    Arc Agent (direct)   : Agent -> Enterprise Proxy -> Target' -ForegroundColor DarkGray
-    }
-    elseif ($Mode -eq 'Private') {
-        Write-Host '    Arc Agent (PLS)      : Agent -> Private Endpoint (VNET) -> Target (private IP)' -ForegroundColor DarkGray
-        Write-Host '    Arc Agent (non-PLS)  : Agent -> Proxy (if set) -> Target (public IP)' -ForegroundColor DarkGray
-    }
-    else {
-        Write-Host '    Arc Agent            : Agent -> azcmagent proxy.url -> Target' -ForegroundColor DarkGray
-    }
-    Write-Host '    Extensions           : Extension -> HTTPS_PROXY -> Target' -ForegroundColor DarkGray
-    Write-Host '    SCHANNEL (PKI/CRL)   : OS -> WinHTTP proxy (unless endpoint in bypass) -> Target' -ForegroundColor DarkGray
-    Write-Host '    TCP test (this script): Direct to Target:443 (no proxy - validates L3/L4)' -ForegroundColor DarkGray
-    Write-Host '    HTTP test (this scrpt): Via effective proxy (validates L7 app-layer path)' -ForegroundColor DarkGray
-    if ($Mode -eq 'Private') {
-        Write-Host '    DNS (Private Link)   : PLS endpoints resolve to private IP (validated in DNS test)' -ForegroundColor DarkGray
-    }
-}
-
-# --- Gateway + proxy.bypass warning ---
-if ($Mode -eq 'Gateway' -and $agentBypass) {
-    Add-Issue -Sev 'WARN' -Cat 'Gateway' `
-        -Msg 'proxy.bypass is configured but NOT supported in Gateway mode' `
-        -Fix 'Run: azcmagent config clear proxy.bypass'
-}
-
-# Neutralize .NET DefaultWebProxy for PS 5.1 when no proxy
-if (-not $script:EffectiveProxy -and $PSVersionTable.PSVersion.Major -lt 6) {
-    try { [System.Net.WebRequest]::DefaultWebProxy = $null } catch { }
-}
-
-Log "Region=$Region Mode=$Mode Proxy=$($script:EffectiveProxy) Gateway=$($script:GatewayUrl)" Info -NoCount
-
-# =========================================================================
-# PHASE 3: TLS & CRYPTO VALIDATION
-# =========================================================================
-
-Write-Section 'TLS & Crypto Validation'
-# Azure Arc requires TLS 1.2 or 1.3 ONLY.
-# Required cipher suites:
-#   TLS 1.3: TLS_AES_256_GCM_SHA384, TLS_AES_128_GCM_SHA256
-#   TLS 1.2: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-# SQL Arc endpoints (*.arcdataservices.com) require TLS 1.2/1.3 — Server 2012 (non-R2) NOT supported.
-# Ref: https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues
-
-$tlsOk = $false
-try {
-    $osVer = [System.Environment]::OSVersion.Version
-    $osBuild = $osVer.Build
-    $osCaption = (Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue).Caption
-    if (-not $osCaption) { $osCaption = "Windows $($osVer.Major).$($osVer.Minor) Build $osBuild" }
-    Write-Status 'OS' $osCaption DarkGray
-
-    # --- 1. SCHANNEL Registry Check ---
-    $schBase = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols'
-    $tls12Disabled = $false
-    $tls12Path = "$schBase\TLS 1.2\Client"
-    if (Test-Path $tls12Path) {
-        $enVal = (Get-ItemProperty -Path $tls12Path -Name 'Enabled' -EA SilentlyContinue).Enabled
-        $dbVal = (Get-ItemProperty -Path $tls12Path -Name 'DisabledByDefault' -EA SilentlyContinue).DisabledByDefault
-        if ($enVal -eq 0) { $tls12Disabled = $true }
-        if ($dbVal -eq 1 -and $enVal -ne 1) { $tls12Disabled = $true }
-    }
-
-    # TLS 1.3 support (Server 2022+ / Build 20348+)
-    $has13 = $false
-    $tls13Path = "$schBase\TLS 1.3\Client"
-    if (Test-Path $tls13Path) {
-        $en13 = (Get-ItemProperty -Path $tls13Path -Name 'Enabled' -EA SilentlyContinue).Enabled
-        if ($en13 -ne 0) { $has13 = $true }
-    }
-    if ($osVer.Major -ge 10 -and $osBuild -ge 20348) { $has13 = $true }
-
-    # OS era check
-    $isServer2012NonR2 = ($osVer.Major -eq 6 -and $osVer.Minor -eq 2)  # 6.2 = Server 2012 / Win8
-    $isModernOS = ($osVer.Major -gt 6) -or ($osVer.Major -eq 6 -and $osVer.Minor -ge 3)  # 6.3+ = 2012R2+
-
-    # --- 2. Real TLS 1.2 Handshake Test ---
-    $tlsHandshakeOk = $false
-    $negotiatedProto = ''
-    $savedProto = [System.Net.ServicePointManager]::SecurityProtocol
     try {
-        # Force .NET to use TLS 1.2 for this test
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
-        $testReq = [System.Net.HttpWebRequest]::Create('https://login.microsoftonline.com')
-        $testReq.Timeout = 10000
-        $testReq.Method = 'HEAD'
-        if ($script:EffectiveProxy) {
-            $testReq.Proxy = [System.Net.WebProxy]::new($script:EffectiveProxy)
-            $testReq.Proxy.UseDefaultCredentials = $true
-        } elseif ($PSVersionTable.PSVersion.Major -lt 6) {
-            $testReq.Proxy = $null
-        }
-        $testResp = $testReq.GetResponse()
-        $testResp.Close()
-        $tlsHandshakeOk = $true
-        $negotiatedProto = 'TLS 1.2'
+        $pxUri = [System.Uri]$script:EffectiveProxy
+        $script:EffectiveProxyReachable = Test-TcpPort -HostName $pxUri.Host -Port $pxUri.Port -TimeoutMs 4000
+        Write-Status 'Proxy reachability' ("$($pxUri.Host):$($pxUri.Port) => " + $(if ($script:EffectiveProxyReachable) { 'Reachable' } else { 'Unreachable' })) $(if ($script:EffectiveProxyReachable) { 'Green' } else { 'Red' })
     }
     catch {
-        # If TLS 1.2 fails, the OS may not support it
+        $script:EffectiveProxyParseError = $_.Exception.Message
+        Add-Issue -Severity 'HIGH' -Category 'Proxy' -Message 'Effective proxy URI is not parseable.' -Fix 'Validate -ProxyUrl or local proxy configuration.'
+    }
+}
+
+Write-Section 'TLS Validation'
+$handshakeOk = $false
+$tls12Disabled = $false
+$cipherWarning = $false
+$cipherInventorySupported = $false
+$cipherInventoryError = $null
+$strongCrypto = $false
+$legacyTls12OnlyOs = $false
+try {
+    $os = Get-OperatingSystemInfo
+    $osCaption = if ($os -and $os.Caption) { $os.Caption } else { "Windows $([System.Environment]::OSVersion.Version)" }
+    $legacyTls12OnlyOs = Test-IsLegacyTls12OnlyOs -OsInfo $os
+    Write-Status 'OS' $osCaption DarkGray
+    if ($legacyTls12OnlyOs) {
+        Write-Status 'TLS posture' 'Legacy OS detected; TLS 1.2 is the required baseline and TLS 1.3 observations are informational.' DarkGray
+    }
+
+    $schBase = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols'
+    $tls12Path = "$schBase\TLS 1.2\Client"
+    if (Test-Path $tls12Path) {
+        $enabled = (Get-ItemProperty -Path $tls12Path -Name 'Enabled' -ErrorAction SilentlyContinue).Enabled
+        $disabledByDefault = (Get-ItemProperty -Path $tls12Path -Name 'DisabledByDefault' -ErrorAction SilentlyContinue).DisabledByDefault
+        if ($enabled -eq 0 -or ($disabledByDefault -eq 1 -and $enabled -ne 1)) {
+            $tls12Disabled = $true
+        }
+    }
+
+    $savedProto = [System.Net.ServicePointManager]::SecurityProtocol
+    $tlsProbeEndpoint = 'login.microsoftonline.com'
+    $tlsProbeBypassed = $false
+    $tlsUsesProxy = $false
+    $tlsBypassedEndpoints = Get-AgentBypassedEndpoints -AgentBypass $agentBypass -Region $Region
+    foreach ($entry in $tlsBypassedEndpoints) {
+        if (-not $entry) { continue }
+        $norm = $entry.Trim().ToLower()
+        if (-not $norm) { continue }
+        if ($norm.StartsWith('*.')) { $norm = $norm.Substring(1) }
+        $probeHost = $tlsProbeEndpoint.Trim().ToLower()
+        if ($probeHost -eq $norm.TrimStart('.') -or ($norm.StartsWith('.') -and $probeHost.EndsWith($norm))) {
+            $tlsProbeBypassed = $true
+            break
+        }
+    }
+    if ($tlsProbeBypassed) {
+        Write-Status 'TLS probe path' 'AAD bypass applied; probing direct path to login.microsoftonline.com' DarkGray
+    }
+    try {
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+        $request = [System.Net.HttpWebRequest]::Create("https://$tlsProbeEndpoint")
+        $request.Method = 'HEAD'
+        $request.Timeout = 10000
+        if ($script:EffectiveProxy -and -not $tlsProbeBypassed) {
+            $request.Proxy = New-Object System.Net.WebProxy($script:EffectiveProxy)
+            $request.Proxy.UseDefaultCredentials = $true
+            $tlsUsesProxy = $true
+        }
+        else {
+            $request.Proxy = $null
+        }
+        $response = $request.GetResponse()
+        $response.Close()
+        $handshakeOk = $true
+    }
+    catch {
+        $handshakeOk = $false
     }
     finally {
         [System.Net.ServicePointManager]::SecurityProtocol = $savedProto
     }
 
-    # --- 3. Cipher Suite Check ---
-    $requiredCiphers12 = @(
-        'TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384'
+    foreach ($regPath in 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319', 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319') {
+        if (Test-Path $regPath) {
+            $sc = (Get-ItemProperty -Path $regPath -Name 'SchUseStrongCrypto' -ErrorAction SilentlyContinue).SchUseStrongCrypto
+            if ($sc -eq 1) { $strongCrypto = $true }
+        }
+    }
+
+    $requiredGcm = @(
+        'TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384',
         'TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256'
     )
-    $requiredCiphers13 = @(
-        'TLS_AES_256_GCM_SHA384'
-        'TLS_AES_128_GCM_SHA256'
-    )
-    $cipherOk = $true
-    $missingCiphers = @()
-    try {
-        $sysCiphers = (Get-TlsCipherSuite -ErrorAction SilentlyContinue).Name
-        if ($sysCiphers) {
-            foreach ($rc in $requiredCiphers12) {
-                if ($sysCiphers -notcontains $rc) { $missingCiphers += $rc; $cipherOk = $false }
+    $cipherInventory = Get-TlsCipherInventory
+    $cipherInventorySupported = $cipherInventory.Supported
+    $cipherInventoryError = $cipherInventory.Error
+    if ($cipherInventorySupported -and $cipherInventory.Names.Count -gt 0) {
+        foreach ($cipher in $requiredGcm) {
+            if ($cipherInventory.Names -notcontains $cipher) {
+                $cipherWarning = $true
+                break
             }
         }
-        # Get-TlsCipherSuite may not exist on older OS (Server 2012/2012R2)
-    }
-    catch {
-        # Get-TlsCipherSuite not available — skip cipher check (older OS)
-        $cipherOk = $true
     }
 
-    # --- 4. .NET Strong Crypto ---
-    $strongCrypto = $false
-    $sysDefaultTls = $false
-    $regPath64 = 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319'
-    $regPath32 = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319'
-    foreach ($rp in @($regPath64, $regPath32)) {
-        if (Test-Path $rp) {
-            $sc = (Get-ItemProperty -Path $rp -Name 'SchUseStrongCrypto' -EA SilentlyContinue).SchUseStrongCrypto
-            if ($sc -eq 1) { $strongCrypto = $true }
-            $sd = (Get-ItemProperty -Path $rp -Name 'SystemDefaultTlsVersions' -EA SilentlyContinue).SystemDefaultTlsVersions
-            if ($sd -eq 1) { $sysDefaultTls = $true }
-        }
-    }
-
-    # --- Display Results ---
     if ($tls12Disabled) {
-        Write-Status 'SCHANNEL TLS 1.2' 'DISABLED in registry' Red
-        Add-Issue -Sev 'CRITICAL' -Cat 'TLS' `
-            -Msg 'TLS 1.2 is disabled in SCHANNEL registry. Azure Arc requires TLS 1.2+.' `
-            -Fix 'https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues'
+        Write-Status 'TLS 1.2' 'Disabled in SCHANNEL' Red
+        Add-Issue -Severity 'CRITICAL' -Category 'TLS' -Message 'TLS 1.2 is disabled in SCHANNEL.' -Fix 'Enable TLS 1.2 in SCHANNEL and re-run the check.'
     }
-    elseif ($tlsHandshakeOk) {
-        $tlsLabel = if ($has13) { 'TLS 1.2 + 1.3' } else { 'TLS 1.2' }
-        Write-Status 'TLS Handshake' "$tlsLabel verified (live test passed)" Green
-        $tlsOk = $true
-    }
-    elseif ($isModernOS) {
-        Write-Status 'TLS SCHANNEL' 'TLS 1.2 enabled (OS default, handshake test failed)' Yellow
-        $tlsOk = $true
+    elseif ($handshakeOk) {
+        Write-Status 'TLS handshake' 'TLS 1.2 handshake succeeded' Green
     }
     else {
-        Write-Status 'TLS' 'Could not verify TLS 1.2 - check SCHANNEL config' Yellow
-        Add-Issue -Sev 'HIGH' -Cat 'TLS' `
-            -Msg 'Cannot verify TLS 1.2 support. Azure Arc requires TLS 1.2+.' `
-            -Fix 'https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues'
-    }
-
-    # Cipher suites
-    if (-not $cipherOk -and $missingCiphers.Count -gt 0) {
-        Write-Status 'Cipher Suites' "MISSING: $($missingCiphers -join ', ')" Red
-        Add-Issue -Sev 'HIGH' -Cat 'TLS Ciphers' `
-            -Msg "Required cipher suites missing: $($missingCiphers -join ', ')" `
-            -Fix 'Enable GCM cipher suites via Group Policy or PowerShell Enable-TlsCipherSuite'
-    }
-    elseif ($missingCiphers.Count -eq 0 -and $cipherOk) {
-        Write-Status 'Cipher Suites' 'Required GCM suites present' Green
-    }
-
-    # .NET StrongCrypto + SystemDefaultTlsVersions
-    if ($strongCrypto -and $sysDefaultTls) {
-        Write-Status '.NET TLS Config' 'SchUseStrongCrypto=1, SystemDefaultTlsVersions=1' Green
-    }
-    elseif ($strongCrypto) {
-        Write-Status '.NET StrongCrypto' 'Enabled (SystemDefaultTlsVersions NOT set)' Yellow
-    }
-    elseif ($sysDefaultTls) {
-        Write-Status '.NET TLS Config' 'SystemDefaultTlsVersions=1 (SchUseStrongCrypto NOT set)' Yellow
-    }
-    else {
-        # On Server 2016+ (.NET 4.6+), TLS 1.2 is default even without these keys (INFO only)
-        # On Server 2012 R2, this is a blocking issue (WARN)
-        $netSev = if ($isModernOS -and $osVer.Major -ge 10) { 'INFO' } else { 'WARN' }
-        $netMsg = if ($netSev -eq 'INFO') {
-            '.NET TLS keys not set (OK on this OS - .NET 4.6+ defaults to TLS 1.2)'
-        } else {
-            '.NET Framework not configured for TLS 1.2 default. Extensions may fail with: "Could not create SSL/TLS secure channel"'
+        $tlsMessage = 'Live TLS 1.2 handshake to login.microsoftonline.com failed.'
+        $tlsFix = 'Validate outbound TLS inspection, proxy behavior, SCHANNEL policy, and root trust.'
+        $tlsSeverity = 'HIGH'
+        if ($tlsUsesProxy) {
+            $tlsSeverity = 'WARN'
+            $tlsMessage = 'Live TLS 1.2 handshake failed through the configured proxy path.'
+            $tlsFix = 'Validate proxy CONNECT policy or TLS inspection before treating this as an OS TLS problem.'
         }
-        Write-Status '.NET TLS Config' 'Neither StrongCrypto nor SystemDefaultTlsVersions set' $(if ($netSev -eq 'INFO') { 'DarkGray' } else { 'Yellow' })
-        if ($netSev -eq 'WARN') {
-            Add-Issue -Sev 'WARN' -Cat 'TLS .NET' `
-                -Msg $netMsg `
-                -Fix 'Set SchUseStrongCrypto=1 and SystemDefaultTlsVersions=1 in HKLM:\SOFTWARE\[Wow6432Node\]Microsoft\.NETFramework\v4.0.30319'
+        elseif ($legacyTls12OnlyOs) {
+            $tlsSeverity = 'WARN'
+            $tlsMessage = 'Live TLS 1.2 handshake failed on a legacy TLS-1.2-only OS.'
+            $tlsFix = 'If azcmagent still reports core healthy, treat this as an inspection/path warning and validate SCHANNEL, root trust, and outbound filtering.'
+        }
+
+        Write-Status 'TLS handshake' 'Live TLS 1.2 handshake failed' Yellow
+        $script:DeferredTlsIssue = [pscustomobject]@{
+            Severity = $tlsSeverity
+            Message = $tlsMessage
+            Fix = $tlsFix
+            UsesProxy = $tlsUsesProxy
         }
     }
 
-    # Server 2012 (non-R2) + SQL Arc warning
-    if ($isServer2012NonR2 -and ($script:InstalledExts -contains 'SQL' -or $CheckIncludeAll)) {
-        Write-Status 'SQL Arc TLS' 'Server 2012 (non-R2) NOT supported for SQL Arc telemetry' Red
-        Add-Issue -Sev 'HIGH' -Cat 'SQL TLS' `
-            -Msg 'Windows Server 2012 (non-R2) does not support TLS 1.2 for *.arcdataservices.com endpoints.' `
-            -Fix 'Upgrade to Server 2012 R2+ for SQL Server enabled by Azure Arc.'
+    if (-not $cipherInventorySupported) {
+        Write-Status 'Cipher suites' 'Local cipher inventory unavailable on this PowerShell/OS; skipped' DarkGray
     }
+    elseif ($cipherWarning) {
+        Write-Status 'Cipher suites' 'GCM suite set appears reduced' Yellow
+        Add-Issue -Severity 'WARN' -Category 'TLS Ciphers' -Message 'Expected GCM cipher suites were not fully observed in the local inventory.' -Fix 'Review local cipher policy if Arc TLS negotiation still fails.'
+    }
+    else {
+        Write-Status 'Cipher suites' 'No blocking issue detected' Green
+    }
+
+    Write-Status '.NET StrongCrypto' $(if ($strongCrypto) { 'Enabled' } else { 'Not set' }) $(if ($strongCrypto) { 'Green' } else { 'Yellow' })
 }
 catch {
-    Write-Status 'TLS' "Check error: $($_.Exception.Message)" Yellow
-    $tlsOk = $true
+    Write-Status 'TLS' "Validation error: $($_.Exception.Message)" Yellow
+    Add-Issue -Severity 'WARN' -Category 'TLS' -Message 'TLS validation encountered an error.' -Fix 'Review PowerShell / .NET capabilities on this OS and validate TLS manually if needed.'
 }
-Log "TLS check: OK=$tlsOk handshake=$tlsHandshakeOk ciphers=$cipherOk strongCrypto=$strongCrypto sysDefaultTls=$sysDefaultTls" $(if ($tlsOk) { 'OK' } else { 'Fail' })
 
-# --- TLS Registry Dump (full diagnostic view) ---
-Write-Section 'TLS Registry Dump (Actual vs Recommended)'
-
-$tlsRegChecks = @(
-    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client'; Name = 'Enabled';           Recommended = 1; Scope = 'TLS Client'; UsedBy = 'Arc Agent, OCSP/CRL' }
-    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client'; Name = 'DisabledByDefault';  Recommended = 0; Scope = 'TLS Client'; UsedBy = 'Arc Agent, OCSP/CRL' }
-    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server'; Name = 'Enabled';           Recommended = 1; Scope = 'TLS Server'; UsedBy = 'WAC inbound, RDP' }
-    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server'; Name = 'DisabledByDefault';  Recommended = 0; Scope = 'TLS Server'; UsedBy = 'WAC inbound, RDP' }
-    @{ Path = 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319';                                          Name = 'SchUseStrongCrypto'; Recommended = 1; Scope = '.NET x64'; UsedBy = 'PS 5.1, Extensions' }
-    @{ Path = 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319';                                          Name = 'SystemDefaultTlsVersions'; Recommended = 1; Scope = '.NET x64'; UsedBy = 'PS 5.1, Extensions' }
-    @{ Path = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319';                              Name = 'SchUseStrongCrypto'; Recommended = 1; Scope = '.NET x86'; UsedBy = '32-bit .NET apps' }
-    @{ Path = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319';                              Name = 'SystemDefaultTlsVersions'; Recommended = 1; Scope = '.NET x86'; UsedBy = '32-bit .NET apps' }
-)
-
-$rdFmt = "  {0,-6} | {1,-10} | {2,-24} | {3,-9} | {4,-5} | {5}"
-Write-Host ($rdFmt -f 'Status', 'Scope', 'Name', 'Value', 'Rec.', 'Used By') -ForegroundColor Cyan
-Write-Host ("  {0,-6}-+-{1,-10}-+-{2,-24}-+-{3,-9}-+-{4,-5}-+-{5}" -f ('-' * 6), ('-' * 10), ('-' * 24), ('-' * 9), ('-' * 5), ('-' * 22)) -ForegroundColor DarkGray
-
-$tlsRegIssues = 0
-foreach ($chk in $tlsRegChecks) {
-    $val = $null
-    $valStr = 'N/A'
-    if (Test-Path $chk.Path) {
-        $prop = Get-ItemProperty -Path $chk.Path -Name $chk.Name -ErrorAction SilentlyContinue
-        if ($null -ne $prop -and $null -ne $prop.($chk.Name)) {
-            $val = $prop.($chk.Name)
-            $valStr = "$val"
-        }
-        else {
-            $valStr = '(not set)'
+if (-not $SkipExtensions -and $azcm) {
+    try {
+        $extOut = & $azcm extension list 2>$null | Out-String
+        if ($extOut) {
+            if ($extOut -match 'WindowsAgent\.SqlServer|LinuxAgent\.SqlServer|SqlServer') { $script:InstalledExts += 'SQL' }
+            if ($extOut -match 'AzureMonitor|AMA') { $script:InstalledExts += 'AMA' }
+            if ($extOut -match 'MDE|DefenderForServers|AzureDefender') { $script:InstalledExts += 'MDE' }
+            if ($extOut -match 'AdminCenter') { $script:InstalledExts += 'WAC' }
+            if ($extOut -match 'KeyVault') { $script:InstalledExts += 'KV' }
+            if ($extOut -match 'HybridWorker|Automation') { $script:InstalledExts += 'HRW' }
+            if ($extOut -match 'ChangeTracking') { $script:InstalledExts += 'CT' }
+            if ($extOut -match 'GuestAttestation|WindowsAttestation|LinuxAttestation') { $script:InstalledExts += 'GA' }
+            if ($extOut -match 'WindowsPatchExtension|LinuxPatchExtension|UpdateManagement') { $script:InstalledExts += 'UM' }
+            if ($extOut -match 'CustomScript') { $script:InstalledExts += 'CS' }
+            if ($extOut -match 'DependencyAgent') { $script:InstalledExts += 'DA' }
+            if ($extOut -match 'DefenderForSQL|AdvancedThreatProtection|MicrosoftDefenderForSQL') { $script:InstalledExts += 'DSQL' }
+            $script:InstalledExts = $script:InstalledExts | Select-Object -Unique
         }
     }
-    else {
-        $valStr = '(key missing)'
+    catch {
+        Add-Issue -Severity 'WARN' -Category 'Extensions' -Message 'Could not enumerate installed Arc extensions.' -Fix 'Verify azcmagent extension list output on this agent version.'
     }
-
-    # Determine status
-    $recStr = "$($chk.Recommended)"
-    if ($val -eq $chk.Recommended) {
-        $status = 'OK'
-        $color = 'Green'
-    }
-    elseif ($null -eq $val -and $chk.Scope -like 'TLS *') {
-        # SCHANNEL keys not set = OS default (TLS 1.2 enabled on 2012R2+ with KB, 2016+ native)
-        $status = 'DFLT'
-        $color = 'DarkYellow'
-    }
-    else {
-        $status = 'WARN'
-        $color = 'Yellow'
-        $tlsRegIssues++
-    }
-
-    # Shorten path for display
-    $shortPath = $chk.Path -replace 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL\\Protocols\\', '...\SCHANNEL\' `
-                            -replace 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\', '...\WOW6432Node\' `
-                            -replace 'HKLM:\\SOFTWARE\\Microsoft\\', '...\Microsoft\'
-
-    $usedBy = if ($chk.UsedBy) { $chk.UsedBy } else { '-' }
-    Write-Host ($rdFmt -f $status, $chk.Scope, $chk.Name, $valStr, $recStr, $usedBy) -ForegroundColor $color
 }
-
-if ($tlsRegIssues -gt 0) {
-    Write-Host ''
-    Write-Host "  $tlsRegIssues registry value(s) not matching recommendation." -ForegroundColor Yellow
-    Write-Host '  Ref: https://learn.microsoft.com/azure/azure-arc/servers/troubleshoot-networking#windows-tls-configuration-issues' -ForegroundColor DarkCyan
-    Write-Host '  Ref: https://learn.microsoft.com/entra/identity/hybrid/connect/reference-connect-tls-enforcement' -ForegroundColor DarkCyan
-}
-else {
-    Write-Host ''
-    Write-Host '  All TLS registry values match Azure Arc recommendations.' -ForegroundColor Green
-}
-Write-Host ''
-Write-Host '  Legend: OK=value matches | DFLT=not set but OS default is correct (Server 2016+) | WARN=should be configured' -ForegroundColor DarkGray
-
-# Also log to file
-$tlsRegLog = $tlsRegChecks | ForEach-Object {
-    $v = $null
-    if (Test-Path $_.Path) { $v = (Get-ItemProperty -Path $_.Path -Name $_.Name -EA SilentlyContinue).($_.Name) }
-    "$($_.Scope) | $($_.Name) = $(if ($null -ne $v) { $v } else { 'N/A' }) (rec: $($_.Recommended))"
-}
-Log "TLS Registry: $($tlsRegLog -join ' ; ')" Info -NoCount
-
-# =========================================================================
-# PHASE 4: PKI/OCSP/CRL BYPASS VALIDATION
-# =========================================================================
+Write-Status 'Extensions' $(if ($script:InstalledExts.Count -gt 0) { $script:InstalledExts -join ', ' } elseif ($CheckIncludeAll) { 'all (forced)' } else { '(none detected)' }) $(if ($script:InstalledExts.Count -gt 0) { 'White' } else { 'DarkGray' })
 
 $pkiEndpoints = @(
-    'oneocsp.microsoft.com'       # OCSP primary
-    'crl.microsoft.com'           # CRL Microsoft root
-    'crl2.microsoft.com'          # CRL Microsoft intermediate
-    'crl3.digicert.com'           # CRL DigiCert
-    'crl4.digicert.com'           # CRL DigiCert alt
-    'ocsp.digicert.com'           # OCSP DigiCert
-    'ctldl.windowsupdate.com'     # Certificate Trust List
-    'www.microsoft.com'           # PKI AIA chain + /pkiops/certs (ESU HTTP:80+HTTPS:443)
-    'caissuers.microsoft.com'     # CA Issuers (AIA)
-    'login.live.com'              # Live ID cert validation
+    'oneocsp.microsoft.com',
+    'ocsp.msocsp.com',
+    'crl.microsoft.com',
+    'crl2.microsoft.com',
+    'crl3.microsoft.com',
+    'crl4.microsoft.com',
+    'crl3.digicert.com',
+    'crl4.digicert.com',
+    'ocsp.digicert.com',
+    'ctldl.windowsupdate.com',
+    'www.microsoft.com',
+    'caissuers.microsoft.com',
+    'login.live.com'
 )
 
-$pkiWildcardCovers = @{
-    '.microsoft.com'      = @('oneocsp.microsoft.com', 'crl.microsoft.com', 'crl2.microsoft.com',
-                              'www.microsoft.com', 'caissuers.microsoft.com')
-    '.digicert.com'       = @('crl3.digicert.com', 'crl4.digicert.com', 'ocsp.digicert.com')
-    '.live.com'           = @('login.live.com')
-    '.ocsp.microsoft.com' = @('oneocsp.microsoft.com')
-    '.ocsp.digicert.com'  = @('ocsp.digicert.com')
-}
-
-function Test-PkiBypassCoverage {
-    if (-not $script:WinHttpProxy) { return @() }
-
-    $byList = @()
+function Get-PkiBypassEntries {
+    $bypassEntries = @()
     if ($script:WinHttpBypass) {
-        # WinHTTP uses *.domain.com format; normalize to .domain.com for matching
-        $byList += $script:WinHttpBypass -split ';' |
-            ForEach-Object { $_.Trim().ToLower() } | Where-Object { $_ } |
-            ForEach-Object { if ($_ -match '^\*\.([a-z])') { $_.Substring(1) } else { $_ } }
+        $bypassEntries += $script:WinHttpBypass -split ';' | ForEach-Object { $_.Trim().ToLower() } | Where-Object { $_ }
     }
     if ($envNoProxy) {
-        $byList += $envNoProxy -split ',' |
-            ForEach-Object { $_.Trim().ToLower() } | Where-Object { $_ }
+        $bypassEntries += $envNoProxy -split ',' | ForEach-Object { $_.Trim().ToLower() } | Where-Object { $_ }
     }
-    if ($byList.Count -eq 0) { return $pkiEndpoints }
+    return @($bypassEntries | Select-Object -Unique)
+}
 
-    $covered = [System.Collections.ArrayList]::new()
-    foreach ($wc in $pkiWildcardCovers.Keys) {
-        if ($byList -contains $wc.ToLower()) {
-            foreach ($ep in $pkiWildcardCovers[$wc]) {
-                if ($covered -notcontains $ep.ToLower()) { [void]$covered.Add($ep.ToLower()) }
+function Test-IsPkiCoveredByBypassOnly {
+    param([string]$Endpoint)
+
+    $endpointHost = $Endpoint.Trim().ToLower()
+    foreach ($entry in (Get-PkiBypassEntries)) {
+        if (-not $entry) { continue }
+        $norm = $entry.Trim().ToLower()
+        if (-not $norm) { continue }
+        if ($norm.StartsWith('*.')) { $norm = $norm.Substring(1) }
+        if ($endpointHost -eq $norm.TrimStart('.') -or ($norm.StartsWith('.') -and $endpointHost.EndsWith($norm))) {
+            return $true
+        }
+    }
+    return $false
+}
+
+function Get-PkiBypassGaps {
+    if (-not $script:WinHttpProxy) { return @() }
+
+    $bypassEntries = Get-PkiBypassEntries
+    if ($bypassEntries.Count -eq 0) { return $pkiEndpoints }
+
+    $missing = @()
+    foreach ($ep in $pkiEndpoints) {
+        $covered = $false
+        $endpointHost = $ep.Trim().ToLower()
+        foreach ($entry in $bypassEntries) {
+            if (-not $entry) { continue }
+            $norm = $entry.Trim().ToLower()
+            if (-not $norm) { continue }
+            if ($norm.StartsWith('*.')) { $norm = $norm.Substring(1) }
+            if ($endpointHost -eq $norm.TrimStart('.') -or ($norm.StartsWith('.') -and $endpointHost.EndsWith($norm))) {
+                $covered = $true
+                break
             }
         }
+        if (-not $covered) { $missing += $ep }
     }
-
-    $uncovered = @()
-    foreach ($ep in $pkiEndpoints) {
-        $lo = $ep.ToLower()
-        if ($byList -contains $lo) { continue }
-        if ($covered -contains $lo) { continue }
-        $matched = $false
-        foreach ($be in $byList) {
-            if ($be.StartsWith('.') -and $lo.EndsWith($be)) { $matched = $true; break }
-        }
-        if (-not $matched) { $uncovered += $ep }
-    }
-    return $uncovered
+    return $missing
 }
 
 if (-not $SkipPKI -and $script:WinHttpProxy) {
-    Write-Section 'PKI/OCSP/CRL Proxy Bypass'
-    $uncPki = Test-PkiBypassCoverage
-    if ($uncPki.Count -eq 0) {
-        Write-Host '  All PKI endpoints covered by bypass list' -ForegroundColor Green
+    Write-Section 'PKI / OCSP / CRL Bypass'
+    $missingPki = Get-PkiBypassGaps
+    if ($missingPki.Count -eq 0) {
+        Write-Status 'PKI bypass' 'Coverage looks reasonable via local bypass settings' Green
     }
     else {
-        Write-Host '  PKI endpoints MISSING from proxy bypass (TLS will fail):' -ForegroundColor Red
-        $bFmt = "    {0,-9} | {1}"
-        Write-Host ($bFmt -f 'Status', 'Endpoint') -ForegroundColor Gray
-        Write-Host ("    {0,-9}-+-{1}" -f ('-' * 9), ('-' * 40)) -ForegroundColor DarkGray
-        foreach ($ep in $uncPki) {
-            Write-Host ($bFmt -f 'MISSING', $ep) -ForegroundColor Red
-            Log "PKI bypass MISSING: $ep" Fail
-        }
-        Add-Issue -Sev 'CRITICAL' -Cat 'PKI Bypass' `
-            -Msg "$($uncPki.Count) PKI endpoint(s) not in proxy bypass" `
-            -Fix "Add to GPO NO_PROXY: $($uncPki -join ',')"
+        Write-Status 'PKI bypass' ("Local bypass coverage is incomplete: $($missingPki -join ', ')") Yellow
+        Add-Issue -Severity 'INFO' -Category 'PKI Coverage' -Message 'Some PKI endpoints are not covered by local bypass configuration (WinHTTP bypass / NO_PROXY). Treat this as inventory only; it is not causal evidence of failure for this run.' -Fix 'Correlate with observed HTTP/TLS probe errors before changing proxy, firewall, route, or PKI policy.'
     }
 }
 
-# =========================================================================
-# PHASE 5: ENDPOINT DEFINITIONS
-# =========================================================================
-
-# Reset stats for test phase
-$script:Stats.OK = 0
-$script:Stats.Fail = 0
-$script:Stats.Warn = 0
-
-# Endpoints eligible for Private Link resolution
-$canBePrivate = [System.Collections.ArrayList]@(
-    'gbl.his.arc.azure.com'
+Write-Section 'Endpoint Discovery (azcmagent check)'
+$coreEndpoints = [System.Collections.ArrayList]@(
+    'login.windows.net',
+    'login.microsoftonline.com',
+    "$Region.login.microsoft.com",
+    'pas.windows.net',
+    'gbl.his.arc.azure.com',
     'agentserviceapi.guestconfiguration.azure.com'
-    'dc.services.visualstudio.com'
+)
+$controlPlaneEndpoints = [System.Collections.ArrayList]@(
+    'management.azure.com'
+)
+$lifecycleEndpoints = [System.Collections.ArrayList]@(
+    'packages.microsoft.com',
+    'download.microsoft.com'
+)
+$privateEligible = [System.Collections.ArrayList]@(
+    'gbl.his.arc.azure.com',
+    'agentserviceapi.guestconfiguration.azure.com',
     'global.handler.control.monitor.azure.com'
 )
 
-# --- Core endpoints (always tested) ---
-# Ref: https://learn.microsoft.com/azure/azure-arc/network-requirements-consolidated
-$coreEps = [System.Collections.ArrayList]@(
-    'login.windows.net'                # AAD authentication
-    'login.microsoftonline.com'        # AAD authentication
-    "$Region.login.microsoft.com"      # AAD regional
-    'pas.windows.net'                  # AAD token (access packages)
-    'management.azure.com'             # ARM (Azure Resource Manager)
-    'gbl.his.arc.azure.com'            # Arc Hybrid Identity Service (global)
-    'agentserviceapi.guestconfiguration.azure.com'  # Guest Configuration (global)
-    'packages.microsoft.com'           # Agent/extension packages (Linux apt/yum)
-    'download.microsoft.com'           # Agent installer + extension downloads
-    'mcr.microsoft.com'                # Extension container images
-)
-
-# dc.services.visualstudio.com — not used in agent 1.24+ (replaced by ARM telemetry)
-$agVerParts = if ($script:AgentVersion) { $script:AgentVersion -split '\.' } else { @() }
-$agMajor = if ($agVerParts.Count -ge 1) { try { [int]$agVerParts[0] } catch { 0 } } else { 0 }
-$agMinor = if ($agVerParts.Count -ge 2) { try { [int]$agVerParts[1] } catch { 0 } } else { 0 }
-if ($script:PreOnboarding -or ($agMajor -lt 1) -or ($agMajor -eq 1 -and $agMinor -lt 24)) {
-    [void]$coreEps.Add('dc.services.visualstudio.com')
+if ($Mode -in @('Public', 'Gateway')) {
+    [void]$coreEndpoints.Add('guestnotificationservice.azure.com')
 }
 
-# GNS global (Public/Gateway modes)
-if ($Mode -in 'Public', 'Gateway') {
-    [void]$coreEps.Add('guestnotificationservice.azure.com')
-}
-
-# Gateway URL
-if ($script:GatewayUrl) {
-    try {
-        $gwFqdn = ([System.Uri]$script:GatewayUrl).Host
-        if ($gwFqdn) { [void]$coreEps.Add($gwFqdn) }
-    }
-    catch {
-        $gwFqdn = $script:GatewayUrl -replace 'https?://', '' -replace '/.*', ''
-        if ($gwFqdn) { [void]$coreEps.Add($gwFqdn) }
+if ($script:AgentJson) {
+    $gw = $null
+    if ($script:AgentJson.PSObject.Properties['gatewayUrl']) { $gw = $script:AgentJson.gatewayUrl }
+    elseif ($script:AgentJson.PSObject.Properties['gatewayurl']) { $gw = $script:AgentJson.gatewayurl }
+    if ($gw) {
+        $script:GatewayUrl = $gw
+        try {
+            $gwHost = ([System.Uri]$gw).Host
+            if ($gwHost -and $coreEndpoints -notcontains $gwHost) { [void]$coreEndpoints.Add($gwHost) }
+        }
+        catch { }
     }
 }
 
-# --- Extension endpoints (auto-detected) ---
-$extEps = @{}
-
-# SQL Server enabled by Azure Arc
-# Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint
-# Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/prerequisites
+$extEndpoints = @{}
 if ($script:InstalledExts -contains 'SQL' -or $CheckIncludeAll) {
-    $extEps['SQL'] = @(
-        "dataprocessingservice.$Region.arcdataservices.com"   # Data processing (telemetry upload)
-        "telemetry.$Region.arcdataservices.com"              # Telemetry collection
-        "san-af-$Region-prod.azurewebsites.net"             # SQL Assessment (legacy, may be deprecated)
-        'graph.microsoft.com'                               # AAD Graph for SQL auth
+    $extEndpoints['SQL'] = @(
+        "dataprocessingservice.$Region.arcdataservices.com",
+        "telemetry.$Region.arcdataservices.com",
+        "san-af-$Region-prod.azurewebsites.net",
+        'graph.microsoft.com',
+        'dc.services.visualstudio.com'
     )
 }
-
-# Defender for SQL (separate from MDE)
-# Ref: https://learn.microsoft.com/azure/defender-for-cloud/defender-for-sql-usage
 if ($script:InstalledExts -contains 'DSQL' -or $CheckIncludeAll) {
-    if (-not $extEps.ContainsKey('SQL')) { $extEps['SQL'] = @() }
-    $extEps['SQL'] += @("defender-for-databases.$Region.arcdataservices.com")
+    if (-not $extEndpoints.ContainsKey('SQL')) { $extEndpoints['SQL'] = @() }
+    $extEndpoints['SQL'] += "defender-for-databases.$Region.arcdataservices.com"
 }
-
-# AMA (Azure Monitor Agent) + Dependency Agent
-# Ref: https://learn.microsoft.com/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
 if ($script:InstalledExts -contains 'AMA' -or $script:InstalledExts -contains 'DA' -or $CheckIncludeAll) {
-    $extEps['AMA'] = @(
-        'global.handler.control.monitor.azure.com'       # Agent control channel (global)
-        "$Region.handler.control.monitor.azure.com"      # Agent control channel (regional)
-        "$Region.monitoring.azure.com"                   # Metrics ingestion (DCR)
-        'global.prod.microsoftmetrics.com'               # Metrics publishing
+    $extEndpoints['AMA'] = @(
+        'global.handler.control.monitor.azure.com',
+        'global.prod.microsoftmetrics.com',
+        "$Region.handler.control.monitor.azure.com",
+        "$Region.monitoring.azure.com"
     )
-    # NOTE: Log ingestion uses <dce-id>.<region>.ingest.monitor.azure.com
-    # which is customer-specific (Data Collection Endpoint). Not testable without DCE context.
 }
-
-# MDE (Microsoft Defender for Endpoint)
-# Ref: https://learn.microsoft.com/defender-endpoint/configure-proxy-internet
-# Ref: https://learn.microsoft.com/defender-endpoint/configure-environment#streamlined-connectivity
-# NOTE: MDE endpoints vary by tenant geo (US/EU/UK). Below are US defaults.
-#       If tenant is in EU/UK, these will differ. Agent geo is detected from onboarding blob.
 if ($script:InstalledExts -contains 'MDE' -or $CheckIncludeAll) {
-    $extEps['MDE'] = @(
-        'unitedstates.x.cp.wd.microsoft.com'   # Cyber data (US geo)
-        'us-v20.events.data.microsoft.com'     # EDR telemetry (US geo)
-        'winatp-gw-cus3.microsoft.com'         # Gateway (Central US)
-        'go.microsoft.com'                     # MDE update/CnC channel
-        '*.endpoint.security.microsoft.com'    # Unified MDE endpoint (streamlined)
+    $extEndpoints['MDE'] = @(
+        'unitedstates.x.cp.wd.microsoft.com',
+        'us-v20.events.data.microsoft.com',
+        'winatp-gw-cus3.microsoft.com'
     )
 }
-
-# WAC (Windows Admin Center)
 if ($script:InstalledExts -contains 'WAC' -or $CheckIncludeAll) {
-    $extEps['WAC'] = @("$Region.service.waconazure.com")
+    $extEndpoints['WAC'] = @("$Region.service.waconazure.com")
 }
-
-# Key Vault extension
 if ($script:InstalledExts -contains 'KV' -or $CheckIncludeAll) {
-    $extEps['KV'] = @('*.vault.azure.net')
+    $extEndpoints['KV'] = @('*.vault.azure.net')
 }
-
-# Hybrid Runbook Worker
-# Ref: https://learn.microsoft.com/azure/automation/automation-hybrid-runbook-worker#network-planning
 if ($script:InstalledExts -contains 'HRW' -or $CheckIncludeAll) {
-    $extEps['HRW'] = @(
-        '*.azure-automation.net'               # Automation account
-        '*.agentsvc.azure-automation.net'      # Agent service
-        '*.jrds.azure-automation.net'          # Job Runtime Data Service
-    )
+    $extEndpoints['HRW'] = @('*.azure-automation.net', '*.agentsvc.azure-automation.net')
 }
-
-# Update Manager
 if ($script:InstalledExts -contains 'UM' -or $CheckIncludeAll) {
-    $extEps['UM'] = @("$Region.monitoring.azure.com")
+    $extEndpoints['UM'] = @("$Region.monitoring.azure.com")
 }
-
-# Guest Attestation
 if ($script:InstalledExts -contains 'GA' -or $CheckIncludeAll) {
-    $extEps['GA'] = @('*.attest.azure.net')
+    $extEndpoints['GA'] = @('*.attest.azure.net')
 }
+if ($SkipExtensions) { $extEndpoints = @{} }
 
-# --- Extension download infrastructure (wildcard, always needed if any extension) ---
-# Ref: https://learn.microsoft.com/azure/azure-arc/servers/network-requirements
-# These are wildcards — cannot be TCP-tested but must be in firewall allow list
-$extDownloadWildcards = @(
-    '*.blob.core.windows.net'              # Extension package download (Azure Storage)
-    '*.dl.delivery.mp.microsoft.com'       # Extension package download (CDN alt)
-    '*.data.mcr.microsoft.com'             # Container image layers (MCR)
-    '*.servicebus.windows.net'             # GNS notification channel (Public mode)
-    '*.ods.opinsights.azure.com'           # Log Analytics data ingestion (AMA/MMA)
-    '*.oms.opinsights.azure.com'           # Log Analytics management (AMA/MMA)
-)
-
-# -SkipExtensions overrides -CheckIncludeAll (user explicitly asked to skip)
-if ($SkipExtensions -and $extEps.Count -gt 0) {
-    $extEps = @{}
-    Log 'Extension endpoints skipped (-SkipExtensions)' Info -NoCount
-}
-
-# =========================================================================
-# PHASE 6: ENDPOINT DISCOVERY (azcmagent check)
-# =========================================================================
-# Regional Arc endpoints use unpredictable abbreviations (e.g. eus2, brs, ncus).
-# Instead of guessing, we parse 'azcmagent check' output to discover the actual
-# endpoints the agent uses.
-
-Write-Section 'Endpoint Discovery (azcmagent check)'
-
-$script:AzcmagentCheckExit = $null
-$discoveredEps = @()
-
+$discoveredEndpoints = @()
 if ($azcm) {
-    $checkArgs = @('check', '--location', $Region, '--cloud', 'AzureCloud')
+    $checkArgs = @('check', '--location', $Region, '--cloud', 'AzureCloud', '--verbose')
     if ($CheckIncludeAll) {
         $checkArgs += @('--extensions', 'all', '--include-all')
     }
     elseif ($script:InstalledExts -contains 'SQL') {
         $checkArgs += @('--extensions', 'sql')
     }
-    if ($Mode -eq 'Private') { $checkArgs += '--enable-pls-check' }
+    if ($Mode -eq 'Private') {
+        $checkArgs += '--enable-pls-check'
+    }
 
     Write-Host "  azcmagent $($checkArgs -join ' ')" -ForegroundColor Gray
     try {
-        $out = & $azcm @checkArgs 2>&1
+        $checkOut = & $azcm @checkArgs 2>&1
         $script:AzcmagentCheckExit = $LASTEXITCODE
-        Save-Log
-        Add-Content -Path $LogFilePath -Value $out
+        Add-Content -Path $LogFilePath -Value ''
+        Add-Content -Path $LogFilePath -Value '=================== AZCMAGENT CHECK ==================='
+        Add-Content -Path $LogFilePath -Value $checkOut
 
-        # Parse pipe-delimited output to extract endpoint FQDNs
-        foreach ($line in $out) {
+        foreach ($line in $checkOut) {
             $s = "$line".Trim()
             if ($s -match '\|\s*https?://([^\s|/]+)') {
                 $fqdn = $Matches[1]
-                if ($fqdn -and $fqdn -notmatch '^(Use Case|Endpoint)') {
-                    $discoveredEps += $fqdn
+                if ($fqdn -and $fqdn -notmatch '^(Use Case|Endpoint)$') {
+                    $discoveredEndpoints += $fqdn
                 }
             }
-        }
-        $discoveredEps = $discoveredEps | Select-Object -Unique
 
-        if ($script:AzcmagentCheckExit -eq 0) {
-            Write-Host "  PASSED - discovered $($discoveredEps.Count) endpoints" -ForegroundColor Green
+            if ($s -match 'Endpoint properties\s+(.+)$') {
+                $payload = $Matches[1]
+                $hostName = $null
+                $useCase = $null
+                $reachable = $null
+                $proxyStatus = $null
+                $private = $null
+                $tls = $null
+
+                if ($payload -match 'hostname=([^\s]+)') { $hostName = $Matches[1] }
+                if ($payload -match 'useCase=([^\s]+)') { $useCase = $Matches[1] }
+                if ($payload -match 'reachable=(true|false)') { $reachable = ($Matches[1] -eq 'true') }
+                if ($payload -match 'proxyStatus=("[^"]+"|[^\s]+)') { $proxyStatus = $Matches[1].Trim('"') }
+                if ($payload -match 'private=(true|false|unknown)') { $private = $Matches[1] }
+                if ($payload -match 'tls=("[^"]+"|[^\s]+)') { $tls = $Matches[1].Trim('"') }
+
+                if ($hostName) {
+                    $script:AzcmagentEndpointMeta[$hostName] = [pscustomobject]@{
+                        HostName = $hostName
+                        UseCase = $useCase
+                        Group = Convert-AzcmagentUseCaseToGroup -UseCase $useCase
+                        Reachable = $reachable
+                        ProxyStatus = $proxyStatus
+                        Private = $private
+                        Tls = $tls
+                    }
+                }
+            }
+
+            if ($s -match 'Check result\s+check_name="[^"]+"\s+endpoint="https?://([^"]+)".*status=(failureed|failed|failure)') {
+                $failedEndpoint = $Matches[1]
+                if ($failedEndpoint -and $script:AzcmagentFailedEndpoints -notcontains $failedEndpoint) {
+                    [void]$script:AzcmagentFailedEndpoints.Add($failedEndpoint)
+                }
+            }
+
+            if ($s -match 'checks_failed=(\d+)') {
+                $script:AzcmagentChecksFailed = [int]$Matches[1]
+            }
+            if ($s -match 'critical_failures=(\d+)') {
+                $script:AzcmagentCriticalFailures = [int]$Matches[1]
+            }
+            if ($s -match 'All endpoints needed to connect to Azure are available\.') {
+                $script:AzcmagentCoreHealthy = $true
+            }
         }
-        else {
-            Write-Host "  FAILED (exit $($script:AzcmagentCheckExit)) - discovered $($discoveredEps.Count) endpoints" -ForegroundColor Red
-            Add-Issue -Sev 'HIGH' -Cat 'Agent Check' `
-                -Msg "azcmagent check failed (exit $($script:AzcmagentCheckExit))" `
-                -Fix 'Review azcmagent check output in log file'
+        $discoveredEndpoints = $discoveredEndpoints | Select-Object -Unique
+        $summary = "exit $($script:AzcmagentCheckExit); discovered $($discoveredEndpoints.Count) endpoints"
+        if ($null -ne $script:AzcmagentChecksFailed) {
+            $summary += "; checks_failed=$($script:AzcmagentChecksFailed)"
+        }
+        if ($null -ne $script:AzcmagentCriticalFailures) {
+            $summary += "; critical_failures=$($script:AzcmagentCriticalFailures)"
+        }
+        Write-Status 'azcmagent check' $summary $(if ($script:AzcmagentCheckExit -eq 0) { 'Green' } else { 'Yellow' })
+        if ($script:AzcmagentCheckExit -ne 0 -and (($null -eq $script:AzcmagentCriticalFailures) -or $script:AzcmagentCriticalFailures -gt 0)) {
+            $failedCoreDetail = ''
+            if ($script:AzcmagentFailedEndpoints.Count -gt 0) {
+                $failedCoreDetail = ' Failed required endpoint(s): ' + (($script:AzcmagentFailedEndpoints | Select-Object -Unique) -join ', ') + '.'
+            }
+            Add-Issue -Severity 'HIGH' -Category 'Core Connectivity' -Message ("azcmagent reported required Arc connectivity failures." + $failedCoreDetail) -Fix 'Review the failed required endpoint(s), gateway/proxy path, and azcmagent check section in the log file.'
         }
     }
     catch {
-        Write-Host "  ERROR: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Status 'azcmagent check' "Failed: $($_.Exception.Message)" Yellow
+        Add-Issue -Severity 'HIGH' -Category 'AgentCheck' -Message 'azcmagent check could not be executed.' -Fix 'Validate azcmagent installation and command availability.'
     }
 }
 else {
-    Write-Host '  azcmagent not found - using DNS-based regional endpoint discovery' -ForegroundColor Yellow
+    Write-Status 'azcmagent check' 'Skipped - azcmagent not installed' Yellow
+}
 
-    # --- Regional endpoint fallback (no agent) ---
-    # his.arc.azure.com uses unpredictable abbreviations per region.
-    # We try a known map + DNS probing to discover the correct FQDN.
-    $regionAbbrevMap = @{
-        'eastus'='eus'; 'eastus2'='eus2'; 'westus'='wus'; 'westus2'='wus2'; 'westus3'='wus3'
-        'centralus'='cus'; 'northcentralus'='ncus'; 'southcentralus'='scus'; 'westcentralus'='wcus'
-        'canadacentral'='cac'; 'canadaeast'='cae'
-        'brazilsouth'='brs'; 'brazilsoutheast'='brse'
-        'northeurope'='neu'; 'westeurope'='weu'
-        'uksouth'='uks'; 'ukwest'='ukw'
-        'francecentral'='frc'; 'francesouth'='frs'
-        'germanywestcentral'='gwc'; 'switzerlandnorth'='szn'; 'switzerlandwest'='szw'
-        'norwayeast'='noe'; 'norwaywest'='now'; 'swedencentral'='sec'
-        'australiaeast'='aue'; 'australiasoutheast'='ause'
-        'eastasia'='ea'; 'southeastasia'='sea'
-        'japaneast'='jpe'; 'japanwest'='jpw'
-        'koreacentral'='krc'; 'koreasouth'='krs'
-        'centralindia'='inc'; 'southindia'='ins'; 'westindia'='inw'
-        'southafricanorth'='san'; 'southafricawest'='saw'
-        'uaenorth'='uan'; 'uaecentral'='uac'
-        'qatarcentral'='qac'; 'polandcentral'='plc'; 'italynorth'='itn'
+foreach ($ep in $discoveredEndpoints) {
+    if ($coreEndpoints -notcontains $ep) { [void]$coreEndpoints.Add($ep) }
+    if ($ep -match 'his\.arc\.azure\.com|guestconfiguration\.azure\.com') {
+        if ($privateEligible -notcontains $ep) { [void]$privateEligible.Add($ep) }
     }
+}
 
-    # Try HIS endpoint: abbreviation first, then full name
-    $hisCandidates = @()
-    $rLower = $Region.ToLower()
-    if ($regionAbbrevMap.ContainsKey($rLower)) {
-        $hisCandidates += "$($regionAbbrevMap[$rLower]).his.arc.azure.com"
+$script:AzcmagentPrivatePathHealthy = (@(
+    $script:AzcmagentEndpointMeta.Values | Where-Object {
+        $_.Reachable -eq $true -and ($privateEligible -contains $_.HostName) -and (
+            $_.Private -eq 'true' -or
+            ($_.ProxyStatus -eq 'bypassed' -and $_.HostName -match 'his\.arc\.azure\.com|guestconfiguration\.azure\.com')
+        )
     }
-    $hisCandidates += "$Region.his.arc.azure.com"
+).Count -gt 0)
 
-    foreach ($hc in $hisCandidates) {
-        try {
-            $null = Resolve-DnsName -Name $hc -ErrorAction Stop
-            $discoveredEps += $hc
-            Write-Host "    Discovered: $hc" -ForegroundColor Green
-            break
-        }
-        catch { }
-    }
+if ($script:EffectiveProxy -and $script:EffectiveProxyParseError -eq $null -and $script:EffectiveProxyReachable -eq $false) {
+    $pxUri = [System.Uri]$script:EffectiveProxy
+    $proxyCoreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+    $proxyPrivatePathHealthyObserved = (
+        $script:AzcmagentPrivatePathHealthy -or
+        @(
+            $script:AzcmagentEndpointMeta.Values | Where-Object {
+                $_.Reachable -eq $true -and ($privateEligible -contains $_.HostName) -and (
+                    $_.Private -eq 'true' -or
+                    ($_.ProxyStatus -eq 'bypassed' -and $_.HostName -match 'his\.arc\.azure\.com|guestconfiguration\.azure\.com')
+                )
+            }
+        ).Count -gt 0
+    )
 
-    # GuestConfiguration always uses full region name with -gas suffix
-    $gcCandidate = "$Region-gas.guestconfiguration.azure.com"
-    try {
-        $null = Resolve-DnsName -Name $gcCandidate -ErrorAction Stop
-        $discoveredEps += $gcCandidate
-        Write-Host "    Discovered: $gcCandidate" -ForegroundColor Green
-    }
-    catch { }
-
-    if ($discoveredEps.Count -gt 0) {
-        Write-Host "  Discovered $($discoveredEps.Count) regional endpoint(s) via DNS" -ForegroundColor Green
+    if ($Mode -eq 'Private' -and $proxyCoreHealthyNoCritical -and $proxyPrivatePathHealthyObserved) {
+        Add-Issue -Severity 'WARN' -Category 'Proxy' -Message "Configured proxy $($pxUri.Host):$($pxUri.Port) is not reachable. In Private/split-network mode this is treated as a non-blocking proxy-path warning because Arc private-capable endpoints remained healthy." -Fix 'Validate proxy host, port, routing, and firewall if ARM control-plane or other proxy-routed endpoints are in scope.'
     }
     else {
-        Write-Host '  No regional endpoints discovered (verify -Region parameter)' -ForegroundColor Yellow
-        Add-Issue -Sev 'WARN' -Cat 'Discovery' `
-            -Msg "Could not discover regional endpoints for region '$Region'" `
-            -Fix 'Verify -Region parameter or install azcmagent first'
+        Add-Issue -Severity 'CRITICAL' -Category 'Proxy' -Message "Configured proxy $($pxUri.Host):$($pxUri.Port) is not reachable." -Fix 'Validate proxy host, port, routing, and firewall.'
     }
 }
 
-# Merge discovered endpoints into core list (avoid duplicates)
-foreach ($dep in $discoveredEps) {
-    if ($coreEps -notcontains $dep) { [void]$coreEps.Add($dep) }
-    # Mark PLS-eligible patterns
-    if ($dep -match 'his\.arc\.azure\.com|guestconfiguration\.azure\.com') {
-        if ($canBePrivate -notcontains $dep) { [void]$canBePrivate.Add($dep) }
+if ($script:DeferredTlsIssue) {
+    $tlsCoreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+    if ($script:DeferredTlsIssue.UsesProxy -and $tlsCoreHealthyNoCritical) {
+        Write-Status 'TLS interpretation' 'Proxy-path TLS probe failed, but azcmagent reported core connectivity healthy' DarkGray
+    }
+    else {
+        Add-Issue -Severity $script:DeferredTlsIssue.Severity -Category 'TLS' -Message $script:DeferredTlsIssue.Message -Fix $script:DeferredTlsIssue.Fix
     }
 }
 
-# --- Build final endpoint group map ---
 $endpointGroupMap = @{}
-foreach ($ep in $coreEps) { $endpointGroupMap[$ep] = 'Core' }
-foreach ($grp in $extEps.Keys) {
-    foreach ($ep in $extEps[$grp]) {
-        if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = $grp }
+foreach ($ep in $coreEndpoints) {
+    $endpointGroupMap[$ep] = if ($script:AzcmagentEndpointMeta.ContainsKey($ep)) { $script:AzcmagentEndpointMeta[$ep].Group } else { 'Core' }
+}
+foreach ($ep in $controlPlaneEndpoints) {
+    $endpointGroupMap[$ep] = 'ControlPlane'
+}
+foreach ($ep in $lifecycleEndpoints) {
+    if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'Lifecycle' }
+}
+foreach ($grp in $extEndpoints.Keys) {
+    foreach ($ep in $extEndpoints[$grp]) {
+        $endpointGroupMap[$ep] = $grp
     }
 }
 if (-not $SkipPKI) {
@@ -1309,559 +1533,546 @@ if (-not $SkipPKI) {
         if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'PKI' }
     }
 }
-# Extension download infrastructure wildcards
-foreach ($ep in $extDownloadWildcards) {
-    if (-not $endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] = 'DL' }
-}
 
-# --- Dynamic GNS allowlist (Public mode only) ---
-$dynamicEps = @()
+$dynamicEndpoints = @()
 if ($Mode -eq 'Public') {
     try {
-        $uri  = "https://guestnotificationservice.azure.com/urls/allowlist?api-version=2020-01-01&location=$Region"
-        $resp = Invoke-HttpSafe -Uri $uri
-        $dynamicEps = @($resp.Content | ConvertFrom-Json) | Where-Object { $_ }
-        if ($dynamicEps.Count -gt 0) {
-            # Filter to primary namespaces only
-            $pids = [System.Collections.ArrayList]::new()
-            foreach ($d in $dynamicEps) {
-                if ($d -match '^azgn-.+\dp-.+?-(\w+)\.servicebus') { [void]$pids.Add($Matches[1]) }
-            }
-            if ($pids.Count -gt 0) {
-                $filtered = [System.Collections.ArrayList]::new()
-                foreach ($d in $dynamicEps) {
-                    if ($d -match '^azgn-') { [void]$filtered.Add($d) }
-                    else {
-                        foreach ($cid in $pids) {
-                            if ($d -like "*$cid*") { [void]$filtered.Add($d); break }
-                        }
-                    }
-                }
-                $dynamicEps = @($filtered)
-            }
-            foreach ($d in $dynamicEps) { $endpointGroupMap[$d] = 'GNS' }
+        $gnsResp = Invoke-HttpSafe -Uri "https://guestnotificationservice.azure.com/urls/allowlist?api-version=2020-01-01&location=$Region" -TimeoutSec 10
+        $dynamicEndpoints = @($gnsResp.Content | ConvertFrom-Json) | Where-Object { $_ } | Select-Object -Unique
+        foreach ($ep in $dynamicEndpoints) {
+            $endpointGroupMap[$ep] = 'GNS'
         }
+        Write-Status 'GNS allowlist' ("Loaded $($dynamicEndpoints.Count) endpoints") Green
     }
     catch {
-        Log "GNS dynamic allowlist failed: $($_.Exception.Message)" Warn
+        Write-Status 'GNS allowlist' "Failed: $($_.Exception.Message)" Yellow
+        Add-Issue -Severity 'WARN' -Category 'GNS' -Message 'Could not retrieve dynamic GNS allowlist.' -Fix 'Validate guestnotificationservice.azure.com reachability if GNS is needed.'
     }
 }
 
-# --- Build combined testable list ---
 $allTestable = @()
-foreach ($ep in $coreEps) { $allTestable += $ep }
-foreach ($grp in $extEps.Keys) {
-    foreach ($ep in $extEps[$grp]) { $allTestable += $ep }
-}
-$allTestable += $dynamicEps
+$allTestable += $coreEndpoints
+$allTestable += $controlPlaneEndpoints
+$allTestable += $lifecycleEndpoints
+foreach ($grp in $extEndpoints.Keys) { $allTestable += $extEndpoints[$grp] }
+$allTestable += $dynamicEndpoints
 if (-not $SkipPKI) { $allTestable += $pkiEndpoints }
+$wildcardEndpoints = @($allTestable | Where-Object { $_ -match '^\*\.' } | Select-Object -Unique)
+$allTestable = @($allTestable | Where-Object { $_ -and $_ -notmatch '^\*\.' } | Select-Object -Unique)
 
-# Add extension download wildcards (always needed)
-$allTestable += $extDownloadWildcards
-
-# Separate wildcards (informational, not testable) from concrete FQDNs
-$wildcardEps = @($allTestable | Where-Object { $_ -match '^\*\.' } | Select-Object -Unique)
-$allTestable = @($allTestable | Where-Object { $_ -notmatch '^\*\.' } | Where-Object { $_ } | Select-Object -Unique)
-
-# --- HTTP probe endpoints ---
-$httpProbeEps = @('login.windows.net', 'login.microsoftonline.com', 'management.azure.com')
-if ($extEps.ContainsKey('SQL')) {
-    $httpProbeEps += "dataprocessingservice.$Region.arcdataservices.com"
-    $httpProbeEps += "telemetry.$Region.arcdataservices.com"
+$httpProbeEndpoints = @(
+    'login.microsoftonline.com'
+)
+if ($script:PreOnboarding -or $script:ProxyMode -eq 'ExplicitProxy' -or $Mode -in @('Private', 'Gateway')) {
+    $httpProbeEndpoints += 'management.azure.com'
 }
-# Probe Gateway URL if configured
-if ($script:GatewayUrl) {
-    $httpProbeEps += $script:GatewayUrl
+if ($extEndpoints.ContainsKey('SQL')) {
+    $httpProbeEndpoints += "dataprocessingservice.$Region.arcdataservices.com"
+    $httpProbeEndpoints += "telemetry.$Region.arcdataservices.com"
 }
+$httpProbeEndpoints += 'oneocsp.microsoft.com'
+$httpProbeEndpoints = $httpProbeEndpoints | Select-Object -Unique
 
-# --- Agent proxy.bypass => skip HTTP for bypassed endpoints ---
-$httpBypassedEps = [System.Collections.ArrayList]::new()
-if ($azcm -and $script:EffectiveProxy) {
-    $bypassCats = @()
-    try {
-        $bRaw = (& $azcm config get proxy.bypass 2>$null | Out-String).Trim()
-        if ($bRaw) {
-            $bypassCats = $bRaw.Trim('[', ']') -split ',' |
-                ForEach-Object { $_.Trim() } | Where-Object { $_ }
+$httpBypassedEndpoints = Get-AgentBypassedEndpoints -AgentBypass $agentBypass -Region $Region
+
+Write-Banner ("TESTING $($allTestable.Count) ENDPOINTS")
+$index = 0
+foreach ($endpoint in $allTestable) {
+    $index++
+    $group = if ($endpointGroupMap.ContainsKey($endpoint)) { $endpointGroupMap[$endpoint] } else { 'Core' }
+    Add-Result -Endpoint $endpoint -Group $group
+
+    $percent = [math]::Round(($index / [Math]::Max($allTestable.Count, 1)) * 100)
+    $short = if ($endpoint.Length -gt 58) { $endpoint.Substring(0, 55) + '...' } else { $endpoint }
+    Write-Host ("`r  [{0,3}%] {1,-60}" -f $percent, $short) -NoNewline -ForegroundColor Gray
+
+    $resolution = Resolve-Endpoint -Endpoint $endpoint
+    if ($resolution.Error) {
+        $coreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+        $pkiWarnOnly = ($group -eq 'PKI' -and $coreHealthyNoCritical)
+        $dnsSeverity = if ((Test-IsOptionalEndpoint -Endpoint $endpoint -Group $group) -or $pkiWarnOnly) { 'WARN' } else { 'FAIL' }
+        $dnsFailureNote = if ($pkiWarnOnly) { 'Name resolution failed; PKI-only warning while Arc core remains healthy.' } else { 'Name resolution failed' }
+        Add-Result -Endpoint $endpoint -DNS $dnsSeverity -Notes $dnsFailureNote
+        switch ($dnsSeverity) {
+            'WARN' { $script:Stats.DNSWarn++ }
+            'FAIL' { $script:Stats.DNSFail++ }
         }
-    }
-    catch { }
-
-    $catMap = @{
-        'AAD'     = @('login.windows.net', 'login.microsoftonline.com', 'pas.windows.net')
-        'ARM'     = @('management.azure.com')
-        'Arc'     = @('gbl.his.arc.azure.com', 'agentserviceapi.guestconfiguration.azure.com')
-        'ArcData' = @("dataprocessingservice.$Region.arcdataservices.com",
-                      "telemetry.$Region.arcdataservices.com")
-        'AMA'     = @('global.handler.control.monitor.azure.com',
-                      "$Region.handler.control.monitor.azure.com")
-    }
-    foreach ($cat in $bypassCats) {
-        if ($catMap.ContainsKey($cat)) {
-            foreach ($ep in $catMap[$cat]) {
-                if ($httpBypassedEps -notcontains $ep) { [void]$httpBypassedEps.Add($ep) }
-            }
+        if ($dnsSeverity -eq 'FAIL') {
+            Add-Issue -Severity 'HIGH' -Category 'DNS' -Message "Cannot resolve $endpoint." -Fix 'Validate DNS path, split-DNS, and firewall/DNS forwarding.'
         }
+        elseif ($pkiWarnOnly) {
+            Add-Issue -Severity 'WARN' -Category 'PKI' -Message "PKI endpoint $endpoint could not be resolved." -Fix 'Review PKI/CRL/OCSP reachability only if certificate validation is the target symptom; do not treat this alone as Arc runtime failure when azcmagent reports critical_failures=0.'
+        }
+        else {
+            Add-Issue -Severity 'WARN' -Category 'DNS' -Message "Optional endpoint $endpoint could not be resolved." -Fix 'Review DNS only if this optional endpoint is expected for the installed extension set.'
+        }
+        continue
     }
-}
 
-# =========================================================================
-# PHASE 7: CONNECTIVITY TESTS (DNS + TCP + HTTP)
-# =========================================================================
+    $aRecord = $resolution.Result | Where-Object { $_.Type -eq 'A' -and $_.IPAddress } | Select-Object -First 1
+    if (-not $aRecord) {
+        $aRecord = $resolution.Result | Where-Object { $_.IPAddress } | Select-Object -First 1
+    }
+    $ip = if ($aRecord) { $aRecord.IPAddress } else { '-' }
+    $type = if (Test-IsPrivateIp -Ip $ip) { 'PRIV' } else { 'PUB' }
 
-Write-Banner "PHASE 2: CONNECTIVITY TESTS ($($allTestable.Count) endpoints)"
-
-# Gateway mode: verify Arc Proxy is listening on localhost:40343
-if ($Mode -eq 'Gateway' -and -not $script:PreOnboarding) {
-    Write-Section 'Arc Gateway Proxy (localhost:40343)'
-    $gwProxyOk = Test-TcpPort -H '127.0.0.1' -P 40343 -T 3000
-    if ($gwProxyOk) {
-        Write-Status 'Arc Proxy' 'localhost:40343 reachable' Green
-        Log 'Arc Gateway Proxy localhost:40343 reachable' OK
+    $dnsState = 'OK'
+    $dnsNote = ''
+    if ($Mode -eq 'Private' -and $type -eq 'PUB' -and ($privateEligible -contains $endpoint)) {
+        $dnsState = 'WARN'
+        $dnsNote = 'Private mode expected private resolution for this endpoint.'
+        $script:Stats.DNSWarn++
+        Add-Issue -Severity 'WARN' -Category 'DNS' -Message "$endpoint resolved to public IP $ip while mode is Private." -Fix 'Validate Private Link Scope DNS and conditional forwarding.'
+    }
+    elseif ($Mode -eq 'Public' -and $type -eq 'PRIV' -and $endpoint -ne 'gbl.his.arc.azure.com') {
+        $dnsState = 'WARN'
+        $dnsNote = 'Public mode observed private resolution.'
+        $script:Stats.DNSWarn++
+        Add-Issue -Severity 'WARN' -Category 'DNS' -Message "$endpoint resolved to private IP $ip while mode is Public." -Fix 'Validate split-DNS expectations and ensure this is intentional.'
     }
     else {
-        Write-Status 'Arc Proxy' 'localhost:40343 NOT reachable' Red
-        Log 'Arc Gateway Proxy localhost:40343 NOT reachable' Fail
-        Add-Issue -Sev 'CRITICAL' -Cat 'Gateway' `
-            -Msg 'Arc Gateway local proxy (localhost:40343) not responding. Tunneled endpoints will fail.' `
-            -Fix 'Verify Arc Gateway is properly configured: azcmagent config get proxy.url'
+        $script:Stats.DNSOK++
     }
-    Write-Host ''
+    Add-Result -Endpoint $endpoint -IP $ip -Type $type -DNS $dnsState -Notes $dnsNote
+
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    $tcpOk = Test-TcpPort -HostName $endpoint -Port 443 -TimeoutMs 5000
+    $sw.Stop()
+    $latency = [math]::Round($sw.Elapsed.TotalMilliseconds, 0)
+
+    $tcpState = 'OK'
+    $tcpNote = ''
+    if ($tcpOk) {
+        $script:Stats.TCPOK++
+        $tcpState = 'OK'
+    }
+    else {
+        $coreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+        $pkiWarnOnly = ($group -eq 'PKI' -and $coreHealthyNoCritical)
+        if ($script:ProxyMode -eq 'ExplicitProxy' -and $type -eq 'PUB' -and $Mode -ne 'Private') {
+            $tcpState = 'WARN'
+            $tcpNote = 'Direct TCP to endpoint failed, but explicit proxy is configured.'
+            $script:Stats.TCPWarn++
+        }
+        elseif (Test-IsOptionalEndpoint -Endpoint $endpoint -Group $group) {
+            $tcpState = 'WARN'
+            $tcpNote = 'Optional endpoint did not accept direct TCP 443 during this run; treat as informational unless azcmagent reports core failures.'
+            $script:Stats.TCPWarn++
+        }
+        elseif ($pkiWarnOnly) {
+            $tcpState = 'WARN'
+            $tcpNote = 'PKI endpoint did not accept direct TCP 443 during this run; treat as informational while Arc core remains healthy.'
+            $script:Stats.TCPWarn++
+            Add-Issue -Severity 'WARN' -Category 'PKI' -Message "PKI endpoint ${endpoint}:443 was not reachable." -Fix 'Review PKI/CRL/OCSP reachability only if certificate validation is the target symptom; do not treat this alone as Arc runtime failure when azcmagent reports critical_failures=0.'
+        }
+        else {
+            $tcpState = 'FAIL'
+            $tcpNote = 'TCP 443 failed.'
+            $script:Stats.TCPFail++
+            Add-Issue -Severity 'HIGH' -Category 'TCP' -Message "Cannot connect to ${endpoint}:443." -Fix 'Validate routing, firewall, or proxy path expectations for this endpoint.'
+        }
+    }
+    Add-Result -Endpoint $endpoint -TCP $tcpState -Latency $(if ($tcpOk) { "${latency}ms" } else { 'timeout' }) -Notes $tcpNote
 }
+Write-Host ''
 
-$pi = 0
-foreach ($ep in $allTestable) {
-    $ep = $ep.Trim()
-    if (-not $ep) { continue }
-    $pi++
-
-    $grp = if ($endpointGroupMap.ContainsKey($ep)) { $endpointGroupMap[$ep] } else { 'Core' }
-    $epPath = if (Test-IsGatewayTunneled -Endpoint $ep) { 'Tunnel' } else { 'Direct' }
-    Add-Result -Endpoint $ep -Group $grp -Path $epPath
-
-    $pct = [math]::Round(($pi / $allTestable.Count) * 100)
-    $epShort = if ($ep.Length -gt 56) { $ep.Substring(0, 53) + '...' } else { $ep }
-    Write-Host ("`r  [{0,3}%] {1,-58}" -f $pct, $epShort) -NoNewline -ForegroundColor Gray
-
-    # --- DNS ---
-    $dns = $null
-    $dnsErr = $null
-    foreach ($a in 1..2) {
-        try {
-            $dns = Resolve-DnsName -Name $ep -ErrorAction Stop
-            $dnsErr = $null
+Write-Section 'HTTP Probes'
+foreach ($endpoint in $httpProbeEndpoints) {
+    $httpBypassApplies = $false
+    $endpointHost = $endpoint.Trim().ToLower()
+    foreach ($entry in $httpBypassedEndpoints) {
+        if (-not $entry) { continue }
+        $norm = $entry.Trim().ToLower()
+        if (-not $norm) { continue }
+        if ($norm.StartsWith('*.')) { $norm = $norm.Substring(1) }
+        if ($endpointHost -eq $norm.TrimStart('.') -or ($norm.StartsWith('.') -and $endpointHost.EndsWith($norm))) {
+            $httpBypassApplies = $true
             break
         }
-        catch {
-            $dnsErr = $_
-            if ($a -lt 2) { Start-Sleep -Milliseconds 300 }
-        }
     }
-
-    if ($dnsErr) {
-        $lv = if ($grp -eq 'GNS') { 'Warn' } else { 'Fail' }
-        Log "DNS $lv $ep - $($dnsErr.Exception.Message)" $lv
-        $rr = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-        if ($rr) { $rr.DNS = $lv.ToUpper() }
-        if ($lv -eq 'Fail') {
-            Add-Issue -Sev 'HIGH' -Cat 'DNS' -Msg "Cannot resolve $ep" -Fix 'Check DNS/firewall'
-        }
+    if ($httpBypassApplies) {
+        Add-Result -Endpoint $endpoint -HTTP 'SKIP' -Notes 'Skipped because agent bypass category applies.'
         continue
     }
 
-    $rec = $dns | Where-Object { $_.Type -eq 'A' -and $_.IPAddress } | Select-Object -First 1
-    if (-not $rec) { $rec = $dns | Where-Object IPAddress | Select-Object -First 1 }
-    $ip   = $rec.IPAddress
-    $kind = if (Test-IsPrivateIp $ip) { 'PRIV' } else { 'PUB' }
+    $forceDirect = $false
+    if ($endpoint -eq 'oneocsp.microsoft.com' -and $script:WinHttpProxy) {
+        $forceDirect = Test-IsPkiCoveredByBypassOnly -Endpoint 'oneocsp.microsoft.com'
+    }
 
-    $rr = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-    if ($rr) { $rr.IP = $ip; $rr.Type = $kind }
+    $group = if ($endpointGroupMap.ContainsKey($endpoint)) { $endpointGroupMap[$endpoint] } else { 'Core' }
+    $coreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+    $privatePathHealthyObserved = (
+        $script:AzcmagentPrivatePathHealthy -or
+        @(
+            $script:AzcmagentEndpointMeta.Values | Where-Object {
+                $_.Reachable -eq $true -and ($privateEligible -contains $_.HostName) -and (
+                    $_.Private -eq 'true' -or
+                    ($_.ProxyStatus -eq 'bypassed' -and $_.HostName -match 'his\.arc\.azure\.com|guestconfiguration\.azure\.com')
+                )
+            }
+        ).Count -gt 0 -or
+        @(
+            $script:Results | Where-Object {
+                ($privateEligible -contains $_.Endpoint) -and $_.DNS -eq 'OK' -and $_.TCP -eq 'OK'
+            }
+        ).Count -gt 0
+    )
+    $optionalEndpoint = Test-IsOptionalEndpoint -Endpoint $endpoint -Group $group
 
-    $cbp = $canBePrivate -contains $ep
-    $mm  = ($Mode -eq 'Private' -and $kind -eq 'PUB' -and $cbp) -or
-           ($Mode -eq 'Public'  -and $kind -eq 'PRIV')
-    if ($mm) {
-        Log "DNS WARN $ep -> $ip [$kind] mode mismatch" Warn
-        $rr2 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-        if ($rr2) { $rr2.DNS = 'WARN' }
+    $http = Get-HttpStatus -Endpoint $endpoint -ForceDirect:$forceDirect
+    if ($http.Success) {
+        $script:Stats.HTTPOK++
+        Add-Result -Endpoint $endpoint -HTTP ("OK($($http.StatusCode))")
     }
     else {
-        Log "DNS OK $ep -> $ip" OK
-        $rr2 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-        if ($rr2) { $rr2.DNS = 'OK' }
-    }
-
-    # --- TCP/443 ---
-    # In Gateway mode, tunneled endpoints route through localhost:40343 (Arc Proxy)
-    # so direct TCP to the target IP is NOT expected to work.
-    $isTunneled = Test-IsGatewayTunneled -Endpoint $ep
-    if ($isTunneled) {
-        Log "TCP SKIP ${ep}:443 (tunneled via Gateway)" Info -NoCount
-        $rr3 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-        if ($rr3) { $rr3.TCP = 'TUNNEL'; $rr3.Latency = 'n/a' }
-    }
-    else {
-        $sw = [System.Diagnostics.Stopwatch]::StartNew()
-        $ok = Test-TcpPort -H $ep -P 443 -T 5000
-        $sw.Stop()
-        $ms = [math]::Round($sw.Elapsed.TotalMilliseconds, 0)
-
-        $rr3 = $script:Results | Where-Object { $_.Endpoint -eq $ep }
-        if ($ok) {
-            Log "TCP OK ${ep}:443 (${ms}ms)" OK
-            if ($rr3) { $rr3.TCP = 'OK'; $rr3.Latency = "${ms}ms" }
+        $httpDiagnosis = Get-HttpFailureDiagnosis -Endpoint $endpoint -Group $group -ErrorText $http.Error -StatusCode $http.StatusCode -UsingExplicitProxy:($script:ProxyMode -eq 'ExplicitProxy') -ForceDirect:$forceDirect -CoreHealthyNoCritical:$coreHealthyNoCritical
+        $privateControlPlaneProxyWarn = ($Mode -eq 'Private' -and $endpoint -eq 'management.azure.com' -and $privatePathHealthyObserved -and $coreHealthyNoCritical)
+        if ($privateControlPlaneProxyWarn) {
+            $httpDiagnosis = [pscustomobject]@{
+                Cause = 'split-network control-plane proxy path degraded'
+                Notes = 'Private mode with Arc private path healthy; Azure Resource Manager traffic failed on the current control-plane/proxy path. Azure Arc Private Link Scope does not carry ARM traffic by default, so this matches a split-network pattern unless onboarding or ARM operations are the target symptom.'
+                Fix = 'Validate proxy reachability to Azure Resource Manager and confirm split-network intent. If ARM must stay private, configure Resource Management Private Link separately. Treat this as non-blocking for Arc runtime when azcmagent reports critical_failures=0 and private Arc endpoints are reachable.'
+                Category = 'ControlPlane'
+                ProxyConfiguredButDown = $httpDiagnosis.ProxyConfiguredButDown
+            }
+        }
+        if ($privateControlPlaneProxyWarn -and $coreHealthyNoCritical) {
+            $script:Stats.HTTPWarn++
+            $httpWarnCategory = 'ControlPlane'
+            $httpWarnGroup = 'ControlPlane'
+            $httpWarnNotes = $httpDiagnosis.Notes
+            $httpWarnMessage = 'management.azure.com failed via proxy/control-plane path while Arc private-capable endpoints remained healthy.'
+            $httpWarnFix = $httpDiagnosis.Fix
+            Add-Result -Endpoint $endpoint -Group $httpWarnGroup -HTTP $(if ($http.StatusCode) { "WARN($($http.StatusCode))" } else { 'WARN' }) -Notes $httpWarnNotes
+            Add-Issue -Severity 'WARN' -Category $httpWarnCategory -Message $httpWarnMessage -Fix $httpWarnFix
+        }
+        elseif ($optionalEndpoint) {
+            $script:Stats.HTTPWarn++
+            $optionalHttpNotes = 'Optional endpoint failed HTTP probe; treat as informational unless core also fails.'
+            $optionalHttpMessage = "Optional HTTP probe to $endpoint failed; likely $($httpDiagnosis.Cause)."
+            $optionalHttpFix = 'Review this endpoint only if the related optional extension or feature is in use.'
+            if (Test-IsArcDataTlsPathError -Endpoint $endpoint -ErrorText $http.Error) {
+                $optionalHttpNotes = 'Arc Data endpoint returned a malformed TLS message; likely proxy/TLS inspection or path-specific handshake issue, not a general TLS 1.2 limitation.'
+                $optionalHttpMessage = "Arc Data HTTP probe to $endpoint failed with a malformed TLS message signature."
+                $optionalHttpFix = 'Review TLS inspection, reverse proxy, firewall, or middlebox behavior on the Arc Data path. If core azcmagent endpoints remain healthy, do not treat this alone as host TLS incompatibility.'
+            }
+            elseif ($httpDiagnosis.Notes) {
+                $optionalHttpNotes = $httpDiagnosis.Notes
+                $optionalHttpFix = $httpDiagnosis.Fix
+            }
+            Add-Result -Endpoint $endpoint -HTTP $(if ($http.StatusCode) { "WARN($($http.StatusCode))" } else { 'WARN' }) -Notes $optionalHttpNotes
+            Add-Issue -Severity 'WARN' -Category 'HTTP' -Message $optionalHttpMessage -Fix $optionalHttpFix
+        }
+        elseif ($script:ProxyMode -eq 'ExplicitProxy' -and $forceDirect -eq $false -and $coreHealthyNoCritical) {
+            $script:Stats.HTTPWarn++
+            $pkiProxyWarnOnly = ($Mode -eq 'Private' -and $group -eq 'PKI' -and $endpoint -eq 'oneocsp.microsoft.com' -and $privatePathHealthyObserved)
+            $httpWarnNotes = if ($pkiProxyWarnOnly) {
+                'PKI/OCSP endpoint failed over the current proxy-routed path while Arc private-capable endpoints remained healthy. Treat as a PKI revocation-path warning, not Arc runtime failure.'
+            }
+            else {
+                $httpDiagnosis.Notes
+            }
+            $httpWarnCategory = if ($pkiProxyWarnOnly) { 'PKI' } else { $httpDiagnosis.Category }
+            $httpWarnGroup = if ($privateControlPlaneProxyWarn) { 'ControlPlane' } elseif ($pkiProxyWarnOnly) { 'PKI' } else { $group }
+            $httpWarnMessage = if ($privateControlPlaneProxyWarn) {
+                'management.azure.com failed via proxy/control-plane path while Arc private-capable endpoints remained healthy.'
+            }
+            elseif ($pkiProxyWarnOnly) {
+                'oneocsp.microsoft.com failed over the proxy-routed path; treat this as a PKI/OCSP warning unless certificate revocation checks are the target symptom.'
+            }
+            else {
+                "HTTP probe to $endpoint failed via proxy path; likely $($httpDiagnosis.Cause)."
+            }
+            $httpWarnFix = if ($pkiProxyWarnOnly) {
+                'Validate OCSP/CRL reachability and any proxy exception or inspection policy that affects revocation traffic. Do not treat this alone as Arc core failure while azcmagent reports no critical connectivity failures.'
+            }
+            else {
+                $httpDiagnosis.Fix
+            }
+            if ($httpWarnCategory -ne 'Proxy' -and $httpWarnCategory -ne 'ControlPlane' -and $httpWarnFix -and $httpWarnFix -notmatch 'critical_failures=0' -and $httpWarnFix -notmatch 'no critical connectivity failures') {
+                $httpWarnFix = ($httpWarnFix.TrimEnd('.') + '. Do not treat this alone as Arc core failure while azcmagent reports no critical connectivity failures.')
+            }
+            Add-Result -Endpoint $endpoint -Group $httpWarnGroup -HTTP $(if ($http.StatusCode) { "WARN($($http.StatusCode))" } else { 'WARN' }) -Notes $httpWarnNotes
+            Add-Issue -Severity 'WARN' -Category $httpWarnCategory -Message $httpWarnMessage -Fix $httpWarnFix
+        }
+        elseif ($script:ProxyMode -eq 'ExplicitProxy' -and $forceDirect -eq $false) {
+            $script:Stats.HTTPWarn++
+            $httpWarnGroup = if ($privateControlPlaneProxyWarn) { 'ControlPlane' } else { $group }
+            $httpWarnMessage = if ($privateControlPlaneProxyWarn) {
+                'management.azure.com failed via proxy/control-plane path while Arc private-capable endpoints remained healthy.'
+            }
+            else {
+                "HTTP probe to $endpoint failed via proxy path; likely $($httpDiagnosis.Cause)."
+            }
+            Add-Result -Endpoint $endpoint -Group $httpWarnGroup -HTTP $(if ($http.StatusCode) { "WARN($($http.StatusCode))" } else { 'WARN' }) -Notes $httpDiagnosis.Notes
+            Add-Issue -Severity 'WARN' -Category $httpDiagnosis.Category -Message $httpWarnMessage -Fix $httpDiagnosis.Fix
         }
         else {
-            # In proxy scenarios, TCP fail may be expected (proxy handles L7)
-            if ($script:EffectiveProxy -and $grp -ne 'PKI') {
-                Log "TCP WARN ${ep}:443 (proxy may handle)" Warn
-                if ($rr3) { $rr3.TCP = 'WARN'; $rr3.Latency = 'proxy' }
-            }
-            else {
-                Log "TCP FAIL ${ep}:443" Fail
-                if ($rr3) { $rr3.TCP = 'FAIL'; $rr3.Latency = 'timeout' }
-                Add-Issue -Sev 'HIGH' -Cat 'TCP' -Msg "Cannot connect to ${ep}:443" -Fix 'Check firewall/proxy rules'
-            }
-        }
-    }
-}
-Write-Host ''   # Clear progress line
-
-# =========================================================================
-# PHASE 7b: HTTP TESTS + PKI PROBE
-# =========================================================================
-
-foreach ($ep in $httpProbeEps) {
-    $ep = $ep.Trim()
-    if (-not $ep) { continue }
-    if ($httpBypassedEps -contains $ep) {
-        Add-Result -Endpoint $ep -HTTP 'SKIP'
-        Log "HTTP SKIP $ep (bypass)" Info -NoCount
-        continue
-    }
-    try {
-        $resp = Invoke-HttpSafe -Uri "https://$ep" -Timeout 10
-        Log "HTTP OK $ep -> $($resp.StatusCode)" OK
-        Add-Result -Endpoint $ep -HTTP "OK($($resp.StatusCode))"
-    }
-    catch {
-        $code = $null
-        if ($_.Exception.Response) {
-            try { $code = [int]$_.Exception.Response.StatusCode } catch { }
-        }
-        # Any HTTP response (even 4xx/5xx) means network + TLS worked
-        if ($code -and $code -ge 100 -and $code -lt 600) {
-            Log "HTTP OK $ep -> $code (endpoint reachable)" OK
-            Add-Result -Endpoint $ep -HTTP "OK($code)"
-        }
-        else {
-            Log "HTTP FAIL $ep" Fail
-            Add-Result -Endpoint $ep -HTTP 'FAIL'
-            Add-Issue -Sev 'MEDIUM' -Cat 'HTTP' -Msg "HTTP failed: $ep" -Fix 'Check proxy/firewall app rules'
+            $script:Stats.HTTPFail++
+            Add-Result -Endpoint $endpoint -HTTP $(if ($http.StatusCode) { "FAIL($($http.StatusCode))" } else { 'FAIL' }) -Notes $httpDiagnosis.Notes
+            Add-Issue -Severity 'MEDIUM' -Category $httpDiagnosis.Category -Message "HTTP probe to $endpoint failed; likely $($httpDiagnosis.Cause)." -Fix $httpDiagnosis.Fix
         }
     }
 }
 
-# PKI HTTP probe — tests the REAL path SCHANNEL will use:
-#   If oneocsp.microsoft.com is in bypass → test DIRECT (no proxy)
-#   If NOT in bypass → test via WinHTTP proxy (likely fails on explicit proxy)
+Run-PlatformChecks -DetectedPlatform $Platform
 
-# --- SQL Arc TLS 1.2 probe ---
-# Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint#check-tls-version-compatibility
-# arcdataservices.com REQUIRES TLS 1.2+ and GCM ciphers. Server 2012 (non-R2) will fail here.
-if ($extEps.ContainsKey('SQL')) {
-    $sqlTlsTarget = "dataprocessingservice.$Region.arcdataservices.com"
-    $sqlTlsOk = $false
-    $savedSqlProto = [Net.ServicePointManager]::SecurityProtocol
-    try {
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        $sqlReq = [System.Net.HttpWebRequest]::Create("https://$sqlTlsTarget")
-        $sqlReq.Timeout = 10000
-        $sqlReq.Method = 'HEAD'
-        if ($script:EffectiveProxy) {
-            $sqlReq.Proxy = [System.Net.WebProxy]::new($script:EffectiveProxy)
-            $sqlReq.Proxy.UseDefaultCredentials = $true
-        } elseif ($PSVersionTable.PSVersion.Major -lt 6) {
-            $sqlReq.Proxy = $null
-        }
-        $sqlResp = $sqlReq.GetResponse()
-        $sqlResp.Close()
-        $sqlTlsOk = $true
-    }
-    catch {
-        $sqlErr = $_.Exception.Message
-        # In PS 5.1, .GetResponse() wraps WebException in MethodInvocationException
-        $innerEx = if ($_.Exception.InnerException) { $_.Exception.InnerException } else { $_.Exception }
-        # If we got an HTTP response (4xx, 5xx), TLS handshake succeeded
-        if ($innerEx -is [System.Net.WebException]) {
-            $wex = [System.Net.WebException]$innerEx
-            if ($wex.Response) {
-                # Any HTTP response means TLS worked (endpoint just doesn't accept GET/HEAD)
-                $sqlTlsOk = $true
-            }
-            elseif ($wex.Status -eq [System.Net.WebExceptionStatus]::SecureChannelFailure -or
-                    $wex.Status -eq [System.Net.WebExceptionStatus]::TrustFailure) {
-                # Explicit TLS failure
-                $sqlTlsOk = $false
-            }
-            elseif ($wex.Status -eq [System.Net.WebExceptionStatus]::ConnectFailure -or
-                    $wex.Status -eq [System.Net.WebExceptionStatus]::Timeout) {
-                # Network issue, not TLS-specific
-                $sqlTlsOk = $false
-                $sqlErr = "Network: $($wex.Status) - $sqlErr"
-            }
-            else {
-                # Other WebException — connection was established (TLS likely OK)
-                # ReceiveFailure, ProtocolError without Response, etc.
-                $sqlTlsOk = $true
-            }
-        }
-        elseif ($_.Exception.Response -or ($innerEx -and $innerEx.Response)) {
-            # Got HTTP response through another exception wrapper
-            $sqlTlsOk = $true
-        }
-    }
-    finally {
-        [Net.ServicePointManager]::SecurityProtocol = $savedSqlProto
-    }
-
-    if ($sqlTlsOk) {
-        Log "SQL TLS probe OK: $sqlTlsTarget (TLS 1.2 handshake succeeded)" OK
-        Add-Result -Endpoint $sqlTlsTarget -HTTP 'OK(TLS)'
-    }
-    else {
-        Log "SQL TLS probe FAIL: $sqlTlsTarget - $sqlErr" Fail
-        Add-Result -Endpoint $sqlTlsTarget -HTTP 'FAIL(TLS)'
-        Add-Issue -Sev 'HIGH' -Cat 'SQL TLS' `
-            -Msg "TLS 1.2 handshake failed to $sqlTlsTarget. SQL Arc telemetry will not work." `
-            -Fix 'Ref: https://learn.microsoft.com/sql/sql-server/azure-arc/troubleshoot-telemetry-endpoint#check-tls-version-compatibility'
-    }
-}
-
-if (-not $SkipPKI -and $script:WinHttpProxy) {
-    $uncPkiNow = Test-PkiBypassCoverage
-    $ocspBypassed = $uncPkiNow -notcontains 'oneocsp.microsoft.com'
-
-    if ($ocspBypassed) {
-        # Endpoint is in bypass — SCHANNEL will connect DIRECT, not via proxy
-        try {
-            $probeParams = @{
-                Uri = 'http://oneocsp.microsoft.com'
-                Method = 'Get'; UseBasicParsing = $true
-                TimeoutSec = 5; ErrorAction = 'Stop'
-            }
-            if ($PSVersionTable.PSVersion.Major -ge 6) {
-                $probeParams['NoProxy'] = $true
-            }
-            else {
-                $savedWP = [System.Net.WebRequest]::DefaultWebProxy
-                [System.Net.WebRequest]::DefaultWebProxy = $null
-            }
-            $resp = Invoke-WebRequest @probeParams
-            if ($PSVersionTable.PSVersion.Major -lt 6) {
-                [System.Net.WebRequest]::DefaultWebProxy = $savedWP
-            }
-            Log "PKI probe OK direct (bypass active)" OK
-            Add-Result -Endpoint 'oneocsp.microsoft.com' -HTTP "OK($($resp.StatusCode))"
-        }
-        catch {
-            try { if ($PSVersionTable.PSVersion.Major -lt 6) { [System.Net.WebRequest]::DefaultWebProxy = $savedWP } } catch { }
-            # OCSP responders return 4xx on bare GET — any HTTP response = reachable
-            $code = $null
-            try {
-                if ($_.Exception -and $_.Exception.Response) {
-                    $code = [int]$_.Exception.Response.StatusCode
-                }
-            } catch { }
-            if ($code -and $code -ge 200 -and $code -lt 600) {
-                Log "PKI probe OK direct -> $code (bypass active)" OK
-                Add-Result -Endpoint 'oneocsp.microsoft.com' -HTTP "OK($code)"
-            }
-            else {
-                $msg = $_.Exception.Message
-                Log "PKI probe FAIL direct: $msg" Fail
-                Add-Result -Endpoint 'oneocsp.microsoft.com' -HTTP 'FAIL'
-                Add-Issue -Sev 'HIGH' -Cat 'PKI Direct' `
-                    -Msg 'OCSP unreachable via direct path (bypass active but no route)' `
-                    -Fix 'Ensure firewall network/application rules allow direct HTTP:80 to PKI endpoints'
-            }
-        }
-    }
-    else {
-        # Endpoint NOT in bypass — SCHANNEL sends via proxy (will likely fail on explicit proxy)
-        try {
-            $resp = Invoke-HttpSafe -Uri 'http://oneocsp.microsoft.com' -Timeout 5 -UseProxy $script:WinHttpProxy
-            Log "PKI probe OK via WinHTTP proxy" OK
-            Add-Result -Endpoint 'oneocsp.microsoft.com' -HTTP "OK($($resp.StatusCode))"
-        }
-        catch {
-            $msg = $_.Exception.Message
-            if ($msg -match '407') {
-                Log "PKI probe: 407 proxy auth" Warn
-                Add-Result -Endpoint 'oneocsp.microsoft.com' -HTTP 'WARN'
-            }
-            else {
-                Log "PKI probe FAIL via proxy: $msg" Fail
-                Add-Result -Endpoint 'oneocsp.microsoft.com' -HTTP 'FAIL'
-                Add-Issue -Sev 'CRITICAL' -Cat 'PKI Proxy' `
-                    -Msg 'OCSP unreachable via WinHTTP proxy (non-proxy request on proxy port)' `
-                    -Fix 'Add PKI endpoints to proxy bypass (GPO NO_PROXY)'
-            }
-        }
-    }
-}
-
-# azcmagent check result (already ran during discovery)
-if ($null -ne $script:AzcmagentCheckExit) {
-    if ($script:AzcmagentCheckExit -eq 0) { Log 'azcmagent check: exit 0' OK }
-    else { Log "azcmagent check: exit $($script:AzcmagentCheckExit)" Fail }
-}
-elseif (-not $azcm) {
-    Log 'azcmagent not found - skipping check' Warn
+$coreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+if ($coreHealthyNoCritical) {
+    Convert-IssuesToNonBlockingWarnings
 }
 
 Save-Log
 
-# =========================================================================
-# PHASE 8: RESULTS
-# =========================================================================
+Write-Banner 'DISCLAIMER'
+foreach ($line in $script:DisclaimerLines) {
+    Write-Host ("  {0}" -f $line) -ForegroundColor DarkGray
+}
 
-Write-Banner 'PHASE 3: RESULTS'
-
-$tbl = $script:Results | ForEach-Object { [pscustomobject]$_ }
-
-# Sort by group priority
-$grps = $tbl | Group-Object Group | Sort-Object @{ Expression = {
-    switch ($_.Name) {
-        'Core' { 0 }; 'PKI' { 1 }; 'SQL' { 2 }; 'AMA' { 3 }; 'MDE' { 4 }
-        'WAC'  { 5 }; 'KV'  { 6 }; 'HRW' { 7 }; 'UM'  { 8 }; 'GA'  { 9 }
-        'GNS'  { 10 }; default { 11 }
+Write-Banner 'RESULTS'
+$results = $script:Results | Sort-Object @{ Expression = {
+    switch ($_.Group) {
+        'Core' { 0 }
+        'PKI' { 1 }
+        'SQL' { 2 }
+        'AMA' { 3 }
+        'MDE' { 4 }
+        'WAC' { 5 }
+        'KV' { 6 }
+        'HRW' { 7 }
+        'UM' { 8 }
+        'GA' { 9 }
+        'GNS' { 10 }
+        default { 11 }
     }
-} }
+} }, Endpoint
 
-# Pipe-delimited table (azcmagent check style)
-$hf = "  {0,-5} | {1,-46} | {2,-16} | {3,-4} | {4,-6} | {5,-9} | {6,-7}"
-Write-Host ($hf -f 'Group', 'Endpoint', 'IP', 'Type', 'Path', 'Result', 'Latency') -ForegroundColor Cyan
-Write-Host ("  {0,-5}-+-{1,-46}-+-{2,-16}-+-{3,-4}-+-{4,-6}-+-{5,-9}-+-{6,-7}" -f `
-    ('-' * 5), ('-' * 46), ('-' * 16), ('-' * 4), ('-' * 6), ('-' * 9), ('-' * 7)) -ForegroundColor DarkGray
-
-foreach ($g in $grps) {
-    foreach ($r in $g.Group) {
-        $dnsOk  = $r.DNS  -notin @('FAIL', 'WARN', '-')
-        $tcpOk  = $r.TCP  -notin @('FAIL', '-')
-        $httpOk = ($r.HTTP -eq '-') -or ($r.HTTP -like 'OK*') -or ($r.HTTP -eq 'SKIP')
-        $fail   = ($r.DNS -eq 'FAIL') -or ($r.TCP -eq 'FAIL') -or ($r.HTTP -like 'FAIL*')
-        $warn   = ($r.DNS -eq 'WARN') -or ($r.TCP -eq 'WARN') -or ($r.HTTP -like 'WARN*')
-
-        # Compose result column (mimics azcmagent: Reachable / Unreachable / Warning)
-        if ($fail) {
-            $detail = @()
-            if ($r.DNS -eq 'FAIL') { $detail += 'DNS' }
-            if ($r.TCP -eq 'FAIL') { $detail += 'TCP' }
-            if ($r.HTTP -like 'FAIL*') { $detail += 'HTTP' }
-            $result = "FAIL($($detail -join ','))"
-        }
-        elseif ($warn) {
-            $result = 'Warning'
-        }
-        elseif ($r.TCP -eq 'TUNNEL') {
-            $result = 'Tunneled'
-        }
-        elseif ($r.HTTP -eq 'SKIP') {
-            $result = 'Reachable*'
-        }
-        else {
-            $result = 'Reachable'
-        }
-
-        $c = if ($fail) { 'Red' } elseif ($warn) { 'Yellow' } elseif ($r.TCP -eq 'TUNNEL') { 'DarkYellow' } else { 'Green' }
-        $pathCol = if ($r.Path) { $r.Path } else { '-' }
-        Write-Host ($hf -f $r.Group, $r.Endpoint, $r.IP, $r.Type, $pathCol, $result, $r.Latency) -ForegroundColor $c
+$fmt = "  {0,-5} | {1,-50} | {2,-16} | {3,-4} | {4,-8} | {5,-8} | {6,-10} | {7,-7}"
+Write-Host ($fmt -f 'Group', 'Endpoint', 'IP', 'Type', 'DNS', 'TCP', 'HTTP', 'Latency') -ForegroundColor Cyan
+Write-Host ("  {0,-5}-+-{1,-50}-+-{2,-16}-+-{3,-4}-+-{4,-8}-+-{5,-8}-+-{6,-10}-+-{7,-7}" -f ('-' * 5), ('-' * 50), ('-' * 16), ('-' * 4), ('-' * 8), ('-' * 8), ('-' * 10), ('-' * 7)) -ForegroundColor DarkGray
+foreach ($r in $results) {
+    $isFail = $r.DNS -eq 'FAIL' -or $r.TCP -eq 'FAIL' -or $r.HTTP -like 'FAIL*'
+    $isWarn = $r.DNS -eq 'WARN' -or $r.TCP -eq 'WARN' -or $r.HTTP -like 'WARN*'
+    $color = if ($isFail) { 'Red' } elseif ($isWarn) { 'Yellow' } else { 'Green' }
+    Write-Host ($fmt -f $r.Group, $r.Endpoint, $r.IP, $r.Type, $r.DNS, $r.TCP, $r.HTTP, $r.Latency) -ForegroundColor $color
+    if (-not [string]::IsNullOrWhiteSpace($r.Notes)) {
+        Write-Host ("        Notes: {0}" -f $r.Notes) -ForegroundColor DarkGray
     }
 }
 
-# Wildcard endpoints (informational)
-if ($wildcardEps.Count -gt 0) {
+if ($wildcardEndpoints.Count -gt 0) {
     Write-Host ''
-    $wFmt = "  {0,-5} | {1,-50} | {2}"
-    Write-Host ($wFmt -f 'Group', 'Wildcard Endpoint', 'Note') -ForegroundColor DarkGray
-    Write-Host ("  {0,-5}-+-{1,-50}-+-{2}" -f ('-' * 5), ('-' * 50), ('-' * 30)) -ForegroundColor DarkGray
-    foreach ($w in $wildcardEps) {
-        $wg = if ($endpointGroupMap.ContainsKey($w)) { $endpointGroupMap[$w] } else { '-' }
-        Write-Host ($wFmt -f $wg, $w, 'Requires firewall rule (not testable)') -ForegroundColor DarkGray
+    Write-Host '  Wildcard endpoints (informational only):' -ForegroundColor DarkGray
+    foreach ($w in $wildcardEndpoints) {
+        $g = if ($endpointGroupMap.ContainsKey($w)) { $endpointGroupMap[$w] } else { '-' }
+        Write-Host ("    [{0}] {1}" -f $g, $w) -ForegroundColor DarkGray
     }
 }
-
-# =========================================================================
-# PHASE 9: ISSUES
-# =========================================================================
 
 if ($script:Issues.Count -gt 0) {
-    Write-Banner "ISSUES ($($script:Issues.Count))"
-    $iFmt = "  {0,-3} | {1,-8} | {2,-12} | {3}"
-    Write-Host ($iFmt -f '#', 'Severity', 'Category', 'Message') -ForegroundColor Cyan
-    Write-Host ("  {0,-3}-+-{1,-8}-+-{2,-12}-+-{3}" -f ('-' * 3), ('-' * 8), ('-' * 12), ('-' * 50)) -ForegroundColor DarkGray
-    $ix = 0
-    foreach ($iss in $script:Issues) {
-        $ix++
-        $sc = switch ($iss.Severity) {
-            'CRITICAL' { 'Red' }; 'HIGH' { 'Red' }
-            'MEDIUM' { 'Yellow' }; 'WARN' { 'Yellow' }
+    Write-Banner ("ISSUES ($($script:Issues.Count))")
+    $ifmt = "  {0,-3} | {1,-8} | {2,-14} | {3}"
+    Write-Host ($ifmt -f '#', 'Severity', 'Category', 'Message') -ForegroundColor Cyan
+    Write-Host ("  {0,-3}-+-{1,-8}-+-{2,-14}-+-{3}" -f ('-' * 3), ('-' * 8), ('-' * 14), ('-' * 50)) -ForegroundColor DarkGray
+    $i = 0
+    foreach ($issue in $script:Issues) {
+        $i++
+        $color = switch ($issue.Severity) {
+            'CRITICAL' { 'Red' }
+            'HIGH' { 'Red' }
+            'MEDIUM' { 'Yellow' }
+            'WARN' { 'Yellow' }
             default { 'Gray' }
         }
-        Write-Host ($iFmt -f $ix, $iss.Severity, $iss.Category, $iss.Message) -ForegroundColor $sc
-        if ($iss.Fix) {
-            Write-Host ("  {0,-3} | {1,-8} | {2,-12} | Fix: {3}" -f '', '', '', $iss.Fix) -ForegroundColor DarkCyan
+        Write-Host ($ifmt -f $i, $issue.Severity, $issue.Category, $issue.Message) -ForegroundColor $color
+        if ($issue.Fix) {
+            Write-Host ("  {0,-3} | {1,-8} | {2,-14} | Fix: {3}" -f '', '', '', $issue.Fix) -ForegroundColor DarkCyan
         }
     }
 }
 
-# =========================================================================
-# PHASE 10: FINAL SUMMARY
-# =========================================================================
-
 Write-Host ''
-Write-Host ('=' * 74) -ForegroundColor DarkCyan
-
-$fc = $script:Stats.Fail
-$wc = $script:Stats.Warn
-$oc = $script:Stats.OK
-$ic = $script:Issues.Count
-
-# Only CRITICAL/HIGH issues cause FAIL; WARN/MEDIUM issues cause WARN status but exit 0
-$critIssues = @($script:Issues | Where-Object { $_.Severity -in @('CRITICAL', 'HIGH') })
-$hasFail    = ($fc -gt 0) -or ($critIssues.Count -gt 0)
-$hasWarn    = ($wc -gt 0) -or ($ic -gt $critIssues.Count)
-$summColor  = if ($hasFail) { 'Red' } elseif ($hasWarn) { 'Yellow' } else { 'Green' }
-$statusText = if ($hasFail) { 'FAIL' } elseif ($hasWarn) { 'WARN' } else { 'PASS' }
-
-$gwTag = if ($script:GatewayUrl) { ' [GW]' } else { '' }
-$preTag = if ($script:PreOnboarding) { ' [PRE-ONBOARDING]' } else { '' }
-Write-Host ("  STATUS: {0}  |  OK:{1} Fail:{2} Warn:{3} Issues:{4}  |  {5} {6}{7}{8}" -f `
-    $statusText, $oc, $fc, $wc, $ic, $Mode, $Region, $gwTag, $preTag) -ForegroundColor $summColor
-
-if ($script:InstalledExts.Count -gt 0) {
-    Write-Host "  Extensions: $($script:InstalledExts -join ', ')" -ForegroundColor DarkGray
+Write-Host ('=' * 82) -ForegroundColor DarkCyan
+$criticalIssues = @($script:Issues | Where-Object { $_.Severity -in @('CRITICAL', 'HIGH') })
+$warningIssues = @($script:Issues | Where-Object { $_.Severity -in @('MEDIUM', 'WARN') })
+$coreHealthyNoCritical = (($script:AzcmagentCoreHealthy -eq $true) -or (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -eq 0))
+$coreBlockingFails = @(
+    $results | Where-Object {
+        $_.Group -eq 'Core' -and (
+            $_.DNS -eq 'FAIL' -or
+            $_.TCP -eq 'FAIL' -or
+            ($_.HTTP -like 'FAIL*' -and -not ($script:ProxyMode -eq 'ExplicitProxy' -and $_.Endpoint -eq 'management.azure.com'))
+        )
+    }
+)
+$blockingCriticalIssues = @(
+    $criticalIssues | Where-Object {
+        -not ($coreHealthyNoCritical -and $_.Category -in @('Proxy', 'AgentCheck'))
+    }
+)
+$nonGnsResultWarnings = @(
+    $results | Where-Object {
+        $_.Group -ne 'GNS' -and (
+            $_.DNS -eq 'WARN' -or
+            $_.TCP -eq 'WARN' -or
+            $_.HTTP -like 'WARN*'
+        )
+    }
+)
+$hasFail = ($blockingCriticalIssues.Count -gt 0) -or ($coreBlockingFails.Count -gt 0)
+$hasWarn = ($warningIssues.Count -gt 0) -or ($nonGnsResultWarnings.Count -gt 0) -or (($criticalIssues.Count -gt 0) -and ($blockingCriticalIssues.Count -lt $criticalIssues.Count))
+if ($coreHealthyNoCritical -and $coreBlockingFails.Count -eq 0) {
+    $hasFail = $false
+    $hasWarn = (($warningIssues.Count -gt 0) -or ($nonGnsResultWarnings.Count -gt 0) -or (($criticalIssues.Count -gt 0) -and ($blockingCriticalIssues.Count -lt $criticalIssues.Count)))
 }
-if ($script:EffectiveProxy) {
-    Write-Host "  Proxy: $($script:EffectiveProxy)" -ForegroundColor DarkGray
+$status = if ($hasFail) { 'FAIL' } elseif ($hasWarn) { 'WARN' } else { 'PASS' }
+$statusColor = if ($hasFail) { 'Red' } elseif ($hasWarn) { 'Yellow' } else { 'Green' }
+$script:ScenarioSummary = @()
+$legacyTls13Endpoints = @(
+    $script:AzcmagentEndpointMeta.Values | Where-Object {
+        $_.Tls -and $_.Tls -match 'TLS\s*1\.3'
+    } | Select-Object -ExpandProperty HostName -Unique
+)
+$controlPlaneDegraded = @(
+    $results | Where-Object {
+        $_.Group -eq 'ControlPlane' -and (
+            $_.DNS -in @('WARN', 'FAIL') -or
+            $_.TCP -in @('WARN', 'FAIL') -or
+            $_.HTTP -like 'WARN*' -or
+            $_.HTTP -like 'FAIL*'
+        )
+    }
+).Count -gt 0
+$optionalDegraded = @(
+    $results | Where-Object {
+        (Test-IsOptionalEndpoint -Endpoint $_.Endpoint -Group $_.Group) -and (
+            $_.DNS -in @('WARN', 'FAIL') -or
+            $_.TCP -in @('WARN', 'FAIL') -or
+            $_.HTTP -like 'WARN*' -or
+            $_.HTTP -like 'FAIL*'
+        )
+    }
+).Count -gt 0
+$pkiDegraded = @(
+    $results | Where-Object {
+        $_.Group -eq 'PKI' -and (
+            $_.DNS -in @('WARN', 'FAIL') -or
+            $_.TCP -in @('WARN', 'FAIL') -or
+            $_.HTTP -like 'WARN*' -or
+            $_.HTTP -like 'FAIL*'
+        )
+    }
+).Count -gt 0
+$runtimeState = if ($coreHealthyNoCritical -and $coreBlockingFails.Count -eq 0) { 'Healthy' } elseif ($coreBlockingFails.Count -gt 0 -or $blockingCriticalIssues.Count -gt 0) { 'Degraded' } else { 'Unknown' }
+$controlPlaneState = if ($controlPlaneDegraded) { 'Degraded' } elseif ($script:PreOnboarding) { 'RequiredForOnboarding' } else { 'HealthyOrNotTargeted' }
+$optionalState = if ($optionalDegraded) { 'WarningsPresent' } else { 'HealthyOrNotInUse' }
+$pkiState = if ($pkiDegraded) { 'WarningsPresent' } else { 'HealthyOrNotObserved' }
+$modeInterpretation = switch ($Mode) {
+    'Private' {
+        if ($script:AzcmagentPrivatePathHealthy -and $coreHealthyNoCritical) {
+            'Private path validated; Arc runtime is using or observing private-capable endpoints successfully.'
+        }
+        else {
+            'Private mode selected; validate private DNS and Private Link Scope behavior for Arc-capable endpoints.'
+        }
+    }
+    'Gateway' {
+        if ($script:GatewayUrl) {
+            "Gateway mode in effect via $($script:GatewayUrl)."
+        }
+        else {
+            'Gateway mode in effect; validate the local listener and upstream proxy path together.'
+        }
+    }
+    default {
+        'Public/direct pattern in effect unless a proxy or private DNS override changes the observed path.'
+    }
 }
-Write-Host "  Log: $LogFilePath" -ForegroundColor DarkGray
-Write-Host ('=' * 74) -ForegroundColor DarkCyan
+if ($coreHealthyNoCritical) {
+    $script:ScenarioSummary += 'Arc core healthy (azcmagent reported no critical connectivity failures).'
+}
+elseif (($null -ne $script:AzcmagentCriticalFailures) -and $script:AzcmagentCriticalFailures -gt 0) {
+    if ($script:AzcmagentFailedEndpoints.Count -gt 0) {
+        $script:ScenarioSummary += ('azcmagent reported required Arc connectivity failures for: ' + (($script:AzcmagentFailedEndpoints | Select-Object -Unique) -join ', ') + '.')
+    }
+    else {
+        $script:ScenarioSummary += 'azcmagent reported required Arc connectivity failures to one or more endpoints.'
+    }
+}
+$privateControlPlaneWarnOnly = ($Mode -eq 'Private' -and $coreHealthyNoCritical -and @($results | Where-Object {
+    ($privateEligible -contains $_.Endpoint) -and $_.DNS -eq 'OK' -and $_.TCP -eq 'OK'
+}).Count -gt 0 -and @($results | Where-Object { $_.Endpoint -eq 'management.azure.com' -and ($_.HTTP -like 'WARN*' -or $_.HTTP -like 'FAIL*') }).Count -gt 0)
+$proxyWarnResults = @($results | Where-Object { $_.HTTP -like 'WARN*' -or ($_.Endpoint -eq 'management.azure.com' -and $_.HTTP -like 'FAIL*') })
+$proxyWarnEndpoints = @($proxyWarnResults | ForEach-Object { $_.Endpoint } | Where-Object { $_ } | Select-Object -Unique)
+$proxyWarnOnlyArcData = ($proxyWarnEndpoints.Count -gt 0 -and @($proxyWarnEndpoints | Where-Object { Test-IsArcDataEndpoint -Endpoint $_ }).Count -eq $proxyWarnEndpoints.Count)
+if ($privateControlPlaneWarnOnly) {
+    $modeInterpretation = 'Private split-network pattern observed; Arc private endpoints are healthy, while Azure Resource Manager is failing on the separate proxy/control-plane path.'
+    $script:ScenarioSummary += 'Private/split-network pattern observed: Arc private-capable endpoints remained healthy while the ARM control-plane path was degraded. Azure Arc Private Link Scope does not include ARM traffic by default.'
+}
+elseif ($script:ProxyMode -eq 'ExplicitProxy' -and $proxyWarnResults.Count -gt 0) {
+    if ($coreHealthyNoCritical -and -not $controlPlaneDegraded -and $proxyWarnOnlyArcData) {
+        $script:ScenarioSummary += 'Explicit proxy path showed warnings only for optional SQL/Arc data endpoints (DPS inventory/billing upload and telemetry/log/DMV upload); Arc core connectivity remained healthy.'
+    }
+    else {
+        $script:ScenarioSummary += 'Proxy path degraded for one or more endpoints.'
+    }
 
-# --- Append to log file ---
-$ts = $tbl | Format-Table -AutoSize | Out-String
+    $proxyFailureSignatures = @(
+        $script:Issues | Where-Object {
+            $_.Category -in @('Proxy', 'ProxyPath', 'HTTP', 'ControlPlane') -and $_.Message -match 'likely '
+        } | ForEach-Object {
+            if ($_.Message -match 'likely ([^.]+)') { $Matches[1].Trim() }
+        } | Where-Object { $_ } | Select-Object -Unique
+    )
+    if ($proxyFailureSignatures.Count -gt 0) {
+        $script:ScenarioSummary += ('Observed proxy-path failure signature(s): ' + ($proxyFailureSignatures -join ', ') + '.')
+    }
+}
+if ($optionalDegraded) {
+    $script:ScenarioSummary += 'Optional extension/GNS endpoints are degraded; treated as WARN unless core also fails.'
+}
+if ($pkiDegraded -and $coreHealthyNoCritical) {
+    $script:ScenarioSummary += 'PKI/CRL/OCSP warnings were observed, but they do not currently prove Arc runtime failure.'
+}
+if ($legacyTls12OnlyOs -and $legacyTls13Endpoints.Count -gt 0) {
+    $script:ScenarioSummary += 'azcmagent observed endpoints advertising TLS 1.3; on legacy Windows this is informational as long as TLS 1.2 succeeds for required paths.'
+}
+Write-Host ("  STATUS: {0} | DNS OK/WARN/FAIL: {1}/{2}/{3} | TCP OK/WARN/FAIL: {4}/{5}/{6} | HTTP OK/WARN/FAIL: {7}/{8}/{9}" -f $status, $script:Stats.DNSOK, $script:Stats.DNSWarn, $script:Stats.DNSFail, $script:Stats.TCPOK, $script:Stats.TCPWarn, $script:Stats.TCPFail, $script:Stats.HTTPOK, $script:Stats.HTTPWarn, $script:Stats.HTTPFail) -ForegroundColor $statusColor
+if ($null -ne $script:AzcmagentCriticalFailures) {
+    Write-Host ("  azcmagent summary: checks_failed={0} critical_failures={1} coreHealthy={2}" -f $script:AzcmagentChecksFailed, $script:AzcmagentCriticalFailures, $(if ($script:AzcmagentCoreHealthy) { 'true' } else { 'false' })) -ForegroundColor DarkGray
+}
+Write-Host ("  Interpretation: ArcRuntime={0} | ControlPlane={1} | Optional={2} | PKI={3}" -f $runtimeState, $controlPlaneState, $optionalState, $pkiState) -ForegroundColor DarkGray
+Write-Host ("  Mode interpretation: {0}" -f $modeInterpretation) -ForegroundColor DarkGray
+foreach ($summaryLine in $script:ScenarioSummary) {
+    Write-Host ("  Summary: {0}" -f $summaryLine) -ForegroundColor DarkGray
+}
+Write-Host ("  Scenario: Platform={0} Mode={1} Region={2} Proxy={3}" -f $Platform, $Mode, $Region, $(if ($script:EffectiveProxy) { $script:EffectiveProxy } else { 'Direct' })) -ForegroundColor DarkGray
+Write-Host ("  Log: {0}" -f $LogFilePath) -ForegroundColor DarkGray
+Write-Host ('=' * 82) -ForegroundColor DarkCyan
+
+Add-Content -Path $LogFilePath -Value ''
+Add-Content -Path $LogFilePath -Value '=================== DISCLAIMER ==================='
+Add-Content -Path $LogFilePath -Value $script:DisclaimerLines
 Add-Content -Path $LogFilePath -Value ''
 Add-Content -Path $LogFilePath -Value '=================== RESULTS ==================='
-Add-Content -Path $LogFilePath -Value $ts.TrimEnd()
-Add-Content -Path $LogFilePath -Value ("Status: $statusText | OK=$oc Fail=$fc Warn=$wc Issues=$ic | $Mode $Region$gwTag")
-
-if ($ic -gt 0) {
+Add-Content -Path $LogFilePath -Value ($fmt -f 'Group', 'Endpoint', 'IP', 'Type', 'DNS', 'TCP', 'HTTP', 'Latency')
+Add-Content -Path $LogFilePath -Value (("  {0,-5}-+-{1,-50}-+-{2,-16}-+-{3,-4}-+-{4,-8}-+-{5,-8}-+-{6,-10}-+-{7,-7}" -f ('-' * 5), ('-' * 50), ('-' * 16), ('-' * 4), ('-' * 8), ('-' * 8), ('-' * 10), ('-' * 7)))
+foreach ($r in $results) {
+    Add-Content -Path $LogFilePath -Value ($fmt -f $r.Group, $r.Endpoint, $r.IP, $r.Type, $r.DNS, $r.TCP, $r.HTTP, $r.Latency)
+    if (-not [string]::IsNullOrWhiteSpace($r.Notes)) {
+        Add-Content -Path $LogFilePath -Value (("        Notes: {0}" -f $r.Notes))
+    }
+}
+Add-Content -Path $LogFilePath -Value ("Status: $status | Platform=$Platform Mode=$Mode Region=$Region Proxy=" + $(if ($script:EffectiveProxy) { $script:EffectiveProxy } else { 'Direct' }))
+if ($script:Issues.Count -gt 0) {
     Add-Content -Path $LogFilePath -Value ''
     Add-Content -Path $LogFilePath -Value '=================== ISSUES ==================='
-    foreach ($iss in $script:Issues) {
-        Add-Content -Path $LogFilePath -Value "[$($iss.Severity)] $($iss.Category): $($iss.Message)"
-        if ($iss.Fix) { Add-Content -Path $LogFilePath -Value "  Fix: $($iss.Fix)" }
+    foreach ($issue in $script:Issues) {
+        Add-Content -Path $LogFilePath -Value ("[$($issue.Severity)] $($issue.Category): $($issue.Message)")
+        if ($issue.Fix) {
+            Add-Content -Path $LogFilePath -Value ("  Fix: $($issue.Fix)")
+        }
     }
 }
 
