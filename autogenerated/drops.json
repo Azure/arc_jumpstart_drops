@@ -2412,6 +2412,34 @@
     ]
   },
   {
+    "Title": "Test Drop",
+    "Summary": "test drop",
+    "Type": "ui_dashboard_workbook",
+    "Authors": [
+      {
+        "Name": "Miles Cole",
+        "Link": "https://www.linkedin.com/in/mileswcole/"
+      }
+    ],
+    "ProgrammingLanguage": [
+      "JavaScript"
+    ],
+    "Products": [
+      "Azure SQL Edge",
+      "Azure VM"
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/test_drop",
+    "Difficulty": "Advanced",
+    "Topics": [
+      "K3s",
+      "Container"
+    ],
+    "Description": "",
+    "Cover": "foor-moo-bench.png",
+    "CreatedDate": "2026-05-07T20:55:33.934Z",
+    "LastModified": "2026-05-07T20:55:33.934Z"
+  },
+  {
     "Title": "Multi-cluster API Management using Traefik",
     "Summary": "This Jumpstart Drop provides configurations for implementing API Management with Traefik and Microsoft Entra ID across multiple Arc-enabled Kubernetes clusters.",
     "Description": "This Jumpstart Drop demonstrates how to configure API Management authentication with Microsoft Entra ID as the Identity Provider to secure applications running on Traefik across multiple Arc-enabled Kubernetes clusters. It includes configurations for creating Microsoft Entra ID applications, and setting up user groups for role-based access control.",
