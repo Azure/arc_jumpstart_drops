@@ -2372,6 +2372,32 @@
     ]
   },
   {
+    "Title": "serpent test",
+    "Summary": "Test\n<script>alert(1)</script>",
+    "Type": "ui_dashboard_workbook",
+    "Authors": [
+      {
+        "Name": "rpen",
+        "Link": "https://serpent.dev/"
+      }
+    ],
+    "ProgrammingLanguage": [
+      ".NET / C#"
+    ],
+    "Products": [
+      "Azure Arc"
+    ],
+    "Source": "",
+    "Difficulty": "Beginner",
+    "Topics": [
+      "AI"
+    ],
+    "Description": "",
+    "Cover": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/serpent_test/img/SERPENT.jpg",
+    "CreatedDate": "2026-08-11T09:13:29.056Z",
+    "LastModified": "2026-08-11T09:13:29.056Z"
+  },
+  {
     "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
     "Summary": "'Talk to Your Factory' leverages Industrial IoT, Edge, and Generative AI to streamline factory operations, enabling real-time, natural language communication with systems for quick issue identification, increased efficiency, and reduced downtime.",
     "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",
