@@ -2372,31 +2372,30 @@
     ]
   },
   {
-    "Title": "SERPENT Baseline One",
-    "Summary": "SERPENT Test: baseline v1",
-    "Type": "sample_app",
+    "Title": "serpent baseline one",
+    "Summary": "SERPENT COLLISION TEST V2 - trying to overwrite",
+    "Type": "tutorial_guide",
     "Authors": [
       {
-        "Name": "Aananya",
-        "Link": "https://github.com/aannagpal_microsoft"
+        "Name": "SERPENT",
+        "Link": "https://github.com/gim-home"
       }
     ],
     "ProgrammingLanguage": [
-      "Bash"
+      "Go"
     ],
     "Products": [
-      "test",
       "Azure Arc"
     ],
-    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_baseline_one",
-    "Difficulty": "Beginner",
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/serpent_baseline_one",
+    "Difficulty": "Medium",
     "Topics": [
-      "AI"
+      "Container"
     ],
     "Description": "",
     "Cover": "serpentlogo.png",
-    "CreatedDate": "2026-08-12T06:33:34.020Z",
-    "LastModified": "2026-08-12T06:33:34.020Z"
+    "CreatedDate": "2026-08-12T06:41:54.675Z",
+    "LastModified": "2026-08-12T06:41:54.675Z"
   },
   {
     "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
