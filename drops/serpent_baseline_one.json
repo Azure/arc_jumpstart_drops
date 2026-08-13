@@ -1,26 +1,26 @@
 {
-  "Title": "serpent baseline one",
-  "Summary": "SERPENT COLLISION TEST V2 - trying to overwrite",
-  "Type": "tutorial_guide",
+  "Title": "Serpent Baseline one",
+  "Summary": "serpent baseline 1 test ",
+  "Type": "sample_app",
   "Authors": [
     {
-      "Name": "SERPENT",
-      "Link": "https://github.com/gim-home"
+      "Name": "rpentest",
+      "Link": "https://github.com/rpentest"
     }
   ],
   "ProgrammingLanguage": [
-    "Go"
+    ".NET / C#"
   ],
   "Products": [
-    "Azure Arc"
+    "Arc-enabled Servers"
   ],
-  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/tutorial_guide/serpent_baseline_one",
-  "Difficulty": "Medium",
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_baseline_one",
+  "Difficulty": "Beginner",
   "Topics": [
-    "Container"
+    "AI"
   ],
   "Description": "",
-  "Cover": "serpentlogo.png",
-  "CreatedDate": "2026-08-12T06:41:54.675Z",
-  "LastModified": "2026-08-12T06:41:54.675Z"
+  "Cover": "SERPENT.jpg",
+  "CreatedDate": "2026-08-13T10:11:01.377Z",
+  "LastModified": "2026-08-13T10:11:01.377Z"
 }
