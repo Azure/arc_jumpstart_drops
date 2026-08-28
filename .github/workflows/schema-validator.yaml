@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
     - name: Sanitize Branch Name
       env: 
@@ -31,7 +31,7 @@ jobs:
 
     - name: Get the Drop schema json
       id: changed-files-specific
-      uses: tj-actions/changed-files@v46
+      uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c # v46.0.5
       with:
         files: drops/*.json 
 
@@ -53,7 +53,7 @@ jobs:
 
     - name: Validate JSON
       if: steps.changed-files-specific.outputs.any_changed == 'true'
-      uses: GrantBirki/json-yaml-validate@v3.0.0
+      uses: GrantBirki/json-yaml-validate@3a3d883daf915618a7503a2e9c04b8e57130a4b8 # v3.0.0
       with:
         comment: "false"
         files: ${{ env.ALL_CHANGED_FILES }}
