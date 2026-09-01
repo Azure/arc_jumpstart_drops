@@ -2372,6 +2372,33 @@
     ]
   },
   {
+    "Title": "SERPENT Baseline One",
+    "Summary": "SERPENT Test: baseline v1",
+    "Type": "sample_app",
+    "Authors": [
+      {
+        "Name": "Aananya",
+        "Link": "https://github.com/aannagpal_microsoft"
+      }
+    ],
+    "ProgrammingLanguage": [
+      "Bash"
+    ],
+    "Products": [
+      "test",
+      "Azure Arc"
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_baseline_one",
+    "Difficulty": "Beginner",
+    "Topics": [
+      "AI"
+    ],
+    "Description": "",
+    "Cover": "serpentlogo.png",
+    "CreatedDate": "2026-08-12T06:33:34.020Z",
+    "LastModified": "2026-08-12T06:33:34.020Z"
+  },
+  {
     "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
     "Summary": "'Talk to Your Factory' leverages Industrial IoT, Edge, and Generative AI to streamline factory operations, enabling real-time, natural language communication with systems for quick issue identification, increased efficiency, and reduced downtime.",
     "Description": "Discover how Generative AI, IoT, and Edge optimize factory operations. See real-time data processing and smart interactions between machines and operators in an end-to-end demo of Industry 4.0 technologies.",

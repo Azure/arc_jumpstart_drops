@@ -1,0 +1,27 @@
+{
+  "Title": "SERPENT Baseline One",
+  "Summary": "SERPENT Test: baseline v1",
+  "Type": "sample_app",
+  "Authors": [
+    {
+      "Name": "Aananya",
+      "Link": "https://github.com/aannagpal_microsoft"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Bash"
+  ],
+  "Products": [
+    "test",
+    "Azure Arc"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_baseline_one",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "serpentlogo.png",
+  "CreatedDate": "2026-08-12T06:33:34.020Z",
+  "LastModified": "2026-08-12T06:33:34.020Z"
+}
