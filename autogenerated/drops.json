@@ -1764,6 +1764,33 @@
     ]
   },
   {
+    "Title": "canarY ",
+    "Summary": "SERPENT Test: baseline v1",
+    "Type": "sample_appp",
+    "Authors": [
+      {
+        "Name": "Aananya",
+        "Link": "https://github.com/aannagpal_microsoft"
+      }
+    ],
+    "ProgrammingLanguage": [
+      "Go"
+    ],
+    "Products": [
+      "test",
+      "Azure Arc"
+    ],
+    "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_baseline_one",
+    "Difficulty": "Beginner",
+    "Topics": [
+      "AI"
+    ],
+    "Description": "",
+    "Cover": "serpentlogo.png",
+    "CreatedDate": "2026-08-12T06:33:34.020Z",
+    "LastModified": "2026-08-12T06:33:34.020Z"
+  },
+  {
     "Title": "\"Cerebral\": An AI-Driven Assistant for Industrial Efficiency",
     "Summary": "This Jumpstart Drop provides an intelligent assistant for real-time troubleshooting and data analysis in hybrid and edge environments, offering a unified platform for consistent management and issue resolution.",
     "Description": "This Jumpstart Drop introduces Cerebral, an intelligent assistant designed to enhance operational efficiency by providing real-time troubleshooting and data analysis capabilities. Built to support hybrid, multi-cloud, and edge deployments, Cerebral ensures consistent and reliable management across diverse environments. By leveraging Azure's advanced AI and edge computing tools, this solution delivers a unified platform where users can interact using natural language to monitor, query, and resolve issues. The integration with Azure Monitor and other Azure services allows Cerebral to act as a powerful, flexible canvas for data analysis and visualization, offering an interactive and cohesive experience directly within the Azure portal.",
