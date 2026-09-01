@@ -2372,20 +2372,21 @@
     ]
   },
   {
-    "Title": "Serpent Baseline one",
-    "Summary": "serpent baseline 1 test ",
+    "Title": "SERPENT Baseline One",
+    "Summary": "SERPENT Test: baseline v1",
     "Type": "sample_app",
     "Authors": [
       {
-        "Name": "rpentest",
-        "Link": "https://github.com/rpentest"
+        "Name": "Aananya",
+        "Link": "https://github.com/aannagpal_microsoft"
       }
     ],
     "ProgrammingLanguage": [
-      ".NET / C#"
+      "Bash"
     ],
     "Products": [
-      "Arc-enabled Servers"
+      "test",
+      "Azure Arc"
     ],
     "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_baseline_one",
     "Difficulty": "Beginner",
@@ -2393,9 +2394,9 @@
       "AI"
     ],
     "Description": "",
-    "Cover": "SERPENT.jpg",
-    "CreatedDate": "2026-08-13T10:11:01.377Z",
-    "LastModified": "2026-08-13T10:11:01.377Z"
+    "Cover": "serpentlogo.png",
+    "CreatedDate": "2026-08-12T06:33:34.020Z",
+    "LastModified": "2026-08-12T06:33:34.020Z"
   },
   {
     "Title": "Talk to Your Factory: Optimizing Factory Operations with GenAI",
