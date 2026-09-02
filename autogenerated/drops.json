@@ -2714,5 +2714,30 @@
       "IoT",
       "Windows Configuration"
     ]
+  },
+  {
+    "Title": "SECURITY ASSESSMENT TEST - DO NOT MERGE",
+    "Summary": "This is an authorized security assessment (SERPENT) test submission validating the PR review process. Not real content.",
+    "Description": "Submitted as part of a scoped, authorized security assessment of the Azure Arc Jumpstart Drops contribution/review pipeline. Please close this PR without merging. Contact aannagpal_microsoft with questions.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Security Assessment PoC",
+        "Link": "https://github.com/aananya-nagpal"
+      }
+    ],
+    "Source": "https://github.com/aananya-nagpal/arc_jumpstart_drops/tree/serpent-test/tutorial_guide/serpent_security_assessment_poc",
+    "Type": "tutorial_guide",
+    "Difficulty": "Beginner",
+    "ProgrammingLanguage": [],
+    "Products": [
+      "Azure Arc"
+    ],
+    "LastModified": "2026-09-02T10:38:04.401Z",
+    "CreatedDate": "2026-09-02T10:38:04.406Z",
+    "Topics": [
+      "Security Assessment",
+      "Do Not Merge"
+    ]
   }
 ]
