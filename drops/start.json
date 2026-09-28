@@ -1,0 +1,26 @@
+{
+  "Title": "Start",
+  "Summary": "aaaaa",
+  "Type": "ui_dashboard_workbook",
+  "Authors": [
+    {
+      "Name": "aaaaa",
+      "Link": "aaaaaaaaaaaaaaaa"
+    }
+  ],
+  "ProgrammingLanguage": [
+    "Java"
+  ],
+  "Products": [
+    "Arc-enabled Kubernetes"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/start",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "AI"
+  ],
+  "Description": "",
+  "Cover": "Screenshot 2026-09-28 123659.png",
+  "CreatedDate": "2026-09-28T07:08:11.366Z",
+  "LastModified": "2026-09-28T07:08:11.366Z"
+}
