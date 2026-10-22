@@ -1,7 +1,7 @@
 {
   "Title": "Arc Insights PBI Dashboards Powered by Jumpstart",
-  "Summary": "This Jumpstart Drop provides a sample PowerBI dashboard, to demonstrate the inventory and insights available across both Arc-connected and Azure native Virtual Machines.",
-  "Description": "Microsoft Power BI is a powerful tool that can be connected to Azure Resource Graph to in order to query the inventory of Arc-enabled servers and Azure virtual machines, providing users a flexible alternative for visualization, as an alternative for the default dashboards offered within the Azure portal. These Jumpstart-powered Power BI dashboards provide a single pane of glass and include an inventory of Azure virtual machines, SQL Server Instances on virtual machines, SQL databases on virtual machines, and Extended Security Update (ESU) cost forecasting. The deployment includes a single-click deployment of a Power BI template which can be downloaded and connected to your Azure subscriptions through the built-in Azure Resource Graph connector.",
+  "Summary": "Arc SQL estate strategy v3.5.1 Power BI template for Azure and Arc inventory, extension coverage, ESU forecasting, patch/CVE insights and SQL best-practice findings.",
+  "Description": "This Power BI template connects to Azure Resource Graph to visualise Azure virtual machines and Arc-enabled servers, SQL Server instances, databases, extensions and resource tags. Version 3.5.1 retains inventory and Extended Security Update (ESU) forecasting pages and adds Security Patching CVE Audit and Best Practices pages. Patch assessments are enriched with public vendor advisories; SQL configuration findings use Arc inventory and identify deeper assessment coverage gaps. ESU and migration/licensing outputs are scenario estimates, not official quotes. Import the template in Power BI Desktop and authenticate with your own account. The existing template filename and download link are preserved.",
   "Cover":"",
   "Authors": [
     {
@@ -21,7 +21,7 @@
     "Azure Arc",
     "Microsoft PowerBI"
   ],
-  "LastModified": "2025-04-21T18:25:43.511Z",
+  "LastModified": "2026-10-22T08:31:23.373Z",
   "CreatedDate": "2025-04-21T18:25:43.511Z",
   "Topics": []
 }
