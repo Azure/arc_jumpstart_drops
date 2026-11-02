@@ -1,0 +1,27 @@
+{
+  "Title": "Azure Local Compendium",
+  "Summary": "This Jumpstart Drop for Azure Local provides a comprehensive knowledge base for Azure Local from different troubleshooting sources, enriched by Copilot.",
+  "Description": "This Jumpstart Drop for Azure Local provides a comprehensive knowledge base for Azure Local from different troubleshooting sources such as the official documentation and TSG articles, enriched by Copilot.",
+  "Cover": "",
+  "Authors": [
+    {
+      "Name": "Erik Grina Raassum",
+      "Link": "https://www.linkedin.com/in/erikgraa"
+    }
+  ],
+  "Source": "https://github.com/erikgraa/azure-local-knowledge",
+  "Type": "tutorial_guide",
+  "Difficulty": "Low",
+  "ProgrammingLanguage": [],
+  "Products": [
+    "Azure Arc",
+    "Azure Kubernetes Service",        
+    "Azure Local"
+  ],
+  "LastModified": "2026-11-01T01:24:45.231Z",
+  "CreatedDate": "2026-11-01T01:24:45.231Z",
+  "Topics": [
+    "AKS",
+    "Azure Local"
+  ]
+}
