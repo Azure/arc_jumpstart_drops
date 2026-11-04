@@ -33,19 +33,25 @@ jobs:
       id: changed-files-specific
       uses: tj-actions/changed-files@v46
       with:
-        files: drops/*.json 
+        files: drops/*.json
+        json: true
+        escape_json: false
+        safe_output: false
 
     - name: List changed JSON schema files
       if: steps.changed-files-specific.outputs.any_changed == 'true'
+      env:
+        CHANGED_FILES_JSON: ${{ steps.changed-files-specific.outputs.all_changed_files }}
       run: |
-            CHANGED_FILES="${{ steps.changed-files-specific.outputs.all_changed_files }}"
-            # Convert spaces to newlines and format it for GitHub environment variable
-            FORMATTED_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n')
+            FORMATTED_FILES=$(printf '%s' "$CHANGED_FILES_JSON" | jq -r '.[]')
+            DELIMITER=$(cat /proc/sys/kernel/random/uuid)
 
             # Export formatted files to the GitHub environment variable
-            echo "ALL_CHANGED_FILES<<EOF" >> $GITHUB_ENV
-            echo "$FORMATTED_FILES" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
+            {
+              printf 'ALL_CHANGED_FILES<<%s\n' "$DELIMITER"
+              printf '%s\n' "$FORMATTED_FILES"
+              printf '%s\n' "$DELIMITER"
+            } >> "$GITHUB_ENV"
             
             # Log success message with the list of all changed files
             echo "✅ Success - Listed all the files that have changed:"
@@ -61,16 +67,20 @@ jobs:
 
     - name: Validate source repo
       if: steps.changed-files-specific.outputs.any_changed == 'true'
+      env:
+        CHANGED_FILES_JSON: ${{ steps.changed-files-specific.outputs.all_changed_files }}
+        PR_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
       run: |
-        if ! jq 'has("Source")' ${{ steps.changed-files-specific.outputs.all_changed_files }} >/dev/null; then
+        mapfile -d '' -t changed_files < <(printf '%s' "$CHANGED_FILES_JSON" | jq -j '.[] | ., "\u0000"')
+        if ! jq 'has("Source")' -- "${changed_files[@]}" >/dev/null; then
           echo "Error: missing the Source field"
           exit 1
         fi
-        source_url=$(jq -r '.Source' ${{ steps.changed-files-specific.outputs.all_changed_files }})
+        source_url=$(jq -r '.Source' -- "${changed_files[@]}")
 
-        echo "Base Repository: ${{ github.event.pull_request.head.repo.full_name }}"
+        echo "Base Repository: $PR_REPOSITORY"
         
-        ORG_USER=$(echo "${{ github.event.pull_request.head.repo.full_name }}" | cut -d'/' -f1)
+        ORG_USER=$(printf '%s' "$PR_REPOSITORY" | cut -d'/' -f1)
         echo "Organization/User: $ORG_USER"
         
         echo "Base Branch Name: $SANITIZED_BRANCH"
@@ -98,9 +108,12 @@ jobs:
       
     - name: Check MIT License
       if: steps.changed-files-specific.outputs.any_changed == 'true'
+      env:
+        CHANGED_FILES_JSON: ${{ steps.changed-files-specific.outputs.all_changed_files }}
       run: |
         # Use curl to check if the LICENSE file exists in the repository
-        source_url=$(jq -r '.Source' ${{ steps.changed-files-specific.outputs.all_changed_files }})
+        mapfile -d '' -t changed_files < <(printf '%s' "$CHANGED_FILES_JSON" | jq -j '.[] | ., "\u0000"')
+        source_url=$(jq -r '.Source' -- "${changed_files[@]}")
 
         # Extract the organization and repository names from the GitHub URL
         organization=$(echo "$source_url" | cut -d'/' -f4)
