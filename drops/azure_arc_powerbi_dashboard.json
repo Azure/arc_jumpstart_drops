@@ -1,7 +1,7 @@
 {
   "Title": "Arc Insights PBI Dashboards Powered by Jumpstart",
-  "Summary": "Arc SQL estate strategy v3.5.1 Power BI template for Azure and Arc inventory, extension coverage, ESU forecasting, patch/CVE insights and SQL best-practice findings.",
-  "Description": "This Power BI template connects to Azure Resource Graph to visualise Azure virtual machines and Arc-enabled servers, SQL Server instances, databases, extensions and resource tags. Version 3.5.1 retains inventory and Extended Security Update (ESU) forecasting pages and adds Security Patching CVE Audit and Best Practices pages. Patch assessments are enriched with public vendor advisories; SQL configuration findings use Arc inventory and identify deeper assessment coverage gaps. ESU and migration/licensing outputs are scenario estimates, not official quotes. Import the template in Power BI Desktop and authenticate with your own account. The existing template filename and download link are preserved.",
+  "Summary": "Arc SQL estate strategy v3.5.2 Power BI template with automatically updated Ubuntu advisory data, Azure and Arc inventory, ESU forecasting, patch/CVE insights and SQL best-practice findings.",
+  "Description": "This Power BI template uses Azure Resource Graph to visualise Azure VMs and Arc-enabled servers, SQL instances, databases, extensions and tags. Version 3.5.2 retains all seven pages and downloads centrally published Canonical USN OVAL data, removing local JSON preparation and file-path setup. GitHub updates the public reference every six hours; references older than 24 hours fail explicitly. Selecting missing patches filters CVE advisories to the selected machine/patch pairs. Vendor advisories provide normalised Linux categories and severity, inferred CVE applicability and coverage diagnostics. Other Linux vendor sources and original privacy settings are preserved. SQL findings use Arc inventory and identify deeper assessment gaps. ESU and migration/licensing costs are scenario estimates, not quotes. Import in Power BI Desktop and authenticate with your own account. The existing template filename and download link are preserved.",
   "Cover":"",
   "Authors": [
     {
@@ -15,13 +15,14 @@
   "ProgrammingLanguage": [
     "Kusto",
     "DAX",
-    "M-Query"
+    "M-Query",
+    "Python"
   ],
   "Products": [
     "Azure Arc",
     "Microsoft PowerBI"
   ],
-  "LastModified": "2026-10-22T08:31:23.373Z",
+  "LastModified": "2026-11-04T11:37:33.000Z",
   "CreatedDate": "2025-04-21T18:25:43.511Z",
   "Topics": []
 }
