@@ -1676,8 +1676,8 @@
   },
   {
     "Title": "Azure Local Endpoints Codified",
-    "Summary": "This Jumpstart Drop for Azure Local includes a PowerShell script and GitHub workflow to retrieve all of the outbound URL endpoints required for each Azure region. The output is codified in JSON format to aid in automation purposes.",
-    "Description": "This Jumpstart Drop for Azure Local includes a PowerShell script and GitHub workflow to retrieve all of the outbound URL endpoints required for each Azure region. The output is codified in JSON format to aid in automation purposes.",
+    "Summary": "This Jumpstart Drop for Azure Local includes a PowerShell script, GitHub workflow and frontend to interact with all URL endpoints required for each Azure region and vendor. The output is codified in JSON format to aid in automation purposes.",
+    "Description": "This Jumpstart Drop for Azure Local includes a PowerShell script, GitHub workflow and frontend to interact with all URL endpoints required for each Azure region and vendor. The output is codified in JSON format to aid in automation purposes.",
     "Cover": "",
     "Authors": [
       {
@@ -1696,7 +1696,7 @@
       "Azure Arc",
       "Azure Local"
     ],
-    "LastModified": "2025-02-22T21:23:43.511Z",
+    "LastModified": "2026-11-01T01:24:45.231Z",
     "CreatedDate": "2025-02-22T21:23:43.511Z",
     "Topics": [
       "Azure Local",
@@ -1704,9 +1704,36 @@
     ]
   },
   {
+    "Title": "Azure Local Compendium",
+    "Summary": "This Jumpstart Drop for Azure Local provides a comprehensive knowledge base for Azure Local from different troubleshooting sources, enriched by Copilot.",
+    "Description": "This Jumpstart Drop for Azure Local provides a comprehensive knowledge base for Azure Local from different troubleshooting sources such as the official documentation and TSG articles, enriched by Copilot.",
+    "Cover": "",
+    "Authors": [
+      {
+        "Name": "Erik Grina Raassum",
+        "Link": "https://www.linkedin.com/in/erikgraa"
+      }
+    ],
+    "Source": "https://github.com/erikgraa/azure-local-knowledge",
+    "Type": "tutorial_guide",
+    "Difficulty": "Low",
+    "ProgrammingLanguage": [],
+    "Products": [
+      "Azure Arc",
+      "Azure Kubernetes Service",
+      "Azure Local"
+    ],
+    "LastModified": "2026-11-01T01:24:45.231Z",
+    "CreatedDate": "2026-11-01T01:24:45.231Z",
+    "Topics": [
+      "AKS",
+      "Azure Local"
+    ]
+  },
+  {
     "Title": "Azure Local Releases Tool",
-    "Summary": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
-    "Description": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local releases that can be consumed by offering details of them as PowerShell objects or as JSON through an API running Pode.",
+    "Summary": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local lifecycle and releases that can be consumed by offering details of them as PowerShell objects, a frontend, or as JSON.",
+    "Description": "This Jumpstart Drop for Azure Local helps increasing observability and traceability of Azure Local lifecycle and releases that can be consumed by offering details of them as PowerShell objects, a frontend, or as JSON.",
     "Cover": "",
     "Authors": [
       {
@@ -1725,7 +1752,7 @@
       "Azure Arc",
       "Azure Local"
     ],
-    "LastModified": "2025-03-05T22:30:00.511Z",
+    "LastModified": "2026-11-01T01:24:45.231Z",
     "CreatedDate": "2025-03-05T22:30:00.511Z",
     "Topics": [
       "Azure Local",
