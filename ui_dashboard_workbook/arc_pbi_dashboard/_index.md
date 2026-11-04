@@ -146,6 +146,8 @@ The audit page is machine-scoped (`fact_resources[resource_kind] = "Server"`). S
 
 Select a row in **All Missing Patches** to filter **CVE Advisory** to that machine and missing patch. Ctrl-select rows to include several machine/patch pairs; clear the selection to restore the current page's advisory scope. A patch with no mapped advisory produces an empty advisory table, not unrelated CVEs. This interaction uses the resource key and patch identifier together, not just the machine name or Windows KB, and applies to both Windows and Linux. It filters already-loaded evidence and does not trigger a data-source refresh.
 
+For Windows evidence, the advisory link opens the corresponding Microsoft KB support article using `https://support.microsoft.com/help/<KB-number>`, rather than the machine-readable monthly MSRC API document. MSRC remains the source of the KB-to-CVE association and vendor severity; the link destination does not change the mapping or establish machine-specific applicability. Linux advisory links are unchanged.
+
 Patch category, vendor priority, CVE severity and applicability answer different questions:
 
 | Field | Meaning |

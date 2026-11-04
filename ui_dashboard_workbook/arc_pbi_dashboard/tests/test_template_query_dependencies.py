@@ -212,6 +212,24 @@ class TemplateQueryDependencyTests(unittest.TestCase):
             {"TypeDetectionEnabled": True, "RelationshipImportEnabled": True},
         )
 
+    def test_windows_advisory_links_open_the_matching_kb_article(self):
+        query = self.m_query("dim_patch_cve_mapping")
+        self.assertIn('source_url="https://support.microsoft.com/help/" & KbNumeric', query)
+        self.assertNotIn('source_url="https://api.msrc.microsoft.com', query)
+        self.assertIn(
+            'RelativePath="cvrf/v3.0/cvrf/" & documentId',
+            query,
+        )
+        self.assertIn('Table.Distinct(ValidMappings, {"kb_numeric", "cve_id"})', query)
+        evidence = expression(self.tables["view_patch_cve_mappings"]["partitions"][0]["source"])
+        self.assertIn('"source_url", \'dim_patch_cve_mapping\'[source_url]', evidence)
+        self.assertIn('"source_url", \'view_linux_advisory_evidence\'[source_url]', evidence)
+        link = next(
+            column for column in self.tables["view_patch_cve_mappings"]["columns"]
+            if column["name"] == "source_url"
+        )
+        self.assertEqual(link["dataCategory"], "WebUrl")
+
     def test_advisory_selection_matches_machine_and_patch_tuples(self):
         measure = next(
             item for item in self.tables["all_measures"]["measures"]
