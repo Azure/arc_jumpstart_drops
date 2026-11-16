@@ -31,8 +31,15 @@ class TemplateQueryDependencyTests(unittest.TestCase):
             cls.advisory_visual = json.loads(archive.read(
                 audit_page + "visuals/9777d499bcda61c0340a/visual.json"
             ))
+            cls.report_definitions = {
+                name: json.loads(archive.read(name))
+                for name in archive.namelist()
+                if name.startswith("Report/definition/") and name.endswith(".json")
+            }
         cls.tables = {table["name"]: table for table in cls.model["tables"]}
-        cls.expressions = {item["name"] for item in cls.model["expressions"]}
+        cls.expressions = {
+            item["name"]: item for item in cls.model["expressions"]
+        }
 
     def m_query(self, name):
         partitions = self.tables[name]["partitions"]
@@ -40,8 +47,13 @@ class TemplateQueryDependencyTests(unittest.TestCase):
         self.assertEqual(partitions[0]["source"]["type"], "m", name)
         return expression(partitions[0]["source"])
 
+    def m_expression(self, name):
+        source = self.expressions[name]
+        self.assertEqual(source["kind"], "m", name)
+        return expression(source)
+
     def test_linux_mapping_is_one_exportable_query(self):
-        query = self.m_query("dim_linux_patch_cve_mapping")
+        query = self.m_expression("dim_linux_patch_cve_mapping")
         for adapter in (
             "fnOracleLinuxPatchCveRows",
             "fnAlmaLinuxPatchCveRows",
@@ -80,16 +92,39 @@ class TemplateQueryDependencyTests(unittest.TestCase):
                 self.m_query(dependency)
         self.m_query("view_missing_patches")
 
-    def test_staging_load_and_ubuntu_history_are_not_duplicated(self):
-        staging = self.tables["dim_linux_patch_cve_mapping"]
-        self.assertTrue(staging["excludeFromModelRefresh"])
+    def test_linux_staging_is_connection_only(self):
+        name = "dim_linux_patch_cve_mapping"
+        self.assertFalse(
+            name in self.tables,
+            "Linux staging must not be a loaded model table",
+        )
+        self.assertIn(name, self.expressions)
         self.assertIn(
             "UbuntuNoticesByRelease = NoticeHistoryByRelease",
-            self.m_query(staging["name"]),
+            self.m_expression(name),
         )
 
+    def test_loaded_tables_participate_in_initial_refresh(self):
+        for name, table in self.tables.items():
+            with self.subTest(table=name):
+                self.assertFalse(
+                    table.get("excludeFromModelRefresh", False),
+                    "Loaded tables must not retain an unprocessed first-import partition",
+                )
+
+    def test_unused_migrate_inventory_has_no_remaining_dependencies(self):
+        definitions = {"DataModelSchema": self.model, **self.report_definitions}
+        for path, definition in definitions.items():
+            source = json.dumps(definition).casefold()
+            for retired in ("view_migrate_projects", "kpi_migrate_project_count"):
+                with self.subTest(path=path, retired=retired):
+                    self.assertFalse(
+                        retired in source,
+                        f"{path} still includes the unused Migrate refresh dependency",
+                    )
+
     def test_ubuntu_history_uses_one_snapshot_for_active_releases(self):
-        query = self.m_query("dim_linux_patch_cve_mapping")
+        query = self.m_expression("dim_linux_patch_cve_mapping")
         self.assertIn('and [os_distribution] = "Ubuntu"', query)
         self.assertIn(
             "if List.IsEmpty(ActiveUbuntuReleases) then null else fnUbuntuOvalSnapshot(ActiveUbuntuReleases)",
@@ -199,7 +234,7 @@ class TemplateQueryDependencyTests(unittest.TestCase):
         self.assertIn("v3.5.2", self.model.get("description", ""))
         self.assertNotIn("UbuntuOvalDataPath", self.expressions)
         self.assertNotIn("UbuntuOvalDataUrl", self.expressions)
-        self.assertEqual(len(self.expressions), 9)
+        self.assertEqual(len(self.expressions), 10)
 
     def test_original_query_settings_have_no_privacy_override(self):
         settings = {

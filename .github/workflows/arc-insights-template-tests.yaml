@@ -1,0 +1,32 @@
+name: Arc Insights template regressions
+
+on:
+  pull_request:
+    branches: [canary, main]
+    paths:
+      - ui_dashboard_workbook/arc_pbi_dashboard/**
+      - drops/azure_arc_powerbi_dashboard.json
+      - .github/workflows/arc-insights-template-tests.yaml
+  push:
+    branches: [canary, main]
+    paths:
+      - ui_dashboard_workbook/arc_pbi_dashboard/**
+      - drops/azure_arc_powerbi_dashboard.json
+      - .github/workflows/arc-insights-template-tests.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run template and Ubuntu parser regressions
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python -m unittest discover -s ui_dashboard_workbook/arc_pbi_dashboard/tests -v
