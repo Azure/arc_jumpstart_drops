@@ -101,6 +101,31 @@ Version 3.5.2 retrieves the Ubuntu reference automatically when relevant Ubuntu 
 
 ![Power BI Save Screenshot](./artifacts/media/pbi_save_screenshot.png)
 
+### Publishing and refreshing in Fabric
+
+Publishing a report does not transfer Desktop data-source credentials or source privacy levels to the Power BI service in Fabric. Even an Anonymous source needs a service-side connection with an explicit privacy level before refresh. This is separate from Microsoft Purview sensitivity labels on reports and semantic models; those labels do not configure source privacy.
+
+For OAuth2 refresh, the data source and the Power BI service must be in the same Microsoft Entra tenant; [cross-tenant OAuth2 refresh is not supported](https://learn.microsoft.com/power-bi/connect-data/refresh-troubleshooting-refresh-scenarios#refresh-fails-when-updating-data-from-sources-that-use-microsoft-entra-id-oauth). Publishing in another tenant can still display imported Desktop data without proving a supported service refresh path.
+
+1. Publish your saved report to the intended Fabric workspace. Open the **semantic model's Settings**, not just the report.
+2. Under **Gateway and cloud connections**, review every source and map it to an existing authorised connection where supported. Otherwise, create or configure the required connection under **Manage connections and gateways** or **Data source credentials**, as available for that connector.
+3. Configure authentication and privacy independently:
+
+   | Source | Authentication | Privacy level |
+   | --- | --- | --- |
+   | Azure Resource Graph | Microsoft Entra organisational account with read access to the intended resources | **Organizational**, or stricter if required by your organisation's policy |
+   | Public reference CSVs, Microsoft Learn, MSRC and public Linux advisory/reference feeds | **Anonymous** | **Public**, after confirming the URL contains only public reference data |
+
+   Do not mark Azure inventory Public or disable privacy checks to make refresh succeed. Public vendor feeds do not make your estate inventory public. Changing a connection's privacy level can require re-entering its authentication settings, including selecting Anonymous again. Save each connection: the confirmation button can be labelled **Sign in** even for Anonymous authentication.
+
+   MSRC's root URL, `https://api.msrc.microsoft.com/`, can return HTTP 404 even when the template's `/cvrf/v3.0/` endpoints work. If this preliminary root probe prevents saving that connection, select **Skip test connection** for MSRC and verify the actual service refresh in the next step. This skips only the probe, not the real data requests or privacy checks; do not ignore errors from the actual query endpoints.
+4. Run **Refresh now** on the semantic model. Check **Refresh history** for successful completion, then open all seven report pages and check inventory, scope, patch coverage and the advisory footer. An already-rendered report can show previously imported data even when a service refresh fails.
+5. Configure scheduled refresh only after the manual service refresh succeeds. Reuse configured connections where supported to reduce repeated setup. New source URLs, ownership changes, expired authentication or tenant policy can still require configuration.
+
+The template does not query Azure Migrate project inventory: that unused query, its project-count KPI and subscription relationship have been removed. The existing migration/licensing scenario estimates do not require an Azure Migrate project.
+
+See Microsoft's guidance on [Desktop privacy levels not transferring to the service](https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-security-content-creator-planning#create-and-publish-content), [configuring source privacy levels](https://learn.microsoft.com/power-query/privacy-levels), [reusing cloud connections](https://learn.microsoft.com/power-bi/connect-data/service-connect-cloud-data-sources) and [Azure Resource Graph authentication](https://learn.microsoft.com/power-query/connectors/azure-resource-graph).
+
 ### Hosted Ubuntu advisory data
 
 Canonical [recommends OVAL exports](https://ubuntu.com/security/oval) and explicitly says [not to use the experimental Ubuntu Security API in production environments or automations](https://ubuntu.com/security/cves/about). Ubuntu enrichment therefore uses the published **USN OVAL** feeds, not the notice/CVE JSON API or scraped HTML pages.
@@ -131,10 +156,21 @@ python -m unittest discover -s .\ui_dashboard_workbook\arc_pbi_dashboard\tests -
 
 For native candidate packaging, set `ARC_INSIGHTS_TEMPLATE` to the candidate's absolute PBIT path before running the Python suite; otherwise it checks the installed repository template. Clear that environment variable afterwards. Publisher Python/Node tests run in the hosting repository.
 
+#### Template release validation
+
+The Arc Insights template regression workflow runs the Python suite for relevant pull requests and changes to `canary` or `main`. These static checks catch dependency/packaging regressions, including refresh-excluded loaded tables and reintroduced Azure Migrate dependencies; they do not prove Desktop or Fabric refresh compatibility.
+
+Before releasing a changed PBIT:
+
+1. Run the suite against the exact final export and run `git diff --check`. Record the PBIT SHA-256, Desktop build, commands and outcomes in the pull request.
+2. Import that export in a new Desktop instance, without manually refreshing to repair it. Let the initial load finish; verify all loaded partitions are Ready, calculated objects have no errors, and every report page renders without incomplete-data warnings. Keep staging queries connection-only rather than refresh-excluded loaded tables.
+3. Publish the same candidate to an authorised test workspace. Follow the Fabric connection setup above, run a service refresh and inspect its history and all report pages. Confirm inventory and advisory evidence match the intended source scope. No Azure Migrate projects should be required.
+4. Record Desktop first-import and Fabric refresh results separately, including the operating systems and distributions actually exercised and any missing assessment data. An empty Linux evidence table does not verify Linux advisory enrichment. If a service test has not completed, keep the pull request in draft and state the outstanding gate; passing Python tests or seeing cached visuals is not a substitute.
+
 ### Data Sources Used
 
 The Dashboard has the following data sources:
-1. Azure Resource Graph - Used to gather server, SQL instance, database, extension, tag, subscription, patch assessment and Azure Migrate project inventory. The template contains its own queries. The [Azure Resource Graph Queries](https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard/artifacts/arg_queries) folder contains earlier inventory examples, not a complete or exact extraction of the v3.5.2 queries.
+1. Azure Resource Graph - Used to gather server, SQL instance, database, extension, tag, subscription and patch assessment inventory. The template contains its own queries. The [Azure Resource Graph Queries](https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard/artifacts/arg_queries) folder contains earlier inventory examples, not a complete or exact extraction of the v3.5.2 queries.
 2. [Learn.microsoft.com](https://learn.microsoft.com/) - Used to gather latest SQL Patch information
 3. Reference CSVs - Azure regions, VM SKUs and extension types are loaded from this repository's [Reference CSVs](https://github.com/Azure/arc_jumpstart_drops/tree/main/ui_dashboard_workbook/arc_pbi_dashboard/artifacts/reference). The template loads its software lifecycle and ESU reference from [arc-sql-agent](https://raw.githubusercontent.com/chrisdoofer/arc-sql-agent/refs/heads/main/powerbi/Dimensions/dim_software_lifecycle.csv), not the lifecycle CSV in this Drop. These sources can change independently of the template.
 4. Windows security advisories - `api.msrc.microsoft.com` provides update documents for KB-to-CVE mapping.
@@ -181,7 +217,7 @@ The existing advisory adapters recognise the following releases. This is the tem
 
 Release recognition does not guarantee coverage of every architecture, package, repository or subscription channel. Ubuntu, Red Hat and SUSE advisory searches retain a 24-month lookback; Windows MSRC mapping retains an 18-month lookback. Linux distribution discovery currently relies on Arc inventory; equivalent enrichment coverage for native Azure VMs has not been established. Review the [Azure Update Manager support matrix](https://learn.microsoft.com/azure/update-manager/support-matrix) separately.
 
-Ubuntu exact-target and supersedence matching share buffered notice lists from the same prepared OVAL snapshot, limited to releases with relevant missing-update targets. No relevant Ubuntu targets means no Ubuntu reference download. The 24-month lookback is unchanged. Supersedence matching deduplicates package/version targets across machines and indexes advisory evidence by package before comparing Debian versions. CVE metadata is buffered within each query evaluation. The hidden Linux mapping query is a staging dependency, excluded from a separate model refresh; the status table counts already-loaded evidence instead of retrieving feeds again. Other vendors retain their existing web sources and can still increase refresh time.
+Ubuntu exact-target and supersedence matching share buffered notice lists from the same prepared OVAL snapshot, limited to releases with relevant missing-update targets. No relevant Ubuntu targets means no Ubuntu reference download. The 24-month lookback is unchanged. Supersedence matching deduplicates package/version targets across machines and indexes advisory evidence by package before comparing Debian versions. CVE metadata is buffered within each query evaluation. The Linux mapping query is a connection-only staging dependency (**Enable load** off); `view_linux_advisory_evidence` loads its output. It is not a loaded table excluded from model refresh, avoiding an unprocessed staging partition on first import. The status table counts already-loaded evidence instead of retrieving feeds again. Other vendors retain their existing web sources and can still increase refresh time.
 
 **OVAL mapping is not a full OVAL assessment engine.** Preparation extracts positive binary-package `dpkginfo_test` fixed-version constraints using literal names or constant name lists. It does not evaluate Boolean applicability, architecture/Pro conditions, negated tests, kernel `uname`/computed-variable rules or Livepatch notices. Counts of unsupported tests and definitions are printed and retained in the snapshot manifest; some packages, particularly kernels, therefore remain uncovered. Even an extracted package match is **Inferred**, not proof of an installed vulnerability. Review **No match** and coverage gaps rather than treating them as successful security assessments.
 
