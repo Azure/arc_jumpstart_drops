@@ -1,0 +1,26 @@
+{
+  "Title": "SERPENT XXS Test One",
+  "Summary": "XSS Test SERPENT",
+  "Type": "sample_app",
+  "Authors": [
+    {
+      "Name": "aanpentest",
+      "Link": "https://github.com/aananya-nagpal"
+    }
+  ],
+  "ProgrammingLanguage": [
+    ".NET / C#"
+  ],
+  "Products": [
+    "Azure Arc"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_xxs_test_one",
+  "Difficulty": "Beginner",
+  "Topics": [
+    "Testing"
+  ],
+  "Description": "",
+  "Cover": "serpentlogo.png",
+  "CreatedDate": "2026-08-17T09:30:37.535Z",
+  "LastModified": "2026-08-17T09:30:37.535Z"
+}
