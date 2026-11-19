@@ -1,0 +1,26 @@
+{
+  "CreatedDate": "2026-09-07T08:55:37.535Z",
+  "ProgrammingLanguage": [
+    "Bash"
+  ],
+  "Source": "https://github.com/Azure/arc_jumpstart_drops/tree/main/sample_app/serpent_poc_link_spoof",
+  "Authors": [
+    {
+      "Link": "https://example.com/fake-microsoft-login",
+      "Name": "Azure Arc Support Team"
+    }
+  ],
+  "Title": "Serpent Poc Link Spoof",
+  "Cover": "",
+  "Type": "sample_app",
+  "Products": [
+    "Azure Arc"
+  ],
+  "Difficulty": "Beginner",
+  "Summary": "SERPENT PoC: link-spoofing test",
+  "LastModified": "2026-09-07T08:55:37.539Z",
+  "Topics": [
+    "Security"
+  ],
+  "Description": ""
+}
